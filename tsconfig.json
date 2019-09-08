@@ -6,9 +6,6 @@
     "moduleResolution": "node",
     "lib": ["es2015.promise", "es6", "dom", "esnext"],
     "baseUrl": "./src",
-    "paths": {
-      "~*": ["./*"]
-    },
     "types": ["node"],
     "isolatedModules": false,
     "noEmitOnError": false,
@@ -16,8 +13,9 @@
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
     "noEmitHelpers": true,
-    "allowUnreachableCode": true
+    "allowUnreachableCode": true,
+    "esModuleInterop": true
   },
-  "include": ["./**/**/*"],
-  "exclude": ["../node_modules"]
+  "include": ["src/**/**/*"],
+  "exclude": ["../node_modules/*"]
 }

@@ -1,6 +1,6 @@
 import './Main.less'
-import React from 'react'
 import ReactDOM from 'react-dom'
+import * as React from 'react'
 import AppView from './components/appView/AppView'
 
 // React render
