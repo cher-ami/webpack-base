@@ -1,0 +1,81 @@
+{
+  "name": "webpack-boilerplate",
+  "version": "1.0.0",
+  "description": "Webpack 4 Boilerplate",
+  "author": "Willy Brauner",
+  "license": "MIT",
+  "main": "Main.tsx",
+  "keywords": [
+    "webpack",
+    "webpack 4",
+    "webpack boilerplate",
+    "boilerplate",
+    "react",
+    "typescript",
+    "hmr"
+  ],
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack/webpack.dev.js",
+    "build": "cross-env NODE_ENV=production webpack --config config/webpack/webpack.prod.js",
+    "prettier": "prettier --write './src/**/**/*.{tsx,ts,jsx,js,json,md}'",
+    "reset": "rm -rf node_modules yarn.lock && yarn"
+  },
+  "dependencies": {
+    "@solid-js/css-flat": "^1.0.1",
+    "preact": "^10.0.0-beta.0",
+    "solidify-lib": "^1.9.9"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/plugin-transform-spread": "^7.2.2",
+    "@babel/preset-env": "^7.5.5",
+    "@hot-loader/react-dom": "^16.9.0",
+    "@types/node": "^12.7.4",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "app-root-path": "^2.2.1",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.4",
+    "cross-env": "^5.2.1",
+    "css-loader": "^3.2.0",
+    "cssnano": "^4.1.10",
+    "file-loader": "^4.2.0",
+    "fork-ts-checker-webpack-plugin": "^1.5.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "html-webpack-plugin": "^3.2.0",
+    "husky": ">=1",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "lint-staged": ">=8",
+    "mini-css-extract-plugin": "^0.8.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^1.18.2",
+    "react-hot-loader": "^4.12.12",
+    "style-loader": "^1.0.0",
+    "terser-webpack-plugin": "^1.4.1",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.6.2",
+    "url-loader": "^2.1.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.2",
+    "webpackbar": "^4.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{tsx,ts,js,less,css,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}

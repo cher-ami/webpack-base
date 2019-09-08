@@ -1,0 +1,47 @@
+@import (reference) '../References.less';
+
+
+
+/**
+ * Set a grid (with gutter) value to specific selector
+ *
+ * @param @pSelector: Selector to affect calc
+ * @param @pNumber: Number of grid we want to affect to selector
+ * @param @pWithLastGutter: last gutter is part of grid size or not. Default is true
+ * @param @@pOneColumnGrid: width of one single column
+ * @param @pGutter: gutter width
+ * @param @pTotalGridNumber: total number of column
+ */
+.grid(
+  @pSelector,
+  @pNumber,
+  @pWithLastGutter: true,
+  @pOneColumnGrid: @one-column-grid,
+  @pGutter: @grid-gutter,
+  @pTotalColumnsNumber: @total-columns-number
+) {
+
+  & when(@pWithLastGutter = true) {
+      @{pSelector} : ~'calc( ( @{pOneColumnGrid} + (@{pGutter} / @{pTotalColumnsNumber}) ) * @{pNumber} )';
+  }
+
+  & when(@pWithLastGutter = false) {
+      @{pSelector} : ~'calc( ( @{pOneColumnGrid} + (@{pGutter} / @{pTotalColumnsNumber}) ) * @{pNumber} - @{pGutter} )';
+  }
+}
+
+/**
+ * centrale Column
+ */
+.centerColumnGrid (@pGridNumber:18) {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  .grid(width, @pGridNumber, false)
+}
+
+.resetCenterColumnGrid() {
+  margin-left: 0;
+  margin-right: 0;
+  width: auto;
+}

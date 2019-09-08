@@ -1,0 +1,31 @@
+// Import module dependencies as reference
+@import (reference) '../References.less';
+
+.labelFormat () {
+  .title-label();
+  margin-bottom: @margin-bottom-label;
+}
+
+.paragraphsFormat () {
+  @media (min-width: @breakpoint-tablet) {
+    max-width: 25vw;
+  }
+}
+
+.paragraphFormat () {
+  .text-medium();
+  .forceHTMLTagsStyle();
+  &:not(:first-child) {
+    margin-top: 1rem;
+  }
+}
+
+
+.sepLine (@pColor:@blue-text-01-color) {
+  margin: -1.5px 0.3rem 0;
+  .size(0.3rem, 1px);
+  display: inline-block;
+  background: @pColor;
+  position: relative;
+  vertical-align: middle;
+}
