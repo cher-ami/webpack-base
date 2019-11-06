@@ -1,14 +1,14 @@
-import {ReactNode} from 'react'
+import { ReactNode } from "react";
 
 export interface IRoute {
   // route name
-  name: string
+  name: string;
   // route component instance
-  component: ReactNode
+  component: ReactNode;
   // is default route application
-  default: boolean
+  default: boolean;
   // route path
-  path: string
+  path: string;
 }
 
 // utils format path
@@ -20,12 +20,10 @@ const formatPath = (pPath: string) =>
     pPath
   ]
     .filter(v => v)
-    .join('')
+    .join("");
 
 /**
  * @name Routes
  * @description Define Router routes of application
  */
-export const Routes: IRoute[] = [
-
-]
+export const Routes: IRoute[] = [];

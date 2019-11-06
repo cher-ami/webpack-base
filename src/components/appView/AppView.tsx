@@ -5,7 +5,15 @@ import "./AppView.less";
 interface IProps {
   classNames?: string[];
 }
+
+// component name
 const component: string = "AppView";
+
+/**
+ * @name AppView
+ * @param props
+ * @constructor
+ */
 function AppView(props: IProps) {
   // render
   return <div className={component}>{component}</div>;
