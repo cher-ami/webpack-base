@@ -1,8 +1,4 @@
-# Webpack starter
-
-## TODO 
-
-- add manifest 
+# Webpack Boilerplate
 
 ## License
 
