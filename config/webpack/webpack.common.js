@@ -1,55 +1,45 @@
-const paths = require('../paths');
-const webpack = require('webpack');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackBar = require('webpackbar');
+const paths = require("../paths");
+const webpack = require("webpack");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   /**
    * Entry
-   *
    * The first place Webpack looks to start building the bundle.
    */
   entry: {
-    main: paths.src + '/Main.tsx',
+    main: paths.src + "/Main.tsx"
   },
 
   /**
    * Output
-   *
    * Where Webpack outputs the assets and bundles.
    */
   output: {
     path: paths.dist,
-    filename: '[name].bundle.js',
+    filename: "[name].bundle.js"
   },
 
   /**
    * Resolve
-   *
-   *
    */
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', 'less', 'css'],
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".json", "less", "css"],
     alias: {
-      'react-dom': '@hot-loader/react-dom'
+      "react-dom": "@hot-loader/react-dom"
     },
 
-    modules: [
-      paths.node_modules,
-      paths.src,
-    ],
+    modules: [paths.node_modules, paths.src]
   },
 
   /**
    * Plugins
-   *
    * Customize the Webpack build process.
    */
   plugins: [
     /**
      * CleanWebpackPlugin
-     *
      * Removes/cleans build folders and unused assets when rebuilding.
      */
     new CleanWebpackPlugin(),
@@ -60,26 +50,19 @@ module.exports = {
      * Generates an HTML file from a template.
      */
     new HtmlWebpackPlugin({
-      title: 'Webpack Boilerplate',
-      favicon: paths.src + '/images/favicon.png',
-      template: paths.src + '/template.html', // template file
-      filename: 'index.html', // output file
+      title: "Webpack Boilerplate",
+      favicon: paths.src + "/images/favicon.png",
+      template: paths.src + "/template.html", // template file
+      filename: "index.html" // output file
     }),
 
     /**
      * Define Plugin
      */
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
-    }),
-
-    /**
-     * Progress bar plugin
-     *
-     * Show progress bar durring compilation
-     */
-    new WebpackBar(),
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
+    })
   ],
 
   /**
@@ -98,15 +81,15 @@ module.exports = {
         test: /\.(js|jsx|ts|tsx|mjs)$/,
         exclude: /node_modules/,
         use: [
-          {loader: 'babel-loader'},
+          { loader: "babel-loader" },
           {
-            loader: 'ts-loader',
+            loader: "ts-loader",
             options: {
               // disable type checker - we will use it in fork plugin
               //transpileOnly: true,
-            },
-          },
-        ],
+            }
+          }
+        ]
       },
 
       /**
@@ -117,11 +100,14 @@ module.exports = {
       {
         test: /\.(less|css)$/,
         use: [
-          'style-loader',
-          {loader: 'css-loader', options: {sourceMap: true, importLoaders: 1}},
-          {loader: 'postcss-loader', options: {sourceMap: true}},
-          {loader: 'less-loader', options: {sourceMap: true}},
-        ],
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: { sourceMap: true, importLoaders: 1 }
+          },
+          { loader: "postcss-loader", options: { sourceMap: true } },
+          { loader: "less-loader", options: { sourceMap: true } }
+        ]
       },
 
       /**
@@ -131,11 +117,11 @@ module.exports = {
        */
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp|svg)$/i,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: '[path][name].[ext]',
-          context: 'src', // prevent display of src/ in filename
-        },
+          name: "[path][name].[ext]",
+          context: "src" // prevent display of src/ in filename
+        }
       },
 
       /**
@@ -145,13 +131,13 @@ module.exports = {
        */
       {
         test: /\.(woff(2)?|eot|ttf|otf|)$/,
-        loader: 'url-loader',
+        loader: "url-loader",
         options: {
           limit: 8192,
-          name: '[path][name].[ext]',
-          context: 'src', // prevent display of src/ in filename
-        },
-      },
-    ],
-  },
+          name: "[path][name].[ext]",
+          context: "src" // prevent display of src/ in filename
+        }
+      }
+    ]
+  }
 };
