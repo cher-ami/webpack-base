@@ -1,6 +1,5 @@
 import "./ArticlePage.less";
 import React, { RefObject, Component } from "react";
-import { TweenLite } from "gsap/all";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 
 interface IProps {

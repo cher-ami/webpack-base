@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Routes } from "./Routes";
+import { getCurrentRouteComponent, Routes } from "./Routes";
 import { IPage } from "./IPage";
+import { findDOMNode } from "react-dom";
 
 /**
  * Transition between pages.
@@ -10,31 +11,50 @@ export enum ETransitionType {
    * [default]
    * New page will be added and played in after current page is played out.
    */
-  PAGE_SEQUENTIAL,
+  SEQUENTIAL,
 
   /**
    * New page will be added on top of current page.
    * Current page will live until new page is played in and current page is played out.
    */
-  PAGE_CROSSED,
+  CROSSED,
 
   /**
    * Transition control is delegated to props.transitionController handler.
    */
   CONTROLLED
 }
+/**
+ * Transition control delegate API.
+ * @param $oldPage Old page DOM element
+ * @param $newPage New page DOM element
+ * @param pOldPage Old page instance
+ * @param pNewPage New page instance
+ */
+interface ITransitionControl {
+  (
+    $oldPage: HTMLElement,
+    $newPage: HTMLElement,
+    pOldPage: IPage,
+    pNewPage: IPage
+  ): Promise<any>;
+}
 
 interface IProps {
-  transitionType: ETransitionType;
-  classNames?: string[];
-  location?: string;
+  // current location
+  location: string;
+
+  // transition type
+  transitionType?: ETransitionType;
+
+  // manage playIn and playOut and return a promise
+  transitionControl?: ITransitionControl;
 }
 
 interface IStates {
   currentRouteIndex?: number;
   oldRoute?: any;
   currentRoute?: any;
-  currentRoutePlayin?: boolean;
 }
 
 // component name
@@ -42,14 +62,17 @@ const component: string = "RouterStack";
 
 /**
  * @name Stack
+ * @description
  */
 export default class RouterStack extends Component<IProps, IStates> {
-  // get instance
+  /**
+   * Get page instance
+   */
   protected _oldRouteInstance: IPage = null;
   protected _currentRouteInstance: IPage = null;
 
   /**
-   * If we are in transition
+   * Check if we are in transition
    */
   protected _isPlayingIn = false;
   protected _isPlayingOut = false;
@@ -61,8 +84,8 @@ export default class RouterStack extends Component<IProps, IStates> {
    * Default props
    */
   static defaultProps = {
-    transitionType: ETransitionType.PAGE_SEQUENTIAL
-  };
+    transitionType: ETransitionType.SEQUENTIAL
+  } as IProps;
 
   /**
    * Init
@@ -74,16 +97,12 @@ export default class RouterStack extends Component<IProps, IStates> {
     this.state = {
       currentRouteIndex: 0,
       oldRoute: null,
-      currentRoute: Routes.find(el => el.path === this.props.location)
-        .component,
-      currentRoutePlayin: true
+      currentRoute: getCurrentRouteComponent(Routes, this.props.location)
     };
   }
 
   componentDidMount(): void {
-    if (this._currentRouteInstance !== null) {
-      this._currentRouteInstance.playIn();
-    }
+    this._currentRouteInstance?.playIn?.();
   }
 
   componentDidUpdate(
@@ -99,37 +118,41 @@ export default class RouterStack extends Component<IProps, IStates> {
       });
 
       // get current route from routes array, depend of current location
-      const getCurrentRoute = Routes.find(el => el.path === this.props.location)
-        .component;
+      const getCurrentRoute = getCurrentRouteComponent(
+        Routes,
+        this.props.location
+      );
+
+      // change transition boolean
+      this._isPlayingIn = true;
+      this._isPlayingOut = true;
 
       /**
-       * Page sequential
+       * SEQUENTIAL
        */
-      if (this.props.transitionType === ETransitionType.PAGE_SEQUENTIAL) {
-        this.pageSequential(getCurrentRoute);
+      if (this.props.transitionType === ETransitionType.SEQUENTIAL) {
+        this.sequential(getCurrentRoute);
       }
-
       /**
-       * Page Cossed
+       * CROSSED
        */
-      if (this.props.transitionType === ETransitionType.PAGE_CROSSED) {
-        this.pageCrossed(getCurrentRoute);
+      if (this.props.transitionType === ETransitionType.CROSSED) {
+        this.crossed(getCurrentRoute);
       }
-
       /**
-       * Controlled
+       * CONTROLLED
        */
       if (this.props.transitionType === ETransitionType.CONTROLLED) {
-        this.pageControlled(getCurrentRoute);
+        this.controlled(getCurrentRoute);
       }
     }
   }
 
   /**
-   * Page Sequential TimeLine
+   * @name sequential
    * @param pGetCurrentRoute
    */
-  protected async pageSequential(pGetCurrentRoute) {
+  protected async sequential(pGetCurrentRoute) {
     // change pages state
     await this.setState({
       // pass current route as old route
@@ -139,9 +162,10 @@ export default class RouterStack extends Component<IProps, IStates> {
     });
 
     // playOut old route
-    if (this._oldRouteInstance !== null && this._oldRouteInstance.playOut) {
-      await this._oldRouteInstance.playOut();
-    }
+    await this._oldRouteInstance?.playOut?.();
+
+    // toggle playing state
+    this._isPlayingOut = false;
 
     // change pages state
     await this.setState({
@@ -152,19 +176,18 @@ export default class RouterStack extends Component<IProps, IStates> {
     });
 
     // play In current route
-    if (
-      this._currentRouteInstance !== null &&
-      this._currentRouteInstance.playIn
-    ) {
-      await this._currentRouteInstance.playIn();
-    }
+    await this._currentRouteInstance?.playIn?.();
+
+    // toggle playing state
+    this._isPlayingIn = false;
   }
 
   /**
-   * Page Crossed TimeLine
+   * @name crossed
    * @param pGetCurrentRoute
    */
-  protected async pageCrossed(pGetCurrentRoute) {
+  protected async crossed(pGetCurrentRoute) {
+    // change pages state
     await this.setState({
       // set current route as old route
       oldRoute: this.state.currentRoute,
@@ -173,49 +196,78 @@ export default class RouterStack extends Component<IProps, IStates> {
     });
 
     // playOut old route
-    if (this._oldRouteInstance !== null && this._oldRouteInstance.playOut) {
-      this._oldRouteInstance.playOut().then(() => {
-        this.setState({ oldRoute: null });
-      });
-    }
+    this._oldRouteInstance?.playOut?.().then(() => {
+      // change pages state
+      this.setState({ oldRoute: null });
+      // toggle playing state
+      this._isPlayingOut = false;
+    });
 
     // as the same time, playIn new current route
-    if (
-      this._currentRouteInstance !== null &&
-      this._currentRouteInstance.playIn
-    ) {
-      this._currentRouteInstance.playIn().then(() => {
-        /// playOut ended
-      });
-    }
+    await this._currentRouteInstance?.playIn?.();
+
+    // toggle playing state
+    this._isPlayingOut = false;
   }
 
   /**
-   * TODO
-   * Page Controlled TimeLine
+   * @name controlled
    * @param pGetCurrentRoute
    */
-  protected async pageControlled(pGetCurrentRoute) {}
+  protected async controlled(pGetCurrentRoute) {
+    // We need the control handler, check if.
+    if (this.props.transitionControl == null) {
+      throw new Error(
+        "ReactViewStack.transitionControl // Please set transitionControl handler."
+      );
+    }
+
+    // TODO ici ça ne fonctionne pas car on se un nouveau state à current route alors quon ne sais pas encore
+    // si on veut le montrer ou non
+
+    // change pages state
+    await this.setState({
+      // set current route as old route
+      oldRoute: this.state.currentRoute,
+      // get new current Route
+      currentRoute: pGetCurrentRoute
+    });
+
+    // Call transition control handler with old and new pages instances
+    // Listen when finished through promise
+    await this.props.transitionControl(
+      findDOMNode(this._oldRouteInstance as any) as HTMLElement,
+      findDOMNode(this._currentRouteInstance as any) as HTMLElement,
+      this._oldRouteInstance,
+      this._currentRouteInstance
+    );
+
+    // toggle playing state
+    this._isPlayingIn = false;
+    this._isPlayingOut = false;
+
+    // Remove old page from state
+    this.setState({ oldRoute: null });
+  }
 
   /**
    * Final render
    */
   render() {
     // get instance from state
-    let OldRouteDom = this.state.oldRoute === null ? null : this.state.oldRoute;
+    let OldRouteDom = this.state?.oldRoute;
     // get instance from state
-    let CurrentRouteDom =
-      this.state.currentRoute === null ? null : this.state.currentRoute;
+    let CurrentRouteDom = this.state?.currentRoute;
 
     return (
       <div className={component}>
-        {OldRouteDom !== null && (
+        {OldRouteDom && (
           <OldRouteDom
             key={this.state.currentRouteIndex - 1}
             ref={r => ((this._oldRouteInstance as any) = r)}
           />
         )}
-        {CurrentRouteDom !== null && (
+        {CurrentRouteDom && (
           <CurrentRouteDom
             key={this.state.currentRouteIndex}
             ref={r => ((this._currentRouteInstance as any) = r)}
