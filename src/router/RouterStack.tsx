@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { classBlock } from "../helpers/className";
 import { Routes } from "./Routes";
+import { IPage } from "./IPage";
 
 /**
  * Transition between pages.
@@ -38,12 +38,12 @@ interface IStates {
 }
 
 // component name
-const component: string = "StackClass";
+const component: string = "RouterStack";
 
 /**
  * @name Stack
  */
-export default class StackClass extends Component<IProps, IStates> {
+export default class RouterStack extends Component<IProps, IStates> {
   // get instance
   protected _oldRouteInstance: IPage = null;
   protected _currentRouteInstance: IPage = null;
@@ -74,7 +74,8 @@ export default class StackClass extends Component<IProps, IStates> {
     this.state = {
       currentRouteIndex: 0,
       oldRoute: null,
-      currentRoute: null,
+      currentRoute: Routes.find(el => el.path === this.props.location)
+        .component,
       currentRoutePlayin: true
     };
   }
@@ -190,6 +191,7 @@ export default class StackClass extends Component<IProps, IStates> {
   }
 
   /**
+   * TODO
    * Page Controlled TimeLine
    * @param pGetCurrentRoute
    */
@@ -206,7 +208,7 @@ export default class StackClass extends Component<IProps, IStates> {
       this.state.currentRoute === null ? null : this.state.currentRoute;
 
     return (
-      <div className={classBlock([component, this.props.classNames])}>
+      <div className={component}>
         {OldRouteDom !== null && (
           <OldRouteDom
             key={this.state.currentRouteIndex - 1}
@@ -222,43 +224,4 @@ export default class StackClass extends Component<IProps, IStates> {
       </div>
     );
   }
-}
-
-/**
- * Allowed playIn / playOut states for IPage
- */
-export enum EPagePlayState {
-  VISIBLE,
-  PLAYING_IN,
-  PLAYING_OUT
-}
-
-/**
- * Interface for page.
- * It can be triggered from route and managed by an IPageStack
- */
-export interface IPage {
-  /**
-   * Current play in / play out state of the page.
-   * Use this state to disable features when animating.
-   */
-  readonly playState: EPagePlayState;
-
-  /**
-   * Action on this page.
-   * Have to check props.action and props.params to show proper content.
-   */
-  action(pActionName: string, pParams: { [index: string]: string | number });
-
-  /**
-   * Play intro animation.
-   * Have to return a promise when animation is ended.
-   */
-  playIn(...rest): Promise<any>;
-
-  /**
-   * Play outro animation.
-   * Have to return a promise when animation is ended.
-   */
-  playOut(...rest): Promise<any>;
 }

@@ -28,6 +28,7 @@ export default class HomePage extends Component<IProps, IStates> {
   public async playIn(): Promise<any> {
     return new Promise(resolve => {
       PageTransitionHelper.playIn(this.rootRef.current, resolve);
+      //resolve()
     });
   }
 

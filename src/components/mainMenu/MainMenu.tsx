@@ -1,8 +1,9 @@
 import "./MainMenu.less";
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Routes } from "../../router/Routes";
 import { classBlock, className } from "../../helpers/className";
+import { TweenLite, Power3 } from "gsap/all";
 
 interface IProps {
   classNames?: string[];
@@ -15,6 +16,18 @@ const component: string = "MainMenu";
  * @name MainMenu
  */
 function MainMenu(props: IProps) {
+  const rootRef = useRef(null);
+
+  // --------------------------------------------------------------------------- ANIM
+
+  useLayoutEffect(() => {
+    TweenLite.from(rootRef.current, 1, {
+      y: -20,
+      autoAlpha: 0,
+      ease: Power3.easeOut
+    });
+  }, []);
+
   // --------------------------------------------------------------------------- PREPARE RENDER
 
   // prepare class block string
@@ -23,7 +36,7 @@ function MainMenu(props: IProps) {
   // --------------------------------------------------------------------------- RENDER
 
   return (
-    <nav className={block}>
+    <nav className={block} ref={rootRef}>
       <ul className={className(component, "items")}>
         {Routes.filter(el => el.showInMenu).map((el, i) => (
           <li className={className(component, "item")} key={i}>

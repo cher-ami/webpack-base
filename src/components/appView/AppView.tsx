@@ -3,8 +3,7 @@ import { hot } from "react-hot-loader/root";
 import React from "react";
 import { useLocation } from "wouter";
 import MainMenu from "../mainMenu/MainMenu";
-import Stack from "../../router/Stack";
-import StackClass, { ETransitionType } from "../../router/StackClass";
+import RouterStack, { ETransitionType } from "../../router/RouterStack";
 
 interface IProps {}
 
@@ -13,17 +12,17 @@ const component: string = "AppView";
 
 /**
  * @name AppView
+ * @description
  */
 function AppView(props: IProps) {
-  // --------------------------------------------------------------------------- PREPARE
+  // get current Location
+  const [location, setLocation] = useLocation();
 
   // --------------------------------------------------------------------------- RENDER
-  const [location, setLocation] = useLocation();
   return (
     <div className={component}>
       <MainMenu />
-      {/*<Stack location={location} />*/}
-      <StackClass
+      <RouterStack
         location={location}
         transitionType={ETransitionType.PAGE_SEQUENTIAL}
       />
