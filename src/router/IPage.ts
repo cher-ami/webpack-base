@@ -1,4 +1,13 @@
 /**
+ * Interface for action parameters.
+ * This is an associative array.
+ * Value can be either string or number.
+ */
+export interface IActionParameters {
+  [index: string]: string | number;
+}
+
+/**
  * Allowed playIn / playOut states for IPage
  */
 export enum EPagePlayState {
