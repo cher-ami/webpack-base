@@ -1,6 +1,7 @@
 import "./BlogPage.less";
 import React, { RefObject, Component } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
+import { Helmet } from "react-helmet";
 
 interface IProps {
   classNames?: string[];
@@ -41,6 +42,9 @@ class BlogPage extends Component<IProps, IStates> {
   render() {
     return (
       <div className={component} ref={this.rootRef}>
+        <Helmet>
+          <title>Blog</title>
+        </Helmet>
         {component}
       </div>
     );

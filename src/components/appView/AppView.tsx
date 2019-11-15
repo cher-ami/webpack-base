@@ -49,7 +49,7 @@ function AppView(props: IProps) {
       <MainMenu />
       <RouterStack
         location={location}
-        transitionType={ETransitionType.CONTROLLED}
+        transitionType={ETransitionType.SEQUENTIAL}
         transitionControl={transitionControl}
       />
     </div>
