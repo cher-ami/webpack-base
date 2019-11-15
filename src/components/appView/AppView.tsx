@@ -1,23 +1,34 @@
-import { hot } from "react-hot-loader/root";
-import * as React from "react";
 import "./AppView.less";
+import { hot } from "react-hot-loader/root";
+import React from "react";
+import { useLocation } from "wouter";
+import MainMenu from "../mainMenu/MainMenu";
+import Stack from "../../router/Stack";
+import StackClass, { ETransitionType } from "../../router/StackClass";
 
-interface IProps {
-  classNames?: string[];
-}
+interface IProps {}
 
 // component name
 const component: string = "AppView";
 
 /**
  * @name AppView
- * @param props
- * @constructor
  */
 function AppView(props: IProps) {
-  // render
-  return <div className={component}>{component}</div>;
+  // --------------------------------------------------------------------------- PREPARE
+
+  // --------------------------------------------------------------------------- RENDER
+  const [location, setLocation] = useLocation();
+  return (
+    <div className={component}>
+      <MainMenu />
+      {/*<Stack location={location} />*/}
+      <StackClass
+        location={location}
+        transitionType={ETransitionType.PAGE_SEQUENTIAL}
+      />
+    </div>
+  );
 }
 
-// export by default with hot module reload enable
 export default hot(AppView);

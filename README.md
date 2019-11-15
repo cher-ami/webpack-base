@@ -1,4 +1,4 @@
-# Webpack Boilerplate
+# Webpack base
 
 ## License
 

@@ -45,6 +45,6 @@ module.exports = merge(common, {
     // friendly webpack error
     // https://github.com/geowarin/friendly-errors-webpack-plugin
     // pass to true if you don't want to print compile file in the console
-    quiet: false
+    quiet: true
   }
 });

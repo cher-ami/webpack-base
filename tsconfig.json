@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "jsx": "react",
     "module": "esnext",
     "target": "es5",
-    "moduleResolution": "node",
-    "lib": ["es2015.promise", "es6", "dom", "esnext"],
     "baseUrl": "./src",
+    "lib": ["es2015.promise", "es6", "dom", "esnext"],
+    "jsx": "react",
+    "moduleResolution": "node",
     "types": ["node"],
+    "sourceMap": true,
     "isolatedModules": false,
     "noEmitOnError": false,
     "experimentalDecorators": true,
@@ -16,6 +17,6 @@
     "allowUnreachableCode": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["../node_modules/*"]
 }
