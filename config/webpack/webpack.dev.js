@@ -33,6 +33,7 @@ module.exports = merge(common, {
     compress: true,
     hot: true,
     port: 3000,
+    historyApiFallback: true,
 
     // display error overlay on screen
     overlay: true,

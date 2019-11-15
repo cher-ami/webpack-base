@@ -13,6 +13,7 @@ const component: string = "AppView";
 
 /**
  * @name AppView
+ * @description
  */
 function AppView(props: IProps) {
   // --------------------------------------------------------------------------- PREPARE
@@ -22,11 +23,11 @@ function AppView(props: IProps) {
   return (
     <div className={component}>
       <MainMenu />
-      {/*<Stack location={location} />*/}
-      <StackClass
-        location={location}
-        transitionType={ETransitionType.PAGE_SEQUENTIAL}
-      />
+      <Stack transitionType={ETransitionType.PAGE_CROSSED} />
+      {/*<StackClass*/}
+      {/*  location={location}*/}
+      {/*  transitionType={ETransitionType.PAGE_CROSSED}*/}
+      {/*/>*/}
     </div>
   );
 }

@@ -74,7 +74,8 @@ export default class StackClass extends Component<IProps, IStates> {
     this.state = {
       currentRouteIndex: 0,
       oldRoute: null,
-      currentRoute: null,
+      currentRoute: Routes.find(el => el.path === this.props.location)
+        .component,
       currentRoutePlayin: true
     };
   }
@@ -190,6 +191,7 @@ export default class StackClass extends Component<IProps, IStates> {
   }
 
   /**
+   * TODO
    * Page Controlled TimeLine
    * @param pGetCurrentRoute
    */
@@ -206,7 +208,7 @@ export default class StackClass extends Component<IProps, IStates> {
       this.state.currentRoute === null ? null : this.state.currentRoute;
 
     return (
-      <div className={classBlock([component, this.props.classNames])}>
+      <div className={component}>
         {OldRouteDom !== null && (
           <OldRouteDom
             key={this.state.currentRouteIndex - 1}
