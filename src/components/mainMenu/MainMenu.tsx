@@ -40,7 +40,7 @@ function MainMenu(props: IProps) {
       <ul className={className(component, "items")}>
         {Routes.filter(el => el.showInMenu).map((el, i) => (
           <li className={className(component, "item")} key={i}>
-            <Link href={el.path} children={el.name} />
+            <Link href={el.as} children={el.name} />
           </li>
         ))}
       </ul>

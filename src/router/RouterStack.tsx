@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getCurrentRouteComponent, Routes } from "./Routes";
+import { EDependOf, getRoute, Routes } from "./Routes";
 import { IPage } from "./IPage";
 import { findDOMNode } from "react-dom";
 
@@ -43,6 +43,9 @@ interface ITransitionControl {
 interface IProps {
   // current location
   location: string;
+
+  // about dynamic route, we need to get params
+  params: { [x: string]: string };
 
   // transition type
   transitionType?: ETransitionType;
@@ -97,7 +100,9 @@ export default class RouterStack extends Component<IProps, IStates> {
     this.state = {
       currentRouteIndex: 0,
       oldRoute: null,
-      currentRoute: getCurrentRouteComponent(Routes, this.props.location)
+      currentRoute: getRoute({
+        pLocation: this.props.location
+      })?.component
     };
   }
 
@@ -118,10 +123,9 @@ export default class RouterStack extends Component<IProps, IStates> {
       });
 
       // get current route from routes array, depend of current location
-      const getCurrentRoute = getCurrentRouteComponent(
-        Routes,
-        this.props.location
-      );
+      const getCurrentRoute = getRoute({
+        pLocation: this.props.location
+      })?.component;
 
       // change transition boolean
       this._isPlayingIn = true;

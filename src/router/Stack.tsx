@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { getCurrentRouteComponent, Routes } from "./Routes";
+import { getRoute, Routes } from "./Routes";
 import { classBlock } from "../helpers/className";
 import { useLocation } from "wouter";
 import { useDidUpdate } from "../hooks/useDidUpdate";
@@ -80,7 +80,7 @@ function Stack(props: IProps) {
   useEffect(() => {
     // save new currentRoute in currentRoute State
     setCurrentRoute({
-      instance: getCurrentRouteComponent(Routes, location)
+      instance: getRoute({ pLocation: location }).component
     });
     // check
     if (_currentRouteInstance && _currentRouteInstance.playIn) {
@@ -109,7 +109,7 @@ function Stack(props: IProps) {
         setOldRoute({ instance: null });
         // save new currentRoute in currentRoute State
         setCurrentRoute({
-          instance: getCurrentRouteComponent(Routes, location)
+          instance: getRoute({ pLocation: location }).component
         });
         if (_currentRouteInstance && _currentRouteInstance.playIn) {
           _currentRouteInstance.playIn();
@@ -124,7 +124,9 @@ function Stack(props: IProps) {
   useDidUpdate(() => {
     if (props.transitionType === ETransitionType.PAGE_CROSSED) {
       setOldRoute({ instance: currentRoute.instance });
-      setCurrentRoute({ instance: getCurrentRouteComponent(Routes, location) });
+      setCurrentRoute({
+        instance: getRoute({ pLocation: location }).component
+      });
     }
   }, [location]);
 

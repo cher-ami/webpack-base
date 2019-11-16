@@ -19,7 +19,8 @@ module.exports = {
    */
   output: {
     path: paths.dist,
-    filename: "[name].bundle.js"
+    filename: "[name].bundle.js",
+    publicPath: "/"
   },
 
   /**
@@ -57,7 +58,7 @@ module.exports = {
      * Generates an HTML file from a template.
      */
     new HtmlWebpackPlugin({
-      title: "Webpack Boilerplate",
+      title: "Webpack base",
       favicon: paths.src + "/images/favicon.png",
       template: paths.src + "/template.html",
       filename: "index.html"
