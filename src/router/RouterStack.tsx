@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { EDependOf, getRoute, Routes } from "./Routes";
+import { getRoute, IRoute } from "./Routes";
 import { IPage } from "./IPage";
 import { findDOMNode } from "react-dom";
+import { Route } from "wouter";
 
 /**
  * Transition between pages.
@@ -55,9 +56,14 @@ interface IProps {
 }
 
 interface IStates {
-  currentRouteIndex?: number;
-  oldRoute?: any;
-  currentRoute?: any;
+  // counter
+  count?: number;
+
+  // oldRoute component
+  oldRoute?: IRoute | null;
+
+  // currentRoute component
+  currentRoute?: IRoute | null;
 }
 
 // component name
@@ -98,11 +104,12 @@ export default class RouterStack extends Component<IProps, IStates> {
 
     // init state
     this.state = {
-      currentRouteIndex: 0,
+      count: 0,
       oldRoute: null,
       currentRoute: getRoute({
-        pLocation: this.props.location
-      })?.component
+        pLocation: this.props.location,
+        pParams: this.props.params
+      })
     };
   }
 
@@ -119,13 +126,14 @@ export default class RouterStack extends Component<IProps, IStates> {
     if (prevProps.location !== this.props.location) {
       // increment page counter
       this.setState({
-        currentRouteIndex: this.state.currentRouteIndex + 1
+        count: this.state.count + 1
       });
 
       // get current route from routes array, depend of current location
-      const getCurrentRoute = getRoute({
-        pLocation: this.props.location
-      })?.component;
+      const currentRoute = getRoute({
+        pLocation: this.props.location,
+        pParams: this.props.params
+      });
 
       // change transition boolean
       this._isPlayingIn = true;
@@ -135,28 +143,28 @@ export default class RouterStack extends Component<IProps, IStates> {
        * SEQUENTIAL
        */
       if (this.props.transitionType === ETransitionType.SEQUENTIAL) {
-        this.sequential(getCurrentRoute);
+        this.sequential(currentRoute);
       }
       /**
        * CROSSED
        */
       if (this.props.transitionType === ETransitionType.CROSSED) {
-        this.crossed(getCurrentRoute);
+        this.crossed(currentRoute);
       }
       /**
        * CONTROLLED
        */
       if (this.props.transitionType === ETransitionType.CONTROLLED) {
-        this.controlled(getCurrentRoute);
+        this.controlled(currentRoute);
       }
     }
   }
 
   /**
    * @name sequential
-   * @param pGetCurrentRoute
+   * @param pCurrentRoute
    */
-  protected async sequential(pGetCurrentRoute) {
+  protected async sequential(pCurrentRoute: IRoute) {
     // change pages state
     await this.setState({
       // pass current route as old route
@@ -176,7 +184,7 @@ export default class RouterStack extends Component<IProps, IStates> {
       // empty old route
       oldRoute: null,
       // get new current route
-      currentRoute: pGetCurrentRoute
+      currentRoute: pCurrentRoute
     });
 
     // play In current route
@@ -188,15 +196,15 @@ export default class RouterStack extends Component<IProps, IStates> {
 
   /**
    * @name crossed
-   * @param pGetCurrentRoute
+   * @param pCurrentRoute
    */
-  protected async crossed(pGetCurrentRoute) {
+  protected async crossed(pCurrentRoute: IRoute) {
     // change pages state
     await this.setState({
       // set current route as old route
       oldRoute: this.state.currentRoute,
       // get new current Route
-      currentRoute: pGetCurrentRoute
+      currentRoute: pCurrentRoute
     });
 
     // playOut old route
@@ -216,9 +224,9 @@ export default class RouterStack extends Component<IProps, IStates> {
 
   /**
    * @name controlled
-   * @param pGetCurrentRoute
+   * @param pCurrentRoute
    */
-  protected async controlled(pGetCurrentRoute) {
+  protected async controlled(pCurrentRoute: IRoute) {
     // We need the control handler, check if.
     if (this.props.transitionControl == null) {
       throw new Error(
@@ -234,7 +242,7 @@ export default class RouterStack extends Component<IProps, IStates> {
       // set current route as old route
       oldRoute: this.state.currentRoute,
       // get new current Route
-      currentRoute: pGetCurrentRoute
+      currentRoute: pCurrentRoute
     });
 
     // Call transition control handler with old and new pages instances
@@ -259,21 +267,21 @@ export default class RouterStack extends Component<IProps, IStates> {
    */
   render() {
     // get instance from state
-    let OldRouteDom = this.state?.oldRoute;
+    let OldRouteDom: any = this.state?.oldRoute?.component;
     // get instance from state
-    let CurrentRouteDom = this.state?.currentRoute;
+    let CurrentRouteDom: any = this.state?.currentRoute?.component;
 
     return (
       <div className={component}>
         {OldRouteDom && (
           <OldRouteDom
-            key={this.state.currentRouteIndex - 1}
+            key={this.state.count - 1}
             ref={r => ((this._oldRouteInstance as any) = r)}
           />
         )}
         {CurrentRouteDom && (
           <CurrentRouteDom
-            key={this.state.currentRouteIndex}
+            key={this.state.count}
             ref={r => ((this._currentRouteInstance as any) = r)}
           />
         )}

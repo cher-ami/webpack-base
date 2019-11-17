@@ -5,7 +5,8 @@ import { useLocation, useRoute, useRouter } from "wouter";
 import MainMenu from "../mainMenu/MainMenu";
 import RouterStack, { ETransitionType } from "../../router/RouterStack";
 import { IPage } from "../../router/IPage";
-import { EDependOf, getRoute } from "../../router/Routes";
+import { getRoute } from "../../router/Routes";
+import NewStack from "../../router/NewStack";
 
 interface IProps {}
 
@@ -19,14 +20,8 @@ const component: string = "AppView";
 function AppView(props: IProps) {
   // get current Location
   const [location, setLocation] = useLocation();
-
   const [match, params] = useRoute(getRoute({ pLocation: location })?.path);
   const router = useRouter();
-
-  console.log(params);
-
-  const bla = useRouter();
-  console.log(bla);
 
   /**
    * Transition manager between all React pages.
