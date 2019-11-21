@@ -29,10 +29,10 @@ const formatPath = (pPath: string) =>
     .join("");
 
 /**
- * @name Routes
+ * @name RoutesList
  * @description Define Router routes of application
  */
-export const Routes: IRoute[] = [
+export const RoutesList: IRoute[] = [
   {
     path: formatPath(""),
     as: formatPath(""),
@@ -72,7 +72,7 @@ export const Routes: IRoute[] = [
  * @param pLocation
  */
 export const getRoute = ({
-  pRoutes = Routes,
+  pRoutes = RoutesList,
   pLocation,
   pParams
 }: {

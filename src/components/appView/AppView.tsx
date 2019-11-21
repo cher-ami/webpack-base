@@ -5,8 +5,8 @@ import { useLocation, useRoute, useRouter } from "wouter";
 import MainMenu from "../mainMenu/MainMenu";
 import RouterStack, { ETransitionType } from "../../router/RouterStack";
 import { IPage } from "../../router/IPage";
-import { getRoute } from "../../router/Routes";
-import NewStack from "../../router/NewStack";
+import { getRoute } from "../../router/RoutesList";
+import TestFunctionStack from "../../router/TestFunctionStack";
 
 interface IProps {}
 
@@ -52,12 +52,13 @@ function AppView(props: IProps) {
     <div className={component}>
       <MainMenu />
       {/*<NewStack/>*/}
-      <RouterStack
-        params={params}
-        location={location}
-        transitionType={ETransitionType.SEQUENTIAL}
-        transitionControl={transitionControl}
-      />
+      {/*<RouterStack*/}
+      {/*  params={params}*/}
+      {/*  location={location}*/}
+      {/*  transitionType={ETransitionType.SEQUENTIAL}*/}
+      {/*  transitionControl={transitionControl}*/}
+      {/*/>*/}
+      <TestFunctionStack />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import "./MainMenu.less";
 import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "wouter";
-import { Routes } from "../../router/Routes";
+import { RoutesList } from "../../router/RoutesList";
 import { classBlock, className } from "../../helpers/className";
 import { TweenLite, Power3 } from "gsap/all";
 
@@ -38,7 +38,7 @@ function MainMenu(props: IProps) {
   return (
     <nav className={block} ref={rootRef}>
       <ul className={className(component, "items")}>
-        {Routes.filter(el => el?.meta?.showInMenu).map((el, i) => (
+        {RoutesList.filter(el => el?.meta?.showInMenu).map((el, i) => (
           <li className={className(component, "item")} key={i}>
             <Link href={el.as} children={el?.meta?.name} />
           </li>

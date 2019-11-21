@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getRoute, IRoute } from "./Routes";
+import { getRoute, IRoute } from "./RoutesList";
 import { IPage } from "./IPage";
 import { findDOMNode } from "react-dom";
 import { Route } from "wouter";
