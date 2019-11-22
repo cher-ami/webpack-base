@@ -1,6 +1,7 @@
 import "./BlogPage.less";
-import React, { forwardRef, useRef } from "react";
-import { Route, Router } from "wouter";
+import React, { useEffect, useRef } from "react";
+import { TweenLite } from "gsap";
+import RouterRegister from "../../router/RouterRegister";
 
 interface IProps {
   classNames?: string[];
@@ -8,8 +9,24 @@ interface IProps {
 
 const component: string = "BlogPage";
 
+/**
+ * @name BlogPage
+ */
 function BlogPage(props: IProps) {
-  return <div className={component}>{component}</div>;
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const anim = () => {
+      TweenLite.to(rootRef.current, 1, { y: 100 });
+    };
+    RouterRegister.registerPlayIn(anim);
+  });
+
+  return (
+    <div ref={rootRef} className={component}>
+      {component}
+    </div>
+  );
 }
 
 export default BlogPage;

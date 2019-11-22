@@ -20,7 +20,7 @@ class PageTransitionHelper {
         y: 0,
         autoAlpha: 1,
         onComplete: () => {
-          pCallBack?.();
+          pCallBack && pCallBack();
           console.log("PageTransitionHelper // play In Complete");
         }
       }
@@ -28,11 +28,11 @@ class PageTransitionHelper {
   }
 
   public pagePlayOut(pRef: MutableRefObject<any>, pCallBack?: () => void) {
-    TweenLite.to(pRef.current, 1, {
+    TweenLite.to(pRef.current, this._duration, {
       y: 100,
       autoAlpha: 0,
       onComplete: () => {
-        pCallBack?.();
+        pCallBack && pCallBack();
         console.log("PageTransitionHelper // play In Complete");
       }
     });

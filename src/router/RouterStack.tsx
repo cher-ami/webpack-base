@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { getRoute, IRoute } from "./RoutesList";
 import { IPage } from "./IPage";
-import { findDOMNode } from "react-dom";
-import { Route } from "wouter";
+import RouterRegister from "./RouterRegister";
 
 /**
  * Transition between pages.
@@ -44,13 +43,10 @@ interface ITransitionControl {
 interface IProps {
   // current location
   location: string;
-
   // about dynamic route, we need to get params
   params: { [x: string]: string };
-
   // transition type
   transitionType?: ETransitionType;
-
   // manage playIn and playOut and return a promise
   transitionControl?: ITransitionControl;
 }
@@ -58,10 +54,8 @@ interface IProps {
 interface IStates {
   // counter
   count?: number;
-
   // oldRoute component
   oldRoute?: IRoute | null;
-
   // currentRoute component
   currentRoute?: IRoute | null;
 }
@@ -74,12 +68,6 @@ const component: string = "RouterStack";
  * @description
  */
 export default class RouterStack extends Component<IProps, IStates> {
-  /**
-   * Get page instance
-   */
-  protected _oldRouteInstance: IPage = null;
-  protected _currentRouteInstance: IPage = null;
-
   /**
    * Check if we are in transition
    */
@@ -113,9 +101,7 @@ export default class RouterStack extends Component<IProps, IStates> {
     };
   }
 
-  componentDidMount(): void {
-    this._currentRouteInstance?.playIn?.();
-  }
+  componentDidMount(): void {}
 
   componentDidUpdate(
     prevProps: Readonly<IProps>,
@@ -170,25 +156,19 @@ export default class RouterStack extends Component<IProps, IStates> {
       // pass current route as old route
       oldRoute: this.state.currentRoute,
       // empty current route
-      currentRoute: null
-    });
-
-    // playOut old route
-    await this._oldRouteInstance?.playOut?.();
-
-    // toggle playing state
-    this._isPlayingOut = false;
-
-    // change pages state
-    await this.setState({
-      // empty old route
-      oldRoute: null,
-      // get new current route
       currentRoute: pCurrentRoute
     });
 
-    // play In current route
-    await this._currentRouteInstance?.playIn?.();
+    // // toggle playing state
+    this._isPlayingOut = false;
+    //
+    // // change pages state
+    // await this.setState({
+    //   // empty old route
+    //   oldRoute: null,
+    //   // get new current route
+    //   currentRoute: pCurrentRoute
+    // });
 
     // toggle playing state
     this._isPlayingIn = false;
@@ -198,69 +178,13 @@ export default class RouterStack extends Component<IProps, IStates> {
    * @name crossed
    * @param pCurrentRoute
    */
-  protected async crossed(pCurrentRoute: IRoute) {
-    // change pages state
-    await this.setState({
-      // set current route as old route
-      oldRoute: this.state.currentRoute,
-      // get new current Route
-      currentRoute: pCurrentRoute
-    });
-
-    // playOut old route
-    this._oldRouteInstance?.playOut?.().then(() => {
-      // change pages state
-      this.setState({ oldRoute: null });
-      // toggle playing state
-      this._isPlayingOut = false;
-    });
-
-    // as the same time, playIn new current route
-    await this._currentRouteInstance?.playIn?.();
-
-    // toggle playing state
-    this._isPlayingOut = false;
-  }
+  protected async crossed(pCurrentRoute: IRoute) {}
 
   /**
    * @name controlled
    * @param pCurrentRoute
    */
-  protected async controlled(pCurrentRoute: IRoute) {
-    // We need the control handler, check if.
-    if (this.props.transitionControl == null) {
-      throw new Error(
-        "ReactViewStack.transitionControl // Please set transitionControl handler."
-      );
-    }
-
-    // TODO ici ça ne fonctionne pas car on se un nouveau state à current route alors quon ne sais pas encore
-    // si on veut le montrer ou non
-
-    // change pages state
-    await this.setState({
-      // set current route as old route
-      oldRoute: this.state.currentRoute,
-      // get new current Route
-      currentRoute: pCurrentRoute
-    });
-
-    // Call transition control handler with old and new pages instances
-    // Listen when finished through promise
-    await this.props.transitionControl(
-      findDOMNode(this._oldRouteInstance as any) as HTMLElement,
-      findDOMNode(this._currentRouteInstance as any) as HTMLElement,
-      this._oldRouteInstance,
-      this._currentRouteInstance
-    );
-
-    // toggle playing state
-    this._isPlayingIn = false;
-    this._isPlayingOut = false;
-
-    // Remove old page from state
-    this.setState({ oldRoute: null });
-  }
+  protected async controlled(pCurrentRoute: IRoute) {}
 
   /**
    * Final render
@@ -271,20 +195,12 @@ export default class RouterStack extends Component<IProps, IStates> {
     // get instance from state
     let CurrentRouteDom: any = this.state?.currentRoute?.component;
 
+    console.log({ OldRouteDom, CurrentRouteDom });
+
     return (
       <div className={component}>
-        {OldRouteDom && (
-          <OldRouteDom
-            key={this.state.count - 1}
-            ref={r => ((this._oldRouteInstance as any) = r)}
-          />
-        )}
-        {CurrentRouteDom && (
-          <CurrentRouteDom
-            key={this.state.count}
-            ref={r => ((this._currentRouteInstance as any) = r)}
-          />
-        )}
+        {OldRouteDom && <OldRouteDom key={this.state.count - 1} />}
+        {CurrentRouteDom && <CurrentRouteDom key={this.state.count} />}
       </div>
     );
   }

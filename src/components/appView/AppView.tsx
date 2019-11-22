@@ -6,7 +6,6 @@ import MainMenu from "../mainMenu/MainMenu";
 import RouterStack, { ETransitionType } from "../../router/RouterStack";
 import { IPage } from "../../router/IPage";
 import { getRoute } from "../../router/RoutesList";
-import TestFunctionStack from "../../router/TestFunctionStack";
 
 interface IProps {}
 
@@ -24,14 +23,7 @@ function AppView(props: IProps) {
   const router = useRouter();
 
   /**
-   * Transition manager between all React pages.
-   * Useful if you want a custom transition behavior other than SEQUENTIAL or CROSSED.
-   * You can setup a generic transition between all pages and do special cases here.
-   * @param {HTMLElement} $oldPage Old page HTMLElement. Can be null.
-   * @param {HTMLElement} $newPage New page HTMLElement.
-   * @param {IPage} pOldPage Old page component instance. Can be null.
-   * @param {IPage} pNewPage New page component instance.
-   * @return {Promise<any>}
+   * Transition manager
    */
   function transitionControl(
     $oldPage: HTMLElement,
@@ -40,7 +32,6 @@ function AppView(props: IProps) {
     pNewPage: IPage
   ) {
     return new Promise(async resolve => {
-      // TODO Test
       await pOldPage.playOut();
       await pOldPage.playIn();
       resolve();
@@ -51,14 +42,12 @@ function AppView(props: IProps) {
   return (
     <div className={component}>
       <MainMenu />
-      {/*<NewStack/>*/}
-      {/*<RouterStack*/}
-      {/*  params={params}*/}
-      {/*  location={location}*/}
-      {/*  transitionType={ETransitionType.SEQUENTIAL}*/}
-      {/*  transitionControl={transitionControl}*/}
-      {/*/>*/}
-      <TestFunctionStack />
+      <RouterStack
+        params={params}
+        location={location}
+        transitionType={ETransitionType.SEQUENTIAL}
+        transitionControl={transitionControl}
+      />
     </div>
   );
 }

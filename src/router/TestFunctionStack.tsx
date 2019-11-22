@@ -34,10 +34,7 @@ function TestFunctionStack() {
   return (
     <div>
       <Route path={"/"}>
-        <HomePage
-          playState={playState}
-          transitonComplete={play => setPlayState(play)}
-        />
+        <HomePage />
       </Route>
       <Route path={"/blog"}>
         <BlogPage />
