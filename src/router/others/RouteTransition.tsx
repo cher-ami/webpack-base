@@ -1,5 +1,5 @@
 import React, { ReactNode, useLayoutEffect, useRef } from "react";
-import { EPlayState } from "../types";
+import { EPlayState } from "../../types";
 
 interface IProps {
   children: ReactNode;

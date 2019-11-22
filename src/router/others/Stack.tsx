@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { getRoute, RoutesList } from "./RoutesList";
-import { classBlock } from "../helpers/className";
+import { getRoute, RoutesList } from "../RoutesList";
+import { classBlock } from "../../helpers/className";
 import { useLocation } from "wouter";
-import { useDidUpdate } from "../hooks/useDidUpdate";
+import { useDidUpdate } from "../../hooks/useDidUpdate";
 import { IPage } from "./IPage";
 
 /**

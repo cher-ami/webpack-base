@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { getRoute, IRoute } from "./RoutesList";
+import { getRoute, IRoute } from "../RoutesList";
 import { IPage } from "./IPage";
-import RouterRegister from "./RouterRegister";
+import RouterRegister from "../RouterRegister";
 
 /**
  * Transition between pages.

@@ -3,10 +3,9 @@ import { hot } from "react-hot-loader/root";
 import React from "react";
 import { useLocation, useRoute, useRouter } from "wouter";
 import MainMenu from "../mainMenu/MainMenu";
-import RouterStack, { ETransitionType } from "../../router/RouterStack";
-import { IPage } from "../../router/IPage";
+import { IPage } from "../../router/others/IPage";
 import { getRoute } from "../../router/RoutesList";
-import TestFunctionStack from "../../router/TestFunctionStack";
+import FunctionalStack from "../../router/FunctionalStack";
 
 interface IProps {}
 
@@ -43,13 +42,7 @@ function AppView(props: IProps) {
   return (
     <div className={component}>
       <MainMenu />
-      <TestFunctionStack />
-      {/*<RouterStack*/}
-      {/*  params={params}*/}
-      {/*  location={location}*/}
-      {/*  transitionType={ETransitionType.SEQUENTIAL}*/}
-      {/*  transitionControl={transitionControl}*/}
-      {/*/>*/}
+      <FunctionalStack />
     </div>
   );
 }

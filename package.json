@@ -22,15 +22,14 @@
     "prettier": "scripts/prettier.sh"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.2",
     "@solid-js/css-flat": "^1.0.1",
     "gsap": "^2.1.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "solidify-lib": "^1.9.9",
     "wouter": "^2.3.1"
   },
   "devDependencies": {
+    "@babel/runtime": "^7.7.2",
     "@babel/core": "^7.7.2",
     "@babel/plugin-proposal-class-properties": "^7.7.0",
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",

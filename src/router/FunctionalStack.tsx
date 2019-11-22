@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useLayoutEffect, useState } from "react";
 import { useLocation, useRouter } from "wouter";
 import { getRoute } from "./RoutesList";
 
-function TestFunctionStack() {
+function FunctionalStack() {
   // get current location
   const [location, setLocation] = useLocation();
 
@@ -15,21 +15,24 @@ function TestFunctionStack() {
   /**
    * Router
    */
+
+  // get old route
   const [oldRoute, setOldRoute] = useState<{ instance: ReactNode }>(null);
+  // get current route
   const [currentRoute, setCurrentRoute] = useState<{ instance: ReactNode }>(
     null
   );
 
   useLayoutEffect(() => {
     /**
-     * Dans le cas d'un croisement de route
+     * TODO besoin de récupérer les animations d'entrée et de sortie de chaque Route, comment ?
      *
-     * TODO besoin de récupérer les animation d'entrée et de sortie de chaque Route
      */
-
     // l'ancienne current devient la old route
-    setOldRoute(currentRoute);
+    if (count > 0) setOldRoute(currentRoute);
     // la current route dépend de la location
+    // FIXME si location contient un param URL type :id, getRoute ne retourn pas le composant
+    // FIXME car il match la location (ex: blog/article) avec le path (ex: blog/:id)
     setCurrentRoute({ instance: getRoute({ pLocation: location })?.component });
     // animer...
   }, [location]);
@@ -51,4 +54,4 @@ function TestFunctionStack() {
   );
 }
 
-export default TestFunctionStack;
+export default FunctionalStack;
