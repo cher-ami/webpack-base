@@ -8,16 +8,12 @@ const useRouteTransition = (
   playInHandler: () => void,
   playOutHandler?: () => void
 ) => {
-  const [playIn, setPlayIn] = useState<() => void>(playInHandler);
+  const [playIn, setPlayIn] = useState([]);
 
   /**
    *
    */
   useEffect(() => {});
-
-  return {
-    playIn
-  };
 };
 
 export default useRouteTransition;

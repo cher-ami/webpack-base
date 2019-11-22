@@ -1,13 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Route, Router, useLocation, useRoute, useRouter } from "wouter";
-import { RoutesList } from "./RoutesList";
-import { EPlayState } from "../types";
-import BlogPage from "../pages/blogPage/BlogPage";
-import HomePage from "../pages/homePage/HomePage";
+import React, { ReactNode, useEffect, useLayoutEffect, useState } from "react";
+import { useLocation, useRouter } from "wouter";
+import { getRoute } from "./RoutesList";
 
 function TestFunctionStack() {
-  // location
-  const router = useRouter();
+  // get current location
   const [location, setLocation] = useLocation();
 
   /**
@@ -17,50 +13,40 @@ function TestFunctionStack() {
   useEffect(() => setCount(count + 1), [location]);
 
   /**
-   * Transition
+   * Router
    */
-  const [playState, setPlayState] = useState(EPlayState.PLAY_IN);
+  const [oldRoute, setOldRoute] = useState<{ instance: ReactNode }>(null);
+  const [currentRoute, setCurrentRoute] = useState<{ instance: ReactNode }>(
+    null
+  );
 
-  let Instance: any = useMemo(() => null, []);
-  let OldInstance: any = useMemo(() => null, []);
+  useLayoutEffect(() => {
+    /**
+     * Dans le cas d'un croisement de route
+     *
+     * TODO besoin de récupérer les animation d'entrée et de sortie de chaque Route
+     */
 
-  useEffect(() => {
-    console.log(Instance);
-    console.log(OldInstance);
+    // l'ancienne current devient la old route
+    setOldRoute(currentRoute);
+    // la current route dépend de la location
+    setCurrentRoute({ instance: getRoute({ pLocation: location })?.component });
+    // animer...
   }, [location]);
 
-  //const [match] = useRoute(location);
+  /**
+   * DOM Route depend of state
+   */
+  let OldRouteDom: any = oldRoute?.instance;
+  let CurrentRouteDom: any = currentRoute?.instance;
 
+  /**
+   * Render
+   */
   return (
     <div>
-      <Route path={"/"}>
-        <HomePage />
-      </Route>
-      <Route path={"/blog"}>
-        <BlogPage />
-      </Route>
-
-      {/*{RoutesList.map((el, i) => {*/}
-      {/*  Instance = el.component as any;*/}
-
-      {/*  return (*/}
-      {/*    <Route path={el.path} key={i}>*/}
-      {/*      { OldInstance &&*/}
-      {/*      <OldInstance*/}
-      {/*          playState={playState}*/}
-      {/*          transitonComplete={play => setPlayState(play)}*/}
-      {/*      />*/}
-      {/*      }*/}
-
-      {/*      { Instance &&*/}
-      {/*        <Instance*/}
-      {/*          playState={playState}*/}
-      {/*          transitonComplete={play => setPlayState(play)}*/}
-      {/*        />*/}
-      {/*      }*/}
-      {/*    </Route>*/}
-      {/*  );*/}
-      {/*})}*/}
+      {OldRouteDom && <OldRouteDom key={count - 1} />}
+      {CurrentRouteDom && <CurrentRouteDom key={count} />}
     </div>
   );
 }

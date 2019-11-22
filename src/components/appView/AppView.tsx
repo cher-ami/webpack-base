@@ -6,6 +6,7 @@ import MainMenu from "../mainMenu/MainMenu";
 import RouterStack, { ETransitionType } from "../../router/RouterStack";
 import { IPage } from "../../router/IPage";
 import { getRoute } from "../../router/RoutesList";
+import TestFunctionStack from "../../router/TestFunctionStack";
 
 interface IProps {}
 
@@ -42,12 +43,13 @@ function AppView(props: IProps) {
   return (
     <div className={component}>
       <MainMenu />
-      <RouterStack
-        params={params}
-        location={location}
-        transitionType={ETransitionType.SEQUENTIAL}
-        transitionControl={transitionControl}
-      />
+      <TestFunctionStack />
+      {/*<RouterStack*/}
+      {/*  params={params}*/}
+      {/*  location={location}*/}
+      {/*  transitionType={ETransitionType.SEQUENTIAL}*/}
+      {/*  transitionControl={transitionControl}*/}
+      {/*/>*/}
     </div>
   );
 }
