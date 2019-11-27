@@ -1,3 +1,9 @@
+import { prepare } from "../helpers/prepare";
+const { component, log } = prepare("RouterRegister");
+
+/**
+ * @name RouterRegister
+ */
 class RouterRegister {
   public _playIn: () => void;
 

@@ -1,13 +1,14 @@
 import "./BlogPage.less";
-import React, { useEffect, useRef } from "react";
+import React, { useLayoutEffect, useEffect, useRef } from "react";
 import { TweenLite } from "gsap";
 import RouterRegister from "../../router/RouterRegister";
+import { prepare } from "../../helpers/prepare";
 
 interface IProps {
   classNames?: string[];
 }
 
-const component: string = "BlogPage";
+const { component, log } = prepare("BlogPage");
 
 /**
  * @name BlogPage

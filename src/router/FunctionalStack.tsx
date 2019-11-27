@@ -15,11 +15,10 @@ function FunctionalStack() {
   /**
    * Router
    */
-
   // get old route
-  const [oldRoute, setOldRoute] = useState<{ instance: ReactNode }>(null);
+  const [oldRoute, setOldRoute] = useState<{ component: ReactNode }>(null);
   // get current route
-  const [currentRoute, setCurrentRoute] = useState<{ instance: ReactNode }>(
+  const [currentRoute, setCurrentRoute] = useState<{ component: ReactNode }>(
     null
   );
 
@@ -33,23 +32,25 @@ function FunctionalStack() {
     // la current route dépend de la location
     // FIXME si location contient un param URL type :id, getRoute ne retourn pas le composant
     // FIXME car il match la location (ex: blog/article) avec le path (ex: blog/:id)
-    setCurrentRoute({ instance: getRoute({ pLocation: location })?.component });
+    setCurrentRoute({
+      component: getRoute({ pLocation: location })?.component
+    });
     // animer...
   }, [location]);
 
   /**
    * DOM Route depend of state
    */
-  let OldRouteDom: any = oldRoute?.instance;
-  let CurrentRouteDom: any = currentRoute?.instance;
+  let Old: any = oldRoute?.component;
+  let Current: any = currentRoute?.component;
 
   /**
    * Render
    */
   return (
     <div>
-      {OldRouteDom && <OldRouteDom key={count - 1} />}
-      {CurrentRouteDom && <CurrentRouteDom key={count} />}
+      {Old && <Old key={count - 1} />}
+      {Current && <Current key={count} />}
     </div>
   );
 }

@@ -3,6 +3,9 @@ import ReactDOM from "react-dom";
 import * as React from "react";
 import AppView from "./components/appView/AppView";
 import { GlobalConfig } from "./data/GlobalConfig";
+import { prepare } from "./helpers/prepare";
+
+const { component, log } = prepare("Main");
 
 // ----------------------------------------------------------------------------- INJECT DATA
 
@@ -15,7 +18,7 @@ GlobalConfig.instance.inject({
 // ----------------------------------------------------------------------------- LOG
 
 // Add version log in console
-console.log(
+log(
   `%c version: ${GlobalConfig.instance.version} `,
   "background: #2b2b2b; color: #69cbdf; padding: 2px 2px 3px"
 );

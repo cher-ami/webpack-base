@@ -6,11 +6,12 @@ import MainMenu from "../mainMenu/MainMenu";
 import { IPage } from "../../router/others/IPage";
 import { getRoute } from "../../router/RoutesList";
 import FunctionalStack from "../../router/FunctionalStack";
+import { prepare } from "../../helpers/prepare";
 
 interface IProps {}
 
 // component name
-const component: string = "AppView";
+const { component, log } = prepare("AppView");
 
 /**
  * @name AppView

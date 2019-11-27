@@ -29,7 +29,6 @@
     "wouter": "^2.3.1"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.7.2",
     "@babel/core": "^7.7.2",
     "@babel/plugin-proposal-class-properties": "^7.7.0",
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
@@ -37,6 +36,7 @@
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
     "@babel/preset-typescript": "^7.7.2",
+    "@babel/runtime": "^7.7.2",
     "@hot-loader/react-dom": "^16.11.0",
     "@types/node": "^12.12.7",
     "@types/react": "^16.9.11",
