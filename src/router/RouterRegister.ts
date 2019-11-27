@@ -32,9 +32,6 @@ class RouterRegister {
     playIn: () => Promise<any>,
     playOut?: () => Promise<any>
   ): void {
-    // if already register, do no register it again
-    //if (this.routeIsAlreadyRegister(this.routesTransitions, name)) return;
-
     // build route object
     const newRouteRegister: IRouteTransitionsRegister = {
       [name]: {
