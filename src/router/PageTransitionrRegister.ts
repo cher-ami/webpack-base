@@ -14,6 +14,7 @@ export type IPageTransition = {
 
 /**
  * @name PageTransitionrRegister
+ *
  */
 class PageTransitionrRegister {
   /**
