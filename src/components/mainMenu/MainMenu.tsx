@@ -17,17 +17,6 @@ const component: string = "MainMenu";
  */
 function MainMenu(props: IProps) {
   const rootRef = useRef(null);
-
-  // --------------------------------------------------------------------------- ANIM
-
-  useLayoutEffect(() => {
-    TweenLite.from(rootRef.current, 1, {
-      y: -20,
-      autoAlpha: 0,
-      ease: Power3.easeOut
-    });
-  }, []);
-
   // --------------------------------------------------------------------------- PREPARE RENDER
 
   // prepare class block string
@@ -40,7 +29,7 @@ function MainMenu(props: IProps) {
       <ul className={className(component, "items")}>
         {RoutesList.filter(el => el?.meta?.showInMenu).map((el, i) => (
           <li className={className(component, "item")} key={i}>
-            <Link href={el.as} children={el?.meta?.name} />
+            <Link href={el.as} children={el.meta?.name} />
           </li>
         ))}
       </ul>

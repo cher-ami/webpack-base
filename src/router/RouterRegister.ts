@@ -6,8 +6,8 @@ const { log } = prepare("RouterRegister");
  */
 export type IRouteTransitionsRegister = {
   [name: string]: {
-    playIn: () => void;
-    playOut?: () => void;
+    playIn: () => Promise<any>;
+    playOut?: () => Promise<any>;
   };
 };
 

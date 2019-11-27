@@ -12,6 +12,8 @@ export interface IRoute {
   as: string;
   // route component instance
   component: ReactNode;
+  // string component name
+  componentName: string;
   // meta
   meta: { [x: string]: any };
 }
@@ -34,9 +36,10 @@ const formatPath = (pPath: string) =>
  */
 export const RoutesList: IRoute[] = [
   {
+    component: HomePage,
+    componentName: "HomePage",
     path: formatPath(""),
     as: formatPath(""),
-    component: HomePage,
     meta: {
       name: "Home",
       showInMenu: true
@@ -44,6 +47,7 @@ export const RoutesList: IRoute[] = [
   },
   {
     component: BlogPage,
+    componentName: "BlogPage",
     path: formatPath("blog"),
     as: formatPath("blog"),
     meta: {
@@ -52,9 +56,10 @@ export const RoutesList: IRoute[] = [
     }
   },
   {
+    component: ArticlePage,
+    componentName: "ArticlePage",
     path: formatPath("blog/:id"),
     as: formatPath("blog/coucou"),
-    component: ArticlePage,
     meta: {
       name: "Article",
       showInMenu: true

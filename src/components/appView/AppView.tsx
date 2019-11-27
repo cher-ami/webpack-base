@@ -8,6 +8,7 @@ import { getRoute } from "../../router/RoutesList";
 import FunctionalStack from "../../router/FunctionalStack";
 import { prepare } from "../../helpers/prepare";
 import RouterRegister from "../../router/RouterRegister";
+import { className } from "../../helpers/className";
 
 interface IProps {}
 
@@ -43,33 +44,24 @@ function AppView(props: IProps) {
   // --------------------------------------------------------------------------- RENDER
   return (
     <div className={component}>
-      <div
-        onClick={() =>
-          RouterRegister.routesTransitions?.["HomePage"]?.playIn?.()
-        }
-      >
-        PLAY IN HOME
-      </div>
-      <div
-        onClick={() =>
-          RouterRegister.routesTransitions?.["BlogPage"]?.playIn?.()
-        }
-      >
-        PLAY IN BLOG
-      </div>
-      <div
-        onClick={() =>
-          RouterRegister.routesTransitions?.["HomePage"]?.playOut?.()
-        }
-      >
-        PLAY OUT HOME
-      </div>
-      <div
-        onClick={() =>
-          RouterRegister.routesTransitions?.["BlogPage"]?.playOut?.()
-        }
-      >
-        PLAY OUT BLOG
+      <div className={className(component, "playTest")}>
+        {["HomePage", "BlogPage"].map((el, i) => (
+          <div key={i}>
+            {el}{" "}
+            <span
+              onClick={() => RouterRegister.routesTransitions?.[el]?.playIn?.()}
+              children={`playIn`}
+            />
+            {" / "}
+            <span
+              key={i}
+              onClick={() =>
+                RouterRegister.routesTransitions?.[el]?.playOut?.()
+              }
+              children={`playOut`}
+            />
+          </div>
+        ))}
       </div>
       <MainMenu />
       <FunctionalStack />
