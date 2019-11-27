@@ -17,10 +17,10 @@ function HomePage(props: IProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const anim = () => {
-      TweenLite.to(rootRef.current, 1, { x: 100 });
+    const playIn = () => {
+      TweenLite.fromTo(rootRef.current, 1, { y: 100 }, { y: 0 });
     };
-    RouterRegister.registerPlayIn(anim);
+    RouterRegister.registerTransitions(component, playIn);
   });
 
   return (

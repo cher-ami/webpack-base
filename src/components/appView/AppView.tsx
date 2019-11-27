@@ -7,6 +7,7 @@ import { IPage } from "../../router/others/IPage";
 import { getRoute } from "../../router/RoutesList";
 import FunctionalStack from "../../router/FunctionalStack";
 import { prepare } from "../../helpers/prepare";
+import RouterRegister from "../../router/RouterRegister";
 
 interface IProps {}
 
@@ -42,6 +43,20 @@ function AppView(props: IProps) {
   // --------------------------------------------------------------------------- RENDER
   return (
     <div className={component}>
+      <div
+        onClick={() =>
+          RouterRegister.routesTransitions?.["HomePage"]?.playIn?.()
+        }
+      >
+        PLAY IN HOME
+      </div>
+      <div
+        onClick={() =>
+          RouterRegister.routesTransitions?.["BlogPage"]?.playIn?.()
+        }
+      >
+        PLAY IN BLOG
+      </div>
       <MainMenu />
       <FunctionalStack />
     </div>
