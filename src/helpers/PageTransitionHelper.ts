@@ -1,8 +1,13 @@
 import { TweenLite } from "gsap/all";
 import { MutableRefObject } from "react";
 import { prepare } from "./prepare";
-const { log } = prepare("PageTransitionHelper");
 
+// prepare
+const { component, log } = prepare("PageTransitionHelper");
+
+/**
+ * @name PageTransitionHelper
+ */
 class PageTransitionHelper {
   protected _duration: number;
 
@@ -10,23 +15,26 @@ class PageTransitionHelper {
     this._duration = 0.8;
   }
 
-  public promisePlayIn(
-    pRef: MutableRefObject<any>,
-    pCallBack?: () => void
-  ): Promise<any> {
+  /**
+   * @name promisePlayIn
+   * @param pRef
+   * @param pCallBack
+   */
+  // prettier-ignore
+  public promisePlayIn(pRef: MutableRefObject<any>, pCallBack?: () => void): Promise<any> {
     // retrun promise
     return new Promise(resolve => {
       // si pas de ref, exit
       if (!pRef.current) return;
 
       // anim
-      // prettier-ignore
       TweenLite.fromTo(pRef.current, this._duration, {
           autoAlpha:0,
           y: 100
         },{
           autoAlpha:1,
           y: 0,
+         clearProps:"all",
           onComplete: () => {
             pCallBack?.();
             resolve();
@@ -41,17 +49,14 @@ class PageTransitionHelper {
    * @param pRef
    * @param pCallBack
    */
-  public promisePlayOut(
-    pRef: MutableRefObject<any>,
-    pCallBack?: () => void
-  ): Promise<any> {
+  // prettier-ignore
+  public promisePlayOut(pRef: MutableRefObject<any>, pCallBack?: () => void): Promise<any> {
     // retrun promise
     return new Promise(resolve => {
       // si pas de ref, exit
       if (!pRef.current) return;
 
       // anim
-      // prettier-ignore
       TweenLite.fromTo(pRef.current, this._duration, {
           autoAlpha:1,
           y: 0

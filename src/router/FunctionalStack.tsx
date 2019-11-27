@@ -55,6 +55,20 @@ function FunctionalStack() {
   /**
    * Transition
    */
+  // playOut Old route
+  // prettier-ignore
+  useAsyncLayoutEffect(async () => {
+    // check
+    if (!oldRoute || !oldRoute?.componentName) return;
+    log("oldRoute", oldRoute);
+    // anim playOut
+    await RouterRegister.routesTransitions?.[oldRoute.componentName]?.playOut?.();
+    // killer oldRoute
+    setOldRoute(null)
+
+    await log("oldRoute playOut Complete");
+  }, [oldRoute]);
+
   // playIn Current route
   // prettier-ignore
   useAsyncLayoutEffect(async () => {
@@ -68,22 +82,6 @@ function FunctionalStack() {
     // afficher un log à la fin de l'animation
     await log("currentRoute playIn Complete");
   }, [currentRoute]);
-
-  // playOut Old route
-  // prettier-ignore
-  useAsyncLayoutEffect(async () => {
-    // check
-    if (!oldRoute || !oldRoute?.componentName) return;
-    log("oldRoute", oldRoute);
-
-    // anim playOut
-    await RouterRegister.routesTransitions?.[oldRoute.componentName]?.playOut?.();
-
-    // killer oldRoute
-    setOldRoute(null)
-
-    await log("oldRoute playOut Complete");
-  }, [oldRoute]);
 
   // ----------------–----------------–----------------–----------------–------- RENDER
 
