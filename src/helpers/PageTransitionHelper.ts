@@ -1,4 +1,4 @@
-import { TweenLite } from "gsap/all";
+import { gsap } from "gsap";
 import { MutableRefObject } from "react";
 import { prepare } from "./prepare";
 
@@ -28,7 +28,7 @@ class PageTransitionHelper {
       if (!pRef.current) return;
 
       // anim
-      TweenLite.fromTo(pRef.current, this._duration, {
+      gsap.fromTo(pRef.current, this._duration, {
           autoAlpha:0,
           y: 100
         },{
@@ -57,7 +57,7 @@ class PageTransitionHelper {
       if (!pRef.current) return;
 
       // anim
-      TweenLite.fromTo(pRef.current, this._duration, {
+      gsap.fromTo(pRef.current, this._duration, {
           autoAlpha:1,
           y: 0
         },{
