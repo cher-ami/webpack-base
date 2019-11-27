@@ -21,7 +21,7 @@ function HomePage(props: IProps) {
 
   const playIn = (): Promise<any> =>
     PageTransitionHelper.promisePlayIn(rootRef, () =>
-      log(`${component}, playIIn complete!`)
+      log(`${component}, playIn complete!`)
     );
 
   const playOut = (): Promise<any> =>

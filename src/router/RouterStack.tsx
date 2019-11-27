@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect, useLayoutEffect, useState } from "react";
-import { useLocation } from "wouter";
 import { getRoute } from "./RoutesList";
 import { prepare } from "../helpers/prepare";
 import { useAsyncLayoutEffect } from "../hooks/useAsyncEffect";
@@ -72,12 +71,12 @@ function RouterStack(props: IProps) {
   /**
    * Page STACK
    */
-  // get old route
+  // c old route
   const [oldPage, setOldPage] = useState<{
     component: ReactNode;
     componentName: string;
   }>(null);
-  // get current route
+  // gsap current route
   const [currentPage, setCurrentPage] = useState<{
     component: ReactNode;
     componentName: string;
