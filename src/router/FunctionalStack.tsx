@@ -1,17 +1,48 @@
 import React, { ReactNode, useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { getRoute } from "./RoutesList";
-import RouterRegister from "./RouterRegister";
+import PageTransitionRegister from "./PageTransitionrRegister";
 import { prepare } from "../helpers/prepare";
 import { useAsyncLayoutEffect } from "../hooks/useAsyncEffect";
+
+/**
+ * Transition between pages.
+ */
+export enum ETransitionType {
+  /**
+   * [default]
+   * New page will be added and played in after current page is played out.
+   */
+  SEQUENTIAL,
+
+  /**
+   * New page will be added on top of current page.
+   * Current page will live until new page is played in and current page is played out.
+   */
+  CROSSED,
+
+  /**
+   * Transition control is delegated to props.transitionController handler.
+   */
+  CONTROLLED
+}
+
+interface IProps {
+  transitionType: ETransitionType;
+}
+
+FunctionalStack.defaultProps = {
+  transitionType: ETransitionType.SEQUENTIAL
+} as IProps;
 
 // prepare
 const { component, log } = prepare("FunctionalStack");
 
 /**
  * @name FunctionalStack
+ * @description
  */
-function FunctionalStack() {
+function FunctionalStack(props: IProps) {
   // get current location
   const [location] = useLocation();
 
@@ -26,15 +57,15 @@ function FunctionalStack() {
   // ----------------–----------------–----------------–----------------–------- STACK
 
   /**
-   * Router STACK
+   * Page STACK
    */
   // get old route
-  const [oldRoute, setOldRoute] = useState<{
+  const [oldPage, setOldPage] = useState<{
     component: ReactNode;
     componentName: string;
   }>(null);
   // get current route
-  const [currentRoute, setCurrentRoute] = useState<{
+  const [currentPage, setCurrentPage] = useState<{
     component: ReactNode;
     componentName: string;
   }>(null);
@@ -42,14 +73,14 @@ function FunctionalStack() {
   // seter les routes dans le state au changement de location
   useLayoutEffect(() => {
     // l'ancienne current devient la old route
-    setOldRoute(currentRoute);
+    setOldPage(currentPage);
 
     // FIXME si location contient un param URL type :id, getRoute ne retourn pas le composant
     // FIXME car il match la location (ex: blog/article) avec le path (ex: blog/:id)
     // la current route dépend de la location
     const { component, componentName } = getRoute({ pLocation: location });
-    // seter la route courante dans le state currentRoute
-    setCurrentRoute({ component, componentName });
+    // seter la route courante dans le state currentPage
+    setCurrentPage({ component, componentName });
   }, [location]);
 
   /**
@@ -59,37 +90,37 @@ function FunctionalStack() {
   // prettier-ignore
   useAsyncLayoutEffect(async () => {
     // check
-    if (!oldRoute || !oldRoute?.componentName) return;
-    log("oldRoute", oldRoute);
+    if (!oldPage || !oldPage?.componentName) return;
+    log("oldPage", oldPage);
     // anim playOut
-    await RouterRegister.routesTransitions?.[oldRoute.componentName]?.playOut?.();
-    // killer oldRoute
-    setOldRoute(null)
+    await PageTransitionRegister.transitions?.[oldPage.componentName]?.playOut?.();
+    // killer oldPage
+    setOldPage(null)
 
-    await log("oldRoute playOut Complete");
-  }, [oldRoute]);
+    await log("oldPage playOut Complete");
+  }, [oldPage]);
 
   // playIn Current route
   // prettier-ignore
   useAsyncLayoutEffect(async () => {
     // check
-    if (!currentRoute || !currentRoute?.componentName) return;
-    log("currentRoute", currentRoute);
+    if (!currentPage || !currentPage?.componentName) return;
+    log("currentPage", currentPage);
 
     // anim playIn
-    await RouterRegister.routesTransitions?.[currentRoute.componentName]?.playIn?.();
+    await PageTransitionRegister.transitions?.[currentPage.componentName]?.playIn?.();
 
     // afficher un log à la fin de l'animation
-    await log("currentRoute playIn Complete");
-  }, [currentRoute]);
+    await log("currentPage playIn Complete");
+  }, [currentPage]);
 
   // ----------------–----------------–----------------–----------------–------- RENDER
 
   /**
-   * DOM Route depend of state
+   * DOM Page depend of state
    */
-  let Old: any = oldRoute?.component;
-  let Current: any = currentRoute?.component;
+  let Old: any = oldPage?.component;
+  let Current: any = currentPage?.component;
 
   /**
    * Render

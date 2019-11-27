@@ -7,7 +7,7 @@ import { IPage } from "../../router/others/IPage";
 import { getRoute } from "../../router/RoutesList";
 import FunctionalStack from "../../router/FunctionalStack";
 import { prepare } from "../../helpers/prepare";
-import RouterRegister from "../../router/RouterRegister";
+import RouterRegister from "../../router/PageTransitionrRegister";
 import { className } from "../../helpers/className";
 
 interface IProps {}
@@ -49,15 +49,13 @@ function AppView(props: IProps) {
           <div key={i}>
             {el}{" "}
             <span
-              onClick={() => RouterRegister.routesTransitions?.[el]?.playIn?.()}
+              onClick={() => RouterRegister.transitions?.[el]?.playIn?.()}
               children={`playIn`}
             />
             {" / "}
             <span
               key={i}
-              onClick={() =>
-                RouterRegister.routesTransitions?.[el]?.playOut?.()
-              }
+              onClick={() => RouterRegister.transitions?.[el]?.playOut?.()}
               children={`playOut`}
             />
           </div>

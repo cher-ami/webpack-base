@@ -2,7 +2,7 @@ import "./BlogPage.less";
 import React, { useRef } from "react";
 import { prepare } from "../../helpers/prepare";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
-import useRouteRegister from "../../router/useRouteRegister";
+import usePageTransitionRegister from "../../router/usePageTransitionRegister";
 
 interface IProps {
   classNames?: string[];
@@ -29,7 +29,7 @@ function BlogPage(props: IProps) {
     );
 
   // register route transition
-  useRouteRegister(component, playIn, playOut);
+  usePageTransitionRegister(component, playIn, playOut);
 
   return (
     <div ref={rootRef} className={component}>

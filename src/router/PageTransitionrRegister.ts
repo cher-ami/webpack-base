@@ -1,10 +1,11 @@
 import { prepare } from "../helpers/prepare";
-const { log } = prepare("RouterRegister");
+// prepare
+const { log } = prepare("PageTransitionrRegister");
 
 /**
  * Route transition register Object
  */
-export type IRouteTransitionsRegister = {
+export type IPageTransition = {
   [name: string]: {
     playIn: () => Promise<any>;
     playOut?: () => Promise<any>;
@@ -12,28 +13,28 @@ export type IRouteTransitionsRegister = {
 };
 
 /**
- * @name RouterRegister
+ * @name PageTransitionrRegister
  */
-class RouterRegister {
+class PageTransitionrRegister {
   /**
    * Store routes transition in an object
    * And access it from outside
    */
-  public routesTransitions: IRouteTransitionsRegister = {};
+  public transitions: IPageTransition = {};
 
   /**
-   * @name registerTransitions
+   * @name register
    * @param name
    * @param playIn
    * @param playOut
    */
-  public registerTransitions(
+  public register(
     name: string,
     playIn: () => Promise<any>,
     playOut?: () => Promise<any>
   ): void {
     // build route object
-    const newRouteRegister: IRouteTransitionsRegister = {
+    const newRouteRegister: IPageTransition = {
       [name]: {
         playIn,
         playOut
@@ -41,12 +42,12 @@ class RouterRegister {
     };
 
     // merge objects
-    this.routesTransitions = {
-      ...this.routesTransitions,
+    this.transitions = {
+      ...this.transitions,
       ...newRouteRegister
     };
 
-    log("is register", this.routesTransitions);
+    log("is register", this.transitions);
   }
 
   /**
@@ -56,7 +57,7 @@ class RouterRegister {
    * @param name
    */
   private routeIsAlreadyRegister(
-    routesTransitions = this.routesTransitions,
+    routesTransitions = this.transitions,
     name: string
   ): boolean {
     return Object.keys(routesTransitions).some(el => el === name);
@@ -64,4 +65,4 @@ class RouterRegister {
 }
 
 // export like singleton
-export default new RouterRegister();
+export default new PageTransitionrRegister();

@@ -1,15 +1,15 @@
 import { useLayoutEffect } from "react";
 import { useLocation } from "wouter";
 import { prepare } from "../helpers/prepare";
-import RouterRegister from "./RouterRegister";
+import RouterRegister from "./PageTransitionrRegister";
 
 // prepare
 const { component, log } = prepare("useRouteRegister");
 
 /**
- * @name useRouteRegister
+ * @name usePageTransitionRegister
  */
-const useRouteRegister = (
+const usePageTransitionRegister = (
   componentName: string,
   playInPromiseHandler: () => Promise<any>,
   playOutPromiseHandler?: () => Promise<any>
@@ -19,7 +19,7 @@ const useRouteRegister = (
 
   useLayoutEffect(() => {
     // register transtions
-    RouterRegister.registerTransitions(
+    RouterRegister.register(
       componentName,
       playInPromiseHandler,
       playOutPromiseHandler
@@ -27,4 +27,4 @@ const useRouteRegister = (
   }, [location]);
 };
 
-export default useRouteRegister;
+export default usePageTransitionRegister;

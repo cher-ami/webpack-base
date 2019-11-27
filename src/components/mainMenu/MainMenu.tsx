@@ -1,16 +1,16 @@
 import "./MainMenu.less";
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { Link } from "wouter";
 import { RoutesList } from "../../router/RoutesList";
 import { classBlock, className } from "../../helpers/className";
-import { TweenLite, Power3 } from "gsap/all";
+import { prepare } from "../../helpers/prepare";
 
 interface IProps {
   classNames?: string[];
 }
 
-// component name
-const component: string = "MainMenu";
+// Prepare
+const { component, log } = prepare("MainMenu");
 
 /**
  * @name MainMenu
