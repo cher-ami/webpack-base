@@ -3,12 +3,11 @@ import { hot } from "react-hot-loader/root";
 import React from "react";
 import { useLocation, useRoute, useRouter } from "wouter";
 import MainMenu from "../mainMenu/MainMenu";
-import { IPage } from "../../router/others/IPage";
 import { getRoute } from "../../router/RoutesList";
-import FunctionalStack from "../../router/FunctionalStack";
+import RouterStack from "../../router/RouterStack";
 import { prepare } from "../../helpers/prepare";
-import RouterRegister from "../../router/PageTransitionrRegister";
 import { className } from "../../helpers/className";
+import { pagesTransitionsList } from "../../router/usePageTransitionRegister";
 
 interface IProps {}
 
@@ -21,7 +20,7 @@ const { component, log } = prepare("AppView");
  */
 function AppView(props: IProps) {
   // get current Location
-  const [location, setLocation] = useLocation();
+  const [location] = useLocation();
   const [match, params] = useRoute(getRoute({ pLocation: location })?.path);
   const router = useRouter();
 
@@ -31,9 +30,9 @@ function AppView(props: IProps) {
   function transitionControl(
     $oldPage: HTMLElement,
     $newPage: HTMLElement,
-    pOldPage: IPage,
-    pNewPage: IPage
-  ) {
+    pOldPage,
+    pNewPage
+  ): Promise<any> {
     return new Promise(async resolve => {
       await pOldPage.playOut();
       await pOldPage.playIn();
@@ -44,25 +43,26 @@ function AppView(props: IProps) {
   // --------------------------------------------------------------------------- RENDER
   return (
     <div className={component}>
+      {/* TEST TODO remove */}
       <div className={className(component, "playTest")}>
         {["HomePage", "BlogPage"].map((el, i) => (
           <div key={i}>
             {el}{" "}
             <span
-              onClick={() => RouterRegister.transitions?.[el]?.playIn?.()}
+              onClick={() => pagesTransitionsList?.[el]?.playIn?.()}
               children={`playIn`}
             />
             {" / "}
             <span
               key={i}
-              onClick={() => RouterRegister.transitions?.[el]?.playOut?.()}
+              onClick={() => pagesTransitionsList?.[el]?.playOut?.()}
               children={`playOut`}
             />
           </div>
         ))}
       </div>
       <MainMenu />
-      <FunctionalStack />
+      <RouterStack location={location} transitionControl={transitionControl} />
     </div>
   );
 }

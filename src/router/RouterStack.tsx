@@ -1,9 +1,12 @@
 import React, { ReactNode, useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { getRoute } from "./RoutesList";
-import PageTransitionRegister from "./PageTransitionrRegister";
 import { prepare } from "../helpers/prepare";
 import { useAsyncLayoutEffect } from "../hooks/useAsyncEffect";
+import { pagesTransitionsList } from "./usePageTransitionRegister";
+
+// prepare
+const { component, log } = prepare("RouterStack");
 
 /**
  * Transition between pages.
@@ -28,30 +31,40 @@ export enum ETransitionType {
 }
 
 interface IProps {
-  transitionType: ETransitionType;
+  // type of transition between oldPage and currentPage
+  transitionType?: ETransitionType;
+
+  // current location, use for
+  location: string;
+
+  // transition control promise
+  // in case transition type is set on "CONTROLLED"
+  transitionControl: (
+    $oldPage: HTMLElement,
+    $newPage: HTMLElement,
+    pOldPage,
+    pNewPage
+  ) => Promise<any>;
 }
 
-FunctionalStack.defaultProps = {
+RouterStack.defaultProps = {
   transitionType: ETransitionType.SEQUENTIAL
 } as IProps;
 
-// prepare
-const { component, log } = prepare("FunctionalStack");
-
 /**
- * @name FunctionalStack
+ * @name RouterStack
  * @description
  */
-function FunctionalStack(props: IProps) {
+function RouterStack(props: IProps) {
   // get current location
-  const [location] = useLocation();
+  const { location } = props;
 
   // ----------------–----------------–----------------–----------------–------- COUNTER
 
   /**
    * Increment counter
    */
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>(0);
   useEffect(() => setCount(count + 1), [location]);
 
   // ----------------–----------------–----------------–----------------–------- STACK
@@ -93,7 +106,7 @@ function FunctionalStack(props: IProps) {
     if (!oldPage || !oldPage?.componentName) return;
     log("oldPage", oldPage);
     // anim playOut
-    await PageTransitionRegister.transitions?.[oldPage.componentName]?.playOut?.();
+    await pagesTransitionsList?.[oldPage.componentName]?.playOut?.();
     // killer oldPage
     setOldPage(null)
 
@@ -108,7 +121,7 @@ function FunctionalStack(props: IProps) {
     log("currentPage", currentPage);
 
     // anim playIn
-    await PageTransitionRegister.transitions?.[currentPage.componentName]?.playIn?.();
+    await pagesTransitionsList?.[currentPage.componentName]?.playIn?.();
 
     // afficher un log à la fin de l'animation
     await log("currentPage playIn Complete");
@@ -133,4 +146,4 @@ function FunctionalStack(props: IProps) {
   );
 }
 
-export default FunctionalStack;
+export default RouterStack;
