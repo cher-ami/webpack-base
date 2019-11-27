@@ -14,7 +14,10 @@ const { component, log } = prepare("BlogPage");
  * @name BlogPage
  */
 function BlogPage(props: IProps) {
+  // get current route
   const rootRef = useRef<HTMLDivElement>(null);
+
+  // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
 
   // playIn
   const playIn = (): Promise<any> =>
@@ -30,6 +33,8 @@ function BlogPage(props: IProps) {
 
   // register route transition
   usePageTransitionRegister(component, playIn, playOut);
+
+  // -------------------–-------------------–-------------------–--------------- RENDER
 
   return (
     <div ref={rootRef} className={component}>

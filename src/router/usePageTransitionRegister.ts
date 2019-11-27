@@ -1,10 +1,9 @@
 import { useLayoutEffect } from "react";
-import { useLocation } from "wouter";
 import { prepare } from "../helpers/prepare";
 import RouterRegister from "./PageTransitionrRegister";
 
 // prepare
-const { component, log } = prepare("useRouteRegister");
+const { log } = prepare("usePageTransitionRegister");
 
 /**
  * @name usePageTransitionRegister
@@ -14,9 +13,6 @@ const usePageTransitionRegister = (
   playInPromiseHandler: () => Promise<any>,
   playOutPromiseHandler?: () => Promise<any>
 ) => {
-  // get current location
-  const [location] = useLocation();
-
   useLayoutEffect(() => {
     // register transtions
     RouterRegister.register(
@@ -24,7 +20,7 @@ const usePageTransitionRegister = (
       playInPromiseHandler,
       playOutPromiseHandler
     );
-  }, [location]);
+  }, []);
 };
 
 export default usePageTransitionRegister;
