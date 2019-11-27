@@ -1,8 +1,8 @@
 import "./HomePage.less";
-import React, { useEffect, useRef } from "react";
-import { TweenLite } from "gsap";
-import RouterRegister from "../../router/RouterRegister";
+import React, { useRef } from "react";
 import { prepare } from "../../helpers/prepare";
+import PageTransitionHelper from "../../helpers/PageTransitionHelper";
+import useRouteTransition from "../../router/useRouteTransition";
 
 interface IProps {
   classNames?: string[];
@@ -16,12 +16,20 @@ const { component, log } = prepare("HomePage");
 function HomePage(props: IProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const playIn = () => {
-      TweenLite.fromTo(rootRef.current, 1, { y: 100 }, { y: 0 });
-    };
-    RouterRegister.registerTransitions(component, playIn);
-  });
+  // playIn
+  const playIn = (): Promise<any> =>
+    PageTransitionHelper.promisePlayIn(rootRef, () =>
+      log(`${component}, playIIn complete!`)
+    );
+
+  // playOut
+  const playOut = (): Promise<any> =>
+    PageTransitionHelper.promisePlayOut(rootRef, () =>
+      log(`${component}, playOut complete!`)
+    );
+
+  // register route transition
+  useRouteTransition(component, playIn, playOut);
 
   return (
     <div ref={rootRef} className={component}>

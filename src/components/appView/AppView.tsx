@@ -57,6 +57,20 @@ function AppView(props: IProps) {
       >
         PLAY IN BLOG
       </div>
+      <div
+        onClick={() =>
+          RouterRegister.routesTransitions?.["HomePage"]?.playOut?.()
+        }
+      >
+        PLAY OUT HOME
+      </div>
+      <div
+        onClick={() =>
+          RouterRegister.routesTransitions?.["BlogPage"]?.playOut?.()
+        }
+      >
+        PLAY OUT BLOG
+      </div>
       <MainMenu />
       <FunctionalStack />
     </div>

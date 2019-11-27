@@ -1,19 +1,28 @@
-import { useEffect, useState } from "react";
+import { MutableRefObject, useLayoutEffect } from "react";
+import { useLocation } from "wouter";
+import { prepare } from "../helpers/prepare";
+import RouterRegister from "./RouterRegister";
+const { component, log } = prepare("useRouteTransition");
 
 /**
  * @name useRouteTransition
  */
 const useRouteTransition = (
   routeName: string,
-  playInHandler: () => void,
-  playOutHandler?: () => void
+  playInPromiseHandler: () => Promise<any>,
+  playOutPromiseHandler?: () => Promise<any>
 ) => {
-  const [playIn, setPlayIn] = useState([]);
+  // get current location
+  const [location, setLocation] = useLocation();
 
-  /**
-   *
-   */
-  useEffect(() => {});
+  useLayoutEffect(() => {
+    // register transtions
+    RouterRegister.registerTransitions(
+      routeName,
+      playInPromiseHandler,
+      playOutPromiseHandler
+    );
+  }, []);
 };
 
 export default useRouteTransition;

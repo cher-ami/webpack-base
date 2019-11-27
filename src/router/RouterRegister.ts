@@ -22,23 +22,24 @@ class RouterRegister {
   public routesTransitions: IRouteTransitionsRegister = {};
 
   /**
-   * Register
+   * @name registerTransitions
    * @param name
    * @param playIn
    * @param playOut
    */
   public registerTransitions(
     name: string,
-    playIn: () => void,
-    playOut?: () => void
+    playIn: () => Promise<any>,
+    playOut?: () => Promise<any>
   ): void {
     // if already register, do no register it again
-    if (this.routeIsAlreadyRegister(this.routesTransitions, name)) return;
+    //if (this.routeIsAlreadyRegister(this.routesTransitions, name)) return;
 
     // build route object
     const newRouteRegister: IRouteTransitionsRegister = {
       [name]: {
-        playIn
+        playIn,
+        playOut
       }
     };
 
@@ -65,4 +66,5 @@ class RouterRegister {
   }
 }
 
+// export like singleton
 export default new RouterRegister();
