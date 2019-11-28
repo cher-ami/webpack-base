@@ -20,14 +20,10 @@ function HomePage(props: IProps) {
   // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
 
   const playIn = (): Promise<any> =>
-    PageTransitionHelper.promisePlayIn(rootRef, () =>
-      log(`${component}, playIn complete!`)
-    );
+    PageTransitionHelper.promisePlayIn(rootRef, () => log(`playIn complete`));
 
   const playOut = (): Promise<any> =>
-    PageTransitionHelper.promisePlayOut(rootRef, () =>
-      log(`${component}, playOut complete!`)
-    );
+    PageTransitionHelper.promisePlayOut(rootRef, () => log(`playOut complete`));
 
   // register page transition
   usePageTransitionRegister(component, playIn, playOut);
