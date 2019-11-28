@@ -8,6 +8,7 @@ import RouterStack from "../../router/RouterStack";
 import { prepare } from "../../helpers/prepare";
 import { className } from "../../helpers/className";
 import { pagesTransitionsList } from "../../router/usePageTransitionRegister";
+import RouterClassStack from "../../router/others/RouterClassStack";
 
 interface IProps {}
 
@@ -62,7 +63,11 @@ function AppView(props: IProps) {
         ))}
       </div>
       <MainMenu />
-      <RouterStack location={location} transitionControl={transitionControl} />
+      {/*<RouterStack location={location} transitionControl={transitionControl} />*/}
+      <RouterClassStack
+        location={location}
+        transitionControl={transitionControl}
+      />
     </div>
   );
 }
