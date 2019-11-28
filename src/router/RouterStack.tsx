@@ -83,6 +83,13 @@ function RouterStack(props: IProps) {
     componentName: string;
   }>(null);
 
+  const [oldPagePlayState, setOldPagePlayState] = useState<EPlayState>(
+    EPlayState.HIDDEN
+  );
+  const [currentPagePlayState, setCurrentPagePlayState] = useState<EPlayState>(
+    EPlayState.VISIBLE
+  );
+
   // seter les routes dans le state au changement de location
   useLayoutEffect(() => {
     // l'ancienne current devient la old route
@@ -96,88 +103,87 @@ function RouterStack(props: IProps) {
     setCurrentPage({ component, componentName });
   }, [location]);
 
-  const [oldPagePlayState, setOldPagePlayState] = useState<EPlayState>(
-    EPlayState.HIDDEN
-  );
-  const [currentPagePlayState, setCurrentPagePlayState] = useState<EPlayState>(
-    EPlayState.VISIBLE
-  );
+  /**
+   * SEQUENCIAL
+   *
+   *    - get oldPage via currentPage
+   *    - vider currentPage
+   *
+   *    - playOut oldPage
+   *
+   *    - vider oldPage
+   *    - get currentPage (en fonction de location)
+   *
+   */
+
+  const sequential = async () => {
+    // permet de ne pas retrigger à nouveau quand setOldPage(null) est appelé
+    if (oldPage === null) return;
+    log("oldPage", oldPage);
+    // change play out oldPage state
+    setOldPagePlayState(EPlayState.PLAY_OUT);
+    // anim playOut
+    await pagesTransitionsList?.[oldPage?.componentName]?.playOut?.();
+    // killer oldPage
+    setOldPage(null);
+    // change hidden oldPage state
+    setOldPagePlayState(EPlayState.HIDDEN);
+
+    log("currentPage", currentPage);
+    // change current page play state
+    setCurrentPagePlayState(EPlayState.PLAY_IN);
+    // anim playIn
+    await pagesTransitionsList?.[currentPage?.componentName]?.playIn?.();
+    // change current page play state
+    setCurrentPagePlayState(EPlayState.VISIBLE);
+  };
 
   /**
-   * Transition
+   * CROSSED
+   *
+   *    - get oldPage via currentPage
+   *    - get currentPage (en fonction de location)
+   *
+   *    - playOut oldPage + vider oldPage
+   *    - playIn currentPage
+   *
    */
-  // playOut Old page
-  // prettier-ignore
-  useAsyncLayoutEffect(async () => {
-
-    /**
-     * SEQUENTIAL
-     */
-    if ( props.transitionType === ETransitionType.SEQUENTIAL) {
-
-
-
-      if (oldPage === null) return; // permet de ne pas retrigger à nouveau quand setOldPage(null) est appelé
-      log("oldPage", oldPage);
-      // change play out oldPage state
-      setOldPagePlayState(EPlayState.PLAY_OUT);
-      // anim playOut
-      await pagesTransitionsList?.[oldPage?.componentName]?.playOut?.();
+  const crossed = async () => {
+    // check
+    log("oldPage", oldPage);
+    // change play out oldPage state
+    setOldPagePlayState(EPlayState.PLAY_OUT);
+    // anim playOut
+    pagesTransitionsList?.[oldPage?.componentName]?.playOut?.().then(() => {
       // killer oldPage
-      setOldPage(null)
+      setOldPage(null);
       // change hidden oldPage state
       setOldPagePlayState(EPlayState.HIDDEN);
+    });
 
-
-      log("currentPage", currentPage);
-      // change current page play state
-      setCurrentPagePlayState(EPlayState.PLAY_IN);
-      // anim playIn
-      await pagesTransitionsList?.[currentPage?.componentName]?.playIn?.();
+    // permet de ne pas retrigger à nouveau quand setOldPage(null) est appelé
+    if (oldPage === null) return;
+    log("currentPage", currentPage);
+    // change current page play state
+    setCurrentPagePlayState(EPlayState.PLAY_IN);
+    // anim playIn
+    pagesTransitionsList?.[currentPage?.componentName]?.playIn?.().then(() => {
       // change current page play state
       setCurrentPagePlayState(EPlayState.VISIBLE);
+    });
+  };
 
-    }
+  /**
+   * CONTROLLED
+   */
+  const controlled = async () => {};
 
-
-    /**
-     * CROSSED
-     */
-    if ( props.transitionType === ETransitionType.CROSSED) {
-
-      // check
-      log("oldPage", oldPage);
-      // change play out oldPage state
-      setOldPagePlayState(EPlayState.PLAY_OUT);
-      // anim playOut
-      pagesTransitionsList?.[oldPage?.componentName]?.playOut?.().then(()=>{
-        // killer oldPage
-        setOldPage(null)
-        // change hidden oldPage state
-        setOldPagePlayState(EPlayState.HIDDEN);
-      });
-
-
-
-      if (oldPage === null) return; // permet de ne pas retrigger à nouveau quand setOldPage(null) est appelé
-      log("currentPage", currentPage);
-      // change current page play state
-      setCurrentPagePlayState(EPlayState.PLAY_IN);
-      // anim playIn
-      pagesTransitionsList?.[currentPage?.componentName]?.playIn?.().then(()=>{
-        // change current page play state
-        setCurrentPagePlayState(EPlayState.VISIBLE);
-      });
-
-
-    }
-
+  // start with transition type
+  useAsyncLayoutEffect(async () => {
+    if (props.transitionType === ETransitionType.SEQUENTIAL) await sequential();
+    if (props.transitionType === ETransitionType.CROSSED) await crossed();
+    if (props.transitionType === ETransitionType.CONTROLLED) await controlled();
   }, [oldPage, currentPage]);
-
-  // playIn Current page
-  // prettier-ignore
-  // useAsyncLayoutEffect(async () => {
-  // }, [currentPage]);
 
   // ----------------–----------------–----------------–----------------–------- RENDER
 
