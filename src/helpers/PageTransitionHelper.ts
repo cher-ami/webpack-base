@@ -28,10 +28,11 @@ class PageTransitionHelper {
       if (!pRef.current) return;
 
       // anim
-      gsap.fromTo(pRef.current, this._duration, {
+      gsap.fromTo(pRef.current, {
           autoAlpha:0,
           y: 100
         },{
+          duration: this._duration,
           autoAlpha:1,
           y: 0,
          clearProps:"all",
@@ -57,10 +58,11 @@ class PageTransitionHelper {
       if (!pRef.current) return;
 
       // anim
-      gsap.fromTo(pRef.current, this._duration, {
+      gsap.fromTo(pRef.current, {
           autoAlpha:1,
           y: 0
         },{
+          duration: this._duration,
           autoAlpha:0,
           y: 100,
           onComplete: () => {

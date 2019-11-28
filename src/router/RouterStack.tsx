@@ -3,9 +3,10 @@ import { getRoute } from "./RoutesList";
 import { prepare } from "../helpers/prepare";
 import { useAsyncLayoutEffect } from "../hooks/useAsyncEffect";
 import { pagesTransitionsList } from "./usePageTransitionRegister";
+import { EPlayState } from "../types";
 
 // prepare
-const { component, log } = prepare("RouterStack");
+const { log } = prepare("RouterStack");
 
 /**
  * Transition between pages.
@@ -47,7 +48,7 @@ interface IProps {
 }
 
 RouterStack.defaultProps = {
-  transitionType: ETransitionType.SEQUENTIAL
+  transitionType: ETransitionType.CROSSED
 } as IProps;
 
 /**
@@ -95,36 +96,88 @@ function RouterStack(props: IProps) {
     setCurrentPage({ component, componentName });
   }, [location]);
 
+  const [oldPagePlayState, setOldPagePlayState] = useState<EPlayState>(
+    EPlayState.HIDDEN
+  );
+  const [currentPagePlayState, setCurrentPagePlayState] = useState<EPlayState>(
+    EPlayState.VISIBLE
+  );
+
   /**
    * Transition
    */
-  // playOut Old route
+  // playOut Old page
   // prettier-ignore
   useAsyncLayoutEffect(async () => {
-    // check
-    if (!oldPage || !oldPage?.componentName) return;
-    log("oldPage", oldPage);
-    // anim playOut
-    await pagesTransitionsList?.[oldPage.componentName]?.playOut?.();
-    // killer oldPage
-    setOldPage(null)
 
-    await log("oldPage playOut Complete");
-  }, [oldPage]);
+    /**
+     * SEQUENTIAL
+     */
+    if ( props.transitionType === ETransitionType.SEQUENTIAL) {
 
-  // playIn Current route
+
+
+      if (oldPage === null) return; // permet de ne pas retrigger à nouveau quand setOldPage(null) est appelé
+      log("oldPage", oldPage);
+      // change play out oldPage state
+      setOldPagePlayState(EPlayState.PLAY_OUT);
+      // anim playOut
+      await pagesTransitionsList?.[oldPage?.componentName]?.playOut?.();
+      // killer oldPage
+      setOldPage(null)
+      // change hidden oldPage state
+      setOldPagePlayState(EPlayState.HIDDEN);
+
+
+      log("currentPage", currentPage);
+      // change current page play state
+      setCurrentPagePlayState(EPlayState.PLAY_IN);
+      // anim playIn
+      await pagesTransitionsList?.[currentPage?.componentName]?.playIn?.();
+      // change current page play state
+      setCurrentPagePlayState(EPlayState.VISIBLE);
+
+    }
+
+
+    /**
+     * CROSSED
+     */
+    if ( props.transitionType === ETransitionType.CROSSED) {
+
+      // check
+      log("oldPage", oldPage);
+      // change play out oldPage state
+      setOldPagePlayState(EPlayState.PLAY_OUT);
+      // anim playOut
+      pagesTransitionsList?.[oldPage?.componentName]?.playOut?.().then(()=>{
+        // killer oldPage
+        setOldPage(null)
+        // change hidden oldPage state
+        setOldPagePlayState(EPlayState.HIDDEN);
+      });
+
+
+
+      if (oldPage === null) return; // permet de ne pas retrigger à nouveau quand setOldPage(null) est appelé
+      log("currentPage", currentPage);
+      // change current page play state
+      setCurrentPagePlayState(EPlayState.PLAY_IN);
+      // anim playIn
+      pagesTransitionsList?.[currentPage?.componentName]?.playIn?.().then(()=>{
+        // change current page play state
+        setCurrentPagePlayState(EPlayState.VISIBLE);
+      });
+
+
+    }
+
+  }, [oldPage, currentPage]);
+
+  // playIn Current page
   // prettier-ignore
-  useAsyncLayoutEffect(async () => {
-    // check
-    if (!currentPage || !currentPage?.componentName) return;
-    log("currentPage", currentPage);
-
-    // anim playIn
-    await pagesTransitionsList?.[currentPage.componentName]?.playIn?.();
-
-    // afficher un log à la fin de l'animation
-    await log("currentPage playIn Complete");
-  }, [currentPage]);
+  // useAsyncLayoutEffect(async () => {
+  // }, [currentPage]);
 
   // ----------------–----------------–----------------–----------------–------- RENDER
 
@@ -138,7 +191,7 @@ function RouterStack(props: IProps) {
    * Render
    */
   return (
-    <div className={component}>
+    <div className={"RouterStack"}>
       {Old && <Old key={count - 1} />}
       {Current && <Current key={count} />}
     </div>

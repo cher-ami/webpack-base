@@ -1,5 +1,5 @@
 import "./HomePage.less";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { prepare } from "../../helpers/prepare";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { usePageTransitionRegister } from "../../router/usePageTransitionRegister";
