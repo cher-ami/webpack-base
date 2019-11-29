@@ -1,9 +1,16 @@
-import React, { ReactNode, useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState
+} from "react";
 import { getRoute } from "./RoutesList";
 import { prepare } from "../helpers/prepare";
 import { useAsyncLayoutEffect } from "../hooks/useAsyncEffect";
 import { pagesTransitionsList } from "./usePageTransitionRegister";
 import { EPlayState } from "../types";
+import { useInitialMountLayout } from "../hooks/useInitialMount";
 
 // prepare
 const { log } = prepare("RouterStack");
@@ -48,7 +55,7 @@ interface IProps {
 }
 
 RouterStack.defaultProps = {
-  transitionType: ETransitionType.CROSSED
+  transitionType: ETransitionType.SEQUENTIAL
 } as IProps;
 
 /**
@@ -69,6 +76,8 @@ function RouterStack(props: IProps) {
 
   // ----------------–----------------–----------------–----------------–------- STACK
 
+  const { component, componentName } = getRoute({ pLocation: location });
+
   /**
    * Page STACK
    */
@@ -81,20 +90,27 @@ function RouterStack(props: IProps) {
   const [currentPage, setCurrentPage] = useState<{
     component: ReactNode;
     componentName: string;
-  }>(null);
+  }>({ component, componentName });
 
-  const [oldPagePlayState, setOldPagePlayState] = useState<EPlayState>(
-    EPlayState.HIDDEN
-  );
-  const [currentPagePlayState, setCurrentPagePlayState] = useState<EPlayState>(
+  const [oldPagePlay, setOldPagePlay] = useState<EPlayState>(EPlayState.HIDDEN);
+  const [currentPagePlay, setCurrentPagePlay] = useState<EPlayState>(
     EPlayState.VISIBLE
+  );
+
+  // est ce qu'on est en transition ou non
+  const isInTransition = useMemo(
+    (): boolean =>
+      oldPagePlay === EPlayState.PLAY_OUT ||
+      oldPagePlay === EPlayState.PLAY_IN ||
+      currentPagePlay === EPlayState.PLAY_OUT ||
+      currentPagePlay === EPlayState.PLAY_IN,
+    [oldPagePlay, currentPagePlay]
   );
 
   // seter les routes dans le state au changement de location
   useLayoutEffect(() => {
     // l'ancienne current devient la old route
     setOldPage(currentPage);
-
     // FIXME si location contient un param URL type :id, getRoute ne retourn pas le composant
     // FIXME car il match la location (ex: blog/article) avec le path (ex: blog/:id)
     // la current route dépend de la location
@@ -119,23 +135,21 @@ function RouterStack(props: IProps) {
   const sequential = async () => {
     // permet de ne pas retrigger à nouveau quand setOldPage(null) est appelé
     if (oldPage === null) return;
-    log("oldPage", oldPage);
+
     // change play out oldPage state
-    setOldPagePlayState(EPlayState.PLAY_OUT);
+    setOldPagePlay(EPlayState.PLAY_OUT);
     // anim playOut
     await pagesTransitionsList?.[oldPage?.componentName]?.playOut?.();
     // killer oldPage
     setOldPage(null);
     // change hidden oldPage state
-    setOldPagePlayState(EPlayState.HIDDEN);
-
-    log("currentPage", currentPage);
+    setOldPagePlay(EPlayState.HIDDEN);
     // change current page play state
-    setCurrentPagePlayState(EPlayState.PLAY_IN);
+    setCurrentPagePlay(EPlayState.PLAY_IN);
     // anim playIn
     await pagesTransitionsList?.[currentPage?.componentName]?.playIn?.();
     // change current page play state
-    setCurrentPagePlayState(EPlayState.VISIBLE);
+    setCurrentPagePlay(EPlayState.VISIBLE);
   };
 
   /**
@@ -149,27 +163,24 @@ function RouterStack(props: IProps) {
    *
    */
   const crossed = async () => {
-    // check
-    log("oldPage", oldPage);
     // change play out oldPage state
-    setOldPagePlayState(EPlayState.PLAY_OUT);
+    setOldPagePlay(EPlayState.PLAY_OUT);
     // anim playOut
     pagesTransitionsList?.[oldPage?.componentName]?.playOut?.().then(() => {
       // killer oldPage
       setOldPage(null);
       // change hidden oldPage state
-      setOldPagePlayState(EPlayState.HIDDEN);
+      setOldPagePlay(EPlayState.HIDDEN);
     });
 
     // permet de ne pas retrigger à nouveau quand setOldPage(null) est appelé
     if (oldPage === null) return;
-    log("currentPage", currentPage);
     // change current page play state
-    setCurrentPagePlayState(EPlayState.PLAY_IN);
+    setCurrentPagePlay(EPlayState.PLAY_IN);
     // anim playIn
     pagesTransitionsList?.[currentPage?.componentName]?.playIn?.().then(() => {
       // change current page play state
-      setCurrentPagePlayState(EPlayState.VISIBLE);
+      setCurrentPagePlay(EPlayState.VISIBLE);
     });
   };
 
@@ -179,10 +190,10 @@ function RouterStack(props: IProps) {
   const controlled = async () => {};
 
   // start with transition type
-  useAsyncLayoutEffect(async () => {
-    if (props.transitionType === ETransitionType.SEQUENTIAL) await sequential();
-    if (props.transitionType === ETransitionType.CROSSED) await crossed();
-    if (props.transitionType === ETransitionType.CONTROLLED) await controlled();
+  useAsyncLayoutEffect(() => {
+    if (props.transitionType === ETransitionType.SEQUENTIAL) sequential();
+    if (props.transitionType === ETransitionType.CROSSED) crossed();
+    if (props.transitionType === ETransitionType.CONTROLLED) controlled();
   }, [oldPage, currentPage]);
 
   // ----------------–----------------–----------------–----------------–------- RENDER
@@ -199,7 +210,7 @@ function RouterStack(props: IProps) {
   return (
     <div className={"RouterStack"}>
       {Old && <Old key={count - 1} />}
-      {Current && <Current key={count} />}
+      {Current && oldPagePlay === EPlayState.HIDDEN && <Current key={count} />}
     </div>
   );
 }

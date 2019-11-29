@@ -63,11 +63,11 @@ function AppView(props: IProps) {
         ))}
       </div>
       <MainMenu />
-      {/*<RouterStack location={location} transitionControl={transitionControl} />*/}
-      <RouterClassStack
-        location={location}
-        transitionControl={transitionControl}
-      />
+      <RouterStack location={location} transitionControl={transitionControl} />
+      {/*<RouterClassStack*/}
+      {/*  location={location}*/}
+      {/*  transitionControl={transitionControl}*/}
+      {/*/>*/}
     </div>
   );
 }
