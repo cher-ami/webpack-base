@@ -10,6 +10,7 @@ import { pagesTransitionsList } from "../../router/usePageTransitionRegister";
 import RouterClassStack, {
   ETransitionType
 } from "../../router/others/RouterClassStack";
+import RouterStack from "../../router/RouterStack";
 
 interface IProps {}
 
@@ -64,7 +65,14 @@ function AppView(props: IProps) {
         ))}
       </div>
       <MainMenu />
-      {/*<RouterStack location={location} transitionControl={transitionControl} />*/}
+
+      {/* FUNCTIONAL STACK */}
+      {/*<RouterStack*/}
+      {/*  transitionType={ETransitionType.CROSSED}*/}
+      {/*  location={location}*/}
+      {/*  transitionControl={transitionControl}*/}
+      {/*/>*/}
+      {/* CLASS STACK */}
       <RouterClassStack
         transitionType={ETransitionType.CROSSED}
         location={location}
