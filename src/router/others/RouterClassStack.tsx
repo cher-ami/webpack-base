@@ -185,7 +185,30 @@ export default class RouterClassStack extends Component<IProps, IStates> {
    * @name crossed
    * @param pCurrentRoute
    */
-  protected async crossed(pCurrentRoute: IRoute) {}
+  protected async crossed(pCurrentRoute: IRoute) {
+    // change pages state
+    await this.setState({
+      // pass current route as old route
+      oldRoute: this.state.currentRoute,
+      // empty current route
+      currentRoute: pCurrentRoute
+    });
+
+    pagesTransitionsList?.[this.state.oldRoute?.componentName]
+      ?.playOut?.()
+      .then(() => {
+        this.setState({ oldRoute: null });
+        // // toggle playing state
+        this._isPlayingOut = false;
+      });
+
+    pagesTransitionsList?.[this.state.currentRoute?.componentName]
+      ?.playIn?.()
+      .then(() => {
+        // toggle playing state
+        this._isPlayingIn = false;
+      });
+  }
 
   /**
    * @name controlled
@@ -201,8 +224,6 @@ export default class RouterClassStack extends Component<IProps, IStates> {
     let OldRouteDom: any = this.state?.oldRoute?.component;
     // get instance from state
     let CurrentRouteDom: any = this.state?.currentRoute?.component;
-
-    log({ OldRouteDom, CurrentRouteDom });
 
     return (
       <div className={component}>
