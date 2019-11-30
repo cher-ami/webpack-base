@@ -1,11 +1,4 @@
-/**
- * Interface for action parameters.
- * This is an associative array.
- * Value can be either string or number.
- */
-export interface IActionParameters {
-  [index: string]: string | number;
-}
+import { IActionParameters } from "./Router";
 
 /**
  * Allowed playIn / playOut states for IPage
@@ -31,7 +24,7 @@ export interface IPage {
    * Action on this page.
    * Have to check props.action and props.params to show proper content.
    */
-  action(pActionName: string, pParams: { [index: string]: string | number });
+  action(pActionName: string, pParams: IActionParameters);
 
   /**
    * Play intro animation.

@@ -4,6 +4,7 @@ import * as React from "react";
 import AppView from "./components/appView/AppView";
 import { GlobalConfig } from "./data/GlobalConfig";
 import { prepare } from "./helpers/prepare";
+import { Router } from "./lib/solidify-lib/navigation/Router";
 
 const { component, log } = prepare("Main");
 
@@ -22,6 +23,48 @@ log(
   `%c version: ${GlobalConfig.instance.version} `,
   "background: #2b2b2b; color: #69cbdf; padding: 2px 2px 3px"
 );
+
+// Init router
+// Google analytics is automatically called when page is changing
+Router.init(GlobalConfig.instance.base, [
+  // -- Home page
+  {
+    url: "/",
+    page: "HomePage"
+
+    // -- If you do not want to use dynamic importers :
+    // Use require to load synchronously
+    //importer 	: () => require('./pages/homePage/HomePage')
+    // Use import to load asynchronously
+    //importer 	: () => import('./pages/homePage/HomePage')
+  },
+
+  // -- Product pages
+  {
+    url: "/blog",
+    page: "BlogPage"
+
+    // -- If you do not want to use dynamic importers :
+    // Use require to load synchronously
+    //importer 	: () => require('./pages/productOverviewPage/ProductOverviewPage')
+    // Use import to load asynchronously
+    //importer 	: () => import('./pages/productOverviewPage/ProductOverviewPage')
+  },
+  {
+    // Prepend parameter with a # to force it as a numeric value
+    url: "/Article-{#id}-{slug}",
+    page: "ArticlePage"
+
+    // -- If you do not want to use dynamic importers :
+    // Use require to load synchronously
+    //importer 	: () => require('./pages/productDetailPage/ProductDetailPage')
+    // Use import to load asynchronously
+    //importer 	: () => import('./pages/productDetailPage/ProductDetailPage')
+  }
+]);
+
+// Enable auto link listening
+Router.listenLinks();
 
 // ----------------------------------------------------------------------------- START
 

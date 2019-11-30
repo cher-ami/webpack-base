@@ -1,15 +1,19 @@
 {
   "presets": [
     "@babel/preset-env",
-    ["@babel/preset-typescript", {
-      "allowDeclareFields": true
-    }],
+    [
+      "@babel/preset-typescript",
+      {
+        "allowDeclareFields": true
+      }
+    ],
     "@babel/preset-react"
   ],
   "plugins": [
     "@babel/plugin-transform-runtime",
-    "@babel/plugin-proposal-class-properties",
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
     "@babel/plugin-proposal-optional-chaining",
-    "react-hot-loader/babel"
+    "react-hot-loader/babel",
+    "@babel/plugin-proposal-export-default-from"
   ]
 }

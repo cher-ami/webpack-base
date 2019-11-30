@@ -1,5 +1,5 @@
 import "./BlogPage.less";
-import React, { useRef } from "react";
+import React, { Component, RefObject, useRef } from "react";
 import { prepare } from "../../helpers/prepare";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { usePageTransitionRegister } from "../../router/usePageTransitionRegister";
@@ -7,34 +7,73 @@ import { usePageTransitionRegister } from "../../router/usePageTransitionRegiste
 interface IProps {
   classNames?: string[];
 }
+interface IStates {}
 
 const { component, log } = prepare("BlogPage");
 
 /**
  * @name BlogPage
  */
-function BlogPage(props: IProps) {
-  // get current route
-  const rootRef = useRef<HTMLDivElement>(null);
+// function BlogPage(props: IProps) {
+//   // get current route
+//   const rootRef = useRef<HTMLDivElement>(null);
+//
+//   // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
+//
+//   const playIn = (): Promise<any> =>
+//     PageTransitionHelper.promisePlayIn(rootRef, () => log(`playIn complete`));
+//
+//   const playOut = (): Promise<any> =>
+//     PageTransitionHelper.promisePlayOut(rootRef, () => log(`playOut complete`));
+//
+//   // register page transition
+//   usePageTransitionRegister(component, playIn, playOut);
+//
+//   // -------------------–-------------------–-------------------–--------------- RENDER
+//
+//   return (
+//     <div ref={rootRef} className={component}>
+//       {component}
+//     </div>
+//   );
+// }
+//
+// export default BlogPage;
 
-  // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
+/**
+ * @name BlogPage
+ */
+export default class BlogPage extends Component<IProps, IStates> {
+  protected rootRef: RefObject<HTMLDivElement>;
 
-  const playIn = (): Promise<any> =>
-    PageTransitionHelper.promisePlayIn(rootRef, () => log(`playIn complete`));
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+  }
 
-  const playOut = (): Promise<any> =>
-    PageTransitionHelper.promisePlayOut(rootRef, () => log(`playOut complete`));
+  /**
+   * PlayIn
+   */
+  public async playIn(): Promise<any> {
+    return new Promise(resolve => {
+      PageTransitionHelper.promisePlayIn(this.rootRef, resolve);
+    });
+  }
 
-  // register page transition
-  usePageTransitionRegister(component, playIn, playOut);
+  /**
+   * PlayOut
+   */
+  public async playOut(): Promise<any> {
+    return new Promise(resolve => {
+      PageTransitionHelper.promisePlayOut(this.rootRef, resolve);
+    });
+  }
 
-  // -------------------–-------------------–-------------------–--------------- RENDER
-
-  return (
-    <div ref={rootRef} className={component}>
-      {component}
-    </div>
-  );
+  render() {
+    return (
+      <div className={component} ref={this.rootRef}>
+        {component}
+      </div>
+    );
+  }
 }
-
-export default BlogPage;
