@@ -28,21 +28,25 @@ log(
 
 // Init router
 // Google analytics is automatically called when page is changing
+
 Router.init(GlobalConfig.instance.base, [
   {
     url: "/",
     page: "HomePage",
-    importer: () => import("./pages/homePage/HomePage")
+    // Use require to load synchronously
+    importer: () => require("./pages/homePage/HomePage")
+    // Use import to load asynchronously
+    // importer: () => import("./pages/homePage/HomePage")
   },
   {
     url: "/blog",
     page: "BlogPage",
-    importer: () => import("./pages/blogPage/BlogPage")
+    importer: () => require("./pages/blogPage/BlogPage")
   },
   {
     url: "/article-{#id}-{slug}",
     page: "ArticlePage",
-    importer: () => import("./pages/articlePage/ArticlePage")
+    importer: () => require("./pages/articlePage/ArticlePage")
   }
 ]);
 

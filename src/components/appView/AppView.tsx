@@ -101,7 +101,7 @@ class AppView extends PureComponent<Props, States> {
     // get not found page name
     const pageName = "NotFoundPage";
     // get not found page
-    const notFoundPage = () => import("../../pages/notFoundPage/NotFoundPage");
+    const notFoundPage = () => require("../../pages/notFoundPage/NotFoundPage");
     // show not found page
     this._viewStack.showPage(pageName, notFoundPage, "index", {});
   }
