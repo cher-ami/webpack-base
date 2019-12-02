@@ -1,4 +1,4 @@
-import { App } from "solidify-lib/core/App";
+import { App } from "../core/App";
 
 /**
  * App bundle static require

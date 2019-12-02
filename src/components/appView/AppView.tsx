@@ -1,53 +1,32 @@
-import "AppView.less";
+import "./AppView.less";
 import { hot } from "react-hot-loader/root";
-import React from "react";
-import { ReactView } from "../../lib/solidify-lib/react/ReactView";
+import React, { PureComponent } from "react";
 import {
   ETransitionType,
   ReactViewStack
 } from "../../lib/solidify-lib/react/ReactViewStack";
 import { IRouteMatch, Router } from "../../lib/solidify-lib/navigation/Router";
 import { IPage } from "../../lib/solidify-lib/navigation/IPage";
+import MainMenu from "../mainMenu/MainMenu";
 
-// ----------------------------------------------------------------------------- STRUCT
+// ------------------------------------------------------------------------------- STRUCT
 
 export interface Props {}
 
-export interface States {
-  // Declare states with ? to allow them to be set without sending all state back
-  // myStateProp  ?:  string;
-}
+export interface States {}
 
-class AppView extends ReactView<Props, States> {
+class AppView extends PureComponent<Props, States> {
   // React view stack, showing pages when route changes
   protected _viewStack: ReactViewStack;
 
-  // ------------------------------------------------------------------------- INIT
+  // --------------------------------------------------------------------------- INIT
 
-  prepare() {
-    // Init state here, you can set from props
-    this.initState({
-      // ...
-    });
+  constructor(props: Props, context: any) {
+    // Relay construction
+    super(props, context);
   }
 
-  // ------------------------------------------------------------------------- RENDERING
-
-  render() {
-    return (
-      <div className="AppView" ref="root">
-        {/* View stack showing pages */}
-        <ReactViewStack
-          ref={r => (this._viewStack = r)}
-          transitionType={ETransitionType.PAGE_SEQUENTIAL}
-          transitionControl={this.transitionControl.bind(this)}
-          onNotFound={this.pageNotFoundHandler.bind(this)}
-        />
-      </div>
-    );
-  }
-
-  // ------------------------------------------------------------------------- LIFECYCLE
+  // --------------------------------------------------------------------------- LIFECYCLE
 
   componentDidMount() {
     // initialize router
@@ -61,7 +40,7 @@ class AppView extends ReactView<Props, States> {
 
   componentDidUpdate(pPrevProps: Props, pPrevState: States) {}
 
-  // ------------------------------------------------------------------------- ROUTER
+  // --------------------------------------------------------------------------- ROUTER
 
   protected initRouter() {
     // Setup viewStack to show pages from Router automatically
@@ -75,7 +54,7 @@ class AppView extends ReactView<Props, States> {
     Router.start();
   }
 
-  // ------------------------------------------------------------------------- HANDLERS
+  // --------------------------------------------------------------------------- HANDLERS
 
   /**
    * Transition manager between all React pages.
@@ -119,7 +98,12 @@ class AppView extends ReactView<Props, States> {
    */
   protected routeNotFoundHandler(...rest) {
     console.error("ROUTE NOT FOUND", rest);
-    this.notFoundPageTrigger();
+    // get not found page name
+    const pageName = "NotFoundPage";
+    // get not found page
+    const notFoundPage = () => import("../../pages/notFoundPage/NotFoundPage");
+    // show not found page
+    this._viewStack.showPage(pageName, notFoundPage, "index", {});
   }
 
   /**
@@ -130,23 +114,23 @@ class AppView extends ReactView<Props, States> {
     console.error("PAGE NOT FOUND", pPageName);
   }
 
-  // ------------------------------------------------------------------------- TRIGGER
+  // --------------------------------------------------------------------------- PREPARE
 
-  /**
-   * Not Found Page Trigger
-   */
-  protected notFoundPageTrigger(): void {
-    // get not found page name
-    const pageName = "NotFoundPage";
-    // get all pages
-    const allPages = require("../../pages");
-    // get not found page
-    const notFoundPage = allPages.filter(page => page.page == pageName)[0];
-    // show not found page
-    this._viewStack.showPage(pageName, notFoundPage.importer, "index", {});
+  // --------------------------------------------------------------------------- RENDER
+
+  render() {
+    return (
+      <div className="AppView" ref="root">
+        <MainMenu />
+        <ReactViewStack
+          ref={r => (this._viewStack = r)}
+          transitionType={ETransitionType.PAGE_CROSSED}
+          transitionControl={this.transitionControl.bind(this)}
+          onNotFound={this.pageNotFoundHandler.bind(this)}
+        />
+      </div>
+    );
   }
-
-  // ------------------------------------------------------------------------- STATES
 }
 
 export default hot(AppView);

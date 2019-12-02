@@ -24,42 +24,25 @@ log(
   "background: #2b2b2b; color: #69cbdf; padding: 2px 2px 3px"
 );
 
+// ----------------------------------------------------------------------------- ROUTES
+
 // Init router
 // Google analytics is automatically called when page is changing
 Router.init(GlobalConfig.instance.base, [
-  // -- Home page
   {
     url: "/",
-    page: "HomePage"
-
-    // -- If you do not want to use dynamic importers :
-    // Use require to load synchronously
-    //importer 	: () => require('./pages/homePage/HomePage')
-    // Use import to load asynchronously
-    //importer 	: () => import('./pages/homePage/HomePage')
+    page: "HomePage",
+    importer: () => import("./pages/homePage/HomePage")
   },
-
-  // -- Product pages
   {
     url: "/blog",
-    page: "BlogPage"
-
-    // -- If you do not want to use dynamic importers :
-    // Use require to load synchronously
-    //importer 	: () => require('./pages/productOverviewPage/ProductOverviewPage')
-    // Use import to load asynchronously
-    //importer 	: () => import('./pages/productOverviewPage/ProductOverviewPage')
+    page: "BlogPage",
+    importer: () => import("./pages/blogPage/BlogPage")
   },
   {
-    // Prepend parameter with a # to force it as a numeric value
-    url: "/Article-{#id}-{slug}",
-    page: "ArticlePage"
-
-    // -- If you do not want to use dynamic importers :
-    // Use require to load synchronously
-    //importer 	: () => require('./pages/productDetailPage/ProductDetailPage')
-    // Use import to load asynchronously
-    //importer 	: () => import('./pages/productDetailPage/ProductDetailPage')
+    url: "/article-{#id}-{slug}",
+    page: "ArticlePage",
+    importer: () => import("./pages/articlePage/ArticlePage")
   }
 ]);
 

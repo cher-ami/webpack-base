@@ -1,31 +1,23 @@
 import "./ArticlePage.less";
-import React, { RefObject, Component, forwardRef } from "react";
+import React, { RefObject, PureComponent } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { Helmet } from "react-helmet";
 import { prepare } from "../../helpers/prepare";
 
-const { component, log } = prepare("ArticlePage");
-
 interface IProps {
   classNames?: string[];
+  parameters?: any;
 }
 
 interface IStates {}
 
-// // component name
-// const component: string = "ArticlePage";
-//
-// function ArticlePage(props: IProps) {
-//   return <div className={component}>{component}</div>;
-// }
-//
-// export default ArticlePage;
-//
+// prepare
+const { component, log } = prepare("ArticlePage");
 
 /**
  * @name ArticlePage
  */
-export default class ArticlePage extends Component<IProps, IStates> {
+class ArticlePage extends PureComponent<IProps, IStates> {
   protected rootRef: RefObject<HTMLDivElement>;
 
   constructor(props) {
@@ -58,7 +50,12 @@ export default class ArticlePage extends Component<IProps, IStates> {
           <title>Article</title>
         </Helmet>
         {component}
+
+        <h1>article "{this.props.parameters.slug}"</h1>
+        <h5>article ID "{this.props.parameters.id}"</h5>
       </div>
     );
   }
 }
+
+export default ArticlePage;

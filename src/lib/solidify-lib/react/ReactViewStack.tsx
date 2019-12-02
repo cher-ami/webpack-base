@@ -544,7 +544,7 @@ export class ReactViewStack extends Component<Props, States>
     // FIXME : Peut-être qu'on doit vérifier si les paramètres de page et action ont changés pour éviter call inutiles ?
 
     if (this._currentPage == null || this.state.currentPage == null) return;
-    this._currentPage.action(
+    this._currentPage?.action?.(
       this.state.currentPage.action,
       this.state.currentPage.parameters
     );

@@ -1,49 +1,20 @@
 import "./BlogPage.less";
-import React, { Component, RefObject, useRef } from "react";
+import React, { PureComponent, RefObject } from "react";
 import { prepare } from "../../helpers/prepare";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
-import { usePageTransitionRegister } from "../../router/usePageTransitionRegister";
 
 interface IProps {
   classNames?: string[];
 }
 interface IStates {}
 
+// prepare
 const { component, log } = prepare("BlogPage");
 
 /**
  * @name BlogPage
  */
-// function BlogPage(props: IProps) {
-//   // get current route
-//   const rootRef = useRef<HTMLDivElement>(null);
-//
-//   // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
-//
-//   const playIn = (): Promise<any> =>
-//     PageTransitionHelper.promisePlayIn(rootRef, () => log(`playIn complete`));
-//
-//   const playOut = (): Promise<any> =>
-//     PageTransitionHelper.promisePlayOut(rootRef, () => log(`playOut complete`));
-//
-//   // register page transition
-//   usePageTransitionRegister(component, playIn, playOut);
-//
-//   // -------------------–-------------------–-------------------–--------------- RENDER
-//
-//   return (
-//     <div ref={rootRef} className={component}>
-//       {component}
-//     </div>
-//   );
-// }
-//
-// export default BlogPage;
-
-/**
- * @name BlogPage
- */
-export default class BlogPage extends Component<IProps, IStates> {
+class BlogPage extends PureComponent<IProps, IStates> {
   protected rootRef: RefObject<HTMLDivElement>;
 
   constructor(props) {
@@ -77,3 +48,5 @@ export default class BlogPage extends Component<IProps, IStates> {
     );
   }
 }
+
+export default BlogPage;

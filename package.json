@@ -23,10 +23,12 @@
   },
   "dependencies": {
     "@solid-js/css-flat": "^1.0.1",
+    "@types/zepto": "^1.0.30",
     "gsap": "^3.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "wouter": "^2.4.0",
+    "zepto": "^1.2.0",
     "zepto-webpack": "^1.2.1"
   },
   "devDependencies": {
