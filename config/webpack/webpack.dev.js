@@ -3,6 +3,7 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
+var ProgressBarPlugin = require("progress-bar-webpack-plugin");
 
 module.exports = merge(common, {
   /**
@@ -18,6 +19,7 @@ module.exports = merge(common, {
   devtool: "inline-source-map",
 
   plugins: [
+    new ProgressBarPlugin(),
     new FriendlyErrorsPlugin({
       clearConsole: true
     })
