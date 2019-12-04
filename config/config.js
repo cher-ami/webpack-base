@@ -6,7 +6,7 @@ module.exports = {
    * Where assets and bundle are build in production
    * (à voir si on doit faire la même chose pour le dev server)
    */
-  outputPath: paths.static,
+  outputPath: paths.dist,
 
   /**
    * Generate an index.html from template /src/template.html
