@@ -600,8 +600,6 @@ export class Router {
         this.trackCurrentPage();
       }
 
-      console.info("Router.updateCurrentRoute // Route", this._currentPath);
-
       // Convert URL to route and store it
       this._currentRouteMatch = this.URLToRoute(this._currentPath);
 

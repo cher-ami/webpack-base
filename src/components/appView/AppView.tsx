@@ -1,6 +1,6 @@
 import "./AppView.less";
 import { hot } from "react-hot-loader/root";
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import {
   ETransitionType,
   ReactViewStack
@@ -8,6 +8,7 @@ import {
 import { IRouteMatch, Router } from "../../lib/solidify-lib/navigation/Router";
 import { IPage } from "../../lib/solidify-lib/navigation/IPage";
 import MainMenu from "../mainMenu/MainMenu";
+import { prepare } from "../../helpers/prepare";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -15,7 +16,10 @@ export interface Props {}
 
 export interface States {}
 
-class AppView extends PureComponent<Props, States> {
+// prepare
+const { component, log } = prepare("AppView");
+
+class AppView extends Component<Props, States> {
   // React view stack, showing pages when route changes
   protected _viewStack: ReactViewStack;
 
@@ -90,7 +94,7 @@ class AppView extends PureComponent<Props, States> {
    * When route has changed
    */
   protected routeChangedHandler(pRouteMatch: IRouteMatch) {
-    console.log("Route changed", pRouteMatch);
+    log("Route changed", pRouteMatch);
   }
 
   /**
@@ -120,7 +124,7 @@ class AppView extends PureComponent<Props, States> {
 
   render() {
     return (
-      <div className="AppView" ref="root">
+      <div className={component}>
         <MainMenu />
         <ReactViewStack
           ref={r => (this._viewStack = r)}

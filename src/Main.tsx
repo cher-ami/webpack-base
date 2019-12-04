@@ -16,6 +16,10 @@ GlobalConfig.instance.inject({
   base: process.env.BASE_URL
 });
 
+log(process.env.BASE_URL);
+log(process.env.NODE_ENV);
+log(process.env);
+
 // ----------------------------------------------------------------------------- LOG
 
 // Add version log in console

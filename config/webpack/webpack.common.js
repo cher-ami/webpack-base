@@ -1,8 +1,10 @@
 const paths = require("../paths");
+const config = require("../config");
 const webpack = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   /**
@@ -10,7 +12,7 @@ module.exports = {
    * The first place Webpack looks to start building the bundle.
    */
   entry: {
-    main: paths.src + "/Main.tsx"
+    main: `${paths.src}/${config.entryFileName}`
   },
 
   /**
@@ -18,7 +20,7 @@ module.exports = {
    * Where Webpack outputs the assets and bundles.
    */
   output: {
-    path: paths.dist,
+    path: config.outputPath,
     filename: "[name].bundle.js",
     publicPath: "/"
   },
@@ -31,7 +33,7 @@ module.exports = {
     alias: {
       "react-dom": "@hot-loader/react-dom"
     },
-    modules: [paths.node_modules, paths.src]
+    modules: [paths.nodeModules, paths.src]
   },
 
   /**
@@ -40,7 +42,13 @@ module.exports = {
    */
   plugins: [
     /**
-     * @note Compile ts to js process is allowing by babel-loader with no type check
+     * Progress Plugin
+     * @doc https://webpack.js.org/plugins/progress-plugin/
+     */
+    new webpack.ProgressPlugin(),
+
+    /**
+     * @note Compile TS to js process is allowing by babel-loader with no type check
      * About react hot reload works, we need to separate type check process
      * @doc https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
      * @doc https://github.com/gaearon/react-hot-loader#typescript
@@ -57,12 +65,22 @@ module.exports = {
      * HtmlWebpackPlugin
      * Generates an HTML file from a template.
      */
-    new HtmlWebpackPlugin({
-      title: "Webpack base",
-      favicon: paths.src + "/images/favicon.png",
-      template: paths.src + "/template.html",
-      filename: "index.html"
-    }),
+    ...(config.generateHtmlIndex
+      ? [
+          new HtmlWebpackPlugin({
+            title: "Webpack base",
+            favicon: paths.src + "/images/favicon.png",
+            template: paths.src + "/template.html",
+            filename: "index.html"
+          })
+        ]
+      : []),
+
+    /**
+     * Dotenv Wepback
+     * @doc https://github.com/mrsteele/dotenv-webpack
+     */
+    new Dotenv(),
 
     /**
      * Define Plugin
@@ -72,6 +90,9 @@ module.exports = {
       "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
     }),
 
+    /**
+     * Provide Plugin
+     */
     new webpack.ProvidePlugin({
       $: "zepto-webpack"
     })
