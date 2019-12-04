@@ -29,7 +29,7 @@ module.exports = merge(common, {
    */
   devServer: {
     contentBase: paths.dist,
-    open: false,
+    open: true,
     compress: true,
     hot: true,
     port: 3000,

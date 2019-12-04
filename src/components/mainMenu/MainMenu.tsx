@@ -1,5 +1,5 @@
 import "./MainMenu.less";
-import React, { useRef } from "react";
+import React from "react";
 import { classBlock, className } from "../../helpers/className";
 import { prepare } from "../../helpers/prepare";
 import { Router } from "../../lib/solidify-lib/navigation/Router";
@@ -15,16 +15,12 @@ const { component, log } = prepare("MainMenu");
  * @name MainMenu
  */
 function MainMenu(props: IProps) {
-  const rootRef = useRef(null);
   // --------------------------------------------------------------------------- PREPARE RENDER
-
-  // prepare class block string
-  const block = classBlock([component, props.classNames]);
 
   // --------------------------------------------------------------------------- RENDER
 
   return (
-    <nav className={block} ref={rootRef}>
+    <nav className={classBlock([component, props.classNames])}>
       <ul className={className(component, "items")}>
         <li>
           <a href={`/`} children={"Home"} data-internal-link />
