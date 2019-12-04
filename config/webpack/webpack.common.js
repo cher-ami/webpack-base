@@ -1,4 +1,4 @@
-const path = require("path");
+//const path = require("path");
 const paths = require("../paths");
 const config = require("../config");
 const webpack = require("webpack");
@@ -13,7 +13,7 @@ module.exports = {
    * The first place Webpack looks to start building the bundle.
    */
   entry: {
-    main: `${paths.src}/${config.entryFileName}`
+    main: `${paths.src}/Main.tsx`
   },
 
   /**
@@ -82,7 +82,7 @@ module.exports = {
      * @doc https://github.com/mrsteele/dotenv-webpack
      */
     new Dotenv({
-      path: path.join(__dirname, ".env"),
+      path: paths.env,
       systemvars: true
     }),
 

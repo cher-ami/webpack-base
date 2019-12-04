@@ -11,7 +11,7 @@ module.exports = merge(common, {
   mode: "production",
   output: {
     path: config.outputPath,
-    filename: config.outputFileName
+    filename: "[name].[contenthash].bundle.js"
   },
   devtool: "source-map",
   plugins: [
@@ -32,7 +32,7 @@ module.exports = merge(common, {
      */
     new CopyWebpackPlugin([
       {
-        from: paths.dist,
+        from: config.outputPath,
         to: "assets",
         ignore: ["*.DS_Store"]
       }

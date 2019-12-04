@@ -5,7 +5,9 @@ import AppView from "./components/appView/AppView";
 import { GlobalConfig } from "./data/GlobalConfig";
 import { prepare } from "./helpers/prepare";
 import { Router } from "./lib/solidify-lib/navigation/Router";
+import { customLog } from "./helpers/customLog";
 
+// prepare
 const { component, log } = prepare("Main");
 
 // ----------------------------------------------------------------------------- INJECT DATA
@@ -13,20 +15,15 @@ const { component, log } = prepare("Main");
 // Inject params into config
 GlobalConfig.instance.inject({
   version: require("../package.json").version,
-  base: process.env.BASE_URL
+  base: process.env.BASE_URL,
+  env: process.env.ENV
 });
-
-log(process.env.BASE_URL);
-log(process.env.NODE_ENV);
-log(process.env.ENV);
 
 // ----------------------------------------------------------------------------- LOG
 
 // Add version log in console
-log(
-  `%c version: ${GlobalConfig.instance.version} `,
-  "background: #2b2b2b; color: #69cbdf; padding: 2px 2px 3px"
-);
+customLog(log, `env: ${GlobalConfig.instance.env}`);
+customLog(log, `version: ${GlobalConfig.instance.version}`);
 
 // ----------------------------------------------------------------------------- ROUTES
 
