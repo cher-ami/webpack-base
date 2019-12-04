@@ -26,7 +26,6 @@ class AppView extends Component<Props, States> {
   // --------------------------------------------------------------------------- INIT
 
   constructor(props: Props, context: any) {
-    // Relay construction
     super(props, context);
   }
 

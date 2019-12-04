@@ -1,0 +1,60 @@
+import "./%%capitalComponentName%%.less";
+import React, { RefObject, PureComponent } from "react";
+import { Helmet } from "react-helmet";
+import { prepare } from "../../helpers/prepare";
+
+interface IProps {}
+interface IStates {}
+// prepare
+const { component, log } = prepare("%%capitalComponentName%%");
+
+/**
+ * @name %%capitalComponentName%%
+ */
+class %%capitalComponentName%% extends PureComponent<IProps, IStates> {
+
+  // --------------------------------------------------------------------------- INIT
+
+  // get root ref
+  protected rootRef: RefObject<HTMLDivElement>;
+
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+  }
+
+  // --------------------------------------------------------------------------- TRANSITION
+
+  /**
+   * PlayIn
+   */
+  public async playIn(): Promise<any> {
+    return new Promise(resolve => {
+      resolve();
+    });
+  }
+
+  /**
+   * PlayOut
+   */
+  public async playOut(): Promise<any> {
+    return new Promise(resolve => {
+      resolve();
+    });
+  }
+
+  // --------------------------------------------------------------------------- RENDER
+
+  render() {
+    return (
+      <div className={component} ref={this.rootRef}>
+        <Helmet>
+          <title>{component}</title>
+        </Helmet>
+        {component}
+      </div>
+    );
+  }
+}
+
+export default %%capitalComponentName%%;

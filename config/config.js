@@ -11,5 +11,10 @@ module.exports = {
   /**
    * Generate an index.html from template /src/template.html
    */
-  generateHtmlIndex: true
+  generateHtmlIndex: true,
+
+  /**
+   * Scaffold compatible folder
+   */
+  componentCompatibleFolders: ["components", "pages", "views"]
 };
