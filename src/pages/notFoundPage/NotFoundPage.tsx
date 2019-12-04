@@ -1,4 +1,4 @@
-import "./HomePage.less";
+import "./NotFoundPage.less";
 import React, { PureComponent, RefObject } from "react";
 import { prepare } from "../../helpers/prepare";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
@@ -9,12 +9,12 @@ interface IProps {
 interface IStates {}
 
 // prepare
-const { component, log } = prepare("HomePage");
+const { component, log } = prepare("NotFoundPage");
 
 /**
- * @name HomePage
+ * @name NotFoundPage
  */
-class HomePage extends PureComponent<IProps, IStates> {
+class NotFoundPage extends PureComponent<IProps, IStates> {
   protected rootRef: RefObject<HTMLDivElement>;
 
   constructor(props) {
@@ -49,4 +49,4 @@ class HomePage extends PureComponent<IProps, IStates> {
   }
 }
 
-export default HomePage;
+export default NotFoundPage;

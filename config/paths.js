@@ -2,7 +2,8 @@ const appRoot = require("app-root-path");
 
 module.exports = {
   src: appRoot.resolve("src"),
-  static: appRoot.resolve("static"),
+  static: appRoot.resolve("dist/static"),
   dist: appRoot.resolve("dist"),
-  node_modules: appRoot.resolve("node_modules")
+  nodeModules: appRoot.resolve("node_modules"),
+  env: appRoot.resolve(".env")
 };

@@ -1,44 +1,52 @@
 import "./BlogPage.less";
-import React, { useRef } from "react";
+import React, { PureComponent, RefObject } from "react";
 import { prepare } from "../../helpers/prepare";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
-import { usePageTransitionRegister } from "../../router/usePageTransitionRegister";
 
 interface IProps {
   classNames?: string[];
 }
+interface IStates {}
 
+// prepare
 const { component, log } = prepare("BlogPage");
 
 /**
  * @name BlogPage
  */
-function BlogPage(props: IProps) {
-  // get current route
-  const rootRef = useRef<HTMLDivElement>(null);
+class BlogPage extends PureComponent<IProps, IStates> {
+  protected rootRef: RefObject<HTMLDivElement>;
 
-  // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+  }
 
-  const playIn = (): Promise<any> =>
-    PageTransitionHelper.promisePlayIn(rootRef, () =>
-      log(`${component}, playIn complete!`)
+  /**
+   * PlayIn
+   */
+  public async playIn(): Promise<any> {
+    return new Promise(resolve => {
+      PageTransitionHelper.promisePlayIn(this.rootRef, resolve);
+    });
+  }
+
+  /**
+   * PlayOut
+   */
+  public async playOut(): Promise<any> {
+    return new Promise(resolve => {
+      PageTransitionHelper.promisePlayOut(this.rootRef, resolve);
+    });
+  }
+
+  render() {
+    return (
+      <div className={component} ref={this.rootRef}>
+        {component}
+      </div>
     );
-
-  const playOut = (): Promise<any> =>
-    PageTransitionHelper.promisePlayOut(rootRef, () =>
-      log(`${component}, playOut complete!`)
-    );
-
-  // register page transition
-  usePageTransitionRegister(component, playIn, playOut);
-
-  // -------------------–-------------------–-------------------–--------------- RENDER
-
-  return (
-    <div ref={rootRef} className={component}>
-      {component}
-    </div>
-  );
+  }
 }
 
 export default BlogPage;

@@ -1,4 +1,5 @@
 const paths = require("../paths");
+const config = require("../config");
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -9,8 +10,8 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 module.exports = merge(common, {
   mode: "production",
   output: {
-    path: paths.dist,
-    filename: "[name].[contenthash].bundle.js"
+    path: config.outputPath,
+    filename: config.outputFileName
   },
   devtool: "source-map",
   plugins: [

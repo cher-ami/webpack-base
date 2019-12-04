@@ -1,9 +1,8 @@
 import "./MainMenu.less";
 import React, { useRef } from "react";
-import { Link } from "wouter";
-import { RoutesList } from "../../router/RoutesList";
 import { classBlock, className } from "../../helpers/className";
 import { prepare } from "../../helpers/prepare";
+import { Router } from "../../lib/solidify-lib/navigation/Router";
 
 interface IProps {
   classNames?: string[];
@@ -27,11 +26,26 @@ function MainMenu(props: IProps) {
   return (
     <nav className={block} ref={rootRef}>
       <ul className={className(component, "items")}>
-        {RoutesList.filter(el => el?.meta?.showInMenu).map((el, i) => (
-          <li className={className(component, "item")} key={i}>
-            <Link href={el.as} children={el.meta?.name} />
-          </li>
-        ))}
+        <li>
+          <a href={`/`} children={"Home"} data-internal-link />
+        </li>
+        <li>
+          <a href={`/blog`} children={"Blog"} data-internal-link />
+        </li>
+        <li>
+          <a
+            href={Router.generateURL({
+              page: "ArticlePage",
+              parameters: {
+                id: 5,
+                slug: "super-article"
+              }
+            })}
+            data-internal-link
+          >
+            Article
+          </a>
+        </li>
       </ul>
     </nav>
   );
