@@ -1,4 +1,3 @@
-//const path = require("path");
 const paths = require("../paths");
 const config = require("../config");
 const webpack = require("webpack");
@@ -6,6 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const ManifestPlugin = require("webpack-manifest-plugin");
 
 module.exports = {
   /**
@@ -85,6 +85,12 @@ module.exports = {
       path: paths.env,
       systemvars: true
     }),
+
+    /**
+     * Manifest plugin
+     * @doc https://github.com/danethurber/webpack-manifest-plugin
+     */
+    new ManifestPlugin(),
 
     /**
      * Define Plugin
