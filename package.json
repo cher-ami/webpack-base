@@ -15,8 +15,6 @@
   "scripts": {
     "dev": "env-cmd -f .env webpack-dev-server --config config/webpack/webpack.dev.js",
     "build": "env-cmd -f .env cross-env webpack --config config/webpack/webpack.prod.js",
-    "build:staging": "env-cmd -f .env.staging cross-env webpack --config config/webpack/webpack.prod.js",
-    "build:production": "env-cmd -f .env.production cross-env webpack --config config/webpack/webpack.prod.js",
     "clean": "scripts/clean.sh",
     "reset": "scripts/reset.sh",
     "prettier": "scripts/prettier.sh",
