@@ -14,13 +14,14 @@
   ],
   "scripts": {
     "dev": "env-cmd -f .env webpack-dev-server --config config/webpack/webpack.dev.js",
-    "build:": "env-cmd -f .env cross-env webpack --config config/webpack/webpack.prod.js",
+    "build": "env-cmd -f .env cross-env webpack --config config/webpack/webpack.prod.js",
     "build:staging": "env-cmd -f .env.staging cross-env webpack --config config/webpack/webpack.prod.js",
     "build:production": "env-cmd -f .env.production cross-env webpack --config config/webpack/webpack.prod.js",
-    "scaffold": "node config/tasks/task-scaffold.js",
     "clean": "scripts/clean.sh",
     "reset": "scripts/reset.sh",
-    "prettier": "scripts/prettier.sh"
+    "prettier": "scripts/prettier.sh",
+    "scaffold": "node config/tasks/task-scaffold.js",
+    "sprites": "node config/tasks/task-sprites.js"
   },
   "dependencies": {
     "@solid-js/css-flat": "^1.0.1",
@@ -47,6 +48,7 @@
     "@types/react-dom": "^16.9.4",
     "@types/zepto": "^1.0.30",
     "@zouloux/files": "^0.6.0",
+    "@zouloux/node-sprite-generator": "^0.12.1",
     "app-root-path": "^3.0.0",
     "babel-loader": "^8.0.6",
     "change-case": "^4.0.1",
@@ -64,8 +66,12 @@
     "fork-ts-checker-webpack-plugin": "^3.1.1",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs": "0.0.2",
+    "handlebars": "^4.5.3",
     "html-webpack-plugin": "^3.2.0",
     "husky": ">=3",
+    "imagemin": "^7.0.1",
+    "imagemin-jpegtran": "^6.0.0",
+    "imagemin-pngquant": "^8.0.0",
     "inquirer": "^7.0.0",
     "install": "^0.13.0",
     "less": "^3.10.3",

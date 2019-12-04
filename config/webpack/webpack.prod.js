@@ -22,7 +22,7 @@ module.exports = merge(common, {
      * They cannot be used together in the same config.
      */
     new MiniCssExtractPlugin({
-      filename: "styles/[name].[contenthash].css",
+      filename: "[name].[contenthash].css",
       chunkFilename: "[id].css"
     }),
 
@@ -44,10 +44,7 @@ module.exports = merge(common, {
         test: /\.(less|css)$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: "../../"
-            }
+            loader: MiniCssExtractPlugin.loader
           },
           "css-loader",
           "postcss-loader",

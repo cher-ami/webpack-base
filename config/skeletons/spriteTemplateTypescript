@@ -1,0 +1,44 @@
+
+/**
+ * This is a generated file. Do not modify.
+ */
+
+export interface ITexture
+{
+  x          :number
+  y          :number
+  width      :number
+  height     :number
+}
+
+export interface ISprite
+{
+  name       :string
+  prefix     :string
+  width      :number
+  height     :number
+  path       :string
+  seed       :string
+
+  textures   :{[index:string]:ITexture}
+}
+
+export const SpriteData:ISprite = {
+	name       : "{{spriteName}}",
+	prefix     : "{{spritePrefix}}",
+
+	width      : {{spriteWidth}},
+	height     : {{spriteHeight}},
+
+	path       : "{{spritePath}}",
+	seed       : "{{spriteSeed}}",
+
+	textures : { {{#each textures}}
+		"{{name}}" : {
+			x       : {{x}},
+			y       : {{y}},
+			width   : {{width}},
+			height  : {{height}}
+		}{{#unless lastOne}},{{/unless}}{{/each}}
+	}
+};

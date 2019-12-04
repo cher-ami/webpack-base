@@ -1,0 +1,11 @@
+
+# Rewriting
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Remove assets from rewriting rules
+RewriteCond %{REQUEST_URI} !^/assets/$
+
+
+RewriteRule (.*) index.html [L,QSA]

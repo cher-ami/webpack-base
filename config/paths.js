@@ -35,5 +35,14 @@ module.exports = {
   atomsTypescriptFile: "Atoms.js",
 
   // Skeletons path
-  skeletonsPath: appRoot.resolve("config/skeletons/")
+  skeletonsPath: appRoot.resolve("config/skeletons/"),
+
+  // Sprite path
+  spritesPath: appRoot.resolve("src/sprites/"),
+
+  // Sprite folder
+  spritesFolder: "sprites/",
+
+  // Sprite PNG output
+  outputSpritesFolder: "src/sprites/"
 };

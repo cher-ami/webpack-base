@@ -3,3 +3,11 @@
 node_modules
 dist
 .env
+
+# Generated sprites
+# à ajouter quand le prebuild sera configuré
+
+#src/*/sprites/*.less
+#src/*/sprites/*.png
+#src/*/sprites/*.ts
+#src/*/sprites/*.cache

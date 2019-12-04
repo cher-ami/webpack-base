@@ -1,0 +1,265 @@
+/**
+ * Sprite name : main
+ * Sprite prefix : sprite-main
+ * Sprite seed : 1bdb9256a319b416ed20539ac
+ */
+
+// ----------------------------------------------------------------------------- SPRITE
+
+/**
+ * This mixin contains all properties about this sprite.
+ * Use this mixin to gain access to those variables.
+ */
+.sprite-main-vars() {
+  // Sprite size
+  @sprite-width: 50px;
+  @sprite-height: 32px;
+
+  // Full texture path
+  @sprite-path: "sprite-main.png";
+
+  // The build seed to use with this sprite.
+  // Usefull to clear cache
+  @sprite-seed: "1bdb9256a319b416ed20539ac";
+}
+
+/**
+ * Target the sprite as background.
+ * Note : import this sprite as (reference) to disable this declaration polluting output CSS file.
+ */
+.sprite-main {
+  background-repeat: no-repeat;
+  background-image: url("sprite-main.png");
+}
+
+// ----------------------------------------------------------------------------- network-icon-instagram
+
+/**
+ * Size and position as variables.
+ * Use this mixin to gain access to those variables.
+ */
+.sprite-main-network-icon-instagram-vars () {
+  @texture-x: -1px;
+  @texture-y: -1px;
+  @texture-width: 30px;
+  @texture-height: 30px;
+}
+
+/**
+ * PX relative sprite size mixin.
+ * @ratio is the ratio of the generated sprite. .5 for retina, 1 for regular.
+ */
+.sprite-main-network-icon-instagram-scale (@ratio : 1) {
+  .sprite-main-network-icon-instagram-vars();
+  .sprite-main-vars();
+
+  width: (@texture-width * @ratio);
+  height: (@texture-height * @ratio);
+  background-position: (@texture-x * @ratio) (@texture-y * @ratio);
+  background-size: (@sprite-width * @ratio) (@sprite-height * @ratio);
+}
+
+/**
+ * EM relative sprite size mixin.
+ * @ratio is the relative size in em. You can use @emRatio property to convert em to px.
+ * Ex : (.5 / @emRatio) will show a retina sprite at size 1 for a font-size of 1em.
+ */
+.sprite-main-network-icon-instagram-em (@ratio : 1) {
+  .sprite-main-network-icon-instagram-vars();
+  .sprite-main-vars();
+
+  width: unit((@texture-width * @ratio), em);
+  height: unit((@texture-height * @ratio), em);
+  background-position: unit((@texture-x * @ratio), em)
+    unit((@texture-y * @ratio), em);
+  background-size: unit((@sprite-width * @ratio), em)
+    unit((@sprite-height * @ratio), em);
+}
+
+/**
+ * VW relative sprite size mixin.
+ * @viewPortWidthSpriteRatio is a viewport width ratio between 0 and 1.
+ */
+.sprite-main-network-icon-instagram-vw (@viewPortWidthSpriteRatio) {
+  .sprite-main-network-icon-instagram-vars();
+  .sprite-main-vars();
+
+  // Multiplying viewport width ratio (between 0 to 1) to a percentage
+  @viewPortPercentage: (@viewPortWidthSpriteRatio * 100);
+
+  // Ratio between height and width on target texture
+  @axisRatio: (@texture-height / @texture-width);
+
+  // Stick width to the viewport percentage value
+  width: unit(@viewPortPercentage, vw);
+
+  // Compute height in viewport width unit, taking axis ratio to have the same ratio as the texture
+  height: unit((@axisRatio * @viewPortPercentage), vw);
+
+  // Determinant value is the texture width.                  we multiply by the viewport percentage to
+  // If we need to show a small texture                       be on the same ratio as the dom element width
+  // the final value will be bigger.       ⬇                        ⬇
+  background-size: unit(
+      (@sprite-width / @texture-width * @viewPortPercentage),
+      vw
+    )
+    unit(
+      (@sprite-height / @texture-height * @axisRatio * @viewPortPercentage),
+      vw
+    );
+  //                                                               ⬆
+  //                                we still have the axis ratio between height and width to apply
+
+  // We have the same order of magnitude than the size          Texture position is also relative to full sprite size
+  //                                       ⬇                          ⬇
+  background-position: unit(
+      (
+        @sprite-width / @texture-width * @texture-x / @sprite-width *
+          @viewPortPercentage
+      ),
+      vw
+    )
+    unit(
+      (
+        @sprite-height / @texture-height * @axisRatio * @texture-y /
+          @sprite-height * @viewPortPercentage
+      ),
+      vw
+    );
+  //                                                               ⬆
+  //                                we still have the axis ratio between height and width to apply
+}
+
+/**
+ * CSS Injected declaration
+ * Note : import this sprite as (reference) to disable this declaration polluting output CSS file.
+ * Regular (ratio 1)
+ */
+.sprite-main-network-icon-instagram {
+  .sprite-main-network-icon-instagram-scale(1);
+}
+
+/**
+ * CSS Injected declaration
+ * Note : import this sprite as (reference) to disable this declaration polluting output CSS file.
+ * Retina (ratio 0.5)
+ */
+.sprite-main-network-icon-instagram-retina {
+  .sprite-main-network-icon-instagram-scale(0.5);
+}
+
+// ----------------------------------------------------------------------------- network-icon-facebook
+
+/**
+ * Size and position as variables.
+ * Use this mixin to gain access to those variables.
+ */
+.sprite-main-network-icon-facebook-vars () {
+  @texture-x: -33px;
+  @texture-y: -1px;
+  @texture-width: 16px;
+  @texture-height: 30px;
+}
+
+/**
+ * PX relative sprite size mixin.
+ * @ratio is the ratio of the generated sprite. .5 for retina, 1 for regular.
+ */
+.sprite-main-network-icon-facebook-scale (@ratio : 1) {
+  .sprite-main-network-icon-facebook-vars();
+  .sprite-main-vars();
+
+  width: (@texture-width * @ratio);
+  height: (@texture-height * @ratio);
+  background-position: (@texture-x * @ratio) (@texture-y * @ratio);
+  background-size: (@sprite-width * @ratio) (@sprite-height * @ratio);
+}
+
+/**
+ * EM relative sprite size mixin.
+ * @ratio is the relative size in em. You can use @emRatio property to convert em to px.
+ * Ex : (.5 / @emRatio) will show a retina sprite at size 1 for a font-size of 1em.
+ */
+.sprite-main-network-icon-facebook-em (@ratio : 1) {
+  .sprite-main-network-icon-facebook-vars();
+  .sprite-main-vars();
+
+  width: unit((@texture-width * @ratio), em);
+  height: unit((@texture-height * @ratio), em);
+  background-position: unit((@texture-x * @ratio), em)
+    unit((@texture-y * @ratio), em);
+  background-size: unit((@sprite-width * @ratio), em)
+    unit((@sprite-height * @ratio), em);
+}
+
+/**
+ * VW relative sprite size mixin.
+ * @viewPortWidthSpriteRatio is a viewport width ratio between 0 and 1.
+ */
+.sprite-main-network-icon-facebook-vw (@viewPortWidthSpriteRatio) {
+  .sprite-main-network-icon-facebook-vars();
+  .sprite-main-vars();
+
+  // Multiplying viewport width ratio (between 0 to 1) to a percentage
+  @viewPortPercentage: (@viewPortWidthSpriteRatio * 100);
+
+  // Ratio between height and width on target texture
+  @axisRatio: (@texture-height / @texture-width);
+
+  // Stick width to the viewport percentage value
+  width: unit(@viewPortPercentage, vw);
+
+  // Compute height in viewport width unit, taking axis ratio to have the same ratio as the texture
+  height: unit((@axisRatio * @viewPortPercentage), vw);
+
+  // Determinant value is the texture width.                  we multiply by the viewport percentage to
+  // If we need to show a small texture                       be on the same ratio as the dom element width
+  // the final value will be bigger.       ⬇                        ⬇
+  background-size: unit(
+      (@sprite-width / @texture-width * @viewPortPercentage),
+      vw
+    )
+    unit(
+      (@sprite-height / @texture-height * @axisRatio * @viewPortPercentage),
+      vw
+    );
+  //                                                               ⬆
+  //                                we still have the axis ratio between height and width to apply
+
+  // We have the same order of magnitude than the size          Texture position is also relative to full sprite size
+  //                                       ⬇                          ⬇
+  background-position: unit(
+      (
+        @sprite-width / @texture-width * @texture-x / @sprite-width *
+          @viewPortPercentage
+      ),
+      vw
+    )
+    unit(
+      (
+        @sprite-height / @texture-height * @axisRatio * @texture-y /
+          @sprite-height * @viewPortPercentage
+      ),
+      vw
+    );
+  //                                                               ⬆
+  //                                we still have the axis ratio between height and width to apply
+}
+
+/**
+ * CSS Injected declaration
+ * Note : import this sprite as (reference) to disable this declaration polluting output CSS file.
+ * Regular (ratio 1)
+ */
+.sprite-main-network-icon-facebook {
+  .sprite-main-network-icon-facebook-scale(1);
+}
+
+/**
+ * CSS Injected declaration
+ * Note : import this sprite as (reference) to disable this declaration polluting output CSS file.
+ * Retina (ratio 0.5)
+ */
+.sprite-main-network-icon-facebook-retina {
+  .sprite-main-network-icon-facebook-scale(0.5);
+}

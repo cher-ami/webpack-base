@@ -22,8 +22,8 @@ module.exports = {
    */
   output: {
     path: config.outputPath,
-    filename: "[name].bundle.js",
-    publicPath: "/"
+    filename: "[name].bundle.js"
+    // publicPath: "/"
   },
 
   /**
@@ -151,6 +151,7 @@ module.exports = {
         options: {
           name: "[path][name].[ext]",
           // prevent display of src/ in filename
+          // TODO pause problème avec le sprite
           context: "src"
         }
       },
