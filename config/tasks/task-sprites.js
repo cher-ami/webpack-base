@@ -71,7 +71,7 @@ const sprites = () =>
       {
         extension: "less",
         template: Handlebars.compile(
-          Files.getFiles(`${paths.skeletonsPath}spriteTemplateLess`).read()
+          Files.getFiles(`${paths.skeletonsPath}/spriteTemplateLess`).read()
         )
       },
       // JSON Template
@@ -79,7 +79,7 @@ const sprites = () =>
         extension: "ts",
         template: Handlebars.compile(
           Files.getFiles(
-            `${paths.skeletonsPath}spriteTemplateTypescript`
+            `${paths.skeletonsPath}/spriteTemplateTypescript`
           ).read()
         )
       }
@@ -155,7 +155,7 @@ const sprites = () =>
     let totalSprites = 0;
 
     // Browse bundles
-    Files.getFolders(`${paths.spritesPath}*/`).all(folder => {
+    Files.getFolders(`${paths.spritesPath}/*/`).all(folder => {
       // Browser sprites folders
 
       ++totalSprites;
@@ -187,7 +187,7 @@ const sprites = () =>
       const spritesPath = `${paths.spritesPath}`;
 
       // Output path for styles / typescript and PNG file
-      const outputPath = `${spritesPath}${spritePrefix}${separator}${spriteName}`;
+      const outputPath = `${spritesPath}/${spritePrefix}${separator}${spriteName}`;
       const PNGOutputPath = `${paths.outputSpritesFolder}${spritePrefix}${separator}${spriteName}`;
 
       // Styles sheet path options
@@ -244,7 +244,7 @@ const sprites = () =>
           pngToOptimize.push({
             spriteName,
             outputPath,
-            bundleSpritePath: spritesPath,
+            bundleSpritePath: `${spritesPath}/`,
             spriteConfig
           });
         }
@@ -276,7 +276,7 @@ const sprites = () =>
 
       // Compute hash for config file
       const currentSpriteConfigHash = Files.getFiles(
-        `${spritesPath}${spritePrefix}${separator}${spriteName}${configExt}`
+        `${spritesPath}/${spritePrefix}${separator}${spriteName}${configExt}`
       ).generateFileListHash(true, false);
 
       // Concat hashes

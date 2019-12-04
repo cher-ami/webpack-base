@@ -28,7 +28,7 @@ export const SpriteData: ISprite = {
   height: 32,
 
   path: "sprite-main.png",
-  seed: "1bdb9256a319b416ed20539ac",
+  seed: "9e43876a37484.816ed2121696",
 
   textures: {
     "network-icon-instagram": {

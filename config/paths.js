@@ -16,29 +16,14 @@ module.exports = {
   // .env file
   env: appRoot.resolve(".env"),
 
-  // Images folder
-  imagesFolder: "images/",
-
   // Path to fonts folder from src
   fontsPath: appRoot.resolve("src/fonts/"),
 
-  // Font folder
-  fontsFolder: "fonts/",
-
-  // Fonts style file path
-  fontsStyleFile: "Fonts.less",
-
-  // Atoms folder
-  atomsFolder: "atoms/",
-
-  // Name of export atoms file
-  atomsTypescriptFile: "Atoms.js",
-
   // Skeletons path
-  skeletonsPath: appRoot.resolve("config/skeletons/"),
+  skeletonsPath: appRoot.resolve("config/skeletons"),
 
   // Sprite path
-  spritesPath: appRoot.resolve("src/sprites/"),
+  spritesPath: appRoot.resolve("src/sprites"),
 
   // Sprite folder
   spritesFolder: "sprites/",

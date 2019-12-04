@@ -103,14 +103,14 @@ const componentScaffolder = () =>
 
     // Scaffold the script
     Files.new(`${componentPath}.tsx`).write(
-      QuickTemplate(Files.getFiles(`${paths.skeletonsPath}${type}`).read(), {
+      QuickTemplate(Files.getFiles(`${paths.skeletonsPath}/${type}`).read(), {
         capitalComponentName: upperComponentName,
         componentType: subFolder
       })
     );
     Files.new(`${componentPath}.less`).write(
       QuickTemplate(
-        Files.getFiles(`${paths.skeletonsPath}lessComponent`).read(),
+        Files.getFiles(`${paths.skeletonsPath}/lessComponent`).read(),
         {
           capitalComponentName: upperComponentName,
           componentType: subFolder
