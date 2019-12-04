@@ -32,7 +32,7 @@ module.exports = merge(common, {
      */
     new CopyWebpackPlugin([
       {
-        from: paths.static,
+        from: paths.dist,
         to: "assets",
         ignore: ["*.DS_Store"]
       }

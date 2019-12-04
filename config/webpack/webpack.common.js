@@ -1,3 +1,4 @@
+const path = require("path");
 const paths = require("../paths");
 const config = require("../config");
 const webpack = require("webpack");
@@ -80,7 +81,10 @@ module.exports = {
      * Dotenv Wepback
      * @doc https://github.com/mrsteele/dotenv-webpack
      */
-    new Dotenv(),
+    new Dotenv({
+      path: path.join(__dirname, ".env"),
+      systemvars: true
+    }),
 
     /**
      * Define Plugin

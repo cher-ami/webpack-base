@@ -18,7 +18,7 @@ GlobalConfig.instance.inject({
 
 log(process.env.BASE_URL);
 log(process.env.NODE_ENV);
-log(process.env);
+log(process.env.ENV);
 
 // ----------------------------------------------------------------------------- LOG
 
