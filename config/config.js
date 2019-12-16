@@ -11,7 +11,7 @@ module.exports = {
   /**
    * Generate an index.html from template /src/template.html
    */
-  generateHtmlIndex: false,
+  generateHtmlIndex: true,
 
   /**
    * Clean outputfolder before every build
