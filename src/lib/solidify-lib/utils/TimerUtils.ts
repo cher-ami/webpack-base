@@ -46,7 +46,7 @@ export class TimerUtils {
     this.__fps = MathUtils.limitRange(0.1, pValue, 120);
 
     // Apply on tweenlite
-    TweenLite.ticker["fps"](this.__fps);
+    TweenLite.ticker?.["fps"](this.__fps);
   }
 
   /**
@@ -65,7 +65,7 @@ export class TimerUtils {
     };
 
     // Listener the frames on the proxy
-    TweenLite.ticker.addEventListener("tick", proxyHandler);
+    TweenLite.ticker?.["addEventListener"]("tick", proxyHandler);
 
     // Store the proxy and external handler association for future deletion
     this.__framesHandlers.push({
@@ -90,7 +90,7 @@ export class TimerUtils {
       // If this is our external handler, remove the listener on TweenLite
       // And don't insert it in the new array
       if (this.__framesHandlers[i].externalHandler == pHandler) {
-        TweenLite.ticker.removeEventListener(
+        TweenLite.ticker?.["removeEventListener"](
           "tick",
           this.__framesHandlers[i].proxyHandler
         );

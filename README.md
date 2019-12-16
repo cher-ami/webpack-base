@@ -10,8 +10,8 @@ Web base project using:
 Tools:
 
 - [React Hot Loader](https://github.com/gaearon/react-hot-loader)
-- [prettier](https://prettier.io/)
-- [debug](https://www.npmjs.com/package/debug)
+- [Prettier](https://prettier.io/)
+- [Debug](https://www.npmjs.com/package/debug)
 
 ## License
 

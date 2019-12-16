@@ -12,6 +12,10 @@
     "typescript",
     "hmr"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/willybrauner/webpack-base.git"
+  },
   "scripts": {
     "dev": "env-cmd -f .env webpack-dev-server --config config/webpack/webpack.dev.js",
     "build": "env-cmd -f .env cross-env webpack --config config/webpack/webpack.prod.js",
@@ -23,7 +27,7 @@
   },
   "dependencies": {
     "@solid-js/css-flat": "^1.0.1",
-    "gsap": "^3.0.1",
+    "gsap": "^3.0.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "wouter": "^2.4.0",
@@ -70,7 +74,7 @@
     "imagemin": "^7.0.1",
     "imagemin-jpegtran": "^6.0.0",
     "imagemin-pngquant": "^8.0.0",
-    "inquirer": "^7.0.0",
+    "inquirer": "^7.0.1",
     "install": "^0.13.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
@@ -87,7 +91,7 @@
     "terser-webpack-plugin": "^2.3.0",
     "typescript": "^3.7.3",
     "url-loader": "^3.0.0",
-    "webpack": "^4.41.2",
+    "webpack": "^4.41.3",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0",
     "webpack-manifest-plugin": "^2.2.0",
