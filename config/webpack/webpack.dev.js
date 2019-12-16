@@ -3,6 +3,7 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = merge(common, {
   /**
@@ -29,7 +30,17 @@ module.exports = merge(common, {
     /**
      * Hot reload
      */
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+
+    /**
+     * Generate Html webpack plugin
+     */
+    new HtmlWebpackPlugin({
+      title: "Webpack base",
+      favicon: paths.src + "/images/favicon.png",
+      template: paths.src + "/template.html",
+      filename: "index.html"
+    })
   ],
 
   /**
@@ -42,7 +53,7 @@ module.exports = merge(common, {
     compress: true,
     hot: true,
     port: 3000,
-    writeToDisk: true,
+    writeToDisk: false,
     historyApiFallback: true,
 
     // display error overlay on screen
