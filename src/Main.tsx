@@ -4,7 +4,7 @@ import * as React from "react";
 import AppView from "./components/appView/AppView";
 import { GlobalConfig } from "./data/GlobalConfig";
 import { prepare } from "./helpers/prepare";
-import { Router } from "./lib/solidify-lib/navigation/Router";
+import { Router } from "./lib/solidify/navigation/Router";
 import { customLog } from "./helpers/customLog";
 
 // prepare

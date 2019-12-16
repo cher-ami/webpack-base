@@ -4,9 +4,9 @@ import React, { Component } from "react";
 import {
   ETransitionType,
   ReactViewStack
-} from "../../lib/solidify-lib/react/ReactViewStack";
-import { IRouteMatch, Router } from "../../lib/solidify-lib/navigation/Router";
-import { IPage } from "../../lib/solidify-lib/navigation/IPage";
+} from "../../lib/solidify/react/ReactViewStack";
+import { IRouteMatch, Router } from "../../lib/solidify/navigation/Router";
+import { IPage } from "../../lib/solidify/navigation/IPage";
 import MainMenu from "../mainMenu/MainMenu";
 import { prepare } from "../../helpers/prepare";
 
