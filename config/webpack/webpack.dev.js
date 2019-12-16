@@ -18,9 +18,18 @@ module.exports = merge(common, {
   devtool: "inline-source-map",
 
   plugins: [
+    /**
+     * Friendly error
+     * @doc https://github.com/geowarin/friendly-errors-webpack-plugin
+     */
     new FriendlyErrorsPlugin({
       clearConsole: true
-    })
+    }),
+
+    /**
+     * Hot reload
+     */
+    new webpack.HotModuleReplacementPlugin()
   ],
 
   /**
@@ -45,7 +54,6 @@ module.exports = merge(common, {
     },
 
     // friendly webpack error
-    // https://github.com/geowarin/friendly-errors-webpack-plugin
     // pass to true if you don't want to print compile file in the console
     quiet: true
   }

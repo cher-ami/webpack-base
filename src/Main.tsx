@@ -1,4 +1,5 @@
 import "./Main.less";
+import { hot } from "react-hot-loader/root";
 import ReactDOM from "react-dom";
 import * as React from "react";
 import AppView from "./components/appView/AppView";

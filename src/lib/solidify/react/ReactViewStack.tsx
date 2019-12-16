@@ -235,11 +235,6 @@ export class ReactViewStack extends Component<Props, States>
   }
 
   /**
-   * Component is created
-   */
-  componentDidMount() {}
-
-  /**
    * Component is updated
    */
   componentDidUpdate(pOldProps: Props, pOldStates: States) {
