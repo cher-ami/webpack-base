@@ -60,7 +60,7 @@ module.exports = {
      * CleanWebpackPlugin
      * Removes/cleans build folders and unused assets when rebuilding.
      */
-    new CleanWebpackPlugin(),
+    ...(config.cleanOutputfolder ? [new CleanWebpackPlugin()] : []),
 
     /**
      * HtmlWebpackPlugin

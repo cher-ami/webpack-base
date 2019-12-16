@@ -11,7 +11,12 @@ module.exports = {
   /**
    * Generate an index.html from template /src/template.html
    */
-  generateHtmlIndex: true,
+  generateHtmlIndex: false,
+
+  /**
+   * Clean outputfolder before every build
+   */
+  cleanOutputfolder: false,
 
   /**
    * Scaffold compatible folder
