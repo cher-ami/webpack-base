@@ -6,6 +6,8 @@ import { ReactPage } from "../../lib/solidify/react/ReactPage";
 
 interface IProps {
   classNames?: string[];
+  setCurrentStep?: (step: string) => void;
+  currentStep?: string;
 }
 interface IStates {}
 
@@ -21,6 +23,7 @@ class HomePage extends ReactPage<IProps, IStates> {
   constructor(pProps: IProps, pContext: any) {
     super(pProps, pContext);
     this.rootRef = React.createRef();
+    this.props.setCurrentStep(component);
   }
 
   /**
@@ -51,6 +54,7 @@ class HomePage extends ReactPage<IProps, IStates> {
     return (
       <div className={component} ref={this.rootRef}>
         {component}
+        <p>Current Step : {this.props.currentStep}</p>
       </div>
     );
   }

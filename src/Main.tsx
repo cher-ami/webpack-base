@@ -7,6 +7,8 @@ import { GlobalConfig } from "./data/GlobalConfig";
 import { prepare } from "./helpers/prepare";
 import { Router } from "./lib/solidify/navigation/Router";
 import { customLog } from "./helpers/customLog";
+import configureStore from "./store/index";
+import { Provider } from "react-redux";
 
 // prepare
 const { component, log } = prepare("Main");
@@ -35,7 +37,7 @@ Router.init(GlobalConfig.instance.base, [
     url: "/",
     page: "HomePage",
     // Use require to load synchronously
-    importer: () => require("./pages/homePage/HomePage")
+    importer: () => require("./pages/homePage/index")
     // Use import to load asynchronously
     // importer: () => import("./pages/homePage/HomePage")
   },
@@ -57,4 +59,9 @@ Router.listenLinks();
 // ----------------------------------------------------------------------------- START
 
 // React render
-ReactDOM.render(<AppView />, document.getElementById("AppContainer"));
+ReactDOM.render(
+  <Provider store={configureStore()}>
+    <AppView />
+  </Provider>,
+  document.getElementById("AppContainer")
+);

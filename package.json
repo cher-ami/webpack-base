@@ -30,6 +30,10 @@
     "gsap": "^3.0.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-redux": "^7.1.3",
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "wouter": "^2.4.0",
     "zepto": "^1.2.0",
     "zepto-webpack": "^1.2.1"
