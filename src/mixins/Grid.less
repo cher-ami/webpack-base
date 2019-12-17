@@ -1,47 +1,79 @@
-@import (reference) '../References.less';
+@import (reference) "../References.less";
 
-
-
-/**
- * Set a grid (with gutter) value to specific selector
- *
- * @param @pSelector: Selector to affect calc
- * @param @pNumber: Number of grid we want to affect to selector
- * @param @pWithLastGutter: last gutter is part of grid size or not. Default is true
- * @param @@pOneColumnGrid: width of one single column
- * @param @pGutter: gutter width
- * @param @pTotalGridNumber: total number of column
- */
-.grid(
-  @pSelector,
-  @pNumber,
-  @pWithLastGutter: true,
-  @pOneColumnGrid: @one-column-grid,
-  @pGutter: @grid-gutter,
-  @pTotalColumnsNumber: @total-columns-number
-) {
-
-  & when(@pWithLastGutter = true) {
-      @{pSelector} : ~'calc( ( @{pOneColumnGrid} + (@{pGutter} / @{pTotalColumnsNumber}) ) * @{pNumber} )';
-  }
-
-  & when(@pWithLastGutter = false) {
-      @{pSelector} : ~'calc( ( @{pOneColumnGrid} + (@{pGutter} / @{pTotalColumnsNumber}) ) * @{pNumber} - @{pGutter} )';
-  }
-}
-
-/**
- * centrale Column
- */
-.centerColumnGrid (@pGridNumber:18) {
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  .grid(width, @pGridNumber, false)
-}
-
-.resetCenterColumnGrid() {
-  margin-left: 0;
-  margin-right: 0;
-  width: auto;
-}
+///**
+// * Container Grid
+// */
+//.containerGrid(@max-width: @max-width-grid-px) {
+//  position: relative;
+//  margin-left: @gutter-size-mobile-px / 2;
+//  margin-right: @gutter-size-mobile-px / 2;
+//
+//  @media (min-width: @breakpoint-tablet) {
+//    margin-left: @gutter-size-mobile-px / 2;
+//    margin-right: @gutter-size-mobile-px / 2;
+//  }
+//
+//  @media (min-width: @max-width-grid-px) {
+//    margin-left: auto;
+//    margin-right: auto;
+//    max-width: @max-width;
+//  }
+//}
+//
+//
+///**
+// * Center element in grid
+// */
+//.centerColumnGrid (@column-number:10) {
+//  position: relative;
+//  margin-left: auto;
+//  margin-right: auto;
+//  width: ~"calc(
+//    (
+//      (100% / @{total-column-number}) * @{column-number})
+//      +
+//      (@{gutter-size-px} / @{total-column-number} * @{column-number})
+//      -
+//      @{gutter-size-px}
+//    )
+//  ";
+//}
+//
+///**
+// * Use grid on every selector
+// * ex: .gridFactor(padding, 3, true);
+// */
+//.gridFactor
+//(@selector, @column-number, @with-last-gutter:false, @with-margin: 0, @total-column-number-param:@total-column-number) {
+//  & when (@with-last-gutter = false) {
+//      @{selector}: ~"calc(
+//    (
+//      (100% / @{total-column-number-param}) * @{column-number})
+//      +
+//      (@{gutter-size-px} / @{total-column-number-param} * @{column-number})
+//      -
+//      @{gutter-size-px}
+//    )
+//  ";
+//  }
+//  // with last gutter
+//  & when (@with-last-gutter = true) {
+//      @{selector}: ~"calc(
+//    (
+//      (100% / @{total-column-number-param}) * @{column-number})
+//      +
+//      (@{gutter-size-px} / @{total-column-number-param} * @{column-number})
+//    )
+//  ";
+//  }
+//}
+//
+//
+//
+//
+//
+//.resetCenterColumnGrid() {
+//  margin-left: 0;
+//  margin-right: 0;
+//  width: auto;
+//}
