@@ -1,6 +1,5 @@
 import { AppState } from "../../store";
-import { setCurrentStep } from "../../store/actions/global/global";
-import HomePage from "./HomePage";
+import SldkzZdlzk from "./SldkzZdlzk";
 import { connect } from "react-redux";
 
 /**
@@ -8,9 +7,7 @@ import { connect } from "react-redux";
  * @param state
  */
 const mapStateToProps = (state: AppState) => {
-  return {
-    currentStep: state.global.currentStep
-  };
+  return {};
 };
 
 /**
@@ -18,9 +15,7 @@ const mapStateToProps = (state: AppState) => {
  * @param dispatch
  */
 const mapDispatchToProps = dispatch => {
-  return {
-    setCurrentStep: currentStep => dispatch(setCurrentStep(currentStep))
-  };
+  return {};
 };
 
 /**
@@ -30,4 +25,4 @@ const connector = connect(mapStateToProps, mapDispatchToProps, null, {
   forwardRef: true
 });
 
-export default connector(HomePage);
+export default connector(SldkzZdlzk);

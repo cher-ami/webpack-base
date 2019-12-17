@@ -1,5 +1,4 @@
 import "./Main.less";
-import { hot } from "react-hot-loader/root";
 import ReactDOM from "react-dom";
 import * as React from "react";
 import AppView from "./components/appView/AppView";
@@ -11,7 +10,7 @@ import configureStore from "./store/index";
 import { Provider } from "react-redux";
 
 // prepare
-const { component, log } = prepare("Main");
+const { log } = prepare("Main");
 
 // ----------------------------------------------------------------------------- INJECT DATA
 
@@ -44,12 +43,12 @@ Router.init(GlobalConfig.instance.base, [
   {
     url: "/blog",
     page: "BlogPage",
-    importer: () => require("./pages/blogPage/BlogPage")
+    importer: () => require("./pages/blogPage/index")
   },
   {
     url: "/article-{#id}-{slug}",
     page: "ArticlePage",
-    importer: () => require("./pages/articlePage/ArticlePage")
+    importer: () => require("./pages/articlePage/index")
   }
 ]);
 

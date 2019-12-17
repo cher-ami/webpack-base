@@ -66,6 +66,14 @@ const askComponentName = () => {
   });
 };
 
+const askConnectToStore = () => {
+  return Inquirer.prompt({
+    type: "boolean",
+    message: "connect component to store ?",
+    name: "connectToStore"
+  });
+};
+
 /**
  * Ask question and scaffold a component with a specific script template
  * @returns {Promise<any>}
@@ -83,6 +91,11 @@ const componentScaffolder = () =>
     let componentName = "";
     await askComponentName().then(answer => {
       componentName = answer.componentName;
+    });
+
+    let connectToStore = false;
+    await askConnectToStore().then(answer => {
+      connectToStore = answer.connectToStore;
     });
 
     // component name "ComponentName" for subfolder and component
@@ -108,6 +121,19 @@ const componentScaffolder = () =>
         componentType: subFolder
       })
     );
+
+    // FIXME CONTINUE
+    const indexType = connectToStore ? "reactIndexRedux" : "reactIndex";
+    Files.new(`index.ts`).write(
+      QuickTemplate(
+        Files.getFiles(`${paths.skeletonsPath}/${indexType}`).read(),
+        {
+          capitalComponentName: upperComponentName,
+          componentType: subFolder
+        }
+      )
+    );
+
     Files.new(`${componentPath}.less`).write(
       QuickTemplate(
         Files.getFiles(`${paths.skeletonsPath}/lessComponent`).read(),
