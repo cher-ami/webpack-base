@@ -3,11 +3,12 @@ import HomePage from "./HomePage";
 import { connect } from "react-redux";
 import { setCurrentStep } from "../../store/actions/common/common";
 
+// TODO: interface AppState not working here
 /**
  * Map state to component props
  * @param state
  */
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (state: any) => {
   return {
     currentStep: state.common.currentStep
   };
