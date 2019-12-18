@@ -36,7 +36,7 @@ Router.init(GlobalConfig.instance.base, [
     url: "/",
     page: "HomePage",
     // Use require to load synchronously
-    importer: () => require("./pages/homePage/index")
+    importer: () => require("./pages/homePage")
     // Use import to load asynchronously
     // importer: () => import("./pages/homePage/HomePage")
   },

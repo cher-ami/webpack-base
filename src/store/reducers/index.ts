@@ -1,1 +1,1 @@
-export { default as global } from "./global/global";
+export { default as common } from "./common/common";

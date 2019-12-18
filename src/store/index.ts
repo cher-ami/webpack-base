@@ -1,10 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import { global } from "./reducers";
+import { common } from "./reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
 const combinedReducers = combineReducers({
-  global
+  common
 });
 
 export default function configureStore(initialState = {}) {

@@ -1,5 +1,5 @@
-import { EGlobalActionTypes } from "../../actions/global/global.types";
 import { Action } from "../../types";
+import { ECommonActionTypes } from "../../actions/common/common.types";
 
 export interface IReduxGlobalState {
   currentStep: string;
@@ -14,7 +14,7 @@ export default (
   action: Action
 ): IReduxGlobalState => {
   switch (action.type) {
-    case EGlobalActionTypes.SET_CURRENT_STEP: {
+    case ECommonActionTypes.SET_CURRENT_STEP: {
       return {
         ...state,
         currentStep: action.currentStep

@@ -1,7 +1,7 @@
 import { AppState } from "../../store";
-import { setCurrentStep } from "../../store/actions/global/global";
 import HomePage from "./HomePage";
 import { connect } from "react-redux";
+import { setCurrentStep } from "../../store/actions/common/common";
 
 /**
  * Map state to component props
@@ -9,7 +9,7 @@ import { connect } from "react-redux";
  */
 const mapStateToProps = (state: AppState) => {
   return {
-    currentStep: state.global.currentStep
+    currentStep: state.common.currentStep
   };
 };
 
