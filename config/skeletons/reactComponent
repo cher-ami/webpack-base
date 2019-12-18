@@ -1,5 +1,5 @@
 import './%%capitalComponentName%%.less';
-import React from 'react'
+import React from 'react';
 import { classBlock } from "../../helpers/className";
 import { prepare } from "../../helpers/prepare";
 
@@ -14,7 +14,6 @@ const { component, log } = prepare("%%capitalComponentName%%");
  * @name %%capitalComponentName%%
  */
 function %%capitalComponentName%% (props: IProps) {
-
   // --------------------------------------------------------------------------- PREPARE
 
   // --------------------------------------------------------------------------- RENDER
@@ -22,6 +21,6 @@ function %%capitalComponentName%% (props: IProps) {
   return <div className={classBlock([component, props.classNames])}>
       {component}
   </div>
-};
+}
 
 export default %%capitalComponentName%%
