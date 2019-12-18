@@ -1,7 +1,8 @@
 import "./HomePage.less";
-import React, { PureComponent, RefObject } from "react";
+import React, { RefObject } from "react";
 import { prepare } from "../../helpers/prepare";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
+import { ReactPage } from "../../lib/solidify/react/ReactPage";
 
 interface IProps {
   classNames?: string[];
@@ -14,30 +15,36 @@ const { component, log } = prepare("HomePage");
 /**
  * @name HomePage
  */
-class HomePage extends PureComponent<IProps, IStates> {
+class HomePage extends ReactPage<IProps, IStates> {
   protected rootRef: RefObject<HTMLDivElement>;
 
-  constructor(props) {
-    super(props);
+  constructor(pProps: IProps, pContext: any) {
+    super(pProps, pContext);
     this.rootRef = React.createRef();
   }
 
   /**
-   * PlayIn
+   * Action on this page.
+   * Check props.action and props.parameters to show proper content.
    */
-  public async playIn(): Promise<any> {
-    return new Promise(resolve => {
-      PageTransitionHelper.promisePlayIn(this.rootRef, resolve);
-    });
+  action() {
+    // Remove if not used
   }
 
   /**
-   * PlayOut
+   * Play in animation.
+   * Call complete handler when animation is done.
    */
-  public async playOut(): Promise<any> {
-    return new Promise(resolve => {
-      PageTransitionHelper.promisePlayOut(this.rootRef, resolve);
-    });
+  protected playInPromiseHandler(pCompleteHandler: () => void) {
+    return PageTransitionHelper.promisePlayIn(this.rootRef, pCompleteHandler);
+  }
+
+  /**
+   * Play out animation.
+   * Call complete handler when animation is done.
+   */
+  protected playOutPromiseHandler(pCompleteHandler: () => void) {
+    return PageTransitionHelper.promisePlayOut(this.rootRef, pCompleteHandler);
   }
 
   render() {
