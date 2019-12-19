@@ -7,7 +7,7 @@ import {
 } from "../../lib/solidify/react/ReactViewStack";
 import { IRouteMatch, Router } from "../../lib/solidify/navigation/Router";
 import { IPage } from "../../lib/solidify/navigation/IPage";
-import MainMenu from "../MainMenu";
+import MainMenu from "../mainMenu";
 import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
 import { EEnv } from "../../types";
 import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";

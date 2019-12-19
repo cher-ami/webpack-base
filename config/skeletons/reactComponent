@@ -1,14 +1,14 @@
 import './%%capitalComponentName%%.less';
 import React from 'react';
 import { classBlock } from "../../helpers/className";
-import { prepare } from "../../helpers/prepare";
+import { prepareComponent } from "../../helpers/prepareComponent";
 
 interface IProps {
   classNames?: string[]
 }
 
 // prepare
-const { component, log } = prepare("%%capitalComponentName%%");
+const { component, log } = prepareComponent("%%capitalComponentName%%");
 
 /**
  * @name %%capitalComponentName%%

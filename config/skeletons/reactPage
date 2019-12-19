@@ -2,13 +2,13 @@ import "./%%capitalComponentName%%.less";
 import React, { RefObject } from "react";
 import {ReactPage} from "../../lib/solidify/react/ReactPage";
 import { Helmet } from "react-helmet";
-import { prepare } from "../../helpers/prepare";
+import { prepareComponent } from "../../helpers/prepareComponent";
 
 interface IProps {}
 interface IStates {}
 
 // prepare
-const { component, log } = prepare("%%capitalComponentName%%");
+const { component, log } = prepareComponent("%%capitalComponentName%%");
 
 /**
  * @name %%capitalComponentName%%
