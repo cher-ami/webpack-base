@@ -7,12 +7,13 @@ import {
 } from "../../lib/solidify/react/ReactViewStack";
 import { IRouteMatch, Router } from "../../lib/solidify/navigation/Router";
 import { IPage } from "../../lib/solidify/navigation/IPage";
-import MainMenu from "../MainMenu/MainMenu";
-import { prepareComponent } from "../../helpers/prepareComponent";
+import MainMenu from "../MainMenu";
 import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
 import { EEnv } from "../../types";
 import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
 import { className } from "../../helpers/className";
+import { prepareComponent } from "../../helpers/prepareComponent";
+import { Atoms } from "../../atoms/Atoms";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -154,12 +155,16 @@ class AppView extends Component<IProps, IStates> {
     return (
       <div className={component}>
         {isEnv(EEnv.DEV) && this.state.showGrid && (
-          <GridLayout maxWidth={1024} />
+          <GridLayout
+            columnsNumber={Atoms.grid["total-column-number"]}
+            gutterSize={Atoms.grid["gutter-size"]}
+            maxWidth={Atoms.grid["max-width-grid"]}
+          />
         )}
         <div className={className(component, "wrapper")}>
           <div className={className(component, "reduxExample")}>
-            CurrentPageName from redux store:{" "}
-            <strong>{this.props.currentPageName}</strong>
+            CurrentPageName from redux store >{" "}
+            <span>{this.props.currentPageName}</span>
           </div>
           <MainMenu />
           <ReactViewStack

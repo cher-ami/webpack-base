@@ -1,23 +1,13 @@
 @import (reference) "../References.less";
 
 /**
- * Grid Wrapper
+ * Grid Container
  */
-.GridWfapper(@max-width: @max-width-grid-px) {
+.gridContainer(@max-width: @max-width-grid-px) {
   position: relative;
-  margin-left: @gutter-size-mobile-px / 2;
-  margin-right: @gutter-size-mobile-px / 2;
-
-  @media (min-width: @breakpoint-tablet) {
-    margin-left: @gutter-size-mobile-px / 2;
-    margin-right: @gutter-size-mobile-px / 2;
-  }
-
-  @media (min-width: @max-width-grid-px) {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: @max-width;
-  }
+  margin-left: auto;
+  margin-right: auto;
+  max-width: @max-width;
 }
 
 /**
@@ -25,13 +15,13 @@
  * ex: .gridFactor(padding, 3, true);
  */
 .gridFactor
-  (@selector, @column-number, @with-last-gutter:false, @with-margin: 0, @total-column-number-param:@total-column-number) {
+  (@selector, @column-number, @with-last-gutter:false, @with-margin: 0) {
   & when (@with-last-gutter = false) {
     @{selector}: ~"calc(
     (
-      (100% / @{total-column-number-param}) * @{column-number})
+      (100% / @{total-column-number}) * @{column-number})
       +
-      (@{gutter-size-px} / @{total-column-number-param} * @{column-number})
+      (@{gutter-size-px} / @{total-column-number} * @{column-number})
       -
       @{gutter-size-px}
     )
@@ -41,9 +31,9 @@
   & when (@with-last-gutter = true) {
     @{selector}: ~"calc(
     (
-      (100% / @{total-column-number-param}) * @{column-number})
+      (100% / @{total-column-number}) * @{column-number})
       +
-      (@{gutter-size-px} / @{total-column-number-param} * @{column-number})
+      (@{gutter-size-px} / @{total-column-number} * @{column-number})
     )
   ";
   }

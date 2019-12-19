@@ -1,8 +1,8 @@
 import "./NotFoundPage.less";
 import React, { RefObject } from "react";
-import { prepareComponent } from "../../helpers/prepareComponent";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { ReactPage } from "../../lib/solidify/react/ReactPage";
+import { prepareComponent } from "../../helpers/prepareComponent";
 
 interface IProps {
   classNames?: string[];

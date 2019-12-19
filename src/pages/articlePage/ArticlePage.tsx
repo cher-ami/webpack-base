@@ -2,8 +2,8 @@ import "./ArticlePage.less";
 import React, { RefObject } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { Helmet } from "react-helmet";
-import { prepareComponent } from "../../helpers/prepareComponent";
 import { ReactPage } from "../../lib/solidify/react/ReactPage";
+import { prepareComponent } from "../../helpers/prepareComponent";
 
 interface IProps {
   classNames?: string[];

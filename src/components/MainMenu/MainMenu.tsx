@@ -1,8 +1,8 @@
 import "./MainMenu.less";
 import React from "react";
 import { classBlock, className } from "../../helpers/className";
-import { prepareComponent } from "../../helpers/prepareComponent";
 import { Router } from "../../lib/solidify/navigation/Router";
+import { prepareComponent } from "../../helpers/prepareComponent";
 
 interface IProps {
   classNames?: string[];

@@ -1,5 +1,4 @@
 import AppView from "./AppView";
-import { setcurrentPageName } from "../../stores/common/actions";
 import { connect } from "react-redux";
 
 /**
@@ -17,10 +16,7 @@ const mapStateToProps = (state: any) => {
  * @param dispatch
  */
 const mapDispatchToProps = dispatch => {
-  return {
-    setcurrentPageName: currentPageName =>
-      dispatch(setcurrentPageName(currentPageName))
-  };
+  return {};
 };
 
 /**
