@@ -14,10 +14,21 @@
 
 // ----------------------------------------------------------------------------- PROPERTIES
 
-@font-base-path: './';
+@font-base-path: "./";
 
 // grid
-@total-columns-number: 12;
-@grid-gutter:20px;
-@one-column-grid: (100vw / @total-columns-number);
 
+@total-column-number: 12;
+@total-column-number-mobile: 4;
+@gutter-size: 35;
+@gutter-size-mobile: 30;
+@gutter-size-px: unit(@gutter-size, px);
+@gutter-size-mobile-px: unit(@gutter-size-mobile, px);
+
+// maximum grid size
+@max-width-grid: 1106;
+@max-width-grid-px: unit(@max-width-grid, px);
+
+// transitions
+@transitions-default-speed: 300ms;
+@transitions-default-ease: cubic-bezier(0.215, 0.61, 0.355, 1);
