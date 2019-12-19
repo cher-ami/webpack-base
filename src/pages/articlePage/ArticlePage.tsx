@@ -2,7 +2,7 @@ import "./ArticlePage.less";
 import React, { RefObject } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { Helmet } from "react-helmet";
-import { prepare } from "../../helpers/prepare";
+import { prepareComponent } from "../../helpers/prepareComponent";
 import { ReactPage } from "../../lib/solidify/react/ReactPage";
 
 interface IProps {
@@ -17,7 +17,7 @@ interface IProps {
 interface IStates {}
 
 // prepare
-const { component, log } = prepare("ArticlePage");
+const { component, log } = prepareComponent("ArticlePage");
 
 /**
  * @name ArticlePage

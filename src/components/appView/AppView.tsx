@@ -8,7 +8,7 @@ import {
 import { IRouteMatch, Router } from "../../lib/solidify/navigation/Router";
 import { IPage } from "../../lib/solidify/navigation/IPage";
 import MainMenu from "../MainMenu/MainMenu";
-import { prepare } from "../../helpers/prepare";
+import { prepareComponent } from "../../helpers/prepareComponent";
 import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
 import { EEnv } from "../../types";
 import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
@@ -25,7 +25,7 @@ export interface IStates {
 }
 
 // prepare
-const { component, log } = prepare("AppView");
+const { component, log } = prepareComponent("AppView");
 
 /**
  * @name AppView

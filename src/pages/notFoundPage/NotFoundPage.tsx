@@ -1,6 +1,6 @@
 import "./NotFoundPage.less";
 import React, { RefObject } from "react";
-import { prepare } from "../../helpers/prepare";
+import { prepareComponent } from "../../helpers/prepareComponent";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { ReactPage } from "../../lib/solidify/react/ReactPage";
 
@@ -10,7 +10,7 @@ interface IProps {
 interface IStates {}
 
 // prepare
-const { component, log } = prepare("NotFoundPage");
+const { component, log } = prepareComponent("NotFoundPage");
 
 /**
  * @name NotFoundPage

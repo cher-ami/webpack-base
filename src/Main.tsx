@@ -2,7 +2,7 @@ import "./Main.less";
 import ReactDOM from "react-dom";
 import * as React from "react";
 import { GlobalConfig } from "./data/GlobalConfig";
-import { prepare } from "./helpers/prepare";
+import { prepareComponent } from "./helpers/prepareComponent";
 import { Router } from "./lib/solidify/navigation/Router";
 import { customLog } from "./helpers/customLog";
 import { Provider } from "react-redux";
@@ -10,7 +10,7 @@ import configureStore from "./stores/index";
 import AppView from "./components/appView";
 
 // prepare
-const { log } = prepare("Main");
+const { log } = prepareComponent("Main");
 
 // ----------------------------------------------------------------------------- INJECT DATA
 

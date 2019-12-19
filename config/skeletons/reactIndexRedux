@@ -1,4 +1,3 @@
-import { AppState } from "../../store";
 import %%capitalComponentName%% from "./%%capitalComponentName%%";
 import { connect } from "react-redux";
 
@@ -6,7 +5,7 @@ import { connect } from "react-redux";
  * Map state to component props
  * @param state
  */
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (state: any) => {
   return {};
 };
 

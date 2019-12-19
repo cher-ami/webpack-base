@@ -1,7 +1,7 @@
 import "./MainMenu.less";
 import React from "react";
 import { classBlock, className } from "../../helpers/className";
-import { prepare } from "../../helpers/prepare";
+import { prepareComponent } from "../../helpers/prepareComponent";
 import { Router } from "../../lib/solidify/navigation/Router";
 
 interface IProps {
@@ -9,7 +9,7 @@ interface IProps {
 }
 
 // Prepare
-const { component, log } = prepare("MainMenu");
+const { component, log } = prepareComponent("MainMenu");
 
 /**
  * @name MainMenu

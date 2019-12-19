@@ -41,7 +41,7 @@ class %%capitalComponentName%% extends ReactPage<IProps, IStates> {
    * Play in animation.
    * Call complete handler when animation is done.
    */
-  protected playInPromiseHandler(pCompleteHandler: () => void) {
+  protected playInHandler(pCompleteHandler: () => void) {
     pCompleteHandler();
   }
 
@@ -49,7 +49,7 @@ class %%capitalComponentName%% extends ReactPage<IProps, IStates> {
    * Play out animation.
    * Call complete handler when animation is done.
    */
-  protected playOutPromiseHandler(pCompleteHandler: () => void) {
+  protected playOutHandler(pCompleteHandler: () => void) {
     pCompleteHandler();
   }
 
