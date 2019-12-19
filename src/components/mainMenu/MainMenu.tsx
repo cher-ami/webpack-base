@@ -21,7 +21,6 @@ function MainMenu(props: IProps) {
 
   return (
     <nav className={classBlock([component, props.classNames])}>
-      <div className={className(component, "sprite")} />
       <ul className={className(component, "items")}>
         <li>
           <a href={`/`} children={"Home"} data-internal-link />

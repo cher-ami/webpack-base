@@ -9,24 +9,40 @@ import { IRouteMatch, Router } from "../../lib/solidify/navigation/Router";
 import { IPage } from "../../lib/solidify/navigation/IPage";
 import MainMenu from "../mainMenu/MainMenu";
 import { prepare } from "../../helpers/prepare";
+import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
+import { EEnv } from "../../types";
+import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
+import { className } from "../../helpers/className";
 
 // ------------------------------------------------------------------------------- STRUCT
 
-export interface Props {}
+export interface IProps {}
 
-export interface States {}
+export interface IStates {
+  showGrid?: boolean;
+}
 
 // prepare
 const { component, log } = prepare("AppView");
 
-class AppView extends Component<Props, States> {
+/**
+ * @name AppView
+ * @description First App Component entry point
+ * This component instanciate router stack
+ */
+class AppView extends Component<IProps, IStates> {
   // React view stack, showing pages when route changes
   protected _viewStack: ReactViewStack;
 
   // --------------------------------------------------------------------------- INIT
 
-  constructor(props: Props, context: any) {
+  constructor(props: IProps, context: any) {
     super(props, context);
+
+    // initialize states
+    this.state = {
+      showGrid: showGridByDefault()
+    } as IStates;
   }
 
   // --------------------------------------------------------------------------- LIFECYCLE
@@ -34,6 +50,8 @@ class AppView extends Component<Props, States> {
   componentDidMount() {
     // initialize router
     this.initRouter();
+    // toggle grid layout visibility
+    this.toggleGridVisibilityHandler();
   }
 
   componentWillUnmount() {
@@ -41,7 +59,7 @@ class AppView extends Component<Props, States> {
     Router.onNotFound.remove(this.routeChangedHandler);
   }
 
-  componentDidUpdate(pPrevProps: Props, pPrevState: States) {}
+  componentDidUpdate(pPrevProps: IProps, pPrevState: IStates) {}
 
   // --------------------------------------------------------------------------- ROUTER
 
@@ -52,7 +70,6 @@ class AppView extends Component<Props, States> {
     // Listen to routes not found
     Router.onNotFound.add(this.routeNotFoundHandler, this);
     Router.onRouteChanged.add(this.routeChangedHandler, this);
-
     // Start router
     Router.start();
   }
@@ -117,6 +134,16 @@ class AppView extends Component<Props, States> {
     console.error("PAGE NOT FOUND", pPageName);
   }
 
+  // --------------------------------------------------------------------------- KEY
+
+  protected toggleGridVisibilityHandler() {
+    // listen press onkey up
+    document.body.onkeyup = (pEvent: KeyboardEvent) => {
+      // if code key is G Key // toggle visibility state
+      if (pEvent.code === "KeyG")
+        this.setState({ showGrid: !this.state.showGrid });
+    };
+  }
   // --------------------------------------------------------------------------- PREPARE
 
   // --------------------------------------------------------------------------- RENDER
@@ -124,13 +151,18 @@ class AppView extends Component<Props, States> {
   render() {
     return (
       <div className={component}>
-        <MainMenu />
-        <ReactViewStack
-          ref={r => (this._viewStack = r)}
-          transitionType={ETransitionType.PAGE_CROSSED}
-          transitionControl={this.transitionControl.bind(this)}
-          onNotFound={this.pageNotFoundHandler.bind(this)}
-        />
+        {isEnv(EEnv.DEV) && this.state.showGrid && (
+          <GridLayout maxWidth={1024} />
+        )}
+        <div className={className(component, "wrapper")}>
+          <MainMenu />
+          <ReactViewStack
+            ref={r => (this._viewStack = r)}
+            transitionType={ETransitionType.PAGE_CROSSED}
+            transitionControl={this.transitionControl.bind(this)}
+            onNotFound={this.pageNotFoundHandler.bind(this)}
+          />
+        </div>
       </div>
     );
   }
