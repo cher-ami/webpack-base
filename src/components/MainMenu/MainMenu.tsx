@@ -26,15 +26,12 @@ function MainMenu(props: IProps) {
           <a href={`/`} children={"Home"} data-internal-link />
         </li>
         <li>
-          <a href={`/blog`} children={"Blog"} data-internal-link />
-        </li>
-        <li>
           <a
             href={Router.generateURL({
               page: "ArticlePage",
               parameters: {
                 id: 5,
-                slug: "super-article"
+                slug: "custom-slug-article"
               }
             })}
             data-internal-link

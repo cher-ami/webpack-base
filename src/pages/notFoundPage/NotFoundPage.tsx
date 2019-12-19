@@ -16,12 +16,21 @@ const { component, log } = prepare("NotFoundPage");
  * @name NotFoundPage
  */
 class NotFoundPage extends ReactPage<IProps, IStates> {
+  // local
   protected rootRef: RefObject<HTMLDivElement>;
 
   constructor(pProps: IProps, pContext: any) {
+    // relay
     super(pProps, pContext);
+    // create ref
     this.rootRef = React.createRef();
   }
+
+  // --------------------------------------------------------------------------- LIFE
+
+  componentDidMount(): void {}
+
+  // --------------------------------------------------------------------------- TRANSITION
 
   /**
    * Action on this page.
@@ -35,7 +44,7 @@ class NotFoundPage extends ReactPage<IProps, IStates> {
    * Play in animation.
    * Call complete handler when animation is done.
    */
-  protected playInPromiseHandler(pCompleteHandler: () => void) {
+  protected playInHandler(pCompleteHandler: () => void) {
     return PageTransitionHelper.promisePlayIn(this.rootRef, pCompleteHandler);
   }
 
@@ -43,9 +52,11 @@ class NotFoundPage extends ReactPage<IProps, IStates> {
    * Play out animation.
    * Call complete handler when animation is done.
    */
-  protected playOutPromiseHandler(pCompleteHandler: () => void) {
+  protected playOutHandler(pCompleteHandler: () => void) {
     return PageTransitionHelper.promisePlayOut(this.rootRef, pCompleteHandler);
   }
+
+  // --------------------------------------------------------------------------- RENDER
 
   render() {
     return (

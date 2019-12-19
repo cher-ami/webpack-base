@@ -35,7 +35,6 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "react-grid-layout-component": "^4.0.0",
-    "wouter": "^2.4.0",
     "zepto": "^1.2.0",
     "zepto-webpack": "^1.2.1"
   },

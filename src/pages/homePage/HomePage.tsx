@@ -6,8 +6,10 @@ import { ReactPage } from "../../lib/solidify/react/ReactPage";
 
 interface IProps {
   classNames?: string[];
-  setCurrentStep?: (step: string) => void;
-  currentStep?: string;
+
+  // from store
+  setcurrentPageName?: (pPageName: string) => void;
+  currentPageName?: string;
 }
 interface IStates {}
 
@@ -18,13 +20,24 @@ const { component, log } = prepare("HomePage");
  * @name HomePage
  */
 class HomePage extends ReactPage<IProps, IStates> {
+  // define ref
   protected rootRef: RefObject<HTMLDivElement>;
 
   constructor(pProps: IProps, pContext: any) {
+    // relay
     super(pProps, pContext);
+    // create ref
     this.rootRef = React.createRef();
-    this.props.setCurrentStep(component);
   }
+
+  // --------------------------------------------------------------------------- LIFE
+
+  componentDidMount(): void {
+    // set current page name in store
+    this.props?.setcurrentPageName?.(component);
+  }
+
+  // --------------------------------------------------------------------------- TRANSITION
 
   /**
    * Action on this page.
@@ -38,7 +51,7 @@ class HomePage extends ReactPage<IProps, IStates> {
    * Play in animation.
    * Call complete handler when animation is done.
    */
-  protected playInPromiseHandler(pCompleteHandler: () => void) {
+  protected playInHandler(pCompleteHandler: () => void) {
     return PageTransitionHelper.promisePlayIn(this.rootRef, pCompleteHandler);
   }
 
@@ -46,15 +59,16 @@ class HomePage extends ReactPage<IProps, IStates> {
    * Play out animation.
    * Call complete handler when animation is done.
    */
-  protected playOutPromiseHandler(pCompleteHandler: () => void) {
+  protected playOutHandler(pCompleteHandler: () => void) {
     return PageTransitionHelper.promisePlayOut(this.rootRef, pCompleteHandler);
   }
+
+  // --------------------------------------------------------------------------- RENDER
 
   render() {
     return (
       <div className={component} ref={this.rootRef}>
         {component}
-        <p>Current Step : {this.props.currentStep}</p>
       </div>
     );
   }

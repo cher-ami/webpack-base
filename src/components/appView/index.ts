@@ -1,6 +1,6 @@
-import HomePage from "./HomePage";
-import { connect } from "react-redux";
+import AppView from "./AppView";
 import { setcurrentPageName } from "../../stores/common/actions";
+import { connect } from "react-redux";
 
 /**
  * Map state to component props
@@ -30,4 +30,4 @@ const connector = connect(mapStateToProps, mapDispatchToProps, null, {
   forwardRef: true
 });
 
-export default connector(HomePage);
+export default connector(AppView);

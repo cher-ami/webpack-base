@@ -6,6 +6,7 @@ import { prepare } from "../../helpers/prepare";
 
 interface IProps {}
 interface IStates {}
+
 // prepare
 const { component, log } = prepare("%%capitalComponentName%%");
 
@@ -20,7 +21,9 @@ class %%capitalComponentName%% extends ReactPage<IProps, IStates> {
   protected rootRef: RefObject<HTMLDivElement>;
 
   constructor(pProps: IProps, pContext: any) {
+    // relay
     super(pProps, pContext);
+    // create ref
     this.rootRef = React.createRef();
   }
 
