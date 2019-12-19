@@ -7,3 +7,12 @@ export enum EPlayState {
   PLAY_IN,
   VISIBLE
 }
+
+/**
+ * Env names list
+ */
+export enum EEnv {
+  DEV = "development",
+  STAGING = "staging",
+  PROD = "production"
+}

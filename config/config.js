@@ -16,7 +16,7 @@ module.exports = {
   /**
    * Clean outputfolder before every build
    */
-  cleanOutputfolder: false,
+  cleanOutputfolder: true,
 
   /**
    * Scaffold compatible folder

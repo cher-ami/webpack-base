@@ -12,12 +12,29 @@
 @black-color: #000;
 @white-color: #fff;
 
-// ----------------------------------------------------------------------------- PROPERTIES
+// ----------------------------------------------------------------------------- VAR
 
-@font-base-path: './';
+@font-base-path: "./";
 
-// grid
-@total-columns-number: 12;
-@grid-gutter:20px;
-@one-column-grid: (100vw / @total-columns-number);
+// ----------------------------------------------------------------------------- GRID
 
+// columns
+@total-column-number: 12;
+@total-column-number-mobile: 4;
+
+// gutters
+@gutter-size: 35;
+@gutter-size-px: unit(@gutter-size, px);
+
+@gutter-size-mobile: 30;
+@gutter-size-mobile-px: unit(@gutter-size-mobile, px);
+
+// maximum grid size
+@max-width-grid: 1106;
+@max-width-grid-px: unit(@max-width-grid, px);
+
+// ----------------------------------------------------------------------------- TRANSITIONS
+
+// transitions
+@transitions-default-speed: 300ms;
+@transitions-default-ease: cubic-bezier(0.215, 0.61, 0.355, 1);
