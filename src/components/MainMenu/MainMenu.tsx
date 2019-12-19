@@ -1,7 +1,7 @@
 import "./MainMenu.less";
 import React from "react";
 import { classBlock, className } from "../../helpers/className";
-import { prepare } from "../../helpers/prepare";
+import { prepareComponent } from "../../helpers/prepareComponent";
 import { Router } from "../../lib/solidify/navigation/Router";
 
 interface IProps {
@@ -9,7 +9,7 @@ interface IProps {
 }
 
 // Prepare
-const { component, log } = prepare("MainMenu");
+const { component, log } = prepareComponent("MainMenu");
 
 /**
  * @name MainMenu
@@ -26,15 +26,12 @@ function MainMenu(props: IProps) {
           <a href={`/`} children={"Home"} data-internal-link />
         </li>
         <li>
-          <a href={`/blog`} children={"Blog"} data-internal-link />
-        </li>
-        <li>
           <a
             href={Router.generateURL({
               page: "ArticlePage",
               parameters: {
                 id: 5,
-                slug: "super-article"
+                slug: "custom-slug-article"
               }
             })}
             data-internal-link

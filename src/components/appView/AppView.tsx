@@ -7,8 +7,8 @@ import {
 } from "../../lib/solidify/react/ReactViewStack";
 import { IRouteMatch, Router } from "../../lib/solidify/navigation/Router";
 import { IPage } from "../../lib/solidify/navigation/IPage";
-import MainMenu from "../mainMenu/MainMenu";
-import { prepare } from "../../helpers/prepare";
+import MainMenu from "../MainMenu/MainMenu";
+import { prepareComponent } from "../../helpers/prepareComponent";
 import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
 import { EEnv } from "../../types";
 import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
@@ -16,14 +16,16 @@ import { className } from "../../helpers/className";
 
 // ------------------------------------------------------------------------------- STRUCT
 
-export interface IProps {}
+export interface IProps {
+  currentPageName?: string;
+}
 
 export interface IStates {
   showGrid?: boolean;
 }
 
 // prepare
-const { component, log } = prepare("AppView");
+const { component, log } = prepareComponent("AppView");
 
 /**
  * @name AppView
@@ -121,7 +123,7 @@ class AppView extends Component<IProps, IStates> {
     // get not found page name
     const pageName = "NotFoundPage";
     // get not found page
-    const notFoundPage = () => require("../../pages/notFoundPage/NotFoundPage");
+    const notFoundPage = () => require("../../pages/notFoundPage");
     // show not found page
     this._viewStack.showPage(pageName, notFoundPage, "index", {});
   }
@@ -155,6 +157,10 @@ class AppView extends Component<IProps, IStates> {
           <GridLayout maxWidth={1024} />
         )}
         <div className={className(component, "wrapper")}>
+          <div className={className(component, "reduxExample")}>
+            CurrentPageName from redux store:{" "}
+            <strong>{this.props.currentPageName}</strong>
+          </div>
           <MainMenu />
           <ReactViewStack
             ref={r => (this._viewStack = r)}

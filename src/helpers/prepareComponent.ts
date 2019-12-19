@@ -1,16 +1,15 @@
 import debug from "debug";
 
 /**
- * @name prepare
+ * @name prepareComponent
  * @description return component name and log debug tool
  * @param pComponentName
  */
-export const prepare = (
+export const prepareComponent = (
   pComponentName: string
 ): { component: string; log: debug } => {
   // get component name
   const component: string = pComponentName;
-
   // prepare log
   const log = debug(`${require("../../package.json").name}:${component}`);
 

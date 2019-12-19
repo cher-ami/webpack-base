@@ -1,0 +1,4 @@
+import %%capitalComponentName%% from "./%%capitalComponentName%%";
+
+// Export without redux connection
+export default %%capitalComponentName%%;

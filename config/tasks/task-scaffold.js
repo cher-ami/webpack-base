@@ -66,6 +66,15 @@ const askComponentName = () => {
   });
 };
 
+const askConnectToStore = () => {
+  return Inquirer.prompt({
+    type: "confirm",
+    message: "connect component to store ?",
+    name: "connectToStore",
+    default: false
+  });
+};
+
 /**
  * Ask question and scaffold a component with a specific script template
  * @returns {Promise<any>}
@@ -85,12 +94,17 @@ const componentScaffolder = () =>
       componentName = answer.componentName;
     });
 
+    let connectToStore = false;
+    await askConnectToStore().then(answer => {
+      connectToStore = answer.connectToStore;
+    });
+
     // component name "ComponentName" for subfolder and component
     let lowerComponentName = changeCase.camelCase(componentName);
     let upperComponentName = changeCase.pascalCase(componentName);
 
     // Base path of the component (no extension here)
-    let componentPath = `${paths.src}/${subFolder}/${lowerComponentName}/${upperComponentName}`;
+    let componentPath = `${paths.src}/${subFolder}/${lowerComponentName}`;
 
     // Check if component already exists
     if (Files.getFiles(`${componentPath}.js`).files.length > 0) {
@@ -102,13 +116,26 @@ const componentScaffolder = () =>
     const type = subFolder === "pages" ? "reactPage" : "reactComponent";
 
     // Scaffold the script
-    Files.new(`${componentPath}.tsx`).write(
+    Files.new(`${componentPath}/${upperComponentName}.tsx`).write(
       QuickTemplate(Files.getFiles(`${paths.skeletonsPath}/${type}`).read(), {
         capitalComponentName: upperComponentName,
         componentType: subFolder
       })
     );
-    Files.new(`${componentPath}.less`).write(
+
+    // index type depend of conect to store answer
+    const indexType = connectToStore ? "reactIndexRedux" : "reactIndex";
+
+    Files.new(`${componentPath}/index.ts`).write(
+      QuickTemplate(
+        Files.getFiles(`${paths.skeletonsPath}/${indexType}`).read(),
+        {
+          capitalComponentName: upperComponentName
+        }
+      )
+    );
+
+    Files.new(`${componentPath}/${upperComponentName}.less`).write(
       QuickTemplate(
         Files.getFiles(`${paths.skeletonsPath}/lessComponent`).read(),
         {

@@ -29,7 +29,6 @@ export class ReactPage<Props, States> extends ReactView<Props, States>
     super(pProps, pContext);
 
     // Call action
-    // FIXME : Useful ?
     this.action();
   }
 
@@ -54,7 +53,7 @@ export class ReactPage<Props, States> extends ReactView<Props, States>
       this._playState = EPagePlayState.PLAYING_IN;
 
       // Execute page animation
-      this.playInPromiseHandler(() => {
+      this.playInHandler(() => {
         // Unlock animating
         this._playState = EPagePlayState.VISIBLE;
 
@@ -78,7 +77,7 @@ export class ReactPage<Props, States> extends ReactView<Props, States>
       this._playState = EPagePlayState.PLAYING_OUT;
 
       // Execute page animation
-      this.playOutPromiseHandler(() => {
+      this.playOutHandler(() => {
         // Unlock animating
         this._playState = null;
 
@@ -92,7 +91,7 @@ export class ReactPage<Props, States> extends ReactView<Props, States>
    * Override this method to implement play in animation.
    * Call complete handler when animation is done.
    */
-  protected playInPromiseHandler(pCompleteHandler: () => void) {
+  protected playInHandler(pCompleteHandler: () => void) {
     pCompleteHandler();
   }
 
@@ -100,7 +99,7 @@ export class ReactPage<Props, States> extends ReactView<Props, States>
    * Override this method to implement play out animation.
    * Call complete handler when animation is done.
    */
-  protected playOutPromiseHandler(pCompleteHandler: () => void) {
+  protected playOutHandler(pCompleteHandler: () => void) {
     pCompleteHandler();
   }
 }

@@ -1,15 +1,16 @@
 import "./Main.less";
-import { hot } from "react-hot-loader/root";
 import ReactDOM from "react-dom";
 import * as React from "react";
-import AppView from "./components/appView/AppView";
 import { GlobalConfig } from "./data/GlobalConfig";
-import { prepare } from "./helpers/prepare";
+import { prepareComponent } from "./helpers/prepareComponent";
 import { Router } from "./lib/solidify/navigation/Router";
 import { customLog } from "./helpers/customLog";
+import { Provider } from "react-redux";
+import configureStore from "./stores/index";
+import AppView from "./components/appView";
 
 // prepare
-const { component, log } = prepare("Main");
+const { log } = prepareComponent("Main");
 
 // ----------------------------------------------------------------------------- INJECT DATA
 
@@ -35,19 +36,13 @@ Router.init(GlobalConfig.instance.base, [
     url: "/",
     page: "HomePage",
     // Use require to load synchronously
-    importer: () => require("./pages/homePage/HomePage")
-    // Use import to load asynchronously
-    // importer: () => import("./pages/homePage/HomePage")
-  },
-  {
-    url: "/blog",
-    page: "BlogPage",
-    importer: () => require("./pages/blogPage/BlogPage")
+    importer: () => require("./pages/homePage")
+    // Use import to load asynchronously -> importer: () => import("./pages/homePage/HomePage")
   },
   {
     url: "/article-{#id}-{slug}",
     page: "ArticlePage",
-    importer: () => require("./pages/articlePage/ArticlePage")
+    importer: () => require("./pages/articlePage")
   }
 ]);
 
@@ -57,4 +52,9 @@ Router.listenLinks();
 // ----------------------------------------------------------------------------- START
 
 // React render
-ReactDOM.render(<AppView />, document.getElementById("AppContainer"));
+ReactDOM.render(
+  <Provider store={configureStore()}>
+    <AppView />
+  </Provider>,
+  document.getElementById("AppContainer")
+);
