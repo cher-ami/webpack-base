@@ -22,9 +22,10 @@ GlobalConfig.instance.inject({
   env: process.env.ENV
 });
 
-// Add log in console
-["env", "version", "base"].map(el => {
-  customLog(log, `${el}: ${GlobalConfig.instance[el]}`);
+log("GlobalConfig", {
+  version: GlobalConfig.instance.version,
+  base: GlobalConfig.instance.base,
+  env: GlobalConfig.instance.env
 });
 
 // ----------------------------------------------------------------------------- ROUTES
