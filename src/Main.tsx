@@ -4,11 +4,10 @@ import * as React from "react";
 import { GlobalConfig } from "./data/GlobalConfig";
 import { prepareComponent } from "./helpers/prepareComponent";
 import { Router } from "./lib/solidify/navigation/Router";
-import { customLog } from "./helpers/customLog";
 import { Provider } from "react-redux";
+import { HelmetProvider } from "react-helmet-async";
 import configureStore from "./stores/index";
 import AppView from "./components/appView";
-import { Helmet, HelmetProvider } from "react-helmet-async";
 
 // prepare
 const { log } = prepareComponent("Main");
