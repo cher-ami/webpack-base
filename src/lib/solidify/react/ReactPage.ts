@@ -1,6 +1,7 @@
 import { ReactView } from "./ReactView";
 import { EPagePlayState, IPage } from "../navigation/IPage";
 import { IActionParameters } from "../navigation/Router";
+import { Component } from "react";
 
 /**
  * Default interface for page properties
@@ -10,7 +11,7 @@ export interface ReactPageProps {
   parameters: IActionParameters;
 }
 
-export class ReactPage<Props, States> extends ReactView<Props, States>
+export class ReactPage<Props, States> extends Component<Props, States>
   implements IPage {
   /**
    * Current play in / play out state of the page.

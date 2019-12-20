@@ -16,7 +16,7 @@ module.exports = merge(common, {
    * Devtool
    * Control how source maps are generated.
    */
-  devtool: "inline-source-map",
+  devtool: "source-map",
 
   plugins: [
     /**
@@ -49,10 +49,11 @@ module.exports = merge(common, {
    */
   devServer: {
     contentBase: paths.dist,
-    open: true,
-    compress: true,
-    hot: true,
     port: 3000,
+    open: false,
+    hot: true,
+    inline: true,
+    compress: true,
     writeToDisk: false,
     historyApiFallback: true,
 

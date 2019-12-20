@@ -1,7 +1,7 @@
 import "./%%capitalComponentName%%.less";
 import React, { RefObject } from "react";
 import {ReactPage} from "../../lib/solidify/react/ReactPage";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { prepareComponent } from "../../helpers/prepareComponent";
 
 interface IProps {}

@@ -8,6 +8,7 @@ import { customLog } from "./helpers/customLog";
 import { Provider } from "react-redux";
 import configureStore from "./stores/index";
 import AppView from "./components/appView";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 // prepare
 const { log } = prepareComponent("Main");
@@ -54,7 +55,9 @@ Router.listenLinks();
 // React render
 ReactDOM.render(
   <Provider store={configureStore()}>
-    <AppView />
+    <HelmetProvider>
+      <AppView />
+    </HelmetProvider>
   </Provider>,
   document.getElementById("AppContainer")
 );

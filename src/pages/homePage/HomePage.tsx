@@ -1,8 +1,10 @@
 import "./HomePage.less";
-import React, { RefObject } from "react";
+import { RefObject } from "react";
+import * as React from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { ReactPage } from "../../lib/solidify/react/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
+import { Helmet } from "react-helmet-async";
 
 interface IProps {
   classNames?: string[];
@@ -23,6 +25,7 @@ class HomePage extends ReactPage<IProps, IStates> {
   // define ref
   protected rootRef: RefObject<HTMLDivElement>;
 
+  // constr
   constructor(pProps: IProps, pContext: any) {
     // relay
     super(pProps, pContext);
@@ -68,6 +71,9 @@ class HomePage extends ReactPage<IProps, IStates> {
   render() {
     return (
       <div className={component} ref={this.rootRef}>
+        <Helmet>
+          <title>{component}</title>
+        </Helmet>
         {component}
       </div>
     );

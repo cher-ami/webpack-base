@@ -2,8 +2,8 @@ import "./AppView.less";
 import { hot } from "react-hot-loader/root";
 import React, { Component } from "react";
 import {
-  ETransitionType,
-  ReactViewStack
+  ReactViewStack,
+  ETransitionType
 } from "../../lib/solidify/react/ReactViewStack";
 import { IRouteMatch, Router } from "../../lib/solidify/navigation/Router";
 import { IPage } from "../../lib/solidify/navigation/IPage";
