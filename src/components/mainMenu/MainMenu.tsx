@@ -3,6 +3,7 @@ import React from "react";
 import { classBlock, className } from "../../helpers/className";
 import { Router } from "../../lib/solidify/navigation/Router";
 import { prepareComponent } from "../../helpers/prepareComponent";
+import { routes } from "../../Main";
 
 interface IProps {
   classNames?: string[];
@@ -22,23 +23,25 @@ function MainMenu(props: IProps) {
   return (
     <nav className={classBlock([component, props.classNames])}>
       <ul className={className(component, "items")}>
-        <li>
-          <a href={`/`} children={"Home"} data-internal-link />
-        </li>
-        <li>
-          <a
-            href={Router.generateURL({
-              page: "ArticlePage",
-              parameters: {
-                id: 5,
-                slug: "custom-slug-article"
-              }
-            })}
-            data-internal-link
-          >
-            Article
-          </a>
-        </li>
+        {routes.map((el, i) => {
+          const parameters = {
+            id: el?.parameters?.id,
+            slug: el?.parameters?.slug
+          };
+          return (
+            <li key={i}>
+              <a
+                href={Router.generateURL({
+                  page: el.page,
+                  parameters: el.parameters ? parameters : null
+                })}
+                //href={el.url}
+                children={el.metas.name}
+                data-internal-link
+              />
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );

@@ -21,6 +21,7 @@ GlobalConfig.instance.inject({
   env: process.env.ENV
 });
 
+// log Global config
 log("GlobalConfig", {
   version: GlobalConfig.instance.version,
   base: GlobalConfig.instance.base,
@@ -29,23 +30,34 @@ log("GlobalConfig", {
 
 // ----------------------------------------------------------------------------- ROUTES
 
-// Init router
-// Google analytics is automatically called when page is changing
-
-Router.init(GlobalConfig.instance.base, [
+export const routes = [
   {
     url: "/",
     page: "HomePage",
     // Use require to load synchronously
-    importer: () => require("./pages/homePage")
+    importer: () => require("./pages/homePage"),
     // Use import to load asynchronously -> importer: () => import("./pages/homePage/HomePage")
+    metas: {
+      name: "Home"
+    }
   },
   {
     url: "/article-{#id}-{slug}",
     page: "ArticlePage",
-    importer: () => require("./pages/articlePage")
+    importer: () => require("./pages/articlePage"),
+    metas: {
+      name: "Article"
+    },
+    parameters: {
+      id: 10,
+      slug: "custom-slug-article"
+    }
   }
-]);
+];
+
+// Init router
+// Google analytics is automatically called when page is changing
+Router.init(GlobalConfig.instance.base, routes);
 
 // Enable auto link listening
 Router.listenLinks();

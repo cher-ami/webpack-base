@@ -113,7 +113,7 @@ class AppView extends Component<IProps, IStates> {
    * When route has changed
    */
   protected routeChangedHandler(pRouteMatch: IRouteMatch) {
-    log("Route changed", pRouteMatch);
+    // log("Route changed", pRouteMatch);
   }
 
   /**
