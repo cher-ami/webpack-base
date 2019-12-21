@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es5",
     "baseUrl": "./src",
     "lib": ["es2015.promise", "es6", "dom", "esnext"],

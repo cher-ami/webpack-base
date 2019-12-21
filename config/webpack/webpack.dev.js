@@ -19,6 +19,26 @@ module.exports = merge(common, {
    */
   devtool: "source-map",
 
+  module: {
+    rules: [
+      /**
+       * JavaScript
+       * Use Babel to transpile JavaScript files.
+       * Overwrite common config to add react-refresh/babel only on development
+       */
+      {
+        test: /\.(js|jsx|ts|tsx|mjs)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "babel-loader",
+            options: { plugins: ["react-refresh/babel"] }
+          }
+        ]
+      }
+    ]
+  },
+
   plugins: [
     /**
      * Friendly error

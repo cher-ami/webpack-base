@@ -8,6 +8,10 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = merge(common, {
+  /**
+   * Mode
+   * Set the mode to development or production.
+   */
   mode: "production",
   output: {
     path: config.outputPath,
@@ -33,7 +37,7 @@ module.exports = merge(common, {
     new CopyWebpackPlugin([
       {
         from: config.outputPath,
-        //to: "assets",
+        to: "/",
         ignore: ["*.DS_Store"]
       }
     ])
