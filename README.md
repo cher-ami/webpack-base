@@ -9,10 +9,14 @@ Web base project using:
 
 Tools:
 
-- [React Hot Loader](https://github.com/gaearon/react-hot-loader)
+- [React Fast Refrest](https://github.com/pmmmwh/react-refresh-webpack-plugin)
 - [Prettier](https://prettier.io/)
 - [Debug](https://www.npmjs.com/package/debug)
 
 ## License
 
 MIT
+
+## Credit
+
+© Willy Brauner
