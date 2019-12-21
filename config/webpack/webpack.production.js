@@ -7,7 +7,10 @@ const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-module.exports = merge(common, {
+/**
+ * Production Webpack Configuration
+ */
+const productionConfig = {
   /**
    * Mode
    * Set the mode to development or production.
@@ -70,4 +73,7 @@ module.exports = merge(common, {
     all: false,
     assets: true
   }
-});
+};
+
+// Export merge config
+module.exports = merge(common, productionConfig);

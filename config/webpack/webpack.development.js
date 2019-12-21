@@ -6,7 +6,10 @@ const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
-module.exports = merge(common, {
+/**
+ * Development Webpack Configuration
+ */
+const developmentConfig = {
   /**
    * Mode
    * Set the mode to development or production.
@@ -102,4 +105,7 @@ module.exports = merge(common, {
     // pass to true if you don't want to print compile file in the console
     quiet: true
   }
-});
+};
+
+// Export merge config
+module.exports = merge(common, developmentConfig);

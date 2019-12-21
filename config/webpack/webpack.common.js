@@ -7,7 +7,10 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const ManifestPlugin = require("webpack-manifest-plugin");
 
-module.exports = {
+/**
+ * Common Webpack Configuration
+ */
+commonConfig = {
   /**
    * Entry
    * The first place Webpack looks to start building the bundle.
@@ -171,3 +174,6 @@ module.exports = {
     ]
   }
 };
+
+// export config
+module.exports = commonConfig;
