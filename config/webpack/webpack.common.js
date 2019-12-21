@@ -32,7 +32,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json", "less", "css"],
     alias: {
-      "react-dom": "@hot-loader/react-dom"
+      // "react-dom": "@hot-loader/react-dom"
     },
     modules: [paths.nodeModules, paths.src]
   },

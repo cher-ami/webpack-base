@@ -4,6 +4,7 @@ const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 module.exports = merge(common, {
   /**
@@ -30,8 +31,8 @@ module.exports = merge(common, {
     /**
      * Hot reload
      */
+    new ReactRefreshWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-
     /**
      * Generate Html webpack plugin
      */
