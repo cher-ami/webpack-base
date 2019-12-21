@@ -4,6 +4,7 @@ const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 module.exports = merge(common, {
   /**
@@ -28,12 +29,24 @@ module.exports = merge(common, {
     }),
 
     /**
-     * Hot reload
+     * React Fast Refresh
+     * @doc https://github.com/pmmmwh/react-refresh-webpack-plugin
+     * IMPORTANT: this is a beta version but work fine
+     */
+    new ReactRefreshWebpackPlugin({
+      disableRefreshCheck: true,
+      forceEnable: false
+    }),
+
+    /**
+     * Enables Hot Module Replacement, otherwise known as HMR
+     * @doc https://webpack.js.org/plugins/hot-module-replacement-plugin/
      */
     new webpack.HotModuleReplacementPlugin(),
 
     /**
-     * Generate Html webpack plugin
+     * The HtmlWebpackPlugin simplifies creation of HTML files to serve your webpack bundles.
+     * @doc https://webpack.js.org/plugins/html-webpack-plugin/
      */
     new HtmlWebpackPlugin({
       title: "Webpack base",
