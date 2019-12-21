@@ -1,5 +1,4 @@
 import "./AppView.less";
-import { hot } from "react-hot-loader/root";
 import React, { Component } from "react";
 import {
   ReactViewStack,
@@ -179,4 +178,4 @@ class AppView extends Component<IProps, IStates> {
   }
 }
 
-export default hot(AppView);
+export default AppView;

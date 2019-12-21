@@ -29,12 +29,24 @@ module.exports = merge(common, {
     }),
 
     /**
-     * Hot reload
+     * React Fast Refresh
+     * @doc https://github.com/pmmmwh/react-refresh-webpack-plugin
+     * IMPORTANT: this is a beta version but work fine
      */
-    new ReactRefreshWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin({
+      disableRefreshCheck: true,
+      forceEnable: false
+    }),
+
     /**
-     * Generate Html webpack plugin
+     * Enables Hot Module Replacement, otherwise known as HMR
+     * @doc https://webpack.js.org/plugins/hot-module-replacement-plugin/
+     */
+    new webpack.HotModuleReplacementPlugin(),
+
+    /**
+     * The HtmlWebpackPlugin simplifies creation of HTML files to serve your webpack bundles.
+     * @doc https://webpack.js.org/plugins/html-webpack-plugin/
      */
     new HtmlWebpackPlugin({
       title: "Webpack base",
