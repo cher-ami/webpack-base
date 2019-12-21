@@ -36,7 +36,7 @@ export const routes = [
     page: "HomePage",
     // Use require to load synchronously
     importer: () => require("./pages/homePage"),
-    // Use import to load asynchronously -> importer: () => import("./pages/homePage/HomePage")
+    // Use import to load asynchronously -> importer: () => import("./pages/homePage")
     metas: {
       name: "Home"
     }

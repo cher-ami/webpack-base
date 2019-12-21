@@ -146,7 +146,6 @@ class AppView extends Component<IProps, IStates> {
         this.setState({ showGrid: !this.state.showGrid });
     };
   }
-  // --------------------------------------------------------------------------- PREPARE
 
   // --------------------------------------------------------------------------- RENDER
 
