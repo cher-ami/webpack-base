@@ -2,7 +2,7 @@ const { Files } = require("@zouloux/files");
 const path = require("path");
 const nsg = require("@zouloux/node-sprite-generator");
 const Handlebars = require("handlebars");
-const { optimizeFiles } = require("./task-imagemin");
+const { optimizeFiles } = require("./imagemin");
 const paths = require("../paths");
 require("colors");
 

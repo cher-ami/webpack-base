@@ -1,6 +1,9 @@
 const appRoot = require("app-root-path");
 
 module.exports = {
+  // root folder
+  root: appRoot.resolve(""),
+
   // src folder
   src: appRoot.resolve("src"),
 
@@ -12,6 +15,9 @@ module.exports = {
 
   // node modules
   nodeModules: appRoot.resolve("node_modules"),
+
+  // .env example file
+  envExample: appRoot.resolve(".env.example"),
 
   // .env file
   env: appRoot.resolve(".env"),
