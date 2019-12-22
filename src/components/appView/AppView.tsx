@@ -1,4 +1,5 @@
-import "./AppView.less";
+// import "./AppView.less";
+import css from "./AppView.module.less";
 import React, { Component } from "react";
 import {
   ReactViewStack,
@@ -151,7 +152,7 @@ class AppView extends Component<IProps, IStates> {
 
   render() {
     return (
-      <div className={component}>
+      <div className={css.AppView}>
         {isEnv(EEnv.DEV) && this.state.showGrid && (
           <GridLayout
             columnsNumber={Atoms.grid["total-column-number"]}
@@ -159,12 +160,12 @@ class AppView extends Component<IProps, IStates> {
             maxWidth={Atoms.grid["max-width-grid"]}
           />
         )}
-        <div className={className(component, "wrapper")}>
-          <div className={className(component, "reduxExample")}>
+        <div className={[css.wrapper, css.wrapper_red].join(" ")}>
+          <div className={css.reduxExample}>
             CurrentPageName from redux store >{" "}
             <span>{this.props.currentPageName}</span>
           </div>
-          <MainMenu />
+          <MainMenu classNames={[css.mainMenu, css.mainMenu_modifier]} />
           <ReactViewStack
             ref={r => (this._viewStack = r)}
             transitionType={ETransitionType.PAGE_CROSSED}

@@ -135,7 +135,13 @@ commonConfig = {
           "style-loader",
           {
             loader: "css-loader",
-            options: { sourceMap: true, importLoaders: 1 }
+            options: {
+              sourceMap: true,
+              importLoaders: 1,
+              modules: {
+                localIdentName: "[name]__[local]--[hash:base64:5]"
+              }
+            }
           },
           { loader: "postcss-loader", options: { sourceMap: true } },
           { loader: "less-loader", options: { sourceMap: true } }

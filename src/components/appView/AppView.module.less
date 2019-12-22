@@ -1,0 +1,52 @@
+@import (reference) "../../References.less";
+
+// ----------------------------------------------------------------------------- CONFIG
+
+@COMPONENT: AppView;
+
+// ----------------------------------------------------------------------------- BLOCK
+
+.@{COMPONENT} {
+  .gridContainer();
+}
+
+// ----------------------------------------------------------------------------- ELEMENT
+
+.wrapper {
+  position: relative;
+  .gridFactor(margin-left, 2, true);
+
+  &_red {
+    color: red;
+  }
+}
+
+.reduxExample {
+  font-size: 1.1rem;
+}
+
+.mainMenu {
+  margin-top: 1rem;
+  font-size: 2rem;
+
+  &_modifier {
+    color: indianred;
+  }
+}
+
+// ----------------------------------------------------------------------------- MODIFIER
+
+.ReactViewStack {
+  margin-top: 1rem;
+  //font-size: 1rem;
+
+  > div {
+    position: absolute;
+  }
+}
+
+.GridLayout {
+  z-index: 0;
+}
+
+// ----------------------------------------------------------------------------- CHILDREN
