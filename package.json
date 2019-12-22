@@ -2,9 +2,9 @@
   "name": "webpack-base",
   "version": "0.1.0",
   "description": "Webpack boilerplate for solid javascript projects",
-  "author": "",
+  "author": "Willy Brauner",
   "license": "MIT",
-  "main": "Main.tsx",
+  "main": "src/Main.tsx",
   "keywords": [
     "webpack",
     "boilerplate",

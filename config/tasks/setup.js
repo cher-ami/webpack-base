@@ -72,20 +72,6 @@ const setupPackage = () => {
 };
 
 /**
- * Setup dependencies
- */
-const setupDependencies = async () => {
-  console.log("> Install dependencies...");
-
-  if (Files.getFolders(paths.nodeModules)) {
-    logError("> node_modules already exists. Aborting.");
-    return;
-  }
-  execSync("npm i", 3);
-  logDone();
-};
-
-/**
  * Setup env file
  */
 const setupEnvFile = () => {
@@ -109,7 +95,6 @@ const setup = () => {
   return new Promise(async resolve => {
     await setupPackage();
     await setupEnvFile();
-    // await setupDependencies();
     help();
     console.log("> Ready to ride!".green, "\n");
     resolve();
