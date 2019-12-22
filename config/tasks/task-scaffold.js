@@ -82,6 +82,7 @@ const askConnectToStore = () => {
 const componentScaffolder = () =>
   new Promise(async resolve => {
     // Static sub-folder for pages
+
     let subFolder = "";
     // Get sub-folder for components
     await askWhichComponentFolder().then(answer => {
@@ -94,6 +95,7 @@ const componentScaffolder = () =>
       componentName = answer.componentName;
     });
 
+    // Get connect to store response
     let connectToStore = false;
     await askConnectToStore().then(answer => {
       connectToStore = answer.connectToStore;
