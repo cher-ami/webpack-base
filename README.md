@@ -38,6 +38,6 @@ $ npm run setup
 
 MIT
 
-## Credit
+## Credits
 
 © Willy Brauner

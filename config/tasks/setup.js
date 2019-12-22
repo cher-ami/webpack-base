@@ -1,15 +1,16 @@
 const Inquirer = require("inquirer");
 const { Files } = require("@zouloux/files");
 const packageJson = require("../../package.json");
-const { execSync } = require("@solid-js/cli");
+const { execSync, print } = require("@solid-js/cli");
 const paths = require("../paths");
+const help = require("./help");
 const changeCase = require("change-case");
 require("colors");
 
 // ----------------------------------------------------------------------------- LOG
 
 const logDone = () => console.log("> Done.".green, "\n");
-const logError = pMessage => console.log(`${pMessage}`.red.bold, "\n");
+const logError = pMessage => console.log(`${pMessage}`.red, "\n");
 
 // ----------------------------------------------------------------------------- TASKS
 
@@ -37,7 +38,7 @@ const setupPackage = () => {
       type: "input",
       message: "Project name for package.json ? (dash-case)",
       name: "projectName"
-    }).then(answer => (projectName = answer.projectName));
+    }).then(answer => (projectName = changeCase.paramCase(answer.projectName)));
 
     // Ask user for author
     await Inquirer.prompt({
@@ -75,6 +76,11 @@ const setupPackage = () => {
  */
 const setupDependencies = async () => {
   console.log("> Install dependencies...");
+
+  if (Files.getFolders(paths.nodeModules)) {
+    logError("> node_modules already exists. Aborting.");
+    return;
+  }
   execSync("npm i", 3);
   logDone();
 };
@@ -98,13 +104,14 @@ const setupEnvFile = () => {
 
 /**
  * Setup Final
- * @returns {Promise<unknown>}
  */
 const setup = () => {
   return new Promise(async resolve => {
     await setupPackage();
     await setupEnvFile();
-    await setupDependencies();
+    // await setupDependencies();
+    help();
+    console.log("> Ready to ride!".green, "\n");
     resolve();
   });
 };
