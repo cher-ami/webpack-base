@@ -22,16 +22,16 @@ Webpack boiler plate for javascript front-end projects. This repos use out of th
 $ git clone git@github.com:willybrauner/webpack-base.git
 ```
 
-- move to folder
+- move to folder:
 
 ```shell script
 $ cd webpack-base
 ```
 
-- run setup task
+- run install script:
 
 ```shell script
-$ npm run setup
+$ ./install.sh
 ```
 
 ## License

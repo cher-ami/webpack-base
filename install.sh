@@ -1,3 +1,5 @@
+echo ""
+
 echo "Install dependencies..."
 npm i
 echo "Done."
@@ -10,5 +12,5 @@ node ./config/tasks/setup.js
 rm -rf .git
 
 # Remove install.sh...
-# rm -rf install.sh
+rm -rf install.sh
 
