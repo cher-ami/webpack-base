@@ -75,8 +75,8 @@ class ArticlePage extends ReactPage<IProps, IStates> {
           <title>Article</title>
         </Helmet>
         {component}
-        <h1>article "{this.props.parameters.slug}"</h1>
-        <h5>article ID "{this.props.parameters.id}"</h5>
+        <h5>id {this.props.parameters.id}</h5>
+        <h1>slug {this.props.parameters.slug}</h1>
       </div>
     );
   }

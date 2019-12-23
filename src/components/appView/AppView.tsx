@@ -16,9 +16,7 @@ import { merge } from "../../helpers/classNameHelper";
 
 // ------------------------------------------------------------------------------- STRUCT
 
-export interface IProps {
-  currentPageName?: string;
-}
+export interface IProps {}
 
 export interface IStates {
   showGrid?: boolean;
@@ -170,9 +168,6 @@ class AppView extends Component<IProps, IStates> {
           />
         )}
         <div className={merge([css._wrapper, css._wrapper__green])}>
-          {/* Redux example */}
-          CurrentPageName from redux store >{" "}
-          <span>{this.props.currentPageName}</span>
           {/* Main Menu */}
           <MainMenu classNames={[css._mainMenu]} />
           {/* View Stack */}

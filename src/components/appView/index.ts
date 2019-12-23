@@ -6,9 +6,7 @@ import { connect } from "react-redux";
  * @param state
  */
 const mapStateToProps = (state: any) => {
-  return {
-    currentPageName: state.common.currentPageName
-  };
+  return {};
 };
 
 /**
