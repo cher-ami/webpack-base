@@ -59,9 +59,6 @@ export const routes = [
 // Google analytics is automatically called when page is changing
 Router.init(GlobalConfig.instance.base, routes);
 
-// Enable auto link listening
-Router.listenLinks();
-
 // ----------------------------------------------------------------------------- START
 
 // React render
@@ -73,3 +70,6 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("AppContainer")
 );
+
+// Enable auto link listening
+Router.listenLinks();
