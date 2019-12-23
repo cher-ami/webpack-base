@@ -300,44 +300,33 @@ export class EnvUtils {
    * has-video
    * has-geolocation
    */
-  static addClasses(pToSelector: string = "body", pPrefix = ""): void {
+  static addClasses(
+    domRoot: HTMLElement = document.body,
+    pPrefix: string = ""
+  ): void {
     // Get env properties
     EnvUtils.initDetection();
 
     // Wait DOM
-    $(() => {
-      // Target selector
-      let $domRoot = $(pToSelector);
-
+    window.onload = () => {
       // Add env properties classes
-      $domRoot.addClass(
-        pPrefix +
-          "is-" +
-          StringUtils.dashToCamelCase(EBrowser[EnvUtils.__BROWSER], "_")
-      );
-      $domRoot.addClass(
-        pPrefix +
-          "is-" +
-          StringUtils.dashToCamelCase(
-            EBrowserEngine[EnvUtils.__BROWSER_ENGINE],
-            "_"
-          )
-      );
-      $domRoot.addClass(
-        pPrefix +
-          "is-" +
-          StringUtils.dashToCamelCase(EDeviceType[EnvUtils.__DEVICE_TYPE], "_")
-      );
-      $domRoot.addClass(
-        pPrefix +
-          "is-" +
-          StringUtils.dashToCamelCase(EPlatform[EnvUtils.__PLATFORM], "_")
-      );
+      [
+        EBrowser[EnvUtils.__BROWSER],
+        EBrowser[EnvUtils.__BROWSER_ENGINE],
+        EDeviceType[EnvUtils.__DEVICE_TYPE],
+        EPlatform[EnvUtils.__PLATFORM]
+      ].map(el => {
+        // add class to dom
+        domRoot.classList.add(
+          pPrefix + "is-" + StringUtils.dashToCamelCase(el, "_")
+        );
+      });
 
       // Add capabilites
       for (let i in EnvUtils.__CAPABILITIES) {
-        EnvUtils.__CAPABILITIES[i] && $domRoot.addClass(pPrefix + "has-" + i);
+        EnvUtils.__CAPABILITIES[i] &&
+          domRoot.classList.add(pPrefix + "has-" + i);
       }
-    });
+    };
   }
 }

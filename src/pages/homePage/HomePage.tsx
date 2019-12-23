@@ -2,7 +2,7 @@ import css from "./HomePage.module.less";
 import { RefObject } from "react";
 import * as React from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
-import { ReactPage } from "../../lib/solidify/react/ReactPage";
+import { ReactPage } from "../../lib/react/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import { Helmet } from "react-helmet-async";
 

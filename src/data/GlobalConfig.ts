@@ -28,7 +28,7 @@ export class GlobalConfig extends GlobalConfigProperties {
   /**
    * Get GlobalConfig singleton instance.
    */
-  static get instance(): GlobalConfig {
+  public static get instance(): GlobalConfig {
     // Create instance
     if (GlobalConfig.__instance == null) {
       GlobalConfig.__instance = new GlobalConfig();

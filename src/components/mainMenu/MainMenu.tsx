@@ -1,8 +1,8 @@
 import css from "./MainMenu.module.less";
 import React from "react";
-import { Router } from "../../lib/solidify/navigation/Router";
+import { Router } from "../../lib/navigation/Router";
 import { prepareComponent } from "../../helpers/prepareComponent";
-import { routes } from "../../Main";
+import Main from "../../Main";
 import { merge } from "../../helpers/classNameHelper";
 
 interface IProps {
@@ -23,7 +23,7 @@ function MainMenu(props: IProps) {
   return (
     <nav className={merge([css.MainMenu, props.classNames])}>
       <ul className={css.items}>
-        {routes.map((el, i) => {
+        {Main.routes.map((el, i) => {
           const parameters = {
             id: el?.parameters?.id,
             slug: el?.parameters?.slug

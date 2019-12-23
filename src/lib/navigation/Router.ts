@@ -321,7 +321,12 @@ export class Router {
    * @param pLinkSignature Signature to listen.
    */
   static listenLinks(pLinkSignature = "a[data-internal-link]") {
-    $(document).on("click", pLinkSignature, this.linkClickedHandler);
+    // get all elements who have pLinkSignature
+    const links = document.querySelectorAll(pLinkSignature);
+    // listen click
+    links.forEach(item =>
+      item.addEventListener("click", this.linkClickedHandler)
+    );
   }
 
   /**
@@ -332,16 +337,14 @@ export class Router {
     // Do not follow link
     pEvent.preventDefault();
 
-    // Cibler le lien dans la DOM
-    let $target = $(pEvent.currentTarget);
+    // get current target
+    const currentTarget = pEvent.currentTarget as HTMLElement;
 
-    // Get href
-    let fullPath = $target.attr("href");
+    // get htef on it
+    const fullPath = currentTarget.getAttribute("href");
 
     // Do not go further if link does exists
     if (fullPath == null) return;
-
-    // FIXME : Faire une fonction pour faire un replaceState ? Utile ?
 
     // Follow link
     Router.openURL(fullPath);

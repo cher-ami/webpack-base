@@ -44,9 +44,9 @@ commonConfig = {
       ".css"
     ],
     alias: {
-      // "react": "preact/compat",
+      // react: "preact/compat",
       // "react-dom/test-utils": "preact/test-utils",
-      // "react-dom": "preact/compat",
+      // "react-dom": "preact/compat"
     },
     modules: [paths.nodeModules, paths.src]
   },
@@ -112,13 +112,6 @@ commonConfig = {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
-    }),
-
-    /**
-     * Provide Plugin
-     */
-    new webpack.ProvidePlugin({
-      $: "zepto-webpack"
     })
   ],
 
