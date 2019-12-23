@@ -137,9 +137,9 @@ const componentScaffolder = () =>
       )
     );
 
-    Files.new(`${componentPath}/${upperComponentName}.less`).write(
+    Files.new(`${componentPath}/${upperComponentName}.module.less`).write(
       QuickTemplate(
-        Files.getFiles(`${paths.skeletonsPath}/lessComponent`).read(),
+        Files.getFiles(`${paths.skeletonsPath}/lessModuleComponent`).read(),
         {
           capitalComponentName: upperComponentName,
           componentType: subFolder

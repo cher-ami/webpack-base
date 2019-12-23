@@ -25,7 +25,11 @@ class HomePage extends ReactPage<IProps, IStates> {
   // define ref
   protected rootRef: RefObject<HTMLDivElement>;
 
-  // constr
+  /**
+   * Constructor
+   * @param pProps
+   * @param pContext
+   */
   constructor(pProps: IProps, pContext: any) {
     // relay
     super(pProps, pContext);

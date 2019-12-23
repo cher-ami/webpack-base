@@ -1,6 +1,6 @@
-import './%%capitalComponentName%%.less';
+import css from './%%capitalComponentName%%.module.less';
 import React from 'react';
-import { classBlock } from "../../helpers/className";
+import { merge } from "../../helpers/classNameHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 
 interface IProps {
@@ -18,7 +18,7 @@ function %%capitalComponentName%% (props: IProps) {
 
   // --------------------------------------------------------------------------- RENDER
 
-  return <div className={classBlock([component, props.classNames])}>
+  return <div className={merge([css.%%capitalComponentName%%, props.classNames])}>
       {component}
   </div>
 }

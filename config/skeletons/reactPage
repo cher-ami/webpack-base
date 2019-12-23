@@ -1,4 +1,4 @@
-import "./%%capitalComponentName%%.less";
+import css from "./%%capitalComponentName%%.module.less";
 import React, { RefObject } from "react";
 import {ReactPage} from "../../lib/solidify/react/ReactPage";
 import { Helmet } from "react-helmet-async";
@@ -20,6 +20,11 @@ class %%capitalComponentName%% extends ReactPage<IProps, IStates> {
   // get root ref
   protected rootRef: RefObject<HTMLDivElement>;
 
+  /**
+   * Constructor
+   * @param pProps
+   * @param pContext
+   */
   constructor(pProps: IProps, pContext: any) {
     // relay
     super(pProps, pContext);
@@ -57,7 +62,7 @@ class %%capitalComponentName%% extends ReactPage<IProps, IStates> {
 
   render() {
     return (
-      <div className={component} ref={this.rootRef}>
+      <div className={css.%%capitalComponentName%%} ref={this.rootRef}>
         <Helmet>
           <title>{component}</title>
         </Helmet>
