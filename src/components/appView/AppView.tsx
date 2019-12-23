@@ -38,6 +38,11 @@ class AppView extends Component<IProps, IStates> {
 
   // --------------------------------------------------------------------------- INIT
 
+  /**
+   * Constructor
+   * @param props
+   * @param context
+   */
   constructor(props: IProps, context: any) {
     super(props, context);
 
@@ -164,12 +169,12 @@ class AppView extends Component<IProps, IStates> {
             maxWidth={Atoms.grid["max-width-grid"]}
           />
         )}
-        <div className={merge([css.wrapper, css.wrapper_green])}>
+        <div className={merge([css._wrapper, css._wrapper__green])}>
           {/* Redux example */}
           CurrentPageName from redux store >{" "}
           <span>{this.props.currentPageName}</span>
           {/* Main Menu */}
-          <MainMenu classNames={[css.mainMenu, css.mainMenu_modifier]} />
+          <MainMenu classNames={[css._mainMenu]} />
           {/* View Stack */}
           <ReactViewStack
             ref={r => (this._viewStack = r)}

@@ -22,16 +22,17 @@ function MainMenu(props: IProps) {
 
   return (
     <nav className={merge([css.MainMenu, props.classNames])}>
-      <ul className={css.items}>
+      <ul className={css._items}>
+        {/* Map availables routes */}
         {Main.routes.map((el, i) => {
           const parameters = {
             id: el?.parameters?.id,
             slug: el?.parameters?.slug
           };
           return (
-            <li key={i} className={css.item}>
+            <li key={i} className={css._item}>
               <a
-                className={merge([css.link])}
+                className={css._link}
                 href={Router.generateURL({
                   page: el.page,
                   parameters: el.parameters ? parameters : null

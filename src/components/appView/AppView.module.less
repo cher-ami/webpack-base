@@ -12,17 +12,17 @@
 
 // ----------------------------------------------------------------------------- ELEMENT
 
-.wrapper {
+._wrapper {
   position: relative;
   .gridFactor(margin-left, 2, true);
-
-  // modifier with one "_" allow to target "css.wrapper_black"
-  &_black {
-    // ...
-  }
 }
 
-.mainMenu {
+// modifier with two "__" allow to target "css.wrapper_black"
+._wrapper__green {
+  // ...
+}
+
+._mainMenu {
   margin-top: 1rem;
   font-size: 2rem;
 }
