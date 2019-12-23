@@ -16,9 +16,14 @@ const { component, log } = prepareComponent("NotFoundPage");
  * @name NotFoundPage
  */
 class NotFoundPage extends ReactPage<IProps, IStates> {
-  // local
+  // get route ref
   protected rootRef: RefObject<HTMLDivElement>;
 
+  /**
+   * Constructor
+   * @param pProps
+   * @param pContext
+   */
   constructor(pProps: IProps, pContext: any) {
     // relay
     super(pProps, pContext);
