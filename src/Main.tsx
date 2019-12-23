@@ -3,13 +3,13 @@ import ReactDOM from "react-dom";
 import * as React from "react";
 import { GlobalConfig } from "./data/GlobalConfig";
 import { prepareComponent } from "./helpers/prepareComponent";
-import { Router } from "./lib/solidify/navigation/Router";
+import { Router } from "./lib/navigation/Router";
 import { Provider } from "react-redux";
 import { HelmetProvider } from "react-helmet-async";
 import configureStore from "./stores/index";
 import AppView from "./components/appView";
-import { EnvUtils } from "./lib/solidify/utils/EnvUtils";
-import { App } from "./lib/solidify/core/App";
+import { EnvUtils } from "./lib/utils/EnvUtils";
+import { App } from "./lib/core/App";
 
 // prepare
 const { log } = prepareComponent("Main");

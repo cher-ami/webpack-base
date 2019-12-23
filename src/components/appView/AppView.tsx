@@ -3,9 +3,9 @@ import React, { Component } from "react";
 import {
   ReactViewStack,
   ETransitionType
-} from "../../lib/solidify/react/ReactViewStack";
-import { IRouteMatch, Router } from "../../lib/solidify/navigation/Router";
-import { IPage } from "../../lib/solidify/navigation/IPage";
+} from "../../lib/react/ReactViewStack";
+import { IRouteMatch, Router } from "../../lib/navigation/Router";
+import { IPage } from "../../lib/navigation/IPage";
 import MainMenu from "../mainMenu";
 import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
 import { EEnv } from "../../types";
