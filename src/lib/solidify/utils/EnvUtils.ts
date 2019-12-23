@@ -309,9 +309,6 @@ export class EnvUtils {
 
     // Wait DOM
     window.onload = () => {
-      // Target selector
-      let $domRoot = $(domRoot);
-
       // Add env properties classes
       [
         EBrowser[EnvUtils.__BROWSER],
@@ -327,7 +324,8 @@ export class EnvUtils {
 
       // Add capabilites
       for (let i in EnvUtils.__CAPABILITIES) {
-        EnvUtils.__CAPABILITIES[i] && $domRoot.addClass(pPrefix + "has-" + i);
+        EnvUtils.__CAPABILITIES[i] &&
+          domRoot.classList.add(pPrefix + "has-" + i);
       }
     };
   }

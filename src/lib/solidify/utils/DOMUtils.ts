@@ -19,7 +19,7 @@ export class DOMUtils {
       return pTarget[DOMUtils.GS_TRANSFORM_KEY];
     }
 
-    // Transform key available in first child (jQuery / zepto)
+    // Transform key available in first child
     else if (0 in pTarget && DOMUtils.GS_TRANSFORM_KEY in pTarget[0]) {
       return pTarget[0][DOMUtils.GS_TRANSFORM_KEY];
     }
