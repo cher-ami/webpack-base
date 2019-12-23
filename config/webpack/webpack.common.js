@@ -33,8 +33,21 @@ commonConfig = {
    * Resolve
    */
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx", ".json", "less", "css"],
-    alias: {},
+    extensions: [
+      ".ts",
+      ".tsx",
+      ".js",
+      ".jsx",
+      ".json",
+      ".module.less",
+      ".less",
+      ".css"
+    ],
+    alias: {
+      // "react": "preact/compat",
+      // "react-dom/test-utils": "preact/test-utils",
+      // "react-dom": "preact/compat",
+    },
     modules: [paths.nodeModules, paths.src]
   },
 
@@ -123,29 +136,6 @@ commonConfig = {
         test: /\.(js|jsx|ts|tsx|mjs)$/,
         exclude: /node_modules/,
         use: [{ loader: "babel-loader" }]
-      },
-
-      /**
-       * Styles
-       * Inject CSS into the head with source maps.
-       */
-      {
-        test: /\.(less|css)$/,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              sourceMap: true,
-              importLoaders: 1,
-              modules: {
-                localIdentName: "[name]__[local]--[hash:base64:5]"
-              }
-            }
-          },
-          { loader: "postcss-loader", options: { sourceMap: true } },
-          { loader: "less-loader", options: { sourceMap: true } }
-        ]
       },
 
       /**

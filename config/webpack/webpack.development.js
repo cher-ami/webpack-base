@@ -22,6 +22,9 @@ const developmentConfig = {
    */
   devtool: "source-map",
 
+  /**
+   * Modules
+   */
   module: {
     rules: [
       /**
@@ -38,10 +41,46 @@ const developmentConfig = {
             options: { plugins: ["react-refresh/babel"] }
           }
         ]
+      },
+
+      /**
+       * Styles
+       * Inject CSS into the head with source maps.
+       */
+      {
+        test: /\.(less|css)$/,
+        oneOf: [
+          // if it's a module
+          {
+            test: /\.module\.(less|css)$/,
+            use: [
+              "style-loader",
+              {
+                loader: "css-loader",
+                options: {
+                  sourceMap: true,
+                  importLoaders: 1,
+                  modules: {
+                    localIdentName: "[name]__[local]--[hash:base64:5]"
+                  }
+                }
+              },
+              "postcss-loader",
+              "less-loader"
+            ]
+          },
+          // else if it's a simple less or css file
+          {
+            use: ["style-loader", "css-loader", "postcss-loader", "less-loader"]
+          }
+        ]
       }
     ]
   },
 
+  /**
+   * Plugins
+   */
   plugins: [
     /**
      * Friendly error

@@ -23,11 +23,14 @@
     "reset": "scripts/reset.sh",
     "prettier": "scripts/prettier.sh",
     "scaffold": "node config/tasks/scaffold.js",
-    "sprites": "node config/tasks/sprites.js"
+    "sprites": "node config/tasks/sprites.js",
+    "analyzer": "webpack-bundle-analyzer dist/manifest.json"
   },
   "dependencies": {
     "@solid-js/css-flat": "^1.0.1",
     "gsap": "^3.0.4",
+    "preact": "^10.1.1",
+    "preact-compat": "^3.19.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-grid-layout-component": "^4.0.0",
@@ -99,6 +102,7 @@
     "typescript": "^3.7.4",
     "url-loader": "^3.0.0",
     "webpack": "^4.41.4",
+    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1",
     "webpack-manifest-plugin": "^2.2.0",

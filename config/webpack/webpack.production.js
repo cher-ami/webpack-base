@@ -20,7 +20,10 @@ const productionConfig = {
     path: config.outputPath,
     filename: "[name].[contenthash].bundle.js"
   },
-  devtool: "source-map",
+
+  /**
+   * Plugins
+   */
   plugins: [
     /**
      * MiniCssExtractPlugin
@@ -29,8 +32,8 @@ const productionConfig = {
      * They cannot be used together in the same config.
      */
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
-      chunkFilename: "[id].css"
+      filename: "[name].[contenthash].css"
+      //chunkFilename: "[id].css"
     }),
 
     /**
@@ -45,17 +48,45 @@ const productionConfig = {
       }
     ])
   ],
+
+  /**
+   * Modules
+   */
   module: {
     rules: [
+      /**
+       * Styles
+       * Extract CSS
+       */
       {
         test: /\.(less|css)$/,
-        use: [
+        oneOf: [
           {
-            loader: MiniCssExtractPlugin.loader
+            test: /\.module\.(less|css)$/,
+            use: [
+              MiniCssExtractPlugin.loader,
+              {
+                loader: "css-loader",
+                options: {
+                  sourceMap: false,
+                  importLoaders: 1,
+                  modules: {
+                    localIdentName: "[name]__[local]--[hash:base64:5]"
+                  }
+                }
+              },
+              "postcss-loader",
+              "less-loader"
+            ]
           },
-          "css-loader",
-          "postcss-loader",
-          "less-loader"
+          {
+            use: [
+              MiniCssExtractPlugin.loader,
+              "css-loader",
+              "postcss-loader",
+              "less-loader"
+            ]
+          }
         ]
       }
     ]
