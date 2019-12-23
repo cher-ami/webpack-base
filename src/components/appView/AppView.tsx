@@ -72,6 +72,10 @@ class AppView extends Component<IProps, IStates> {
     // Listen to routes not found
     Router.onNotFound.add(this.routeNotFoundHandler, this);
     Router.onRouteChanged.add(this.routeChangedHandler, this);
+
+    // Enable auto link listening
+    Router.listenLinks();
+
     // Start router
     Router.start();
   }

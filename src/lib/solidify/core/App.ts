@@ -9,7 +9,7 @@ export class App extends Disposable {
    * @param {boolean} pInitSequence if true, will go through init method. If false, it will directly go to prepare and ready.
    * @param {any} pParams optionnel parameters, passed to prepare method.
    */
-  constructor(pInitSequence: boolean, pParams: any = null) {
+  constructor(pInitSequence: boolean = true, pParams: any = null) {
     // Relay
     super();
 
