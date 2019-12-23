@@ -6,6 +6,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 /**
  * Production Webpack Configuration
@@ -33,7 +35,6 @@ const productionConfig = {
      */
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].css"
-      //chunkFilename: "[id].css"
     }),
 
     /**
@@ -46,7 +47,18 @@ const productionConfig = {
         to: "/",
         ignore: ["*.DS_Store"]
       }
-    ])
+    ]),
+
+    /**
+     * webpack-bundle-analyzer
+     * @doc https://github.com/webpack-contrib/webpack-bundle-analyzer
+     *
+     */
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      analyzerMode: "static",
+      defaultSizes: "gzip"
+    })
   ],
 
   /**
