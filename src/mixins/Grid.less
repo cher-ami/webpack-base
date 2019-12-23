@@ -3,7 +3,7 @@
 /**
  * Grid Container
  */
-.gridContainer(@max-width: @max-width-grid-px) {
+.gridContainer(@max-width: unit(@max-width-grid, px)) {
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -21,9 +21,9 @@
     (
       (100% / @{total-column-number}) * @{column-number})
       +
-      (@{gutter-size-px} / @{total-column-number} * @{column-number})
+      (@{gutter-size}px / @{total-column-number} * @{column-number})
       -
-      @{gutter-size-px}
+      @{gutter-size}px
     )
   ";
   }
@@ -33,7 +33,7 @@
     (
       (100% / @{total-column-number}) * @{column-number})
       +
-      (@{gutter-size-px} / @{total-column-number} * @{column-number})
+      (@{gutter-size}px / @{total-column-number} * @{column-number})
     )
   ";
   }
@@ -49,9 +49,9 @@
     (
       (100% / @{total-column-number}) * @{column-number})
       +
-      (@{gutter-size-px} / @{total-column-number} * @{column-number})
+      (@{gutter-size}px / @{total-column-number} * @{column-number})
       -
-      @{gutter-size-px}
+      @{gutter-size}px
     )
   ";
 }
