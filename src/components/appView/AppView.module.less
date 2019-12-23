@@ -1,0 +1,45 @@
+@import (reference) "../../References.less";
+
+// ----------------------------------------------------------------------------- CONFIG
+
+@COMPONENT: AppView;
+
+// ----------------------------------------------------------------------------- BLOCK
+
+.AppView {
+  .gridContainer();
+}
+
+// ----------------------------------------------------------------------------- ELEMENT
+
+.wrapper {
+  position: relative;
+  .gridFactor(margin-left, 2, true);
+
+  // modifier with one "_" allow to target "css.wrapper_black"
+  &_black {
+    // ...
+  }
+}
+
+.mainMenu {
+  margin-top: 1rem;
+  font-size: 2rem;
+}
+
+// ----------------------------------------------------------------------------- MODIFIER
+
+// ----------------------------------------------------------------------------- CHILDREN
+
+:global (.ReactViewStack) {
+  margin-top: 1rem;
+  & > div {
+    position: absolute;
+  }
+}
+
+:global (.GridLayout) {
+  z-index: 0;
+}
+
+// ----------------------------------------------------------------------------- PATCHES

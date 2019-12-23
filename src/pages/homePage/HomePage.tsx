@@ -1,4 +1,4 @@
-import "./HomePage.less";
+import css from "./HomePage.module.less";
 import { RefObject } from "react";
 import * as React from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
@@ -25,7 +25,11 @@ class HomePage extends ReactPage<IProps, IStates> {
   // define ref
   protected rootRef: RefObject<HTMLDivElement>;
 
-  // constr
+  /**
+   * Constructor
+   * @param pProps
+   * @param pContext
+   */
   constructor(pProps: IProps, pContext: any) {
     // relay
     super(pProps, pContext);
@@ -70,7 +74,7 @@ class HomePage extends ReactPage<IProps, IStates> {
 
   render() {
     return (
-      <div className={component} ref={this.rootRef}>
+      <div className={css.HomePage} ref={this.rootRef}>
         <Helmet>
           <title>{component}</title>
         </Helmet>

@@ -1,4 +1,4 @@
-import "./AppView.less";
+import css from "./AppView.module.less";
 import React, { Component } from "react";
 import {
   ReactViewStack,
@@ -10,9 +10,9 @@ import MainMenu from "../mainMenu";
 import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
 import { EEnv } from "../../types";
 import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
-import { className } from "../../helpers/className";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import { Atoms } from "../../atoms/Atoms";
+import { merge } from "../../helpers/classNameHelper";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -151,7 +151,8 @@ class AppView extends Component<IProps, IStates> {
 
   render() {
     return (
-      <div className={component}>
+      <div className={css.AppView}>
+        {/* Grid */}
         {isEnv(EEnv.DEV) && this.state.showGrid && (
           <GridLayout
             columnsNumber={Atoms.grid["total-column-number"]}
@@ -159,12 +160,13 @@ class AppView extends Component<IProps, IStates> {
             maxWidth={Atoms.grid["max-width-grid"]}
           />
         )}
-        <div className={className(component, "wrapper")}>
-          <div className={className(component, "reduxExample")}>
-            CurrentPageName from redux store >{" "}
-            <span>{this.props.currentPageName}</span>
-          </div>
-          <MainMenu />
+        <div className={merge([css.wrapper, css.wrapper_green])}>
+          {/* Redux example */}
+          CurrentPageName from redux store >{" "}
+          <span>{this.props.currentPageName}</span>
+          {/* Main Menu */}
+          <MainMenu classNames={[css.mainMenu, css.mainMenu_modifier]} />
+          {/* View Stack */}
           <ReactViewStack
             ref={r => (this._viewStack = r)}
             transitionType={ETransitionType.PAGE_CROSSED}

@@ -1,4 +1,4 @@
-import "./NotFoundPage.less";
+import css from "./NotFoundPage.module.less";
 import React, { RefObject } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { ReactPage } from "../../lib/solidify/react/ReactPage";
@@ -60,7 +60,7 @@ class NotFoundPage extends ReactPage<IProps, IStates> {
 
   render() {
     return (
-      <div className={component} ref={this.rootRef}>
+      <div className={css.NotFoundPage} ref={this.rootRef}>
         {component}
       </div>
     );

@@ -1,9 +1,9 @@
-import "./MainMenu.less";
+import css from "./MainMenu.module.less";
 import React from "react";
-import { classBlock, className } from "../../helpers/className";
 import { Router } from "../../lib/solidify/navigation/Router";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import { routes } from "../../Main";
+import { merge } from "../../helpers/classNameHelper";
 
 interface IProps {
   classNames?: string[];
@@ -21,21 +21,21 @@ function MainMenu(props: IProps) {
   // --------------------------------------------------------------------------- RENDER
 
   return (
-    <nav className={classBlock([component, props.classNames])}>
-      <ul className={className(component, "items")}>
+    <nav className={merge([css.MainMenu, props.classNames])}>
+      <ul className={css.items}>
         {routes.map((el, i) => {
           const parameters = {
             id: el?.parameters?.id,
             slug: el?.parameters?.slug
           };
           return (
-            <li key={i}>
+            <li key={i} className={css.item}>
               <a
+                className={merge([css.link])}
                 href={Router.generateURL({
                   page: el.page,
                   parameters: el.parameters ? parameters : null
                 })}
-                //href={el.url}
                 children={el.metas.name}
                 data-internal-link
               />
