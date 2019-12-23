@@ -1,12 +1,12 @@
+import { Signal } from "../../helpers/Signal";
+
 /**
  * Preload videos via XHR
  * @param pURLs
  * @param pCallBack
  */
-import { Signal } from "../../helpers/Signal";
-
 export class PreloadVideosByXHR {
-  // ------------------------------------------------------------------------- SINGLETON
+  // --------------------------------------------------------------------------- SINGLETON
 
   /**
    * Create an instance if it doesn't already exist when instance method
@@ -18,7 +18,7 @@ export class PreloadVideosByXHR {
     return this.__instance;
   }
 
-  // ------------------------------------------------------------------------- STATIC
+  // --------------------------------------------------------------------------- LOCAL
 
   /**
    * Percentage loaded of all XHR
@@ -34,7 +34,7 @@ export class PreloadVideosByXHR {
     return this.__progressChange;
   }
 
-  // ------------------------------------------------------------------------- VIDEO
+  // --------------------------------------------------------------------------- API
   /**
    * Preload Videos list
    * - Calc percent loaded and dispatch it w/ Signal of solidify
