@@ -1,4 +1,4 @@
-import "./ArticlePage.less";
+import css from "./ArticlePage.module.less";
 import React, { RefObject } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { Helmet } from "react-helmet-async";
@@ -70,7 +70,7 @@ class ArticlePage extends ReactPage<IProps, IStates> {
 
   render() {
     return (
-      <div className={component} ref={this.rootRef}>
+      <div className={css.ArticlePage} ref={this.rootRef}>
         <Helmet>
           <title>Article</title>
         </Helmet>

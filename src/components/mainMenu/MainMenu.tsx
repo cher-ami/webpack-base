@@ -1,8 +1,9 @@
-import S from "./MainMenu.module.less";
+import css from "./MainMenu.module.less";
 import React from "react";
 import { Router } from "../../lib/solidify/navigation/Router";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import { routes } from "../../Main";
+import { merge } from "../../helpers/classNameHelper";
 
 interface IProps {
   classNames?: string[];
@@ -17,25 +18,20 @@ const { component, log } = prepareComponent("MainMenu");
 function MainMenu(props: IProps) {
   // --------------------------------------------------------------------------- PREPARE RENDER
 
-  //const C = (pClasses:string[]) =>
-  // TODO : créer une function "combine" className avec un test sur le merge d'array
-
   // --------------------------------------------------------------------------- RENDER
 
   return (
-    <nav className={[S.MainMenu, ...props.classNames].join(" ")}>
-      <ul className={S.items}>
+    <nav className={merge([css.MainMenu, props.classNames])}>
+      <ul className={css.items}>
         {routes.map((el, i) => {
           const parameters = {
             id: el?.parameters?.id,
             slug: el?.parameters?.slug
           };
           return (
-            <li key={i} className={S.item}>
+            <li key={i} className={css.item}>
               <a
-                className={[S.link, i == 0 ? S.link_blue : null]
-                  .filter(v => v)
-                  .join(" ")}
+                className={merge([css.link])}
                 href={Router.generateURL({
                   page: el.page,
                   parameters: el.parameters ? parameters : null

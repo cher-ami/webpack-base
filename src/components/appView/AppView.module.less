@@ -16,37 +16,28 @@
   position: relative;
   .gridFactor(margin-left, 2, true);
 
-  &_red {
-    color: red;
+  // modifier with one "_" allow to target "css.wrapper_black"
+  &_black {
+    // ...
   }
-}
-
-.reduxExample {
-  font-size: 1.1rem;
 }
 
 .mainMenu {
   margin-top: 1rem;
   font-size: 2rem;
-
-  &_modifier {
-    color: indianred;
-  }
 }
 
 // ----------------------------------------------------------------------------- MODIFIER
 
-.ReactViewStack {
-  margin-top: 1rem;
-  //font-size: 1rem;
+// ----------------------------------------------------------------------------- CHILDREN
 
-  > div {
+:global (.ReactViewStack) {
+  margin-top: 1rem;
+  & > div {
     position: absolute;
   }
 }
 
-.GridLayout {
+:global (.GridLayout) {
   z-index: 0;
 }
-
-// ----------------------------------------------------------------------------- CHILDREN
