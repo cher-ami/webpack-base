@@ -29,78 +29,6 @@ export class DOMUtils {
   }
 
   /**
-   * Get size of scrollbar following client env.
-   * Warning hazardous code !
-   * @returns the default size of a vertical scrollbar
-   */
-  static getScrollBarSize(): Number {
-    // Create temp scrollable div
-    let $scrollableDiv = $("<div></div>")
-      .addClass("verticalScroll")
-      .css({
-        position: "absolute",
-        width: 100,
-        height: 100,
-        overflow: "scroll",
-        top: -9999
-      });
-
-    // Append it to body
-    $scrollableDiv.appendTo($("body"));
-
-    // Measure inner and outer size
-    let scrollBarWidth =
-      $scrollableDiv[0].offsetWidth - $scrollableDiv[0].clientWidth;
-
-    // Remove from dom
-    $scrollableDiv.remove();
-
-    // Return measured size and pray
-    return scrollBarWidth;
-  }
-
-  /**
-   * Measure the size pixel value of an element with a dynamic size.
-   * Width and height only can be measured in px. No background positions.
-   * Dynamic sizes can be things like 'auto', '50%', '3em', '3vw'
-   * @param pElement The DOM element to measure.
-   * @param pPropertyName width or height only
-   * @param pDynamicSize Dynamic size to measure. 'auto', '50%', '3em', '3vw' ...
-   * @throws Error if pPropertyName is not valid.
-   * @returns {number} Measured size in px.
-   */
-  static getPixelSizeFromDynamicSize(
-    pElement: HTMLElement,
-    pPropertyName = "height",
-    pDynamicSize: "auto"
-  ): number {
-    // Check property name
-    if (pPropertyName != "width" && pPropertyName != "height") {
-      throw new Error(
-        `DOMUtils.getPixelSizeFromDynamicSize // Only width and height are valid size properties.`
-      );
-    }
-
-    // Target element as a jquery / zepto collection
-    const $element = $(pElement);
-
-    // Get current declared css value
-    const currentValue = $element.css(pPropertyName);
-
-    // Set dynamic value to measure
-    $element.css(pPropertyName, pDynamicSize);
-
-    // Measure size in px
-    const pixelValue = $element[pPropertyName]();
-
-    // Roll back to the first measured height value
-    $element.css(pPropertyName, currentValue);
-
-    // Return measured value
-    return pixelValue;
-  }
-
-  /**
    * Get number value from a css property.
    * Will return an array with the number parsed value and the unit.
    * Can parse % and px values.
@@ -142,19 +70,5 @@ export class DOMUtils {
       pElement.getBoundingClientRect().width / pElement["offsetWidth"],
       pElement.getBoundingClientRect().height / pElement["offsetHeight"]
     ];
-  }
-
-  /**
-   * Will return nearest parent element corresponding to selector.
-   * @param pTarget The element to check.
-   * @param pSelector Selector on which target or parent we have to check.
-   * @returns target or any of its parents correspond to the selector
-   */
-  static nearestParent(pTarget: HTMLElement, pSelector: string): HTMLElement {
-    return $(pTarget).is(pSelector)
-      ? pTarget
-      : $(pTarget)
-          .parents(pSelector)
-          .get(0);
   }
 }
