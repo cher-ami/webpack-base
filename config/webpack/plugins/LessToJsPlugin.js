@@ -45,7 +45,7 @@ module.exports = class LessToJsPlugin {
      */
     compiler.hooks.beforeRun.tapAsync(PLUGIN_NAME, async compilation => {
       debug(`Prebuild atoms...`);
-      //return new Promise(resolve => preBuildAtoms(resolve));
+      return await prebuildAtoms();
     });
 
     /**
@@ -58,11 +58,8 @@ module.exports = class LessToJsPlugin {
 
       // TODO If changed files match with option params
       if (changedFiles.includes("src/atoms/partials/")) {
-        // prebuild atoms and resolve promise
-        debug(`Prebuild atoms... `);
-        debug(`Changed files: ${changedFiles}`);
-
         // return prebuild
+        debug(`Prebuild atoms... `);
         return await prebuildAtoms();
       } else {
         debug("Not prebluild, matches files doesn't changed");
