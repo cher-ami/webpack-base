@@ -13,7 +13,8 @@ import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import { Atoms } from "../../atoms/Atoms";
 import { merge } from "../../helpers/classNameHelper";
-const AtomsLess = require("../../atoms/atoms.less");
+import { Atoms as atomAutoGenerate } from "../../atoms/atomsAutoGenerate";
+
 // ------------------------------------------------------------------------------- STRUCT
 
 export interface IProps {}
@@ -58,7 +59,7 @@ class AppView extends Component<IProps, IStates> {
     // toggle grid layout visibility
     this.toggleGridVisibilityHandler();
 
-    log(AtomsLess);
+    log(atomAutoGenerate["total-column-number"]);
   }
 
   componentWillUnmount() {
@@ -164,7 +165,7 @@ class AppView extends Component<IProps, IStates> {
         {/* Grid */}
         {isEnv(EEnv.DEV) && this.state.showGrid && (
           <GridLayout
-            columnsNumber={10}
+            columnsNumber={parseInt(atomAutoGenerate["total-column-number"])}
             gutterSize={Atoms.grid["gutter-size"]}
             maxWidth={Atoms.grid["max-width-grid"]}
           />

@@ -1,5 +1,4 @@
 @import (reference) "../../References.less";
-@import (reference) "../../atoms/test.module.css";
 
 // ----------------------------------------------------------------------------- CONFIG
 
@@ -8,7 +7,6 @@
 // ----------------------------------------------------------------------------- BLOCK
 
 .AppView {
-  //margin-top: @value test;
   .gridContainer();
 }
 
@@ -17,11 +15,14 @@
 ._wrapper {
   position: relative;
   .gridFactor(margin-left, 1, true);
+
+  // modifier with two "__" allow to target "css._wrapper__green"
+  &__green {
+  }
 }
 
-// modifier with two "__" allow to target "css.wrapper_black"
+// scd example modifier
 ._wrapper__green {
-  // ...
 }
 
 ._mainMenu {

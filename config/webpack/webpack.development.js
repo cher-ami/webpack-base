@@ -5,6 +5,7 @@ const common = require("./webpack.common.js");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const lessToJsPlugin = require("./plugins/lessToJsPlugin");
 
 /**
  * Development Webpack Configuration
@@ -115,7 +116,12 @@ const developmentConfig = {
       favicon: paths.src + "/images/favicon.png",
       template: paths.src + "/template.html",
       filename: "index.html"
-    })
+    }),
+
+    /**
+     * Custom Less to Js Plugin
+     */
+    new lessToJsPlugin()
   ],
 
   /**
@@ -143,6 +149,10 @@ const developmentConfig = {
     // friendly webpack error
     // pass to true if you don't want to print compile file in the console
     quiet: true
+  },
+
+  watchOptions: {
+    //ignored: [paths.src + '/atoms/atomsAutoGenerate.ts']
   }
 };
 

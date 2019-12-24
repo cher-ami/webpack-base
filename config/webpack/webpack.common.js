@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const ManifestPlugin = require("webpack-manifest-plugin");
+const lessToJsPlugin = require("./plugins/lessToJsPlugin");
 
 /**
  * Common Webpack Configuration
@@ -113,6 +114,11 @@ commonConfig = {
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
     })
+
+    /**
+     * Custom Less to Js Plugin
+     */
+    // new lessToJsPlugin()
   ],
 
   /**

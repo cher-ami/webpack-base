@@ -35,5 +35,7 @@ module.exports = {
   spritesFolder: "sprites/",
 
   // Sprite PNG output
-  outputSpritesFolder: "src/sprites/"
+  outputSpritesFolder: "src/sprites/",
+
+  atomsPath: appRoot.resolve("src/atoms")
 };
