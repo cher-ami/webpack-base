@@ -1,14 +1,15 @@
 const { Files } = require("@zouloux/files");
 const path = require("path");
 const paths = require("../paths");
-const fileTabs = "\t\t\t";
-const fileTabRegex = new RegExp(`(\n${fileTabs})`, "gmi");
 const debug = require("debug")("config:prebuild-atoms");
 
 // ----------------------------------------------------------------------------- PRIVATE
 
 // create template
-const _atomsTemplate = (pAtomList, pFileTabRegex = fileTabRegex) => {
+const _atomsTemplate = (
+  pAtomList,
+  pFileTabRegex = new RegExp(`(\n${"\t\t\t"})`, "gmi")
+) => {
   return `
 			/**
 			 * WARNING
@@ -89,42 +90,39 @@ const _atomsParser = () => {
 
 // ----------------------------------------------------------------------------- PUBLIC
 
-/**
- * Generate atoms typescript file from less files inside atoms directory
- * Return a promise
- */
-const preBuildAtoms = async () =>
-  new Promise(resolve => {
-    // get atoms list
-    const atomList = _atomsParser();
+module.exports = {
+  /**
+   * Generate atoms typescript file from less files inside atoms directory
+   * Return a promise
+   */
+  prebuildAtoms: () =>
+    new Promise(resolve => {
+      // get atoms list
+      const atomList = _atomsParser();
 
-    // Generate File path  TODO
-    const generatedFilePath = `${paths.src}/atoms/atomsAutoGenerate.ts`;
+      // Generate File path TODO
+      const generatedFilePath = `${paths.src}/atoms/atomsAutoGenerate.ts`;
 
-    // create current file var
-    let currentFile;
+      // create current file var
+      let currentFile;
 
-    // If file exist
-    if (Files.getFiles(generatedFilePath).files.length > 0) {
-      // register file content
-      currentFile = Files.getFiles(generatedFilePath).read();
-    }
+      // If file exist
+      if (Files.getFiles(generatedFilePath).files.length > 0) {
+        // register file content
+        currentFile = Files.getFiles(generatedFilePath).read();
+      }
 
-    debug("file as changed? :", currentFile !== _atomsTemplate(atomList));
+      debug("file as changed? :", currentFile !== _atomsTemplate(atomList));
 
-    // check if current file is the same than the new one
-    if (currentFile === _atomsTemplate(atomList)) return;
+      // check if current file is the same than the new one
+      if (currentFile === _atomsTemplate(atomList)) return;
 
-    debug("Write atoms file...");
-    // Write atoms typescript files
-    Files.new(generatedFilePath).write(_atomsTemplate(atomList));
+      debug("Write new atoms file...");
 
-    // resolove promise
-    resolve();
-  });
+      // Write atoms typescript files
+      Files.new(generatedFilePath).write(_atomsTemplate(atomList));
 
-/**
- * Export module
- * @type {Promise<unknown>}
- */
-module.exports = preBuildAtoms();
+      // resolove promise
+      resolve();
+    })
+};

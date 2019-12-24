@@ -14,7 +14,7 @@ export const Atoms = {
   "breakpoint-desktop": "1680px",
   "black-color": "#000",
   "white-color": "#fff",
-  "total-column-number": "12",
+  "total-column-number": "10",
   "total-column-number-mobile": "4",
   "gutter-size": "30",
   "gutter-size-mobile": "25",

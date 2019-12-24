@@ -1,11 +1,10 @@
 /**
  * Less to JS Plugin
  * Allow to parse and transform Less variables to JS object.
- * @type {lessToJsPlugin}
  */
 
 // get prebuild atoms task
-const preBuildAtoms = require("../../tasks/atoms");
+const { prebuildAtoms } = require("../../tasks/atoms");
 const PLUGIN_NAME = "less-to-js-plugin";
 const debug = require("debug")(`config:${PLUGIN_NAME}`);
 
@@ -64,7 +63,7 @@ module.exports = class LessToJsPlugin {
         debug(`Changed files: ${changedFiles}`);
 
         // return prebuild
-        return await preBuildAtoms();
+        return await prebuildAtoms();
       } else {
         debug("Not prebluild, matches files doesn't changed");
       }
