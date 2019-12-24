@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const ManifestPlugin = require("webpack-manifest-plugin");
-const lessToJsPlugin = require("./plugins/lessToJsPlugin");
+const lessToJsPlugin = require("./plugins/LessToJsPlugin");
 
 /**
  * Common Webpack Configuration

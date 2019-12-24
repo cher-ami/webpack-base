@@ -3,13 +3,13 @@ const path = require("path");
 const paths = require("../paths");
 const fileTabs = "\t\t\t";
 const fileTabRegex = new RegExp(`(\n${fileTabs})`, "gmi");
+const debug = require("debug")("config:prebuild-atoms");
 
-/**
- * Generate atoms typescript file from less files inside atoms directory
- */
-module.exports = preBuildAtoms = () => {
-  const atomsTemplate = atoms =>
-    `
+// ----------------------------------------------------------------------------- PRIVATE
+
+// create template
+const _atomsTemplate = (pAtomList, pFileTabRegex = fileTabRegex) => {
+  return `
 			/**
 			 * WARNING
 			 * Auto-generated file, do not edit!
@@ -18,9 +18,19 @@ module.exports = preBuildAtoms = () => {
 			 * Data are extracted from all less files inside atoms/ directory.
 			 */
 			export const Atoms =
-			{\n${atoms}
-			};`.replace(fileTabRegex, "\n");
+			{\n${pAtomList
+        .map(atom => {
+          return `	"${atom.name}": ${atom.value},`;
+        })
+        .join("\n")}
+			};`.replace(pFileTabRegex, "\n");
+};
 
+/**
+ * Parse atoms list
+ * return {array}
+ */
+const _atomsParser = () => {
   // Get less files
   const atomsLessFiles = Files.getFiles(`${paths.atomsPath}/partials/*.less`);
 
@@ -74,31 +84,47 @@ module.exports = preBuildAtoms = () => {
     });
   });
 
-  // File to generate
-  const generatedFilePath = `${paths.src}/atoms/atomsAutoGenerate.ts`;
-
-  // create current file var
-  let currentFile;
-
-  // If file exist
-  if (Files.getFiles(generatedFilePath).files.length > 0) {
-    // register file content
-    currentFile = Files.getFiles(generatedFilePath).read();
-  }
-
-  // prepare template for new file
-  const prepareNewFile = atomsTemplate(
-    atomList
-      .map(atom => {
-        return `	"${atom.name}": ${atom.value},`;
-      })
-      .join("\n")
-  );
-
-  console.log("currentFile === prepareNewFile", currentFile === prepareNewFile);
-  // check if current file is the same than the new one
-  if (currentFile === prepareNewFile) return;
-
-  // Write atoms typescript files
-  Files.new(generatedFilePath).write(prepareNewFile);
+  return atomList;
 };
+
+// ----------------------------------------------------------------------------- PUBLIC
+
+/**
+ * Generate atoms typescript file from less files inside atoms directory
+ * Return a promise
+ */
+const preBuildAtoms = async () =>
+  new Promise(resolve => {
+    // get atoms list
+    const atomList = _atomsParser();
+
+    // Generate File path  TODO
+    const generatedFilePath = `${paths.src}/atoms/atomsAutoGenerate.ts`;
+
+    // create current file var
+    let currentFile;
+
+    // If file exist
+    if (Files.getFiles(generatedFilePath).files.length > 0) {
+      // register file content
+      currentFile = Files.getFiles(generatedFilePath).read();
+    }
+
+    debug("file as changed? :", currentFile !== _atomsTemplate(atomList));
+
+    // check if current file is the same than the new one
+    if (currentFile === _atomsTemplate(atomList)) return;
+
+    debug("Write atoms file...");
+    // Write atoms typescript files
+    Files.new(generatedFilePath).write(_atomsTemplate(atomList));
+
+    // resolove promise
+    resolve();
+  });
+
+/**
+ * Export module
+ * @type {Promise<unknown>}
+ */
+module.exports = preBuildAtoms();

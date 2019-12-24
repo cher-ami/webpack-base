@@ -5,7 +5,7 @@ const common = require("./webpack.common.js");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const lessToJsPlugin = require("./plugins/lessToJsPlugin");
+const lessToJsPlugin = require("./plugins/LessToJsPlugin");
 
 /**
  * Development Webpack Configuration
@@ -87,9 +87,9 @@ const developmentConfig = {
      * Friendly error
      * @doc https://github.com/geowarin/friendly-errors-webpack-plugin
      */
-    new FriendlyErrorsPlugin({
-      clearConsole: true
-    }),
+    // new FriendlyErrorsPlugin({
+    //    clearConsole: true
+    // }),
 
     /**
      * React Fast Refresh
@@ -148,11 +148,7 @@ const developmentConfig = {
 
     // friendly webpack error
     // pass to true if you don't want to print compile file in the console
-    quiet: true
-  },
-
-  watchOptions: {
-    //ignored: [paths.src + '/atoms/atomsAutoGenerate.ts']
+    quiet: false
   }
 };
 
