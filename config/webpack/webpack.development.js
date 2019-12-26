@@ -128,9 +128,9 @@ const developmentConfig = {
      * Custom Less to Js Plugin
      */
     new lessToJsPlugin({
-      watcher: `${paths.atomsPath}/partials/grid.less`,
+      watcher: `${paths.atomsPath}/partials/*.less`,
       outputPath: paths.atomsPath,
-      outputFilename: "atomsOutput.ts"
+      outputFilename: "atoms.ts"
     })
   ],
 

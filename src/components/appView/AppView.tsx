@@ -11,9 +11,8 @@ import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
 import { EEnv } from "../../types";
 import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
-import { Atoms } from "../../atoms/Atoms";
 import { merge } from "../../helpers/classNameHelper";
-import { Atoms as atomAutoGenerate } from "../../atoms/atomsAutoGenerate";
+import { atoms } from "../../atoms/atoms";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -59,7 +58,7 @@ class AppView extends Component<IProps, IStates> {
     // toggle grid layout visibility
     this.toggleGridVisibilityHandler();
 
-    log(atomAutoGenerate["total-column-number"]);
+    log(atoms["total-column-number"]);
   }
 
   componentWillUnmount() {
@@ -165,9 +164,9 @@ class AppView extends Component<IProps, IStates> {
         {/* Grid */}
         {isEnv(EEnv.DEV) && this.state.showGrid && (
           <GridLayout
-            columnsNumber={parseInt(atomAutoGenerate["total-column-number"])}
-            gutterSize={Atoms.grid["gutter-size"]}
-            maxWidth={Atoms.grid["max-width-grid"]}
+            columnsNumber={parseInt(atoms["total-column-number"])}
+            gutterSize={parseInt(atoms["gutter-size"])}
+            maxWidth={parseInt(atoms["max-width-grid"])}
           />
         )}
         <div className={merge([css._wrapper, css._wrapper__green])}>

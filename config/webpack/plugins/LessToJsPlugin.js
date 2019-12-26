@@ -12,33 +12,17 @@ const log = require("debug")(`config:${PLUGIN_NAME}`);
 module.exports = class LessToJsPlugin {
   /**
    * Constructor
-   * @param options
+   * @param watcher: files string url to watch, accept glob
+   * @param outputPath: output path
+   * @param outputFilename: name of the output file
    */
-  constructor(options) {
-    //log(options);
-
-    // files string url to watch, accept glob
-    this.watcher = options.watcher;
-
-    // output path
-    this.outputPath = options.outputPath;
-
-    // name of the output file
-    this.outputFilename = options.outputFilename;
+  constructor({ watcher = "", outputPath = "", outputFilename = "" }) {
+    this.watcher = watcher;
+    this.outputPath = outputPath;
+    this.outputFilename = outputFilename;
   }
 
   // ---------------------------–---------------------------–------------------- PRIVATE
-  //
-  // _filesAsChanged(pCompilation, pWatchFiles = this.watcher) {
-  //   // if is glob,
-  //   const glob = Files.getFiles(pWatchFiles);
-  //
-  //   // check if is glob (glob.files.length > 0)
-  //   if (glob.files && glob.files.length > 0) {
-  //     // is glob
-  //     return glob.files.some(el => el === this._getChangedFiles(pCompilation));
-  //   }
-  // }
 
   /**
    * Get compilation files changes names
@@ -51,9 +35,43 @@ module.exports = class LessToJsPlugin {
       pCompilation.watchFileSystem.watcher &&
       pCompilation.watchFileSystem.watcher.mtimes;
     // get changes files
-    return Object.keys(changedTimes)
-      .map(file => `\n  ${file}`)
-      .join("");
+    return Object.keys(changedTimes).map(file => file);
+  }
+
+  /**
+   * Check if a file of glob list as changed
+   * @param pCompilation
+   * @returns {boolean}
+   * @private
+   */
+  _fileAsChanged(pCompilation) {
+    // check files to watch
+    const glob = Files.getFiles(this.watcher);
+
+    // check if is glob (glob.files.length > 0)
+    if (glob.files && glob.files.length > 0) {
+      // register file as change boolean
+      return glob.files.some(globEl =>
+        // check if a file of change file list match with one of glob files
+        this._getChangedFiles(pCompilation).some(
+          changeEl => changeEl === globEl
+        )
+      );
+    } else return false;
+  }
+
+  /**
+   * Check if output file exist
+   * @param pOutputPath
+   * @param pOutputFilename
+   * @returns {boolean}
+   * @private
+   */
+  _outputFileExist(
+    pOutputPath = this.outputPath,
+    pOutputFilename = this.outputFilename
+  ) {
+    return Files.getFiles(`${pOutputPath}/${pOutputFilename}`).files.length > 0;
   }
 
   // ---------------------------–---------------------------–------------------- PUBLIC
@@ -77,29 +95,12 @@ module.exports = class LessToJsPlugin {
      * triggering every time that webpack recompiles on a change triggered by the watcher
      */
     compiler.hooks.watchRun.tapPromise(PLUGIN_NAME, async compilation => {
-      // get changed files
-      const changedFiles = this._getChangedFiles(compilation);
-      log("changedFiles: ", changedFiles);
+      log({
+        _outputFileExist: this._outputFileExist(),
+        _fileAsChanged: this._fileAsChanged(compilation)
+      });
 
-      // check files to watch
-      const glob = Files.getFiles(this.watcher);
-
-      let fileAsCHanged;
-      // check if is glob (glob.files.length > 0)
-      if (glob.files && glob.files.length > 0) {
-        log("glob files", glob.files[0]);
-
-        // is glob
-        fileAsCHanged = glob.files.some(el => {
-          log("el", el);
-          return el === changedFiles;
-        });
-      }
-
-      log("fileAsCHanged", fileAsCHanged);
-
-      // TODO If changed files match with option params
-      if (changedFiles.includes("src/atoms/partials/")) {
+      if (!this._outputFileExist() || this._fileAsChanged(compilation)) {
         // return prebuild
         log(`Prebuild atoms... `);
         return await prebuildAtoms({

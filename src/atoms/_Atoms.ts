@@ -38,7 +38,7 @@ export const grid = {
 /**
  * Final Atom export
  */
-export const Atoms = {
+export const _Atoms = {
   breakPoint,
   colors,
   grid

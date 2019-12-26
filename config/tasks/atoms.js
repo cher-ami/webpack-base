@@ -18,7 +18,7 @@ const _atomsTemplate = (
 			 * Only updated when webpack is launched.
 			 * Data are extracted from all less files inside atoms/ directory.
 			 */
-			export const Atoms =
+			export const atoms =
 			{\n${pAtomList
         .map(atom => {
           return `	"${atom.name}": ${atom.value},`;
