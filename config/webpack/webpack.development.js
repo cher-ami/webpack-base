@@ -8,7 +8,7 @@ const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"
 const lessToJsPlugin = require("./plugins/LessToJsPlugin");
 
 // test env to get console print option
-const consolePrintFriendly = process.env.CONSOLE_PRINT === "friendly";
+const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
 
 /**
  * Development Webpack Configuration
@@ -90,7 +90,7 @@ const developmentConfig = {
      * Friendly error
      * @doc https://github.com/geowarin/friendly-errors-webpack-plugin
      */
-    ...(consolePrintFriendly
+    ...(CONSOLE_PRINT_FRIENDLY
       ? [
           new FriendlyErrorsPlugin({
             clearConsole: true
@@ -127,7 +127,11 @@ const developmentConfig = {
     /**
      * Custom Less to Js Plugin
      */
-    new lessToJsPlugin()
+    new lessToJsPlugin({
+      watcher: `${paths.atomsPath}/partials/grid.less`,
+      outputPath: paths.atomsPath,
+      outputFilename: "atomsOutput.ts"
+    })
   ],
 
   /**
@@ -149,14 +153,14 @@ const developmentConfig = {
 
     stats: {
       all: false,
-      errors: !consolePrintFriendly,
-      warnings: !consolePrintFriendly,
-      colors: !consolePrintFriendly
+      errors: !CONSOLE_PRINT_FRIENDLY,
+      warnings: !CONSOLE_PRINT_FRIENDLY,
+      colors: !CONSOLE_PRINT_FRIENDLY
     },
 
     // friendly webpack error
     // pass to true if you don't want to print compile file in the console
-    quiet: consolePrintFriendly
+    quiet: CONSOLE_PRINT_FRIENDLY
   }
 };
 

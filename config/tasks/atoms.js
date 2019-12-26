@@ -32,6 +32,7 @@ const _atomsTemplate = (
  * return {array}
  */
 const _atomsParser = () => {
+  // TODO: pass atoms path and glob as param
   // Get less files
   const atomsLessFiles = Files.getFiles(`${paths.atomsPath}/partials/*.less`);
 
@@ -95,13 +96,16 @@ module.exports = {
    * Generate atoms typescript file from less files inside atoms directory
    * Return a promise
    */
-  prebuildAtoms: () =>
+  prebuildAtoms: ({
+    pOutputPath = paths.atomsPath,
+    pOutputFilename = paths.atomsGenerateFilename
+  }) =>
     new Promise(resolve => {
       // get atoms list
       const atomList = _atomsParser();
 
-      // Generate File path TODO
-      const generatedFilePath = `${paths.src}/atoms/atomsAutoGenerate.ts`;
+      // Generate File path
+      const generatedFilePath = `${pOutputPath}/${pOutputFilename}`;
 
       // create current file var
       let currentFile;

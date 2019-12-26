@@ -14,12 +14,13 @@ export const Atoms = {
   "breakpoint-desktop": "1680px",
   "black-color": "#000",
   "white-color": "#fff",
-  "total-column-number": "9",
+  "total-column-number": "10",
   "total-column-number-mobile": "4",
   "gutter-size": "30",
   "gutter-size-mobile": "25",
   "max-width-grid": "1024",
   "transitions-default-speed": "300ms",
   "transitions-default-ease": "cubic-bezier(0.215, 0.61, 0.355, 1)",
-  "font-base-path": "./"
+  "font-base-path": "./",
+  bla: "test"
 };

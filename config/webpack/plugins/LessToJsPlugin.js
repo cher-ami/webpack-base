@@ -1,15 +1,13 @@
+const { prebuildAtoms } = require("../../tasks/atoms");
+const { Files } = require("@zouloux/files");
+
+// params
+const PLUGIN_NAME = "less-to-js-plugin";
+const log = require("debug")(`config:${PLUGIN_NAME}`);
+
 /**
  * Less to JS Plugin
  * Allow to parse and transform Less variables to JS object.
- */
-
-// get prebuild atoms task
-const { prebuildAtoms } = require("../../tasks/atoms");
-const PLUGIN_NAME = "less-to-js-plugin";
-const debug = require("debug")(`config:${PLUGIN_NAME}`);
-
-/**
- * LessToJsPlugin
  */
 module.exports = class LessToJsPlugin {
   /**
@@ -17,23 +15,49 @@ module.exports = class LessToJsPlugin {
    * @param options
    */
   constructor(options) {
-    this.options = options;
+    //log(options);
+
+    // files string url to watch, accept glob
+    this.watcher = options.watcher;
+
+    // output path
+    this.outputPath = options.outputPath;
+
+    // name of the output file
+    this.outputFilename = options.outputFilename;
   }
+
+  // ---------------------------–---------------------------–------------------- PRIVATE
+  //
+  // _filesAsChanged(pCompilation, pWatchFiles = this.watcher) {
+  //   // if is glob,
+  //   const glob = Files.getFiles(pWatchFiles);
+  //
+  //   // check if is glob (glob.files.length > 0)
+  //   if (glob.files && glob.files.length > 0) {
+  //     // is glob
+  //     return glob.files.some(el => el === this._getChangedFiles(pCompilation));
+  //   }
+  // }
 
   /**
    * Get compilation files changes names
    * @param pCompilation
-   * @param pLog
    * @private
    */
-  _getChangedFiles(pCompilation, pLog = true) {
+  _getChangedFiles(pCompilation) {
     // get get changed times
-    const changedTimes = pCompilation.watchFileSystem.watcher.mtimes;
+    const changedTimes =
+      pCompilation.watchFileSystem.watcher &&
+      pCompilation.watchFileSystem.watcher.mtimes;
     // get changes files
     return Object.keys(changedTimes)
       .map(file => `\n  ${file}`)
       .join("");
   }
+
+  // ---------------------------–---------------------------–------------------- PUBLIC
+
   /**
    * Apply
    * @param compiler
@@ -44,8 +68,8 @@ module.exports = class LessToJsPlugin {
      * (only for production build, not dev server)
      */
     compiler.hooks.beforeRun.tapAsync(PLUGIN_NAME, async compilation => {
-      debug(`Prebuild atoms...`);
-      return await prebuildAtoms();
+      log(`Prebuild atoms...`);
+      return await prebuildAtoms({});
     });
 
     /**
@@ -55,14 +79,34 @@ module.exports = class LessToJsPlugin {
     compiler.hooks.watchRun.tapPromise(PLUGIN_NAME, async compilation => {
       // get changed files
       const changedFiles = this._getChangedFiles(compilation);
+      log("changedFiles: ", changedFiles);
+
+      // check files to watch
+      const glob = Files.getFiles(this.watcher);
+
+      let fileAsCHanged;
+      // check if is glob (glob.files.length > 0)
+      if (glob.files && glob.files.length > 0) {
+        log("glob files", glob.files[0]);
+
+        // is glob
+        fileAsCHanged = glob.files.some(el => {
+          log("el", el);
+          return el === changedFiles;
+        });
+      }
+
+      log("fileAsCHanged", fileAsCHanged);
 
       // TODO If changed files match with option params
       if (changedFiles.includes("src/atoms/partials/")) {
         // return prebuild
-        debug(`Prebuild atoms... `);
-        return await prebuildAtoms();
+        log(`Prebuild atoms... `);
+        return await prebuildAtoms({
+          pOutputFilename: this.outputFilename
+        });
       } else {
-        debug("Not prebluild, matches files doesn't changed");
+        log("Not prebluild, matches files doesn't changed");
       }
     });
   }

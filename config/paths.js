@@ -37,5 +37,11 @@ module.exports = {
   // Sprite PNG output
   outputSpritesFolder: "src/sprites/",
 
-  atomsPath: appRoot.resolve("src/atoms")
+  // --------------------------------------------------------------------------- ATOMS
+
+  // atoms path
+  atomsPath: appRoot.resolve("src/atoms"),
+
+  // auto generate atoms file name
+  atomsGenerateFilename: "atomsAutoGenerate.ts"
 };
