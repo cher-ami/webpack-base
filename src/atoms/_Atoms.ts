@@ -1,6 +1,7 @@
 /**
  * Atoms properties
  * Need to be share with atoms.less
+ * TODO TO REMOVE
  */
 
 // ----------------------------------------------------------------------------- BREAKPOINTS

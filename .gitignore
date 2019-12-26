@@ -4,6 +4,9 @@ node_modules
 dist
 .env
 
+# Generated
+src/atoms/atoms.ts
+
 # Generated sprites
 # à ajouter quand le prebuild sera configuré
 

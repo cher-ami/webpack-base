@@ -27,6 +27,7 @@ module.exports = class LessToJsPlugin {
   /**
    * Get compilation files changes names
    * @param pCompilation
+   * @returns {[]}
    * @private
    */
   _getChangedFiles(pCompilation) {
@@ -100,14 +101,16 @@ module.exports = class LessToJsPlugin {
         _fileAsChanged: this._fileAsChanged(compilation)
       });
 
+      // if output file don't exist
+      // or file of watcher as changed
       if (!this._outputFileExist() || this._fileAsChanged(compilation)) {
-        // return prebuild
-        log(`Prebuild atoms... `);
+        // prebuild
+        log(`Prebuild less to js... `);
         return await prebuildAtoms({
           pOutputFilename: this.outputFilename
         });
       } else {
-        log("Not prebluild, matches files doesn't changed");
+        log("Prebluild nothing, matches files doesn't changed");
       }
     });
   }
