@@ -1,9 +1,9 @@
 import css from "./ArticlePage.module.less";
 import React, { RefObject } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
-import { Helmet } from "react-helmet-async";
 import { ReactPage } from "../../lib/react/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
+import Metas from "../../components/metas";
 
 interface IProps {
   classNames?: string[];
@@ -71,9 +71,13 @@ class ArticlePage extends ReactPage<IProps, IStates> {
   render() {
     return (
       <div className={css.ArticlePage} ref={this.rootRef}>
-        <Helmet>
-          <title>Article</title>
-        </Helmet>
+        <Metas
+          title={component}
+          description={`${component} desc`}
+          siteName={`${component} site name`}
+          pageURL={`${component} http://foo`}
+          imageURL={`${component} image URL`}
+        />
         {component}
         <h5>id {this.props.parameters.id}</h5>
         <h1>slug {this.props.parameters.slug}</h1>

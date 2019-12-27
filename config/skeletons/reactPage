@@ -1,7 +1,6 @@
 import css from "./%%capitalComponentName%%.module.less";
 import React, { RefObject } from "react";
 import {ReactPage} from "../../lib/solidify/react/ReactPage";
-import { Helmet } from "react-helmet-async";
 import { prepareComponent } from "../../helpers/prepareComponent";
 
 interface IProps {}
@@ -63,9 +62,6 @@ class %%capitalComponentName%% extends ReactPage<IProps, IStates> {
   render() {
     return (
       <div className={css.%%capitalComponentName%%} ref={this.rootRef}>
-        <Helmet>
-          <title>{component}</title>
-        </Helmet>
         {component}
       </div>
     );

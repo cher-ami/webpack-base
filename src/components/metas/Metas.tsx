@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { prepareComponent } from "../../helpers/prepareComponent";
 
 interface IProps {
   title?: string;
@@ -9,17 +8,16 @@ interface IProps {
   pageURL?: string;
 }
 
-// prepare
-const { log } = prepareComponent("Metas");
-
 /**
  * @name Metas
  */
+// prettier-ignore
 function Metas(props: IProps) {
+
   // --------------------------------------------------------------------------- PREPARE
 
   // define meta title list
-  // prettier-ignore
+
   const metaProperties = {
     title: [
       "property='og:title'",
@@ -41,31 +39,36 @@ function Metas(props: IProps) {
     pageURL: [
       "property='og:url'",
       "name='twitter:url'",
-      "rel='canonical'" // attention: url and not content attr
+      "rel='canonical'"
     ]
   };
 
   /**
    * inject all metas
    */
-  function injectAllMetas(pMetas: IProps, pProperties) {
+  function injectAllMetas(pMetas: IProps, pProperties)
+  {
     // update main document title
     if (document.title !== null) document.title = props.title;
 
     // loop each metas type
-    for (let metaType of Object.keys(pMetas)) {
+    for (let metaType of Object.keys(pMetas))
+    {
       // for each metatype, loop on available properties
-      for (let property of pProperties[metaType]) {
+      for (let property of pProperties[metaType])
+      {
         // check if meta tag with this property exist
         if (document.head.querySelector(`[${property}]`) === null) return;
 
-        // exception
-        if (property === "rel='canonical'") {
-          // if exist, inject title insite.
+        // exception if exist, inject title insite
+        if (property === "rel='canonical'")
+        {
           document.head
             .querySelector(`[${property}]`)
             .setAttribute("href", pMetas[metaType]);
-        } else {
+        }
+        else
+        {
           // if exist, inject title insite.
           document.head
             .querySelector(`[${property}]`)
@@ -76,12 +79,13 @@ function Metas(props: IProps) {
   }
 
   /**
-   * Final
+   * Update meta after render
    */
   useEffect(() => injectAllMetas(props, metaProperties), []);
 
   // --------------------------------------------------------------------------- RENDER
 
+  // return nothing
   return null;
 }
 

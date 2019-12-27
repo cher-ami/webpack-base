@@ -4,7 +4,6 @@ import * as React from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { ReactPage } from "../../lib/react/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
-import { Helmet } from "react-helmet-async";
 import Metas from "../../components/metas";
 
 interface IProps {
@@ -78,10 +77,10 @@ class HomePage extends ReactPage<IProps, IStates> {
       <div className={css.HomePage} ref={this.rootRef}>
         <Metas
           title={component}
-          description={"desc top"}
-          siteName={"mon site"}
-          pageURL={"http://bla"}
-          imageURL={"image.jpg"}
+          description={`${component} desc`}
+          siteName={`${component} site name`}
+          pageURL={`${component} http://foo`}
+          imageURL={`${component} image URL`}
         />
         {component}
       </div>
