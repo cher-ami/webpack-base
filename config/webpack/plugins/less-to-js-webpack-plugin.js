@@ -2,7 +2,7 @@ const { prebuildAtoms } = require("../../tasks/prebuildAtoms");
 const { Files } = require("@zouloux/files");
 
 // params
-const PLUGIN_NAME = "less-to-js-plugin";
+const PLUGIN_NAME = "less-to-js-webpack-plugin";
 const log = require("debug")(`config:${PLUGIN_NAME}`);
 
 /**
@@ -105,8 +105,8 @@ module.exports = class LessToJsPlugin {
      * The "beforeRun" hook runs only on single webpack build, triggering only once
      * (only for production build, not dev server)
      */
-    compiler.hooks.beforeRun.tapAsync(PLUGIN_NAME, async compilation => {
-      log(`Prebuild atoms...`);
+    compiler.hooks.beforeRun.tapPromise(PLUGIN_NAME, async compilation => {
+      log(`Prebuild less to js file...`);
       return await this._buildLessToJsFile();
     });
 
@@ -123,7 +123,7 @@ module.exports = class LessToJsPlugin {
       // if output file don't exist
       // or files to watch were changed
       if (!this._outputFileExist() || this._fileAsChanged(compilation)) {
-        log(`Prebuild less to js... `);
+        log(`Prebuild less to js file...`);
         return await this._buildLessToJsFile();
       } else {
         log("Prebluild nothing, matches files doesn't changed");

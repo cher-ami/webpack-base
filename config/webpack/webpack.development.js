@@ -5,7 +5,7 @@ const common = require("./webpack.common.js");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const lessToJsPlugin = require("./plugins/LessToJsPlugin");
+const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin");
 
 // test env to get console print option
 const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";

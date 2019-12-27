@@ -10,8 +10,13 @@ const log = require("debug")("config:prebuild-atoms");
  */
 const _atomsTemplate = (
   pAtomList,
+  pOutputFilename = "atoms",
   pFileTabRegex = new RegExp(`(\n${"\t\t\t"})`, "gmi")
 ) => {
+  // get output file name without extensions
+  const outputFilenameWitoutExtension = pOutputFilename.split(".")[0];
+  log({ outputFilenameWitoutExtension });
+
   return `
 			/**
 			 * WARNING
@@ -19,7 +24,7 @@ const _atomsTemplate = (
 			 * Auto-Updated with HMR and generated on production build.
 			 * This file is ignored on .gitignore 
 			 */
-			export const atoms = {
+			export const ${outputFilenameWitoutExtension} = {
 			${pAtomList
         .map(atom => {
           return `	"${atom.name}": ${atom.value},`;
@@ -100,9 +105,11 @@ module.exports = {
       const generatedFilePath = `${pOutputPath}/${pOutputFilename}`;
       // get atoms list
       const atomList = _atomsParser(pWatcher);
+      // get template
+      const template = _atomsTemplate(atomList, pOutputFilename);
 
       log("Write new atoms file...");
-      Files.new(generatedFilePath).write(_atomsTemplate(atomList));
+      Files.new(generatedFilePath).write(template);
 
       log("Done.");
       resolve();

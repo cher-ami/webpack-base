@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const ManifestPlugin = require("webpack-manifest-plugin");
-const lessToJsPlugin = require("./plugins/LessToJsPlugin");
+const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin");
 
 /**
  * Common Webpack Configuration
@@ -65,7 +65,7 @@ commonConfig = {
 
     /**
      * @note Compile TS to js process is allowing by babel-loader with no type check
-     * About react hot reload works, we need to separate type check process
+     * About react hot loader works, we need to separate type check process
      * @doc https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
      * @doc https://github.com/gaearon/react-hot-loader#typescript
      */
@@ -116,7 +116,9 @@ commonConfig = {
     }),
 
     /**
-     * Custom Less to Js Plugin
+     * @name Less to Js Plugin
+     * @description Custom plugin allow to generate parsed less variables,
+     * and expose it in generated javascript file.
      */
     new lessToJsPlugin({
       watcher: paths.atomsFilesToWatch,
