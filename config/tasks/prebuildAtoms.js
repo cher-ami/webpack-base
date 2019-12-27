@@ -1,7 +1,7 @@
 const { Files } = require("@zouloux/files");
 const path = require("path");
 const paths = require("../paths");
-const debug = require("debug")("config:prebuild-atoms");
+const log = require("debug")("config:prebuild-atoms");
 
 // ----------------------------------------------------------------------------- PRIVATE
 
@@ -29,12 +29,13 @@ const _atomsTemplate = (
 
 /**
  * Parse atoms list
- * return {array}
+ * @param pWatcher Files to parse
+ * @returns {[]}
+ * @private
  */
-const _atomsParser = () => {
-  // TODO: pass atoms path and glob as param
+const _atomsParser = pWatcher => {
   // Get less files
-  const atomsLessFiles = Files.getFiles(`${paths.atomsPath}/partials/*.less`);
+  const atomsLessFiles = Files.getFiles(pWatcher);
 
   // Generated atoms list
   let atomList = [];
@@ -48,25 +49,18 @@ const _atomsParser = () => {
     lessContent.split("\n").map(split => {
       // Trim line
       split = split.trim();
-
       // Get @ index (starting of a new less var)
       const atIndex = split.indexOf("@");
-
       // If @ is not at first index (we are trimmed), next
       if (atIndex !== 0) return;
-
       // Get colon index (starting of a value in less)
       const colonIndex = split.indexOf(":");
-
       // If there is no value on this line, next
       if (colonIndex === -1) return;
-
       // Get optionnal semi colon index
       const semiIndex = split.indexOf(";");
-
       // Extract var name and trim it
       const varName = split.substring(atIndex + 1, colonIndex).trim();
-
       // Extract value and trim it
       const value = split
         .substring(colonIndex + 1, Math.min(split.length, semiIndex))
@@ -76,7 +70,6 @@ const _atomsParser = () => {
       atomList.push({
         // Var name
         name: varName,
-
         // Var value add quotes of not already there
         value:
           value.charAt(0) === "'" || value.charAt(0) === '"'
@@ -97,15 +90,16 @@ module.exports = {
    * Return a promise
    */
   prebuildAtoms: ({
+    pWatcher = paths.atomsFilesToWatch,
     pOutputPath = paths.atomsPath,
-    pOutputFilename = paths.atomsGenerateFilename
+    pOutputFilename = paths.atomsGeneratedFilename
   }) =>
     new Promise(resolve => {
-      // get atoms list
-      const atomList = _atomsParser();
-
       // Generate File path
       const generatedFilePath = `${pOutputPath}/${pOutputFilename}`;
+
+      // get atoms list
+      const atomList = _atomsParser(pWatcher);
 
       // create current file var
       let currentFile;
@@ -116,15 +110,16 @@ module.exports = {
         currentFile = Files.getFiles(generatedFilePath).read();
       }
 
-      debug("file as changed? :", currentFile !== _atomsTemplate(atomList));
+      log("file as changed?:", currentFile !== _atomsTemplate(atomList));
 
       // check if current file is the same than the new one
-      if (currentFile === _atomsTemplate(atomList)) return;
+      //if (currentFile === _atomsTemplate(atomList)) return;
 
-      debug("Write new atoms file...");
+      log("Write new atoms file...");
 
-      // Write atoms typescript files
       Files.new(generatedFilePath).write(_atomsTemplate(atomList));
+
+      log("Done.");
 
       // resolove promise
       resolve();

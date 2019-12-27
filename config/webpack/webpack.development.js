@@ -122,15 +122,6 @@ const developmentConfig = {
       favicon: paths.src + "/images/favicon.png",
       template: paths.src + "/template.html",
       filename: "index.html"
-    }),
-
-    /**
-     * Custom Less to Js Plugin
-     */
-    new lessToJsPlugin({
-      watcher: `${paths.atomsPath}/partials/*.less`,
-      outputPath: paths.atomsPath,
-      outputFilename: "atoms.ts"
     })
   ],
 

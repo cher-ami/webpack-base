@@ -113,12 +113,16 @@ commonConfig = {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
-    })
+    }),
 
     /**
      * Custom Less to Js Plugin
      */
-    // new lessToJsPlugin()
+    new lessToJsPlugin({
+      watcher: paths.atomsFilesToWatch,
+      outputPath: paths.atomsPath,
+      outputFilename: paths.atomsGeneratedFilename
+    })
   ],
 
   /**

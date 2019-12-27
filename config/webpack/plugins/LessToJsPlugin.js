@@ -1,4 +1,4 @@
-const { prebuildAtoms } = require("../../tasks/atoms");
+const { prebuildAtoms } = require("../../tasks/prebuildAtoms");
 const { Files } = require("@zouloux/files");
 
 // params
@@ -75,6 +75,25 @@ module.exports = class LessToJsPlugin {
     return Files.getFiles(`${pOutputPath}/${pOutputFilename}`).files.length > 0;
   }
 
+  /**
+   * Build less to js file
+   * Parse & Building process are external tasks in order to call these outside
+   * this webpack plugin
+   * @returns {*|Promise<unknown>}
+   * @private
+   */
+  _buildLessToJsFile(
+    pWatcher = this.watcher,
+    pOutputPath = this.outputPath,
+    pOutputFilename = this.outputFilename
+  ) {
+    return prebuildAtoms({
+      pWatcher: pWatcher,
+      pOutputPath: pOutputPath,
+      pOutputFilename: pOutputFilename
+    });
+  }
+
   // ---------------------------–---------------------------–------------------- PUBLIC
 
   /**
@@ -88,7 +107,7 @@ module.exports = class LessToJsPlugin {
      */
     compiler.hooks.beforeRun.tapAsync(PLUGIN_NAME, async compilation => {
       log(`Prebuild atoms...`);
-      return await prebuildAtoms({});
+      return await this._buildLessToJsFile();
     });
 
     /**
@@ -102,13 +121,10 @@ module.exports = class LessToJsPlugin {
       });
 
       // if output file don't exist
-      // or file of watcher as changed
+      // or files to watch were changed
       if (!this._outputFileExist() || this._fileAsChanged(compilation)) {
-        // prebuild
         log(`Prebuild less to js... `);
-        return await prebuildAtoms({
-          pOutputFilename: this.outputFilename
-        });
+        return await this._buildLessToJsFile();
       } else {
         log("Prebluild nothing, matches files doesn't changed");
       }

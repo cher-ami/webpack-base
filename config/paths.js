@@ -42,6 +42,12 @@ module.exports = {
   // atoms path
   atomsPath: appRoot.resolve("src/atoms"),
 
-  // auto generate atoms file name
-  atomsGenerateFilename: "atomsAutoGenerate.ts"
+  // atoms partial path
+  atomsPartialsPath: appRoot.resolve("src/atoms/partials"),
+
+  // atoms files to watch: can be glob
+  atomsFilesToWatch: appRoot.resolve("src/atoms/partials/*.less"),
+
+  // auto generated atoms file name
+  atomsGeneratedFilename: "atoms.ts"
 };
