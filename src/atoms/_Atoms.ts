@@ -1,6 +1,7 @@
 /**
  * Atoms properties
  * Need to be share with atoms.less
+ * TODO TO REMOVE
  */
 
 // ----------------------------------------------------------------------------- BREAKPOINTS
@@ -26,18 +27,11 @@ export const colors = {
 export const grid = {
   // column
   "total-column-number": 12,
-  "total-column-number-mobile": 4,
-
   // gutter
   "gutter-size": 30,
-  "gutter-size-px": "35px",
-
   "gutter-size-mobile": 30,
-  "gutter-size-mobile-px": "30px",
-
   // maximum grid size
-  "max-width-grid": 1024,
-  "max-width-grid-px": "1024px"
+  "max-width-grid": 1024
 };
 
 // ----------------------------------------------------------------------------- FINAL
@@ -45,7 +39,7 @@ export const grid = {
 /**
  * Final Atom export
  */
-export const Atoms = {
+export const _Atoms = {
   breakPoint,
   colors,
   grid

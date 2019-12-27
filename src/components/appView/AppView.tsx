@@ -11,8 +11,8 @@ import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
 import { EEnv } from "../../types";
 import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
-import { Atoms } from "../../atoms/Atoms";
 import { merge } from "../../helpers/classNameHelper";
+import { atoms } from "../../atoms/atoms";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -104,8 +104,7 @@ class AppView extends Component<IProps, IStates> {
     pNewPage: IPage
   ): Promise<any> {
     return new Promise(async resolve => {
-      // You can implement your transition here
-
+      // You can implement your transition here.
       // Do not forget to call playIn and playOut on pages.
       pOldPage != null && pOldPage.playOut();
       await pNewPage.playIn();
@@ -162,9 +161,9 @@ class AppView extends Component<IProps, IStates> {
         {/* Grid */}
         {isEnv(EEnv.DEV) && this.state.showGrid && (
           <GridLayout
-            columnsNumber={Atoms.grid["total-column-number"]}
-            gutterSize={Atoms.grid["gutter-size"]}
-            maxWidth={Atoms.grid["max-width-grid"]}
+            columnsNumber={atoms.columnNumber}
+            gutterSize={atoms.gutterSize}
+            maxWidth={atoms.maxWidthGrid}
           />
         )}
         <div className={merge([css._wrapper, css._wrapper__green])}>

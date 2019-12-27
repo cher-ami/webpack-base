@@ -14,12 +14,15 @@
 
 ._wrapper {
   position: relative;
-  .gridFactor(margin-left, 2, true);
+  .gridFactor(margin-left, 1, true);
+
+  // modifier with two "__" allow to target "css._wrapper__green"
+  &__green {
+  }
 }
 
-// modifier with two "__" allow to target "css.wrapper_black"
+// scd example modifier
 ._wrapper__green {
-  // ...
 }
 
 ._mainMenu {

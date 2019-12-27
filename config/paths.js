@@ -35,5 +35,19 @@ module.exports = {
   spritesFolder: "sprites/",
 
   // Sprite PNG output
-  outputSpritesFolder: "src/sprites/"
+  outputSpritesFolder: "src/sprites/",
+
+  // --------------------------------------------------------------------------- ATOMS
+
+  // atoms path
+  atomsPath: appRoot.resolve("src/atoms"),
+
+  // atoms partial path
+  atomsPartialsPath: appRoot.resolve("src/atoms/partials"),
+
+  // atoms files to watch: can be glob
+  atomsFilesToWatch: appRoot.resolve("src/atoms/partials/*.less"),
+
+  // auto generated atoms file name
+  atomsGeneratedFilename: "atoms.ts"
 };
