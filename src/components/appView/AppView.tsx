@@ -57,8 +57,6 @@ class AppView extends Component<IProps, IStates> {
     this.initRouter();
     // toggle grid layout visibility
     this.toggleGridVisibilityHandler();
-
-    log(atoms["total-column-number"]);
   }
 
   componentWillUnmount() {
@@ -106,8 +104,7 @@ class AppView extends Component<IProps, IStates> {
     pNewPage: IPage
   ): Promise<any> {
     return new Promise(async resolve => {
-      // You can implement your transition here
-
+      // You can implement your transition here.
       // Do not forget to call playIn and playOut on pages.
       pOldPage != null && pOldPage.playOut();
       await pNewPage.playIn();
@@ -164,9 +161,9 @@ class AppView extends Component<IProps, IStates> {
         {/* Grid */}
         {isEnv(EEnv.DEV) && this.state.showGrid && (
           <GridLayout
-            columnsNumber={parseInt(atoms["total-column-number"])}
-            gutterSize={parseInt(atoms["gutter-size"])}
-            maxWidth={parseInt(atoms["max-width-grid"])}
+            columnsNumber={atoms.columnNumber}
+            gutterSize={atoms.gutterSize}
+            maxWidth={atoms.maxWidthGrid}
           />
         )}
         <div className={merge([css._wrapper, css._wrapper__green])}>

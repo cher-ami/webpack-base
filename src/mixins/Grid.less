@@ -19,9 +19,9 @@
   & when (@with-last-gutter = false) {
     @{selector}: ~"calc(
     (
-      (100% / @{total-column-number}) * @{column-number})
+      (100% / @{column-number}) * @{column-number})
       +
-      (@{gutter-size}px / @{total-column-number} * @{column-number})
+      (@{gutter-size}px / @{column-number} * @{column-number})
       -
       @{gutter-size}px
     )
@@ -31,9 +31,9 @@
   & when (@with-last-gutter = true) {
     @{selector}: ~"calc(
     (
-      (100% / @{total-column-number}) * @{column-number})
+      (100% / @{column-number}) * @{column-number})
       +
-      (@{gutter-size}px / @{total-column-number} * @{column-number})
+      (@{gutter-size}px / @{column-number} * @{column-number})
     )
   ";
   }
@@ -47,14 +47,17 @@
   margin-right: auto;
   width: ~"calc(
     (
-      (100% / @{total-column-number}) * @{column-number})
+      (100% / @{column-number}) * @{column-number})
       +
-      (@{gutter-size}px / @{total-column-number} * @{column-number})
+      (@{gutter-size}px / @{column-number} * @{column-number})
       -
       @{gutter-size}px
     )
   ";
 }
+/**
+ * Reset center column grid
+ */
 .resetGridCenter() {
   margin-left: 0;
   margin-right: 0;

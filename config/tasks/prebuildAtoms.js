@@ -2,6 +2,7 @@ const { Files } = require("@zouloux/files");
 const path = require("path");
 const paths = require("../paths");
 const log = require("debug")("config:prebuild-atoms");
+const changeCase = require("change-case");
 
 // ----------------------------------------------------------------------------- PRIVATE
 
@@ -15,7 +16,6 @@ const _atomsTemplate = (
 ) => {
   // get output file name without extensions
   const outputFilenameWitoutExtension = pOutputFilename.split(".")[0];
-  log({ outputFilenameWitoutExtension });
 
   return `
 			/**
@@ -52,36 +52,42 @@ const _atomsParser = pWatcher => {
     const lessContent = Files.getFiles(lessFile).read();
 
     // Browse lines
-    lessContent.split("\n").map(split => {
+    lessContent.split("\n").map(el => {
       // Trim line
-      split = split.trim();
+      el = el.trim();
       // Get @ index (starting of a new less var)
-      const atIndex = split.indexOf("@");
+      const atIndex = el.indexOf("@");
       // If @ is not at first index (we are trimmed), next
       if (atIndex !== 0) return;
       // Get colon index (starting of a value in less)
-      const colonIndex = split.indexOf(":");
+      const colonIndex = el.indexOf(":");
       // If there is no value on this line, next
       if (colonIndex === -1) return;
       // Get optionnal semi colon index
-      const semiIndex = split.indexOf(";");
+      const semiIndex = el.indexOf(";");
       // Extract var name and trim it
-      const varName = split.substring(atIndex + 1, colonIndex).trim();
+      const varName = el.substring(atIndex + 1, colonIndex).trim();
       // Extract value and trim it
-      const value = split
-        .substring(colonIndex + 1, Math.min(split.length, semiIndex))
+      const varValue = el
+        .substring(colonIndex + 1, Math.min(el.length, semiIndex))
         .trim();
+      // final name
+      const name = changeCase.camelCase(varName);
+
+      // final value
+      const value =
+        // if value is a number
+        !isNaN(varValue) ||
+        // or if value already begin and ending with quote
+        varValue.charAt(0) === "'" ||
+        varValue.charAt(0) === '"'
+          ? // return value without formating
+            varValue
+          : // return value with quote
+            "'" + varValue + "'";
 
       // Add this atom
-      atomList.push({
-        // Var name
-        name: varName,
-        // Var value add quotes of not already there
-        value:
-          value.charAt(0) === "'" || value.charAt(0) === '"'
-            ? value
-            : "'" + value + "'"
-      });
+      atomList.push({ name, value });
     });
   });
 
