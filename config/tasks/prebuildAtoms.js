@@ -5,7 +5,9 @@ const log = require("debug")("config:prebuild-atoms");
 
 // ----------------------------------------------------------------------------- PRIVATE
 
-// create template
+/**
+ * Create atoms less to JS template
+ */
 const _atomsTemplate = (
   pAtomList,
   pFileTabRegex = new RegExp(`(\n${"\t\t\t"})`, "gmi")
@@ -14,12 +16,11 @@ const _atomsTemplate = (
 			/**
 			 * WARNING
 			 * Auto-generated file, do not edit!
-			 *
-			 * Only updated when webpack is launched.
-			 * Data are extracted from all less files inside atoms/ directory.
+			 * Auto-Updated with HMR and generated on production build.
+			 * This file is ignored on .gitignore 
 			 */
-			export const atoms =
-			{\n${pAtomList
+			export const atoms = {
+			${pAtomList
         .map(atom => {
           return `	"${atom.name}": ${atom.value},`;
         })
@@ -97,31 +98,13 @@ module.exports = {
     new Promise(resolve => {
       // Generate File path
       const generatedFilePath = `${pOutputPath}/${pOutputFilename}`;
-
       // get atoms list
       const atomList = _atomsParser(pWatcher);
 
-      // create current file var
-      let currentFile;
-
-      // If file exist
-      if (Files.getFiles(generatedFilePath).files.length > 0) {
-        // register file content
-        currentFile = Files.getFiles(generatedFilePath).read();
-      }
-
-      log("file as changed?:", currentFile !== _atomsTemplate(atomList));
-
-      // check if current file is the same than the new one
-      //if (currentFile === _atomsTemplate(atomList)) return;
-
       log("Write new atoms file...");
-
       Files.new(generatedFilePath).write(_atomsTemplate(atomList));
 
       log("Done.");
-
-      // resolove promise
       resolve();
     })
 };
