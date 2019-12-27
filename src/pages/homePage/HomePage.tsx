@@ -76,7 +76,13 @@ class HomePage extends ReactPage<IProps, IStates> {
   render() {
     return (
       <div className={css.HomePage} ref={this.rootRef}>
-        <Metas title={component} description={"desc top"} />
+        <Metas
+          title={component}
+          description={"desc top"}
+          siteName={"mon site"}
+          pageURL={"http://bla"}
+          imageURL={"image.jpg"}
+        />
         {component}
       </div>
     );

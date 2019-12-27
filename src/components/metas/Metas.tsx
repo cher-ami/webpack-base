@@ -30,8 +30,8 @@ function Metas(props: IProps) {
       "property='og:description'",
       "name='twitter:description'"
     ],
-    image: [
-      "meta[property='og:image'",
+    imageURL: [
+      "property='og:image'",
       "name='twitter:image'"
     ],
     siteName: [
@@ -41,87 +41,44 @@ function Metas(props: IProps) {
     pageURL: [
       "property='og:url'",
       "name='twitter:url'",
-      "link[rel='canonical'" // attention: url and not content attr
+      "rel='canonical'" // attention: url and not content attr
     ]
   };
 
   /**
-   * Inject title in appropiate meta tags
-   * @param pTitle
-   * @param pProperties
+   * inject all metas
    */
-  function injectTitle(pTitle: string, pProperties: string[]) {
-    // check
-    if (!props?.title) return;
-
+  function injectAllMetas(pMetas: IProps, pProperties) {
     // update main document title
     if (document.title !== null) document.title = props.title;
 
-    // loop on available properties
-    for (let el of pProperties) {
-      // check if meta tag with this property exist
+    // loop each metas type
+    for (let metaType of Object.keys(pMetas)) {
+      // for each metatype, loop on available properties
+      for (let property of pProperties[metaType]) {
+        // check if meta tag with this property exist
+        if (document.head.querySelector(`[${property}]`) === null) return;
 
-      if (document.head.querySelector(`[${el}]`) === null) return;
-
-      // if exist, inject title insite.
-      document.head.querySelector(`[${el}]`).setAttribute("content", pTitle);
+        // exception
+        if (property === "rel='canonical'") {
+          // if exist, inject title insite.
+          document.head
+            .querySelector(`[${property}]`)
+            .setAttribute("href", pMetas[metaType]);
+        } else {
+          // if exist, inject title insite.
+          document.head
+            .querySelector(`[${property}]`)
+            .setAttribute("content", pMetas[metaType]);
+        }
+      }
     }
-  }
-
-  /**
-   * Inject Description
-   * @param pDescription
-   * @param pProperties
-   */
-  function injectDescription(pDescription: string, pProperties: string[]) {
-    // loop on available properties
-    for (let el of pProperties) {
-      // check if meta tag with this property exist
-
-      if (document.head.querySelector(`[${el}]`) === null) return;
-
-      // if exist, inject title insite.
-      document.head
-        .querySelector(`[${el}]`)
-        .setAttribute("content", pDescription);
-    }
-  }
-
-  function injectImage(pImageURL: string, pProperties: string[]) {
-    // TODO
-  }
-
-  function injectSiteName(pSiteName: string, pProperties: string[]) {
-    // TODO
-  }
-
-  function injectPageURL(pPageURL: string, pProperties: string[]) {}
-
-  // treat props here
-
-  /**
-   * inject all metas
-   */
-  function injectAllMetas({
-    title,
-    description,
-    imageURL,
-    siteName,
-    pageURL
-  }: IProps) {
-    // FIXME ces fonctions font toutes la meme chose, généraliser le tout
-
-    // inject title
-    injectTitle(title, metaProperties.title);
-
-    // inject description
-    injectDescription(description, metaProperties.description);
   }
 
   /**
    * Final
    */
-  useEffect(() => injectAllMetas(props), [props]);
+  useEffect(() => injectAllMetas(props, metaProperties), []);
 
   // --------------------------------------------------------------------------- RENDER
 
