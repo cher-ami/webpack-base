@@ -15,13 +15,13 @@
  * ex: .gridFactor(padding, 3, true);
  */
 .gridFactor
-  (@selector, @column-number, @with-last-gutter:false, @with-margin: 0) {
+  (@selector, @el-column-number, @with-last-gutter:false, @with-margin: 0) {
   & when (@with-last-gutter = false) {
     @{selector}: ~"calc(
     (
-      (100% / @{column-number}) * @{column-number})
+      (100% / @{column-number}) * @{el-column-number})
       +
-      (@{gutter-size}px / @{column-number} * @{column-number})
+      (@{gutter-size}px / @{column-number} * @{el-column-number})
       -
       @{gutter-size}px
     )
@@ -31,9 +31,9 @@
   & when (@with-last-gutter = true) {
     @{selector}: ~"calc(
     (
-      (100% / @{column-number}) * @{column-number})
+      (100% / @{column-number}) * @{el-column-number})
       +
-      (@{gutter-size}px / @{column-number} * @{column-number})
+      (@{gutter-size}px / @{column-number} * @{el-column-number})
     )
   ";
   }
@@ -41,15 +41,15 @@
 /**
  * Center element in grid
  */
-.gridCenter (@column-number:10) {
+.gridCenter (@el-column-number:10) {
   position: relative;
   margin-left: auto;
   margin-right: auto;
   width: ~"calc(
     (
-      (100% / @{column-number}) * @{column-number})
+      (100% / @{column-number}) * @{el-column-number})
       +
-      (@{gutter-size}px / @{column-number} * @{column-number})
+      (@{gutter-size}px / @{column-number} * @{el-column-number})
       -
       @{gutter-size}px
     )
