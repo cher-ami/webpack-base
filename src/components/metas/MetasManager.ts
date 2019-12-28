@@ -21,40 +21,57 @@ export type TMetas = {
   pageURL?: string | TMetaProperty[];
   author?: string | TMetaProperty[];
   keywords?: string | TMetaProperty[];
+  // TODO add favicon
 };
 
 /**
  * Default Meta properties
  */
-// prettier-ignore
 const METAS_PROPERTIES: TMetas = {
   title: [
-    { selectorAttr: "property", selectorValue:"og:title", setAttr: "content" },
-    { selectorAttr: "name", selectorValue:"twitter:title", setAttr: "content" }
+    { selectorAttr: "property", selectorValue: "og:title", setAttr: "content" },
+    { selectorAttr: "name", selectorValue: "twitter:title", setAttr: "content" }
   ],
   description: [
-    { selectorAttr: "name", selectorValue:"description", setAttr: "content" },
-    { selectorAttr: "property", selectorValue:"og:description", setAttr: "content" },
-    { selectorAttr: "name", selectorValue:"twitter:description", setAttr: "content" }
+    { selectorAttr: "name", selectorValue: "description", setAttr: "content" },
+    {
+      selectorAttr: "property",
+      selectorValue: "og:description",
+      setAttr: "content"
+    },
+    {
+      selectorAttr: "name",
+      selectorValue: "twitter:description",
+      setAttr: "content"
+    }
   ],
   imageURL: [
-    { selectorAttr: "property", selectorValue:"og:image", setAttr: "content" },
-    { selectorAttr: "name", selectorValue:"twitter:image", setAttr: "content" }
+    { selectorAttr: "property", selectorValue: "og:image", setAttr: "content" },
+    {
+      selectorAttr: "name",
+      selectorValue: "twitter:image",
+      setAttr: "content"
+    },
+    { selectorAttr: "rel", selectorValue: "image_src", setAttr: "href" }
   ],
   siteName: [
-    { selectorAttr: "property", selectorValue:"og:site_name", setAttr: "content" },
-    { selectorAttr: "name", selectorValue:"twitter:site", setAttr: "content" }
+    {
+      selectorAttr: "property",
+      selectorValue: "og:site_name",
+      setAttr: "content"
+    },
+    { selectorAttr: "name", selectorValue: "twitter:site", setAttr: "content" }
   ],
   pageURL: [
-    { selectorAttr: "property", selectorValue:"og:url", setAttr: "content" },
-    { selectorAttr: "name", selectorValue:"twitter:url", setAttr: "content" },
-    { selectorAttr: "rel", selectorValue:"canonical", setAttr: "href" }
+    { selectorAttr: "property", selectorValue: "og:url", setAttr: "content" },
+    { selectorAttr: "name", selectorValue: "twitter:url", setAttr: "content" },
+    { selectorAttr: "rel", selectorValue: "canonical", setAttr: "href" }
   ],
   author: [
-    { selectorAttr: "name", selectorValue:"author", setAttr: "content" }
+    { selectorAttr: "name", selectorValue: "author", setAttr: "content" }
   ],
   keywords: [
-    { selectorAttr: "name", selectorValue:"keywords", setAttr: "content" }
+    { selectorAttr: "name", selectorValue: "keywords", setAttr: "content" }
   ]
 };
 
@@ -62,13 +79,17 @@ const METAS_PROPERTIES: TMetas = {
  * MetasManager
  *
  * @description Manage metas document head
- * Default should be define on app initialisation via defaultMetas seter
- * MetasManager.defaultMetas = { }
+ * Default should be define on app initialisation via defaultMetas seter:
+ *  MetasManager.defaultMetas = { }
  *
- * Each view should set custom meta value
- * MetasManager.inject({ title:"...", ... })
+ * Each view should set custom meta value:
+ *  MetasManager.inject({ title:"...", ... })
  *
- * TODO add option create HTML meta tag if doesn't exist
+ * In order to use this manager, DOM meta tags need be set in each HTML page:
+ *  <title></title>
+ *  <meta name="description" content="">
+ *  <meta name="author" content="">
+ * ...
  *
  */
 class MetasManager {
@@ -109,7 +130,7 @@ class MetasManager {
    * @private
    */
   private _formatMeta(pMetaValue: string, pType: string): string {
-    // TODO
+    // TODO check if is necessary
     // check if there is specific caracters who can break HTML structure
     // if should be URL, check if this is a real one
     return pMetaValue;

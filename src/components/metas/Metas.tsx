@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
 import MetasManager, { TMetas } from "./MetasManager";
 
-type IProps = TMetas;
+type IProps = TMetas & {
+  defaultMetas?: boolean;
+};
+
+Metas.defaultProps = {
+  defaultMetas: false
+} as IProps;
 
 /**
  * @name Metas
@@ -10,7 +16,16 @@ function Metas(props: IProps) {
   /**
    * Update meta after render
    */
-  useEffect(() => MetasManager.inject(props), []);
+  useEffect(() => {
+    // if this is default metas
+    if (props.defaultMetas) {
+      // set default meta
+      MetasManager.defaultMetas = props;
+    } else {
+      // inject custom metas
+      MetasManager.inject(props);
+    }
+  }, []);
 
   // return nothing
   return null;

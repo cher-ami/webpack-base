@@ -13,8 +13,7 @@ import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import { merge } from "../../helpers/classNameHelper";
 import { atoms } from "../../atoms/atoms";
-import MetasManager from "../metas/MetasManager";
-import { GlobalConfig } from "../../data/GlobalConfig";
+import Metas from "../metas";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -58,9 +57,6 @@ class AppView extends Component<IProps, IStates> {
     // initialize router
     this.initRouter();
 
-    // initialize meta
-    this.initMetas();
-
     // toggle grid layout visibility
     this.toggleGridVisibilityHandler();
   }
@@ -90,22 +86,6 @@ class AppView extends Component<IProps, IStates> {
 
     // Start router
     Router.start();
-  }
-
-  /**
-   * Initialize Metas
-   */
-  protected initMetas(): void {
-    // target package
-    const packageJSON = require("../../../package.json");
-
-    // set default meta
-    MetasManager.defaultMetas = {
-      title: "default metas title from appView",
-      description: "default meta",
-      siteName: packageJSON.name,
-      author: packageJSON.author
-    };
   }
 
   // --------------------------------------------------------------------------- HANDLERS
@@ -191,6 +171,18 @@ class AppView extends Component<IProps, IStates> {
             maxWidth={atoms.maxWidthGrid}
           />
         )}
+        {/* Default Metas */}
+        <Metas
+          defaultMetas={true}
+          title={require("../../../package.json").name}
+          description={""}
+          keywords={""}
+          author={""}
+          imageURL={""}
+          pageURL={`${window.location.href}`}
+          siteName={require("../../../package.json").name}
+        />
+
         <div className={merge([css._wrapper, css._wrapper__green])}>
           {/* Main Menu */}
           <MainMenu classNames={[css._mainMenu]} />
