@@ -1,7 +1,7 @@
 import { Disposable } from "./Disposable";
 
 export class App extends Disposable {
-  // ------------------------------------------------------------------------- INIT
+  // --------------------------------------------------------------------------- INIT
 
   /**
    * App constructor.
@@ -18,17 +18,12 @@ export class App extends Disposable {
 
     // Launch init sequence
     if (pInitSequence) {
-      // Init app config
       this.initConfig();
-
-      // Init env stuff
+      this.initMetas();
       this.initEnv();
-
-      // Init routes
       this.initRoutes();
     }
 
-    // Our app is ready
     this.ready();
   }
 
@@ -44,7 +39,15 @@ export class App extends Disposable {
    */
   protected initConfig() {}
 
-  // ------------------------------------------------------------------------- ENV
+  // --------------------------------------------------------------------------- METAS
+
+  /**
+   * Init env dependent stuff.
+   * Can be overridden.
+   */
+  protected initMetas(): void {}
+
+  // --------------------------------------------------------------------------- ENV
 
   /**
    * Init env dependent stuff.
@@ -52,7 +55,7 @@ export class App extends Disposable {
    */
   protected initEnv(): void {}
 
-  // ------------------------------------------------------------------------- ROUTING
+  // --------------------------------------------------------------------------- ROUTING
 
   /**
    * Init routes.
@@ -60,7 +63,7 @@ export class App extends Disposable {
    */
   protected initRoutes(): void {}
 
-  // ------------------------------------------------------------------------- READY
+  // --------------------------------------------------------------------------- READY
 
   /**
    * When all the app is ready

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { IMetas, injectMetas, metaProperties } from "./injectMetas";
+import MetasManager, { IMetas } from "./injectMetas";
 
 type IProps = IMetas;
 
@@ -10,7 +10,7 @@ function Metas(props: IProps) {
   /**
    * Update meta after render
    */
-  useEffect(() => injectMetas(props, metaProperties), []);
+  useEffect(() => MetasManager.instance.injectMetas(props), []);
 
   // return nothing
   return null;
