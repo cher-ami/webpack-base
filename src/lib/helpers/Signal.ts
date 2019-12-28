@@ -10,9 +10,6 @@ export interface IListener {
   id: number;
 }
 
-/**
- * TODO : Faire en sorte qu'on puisse forcer les types des paramètres des handlers à l'instanciation
- */
 export class Signal extends Disposable {
   // ------------------------------------------------------------------------- LOCALS
 

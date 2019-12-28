@@ -389,7 +389,7 @@ export function parseQueryString(
   const parseNumberValue = pValue =>
     isNumber(pValue) ? parseFloat(pValue) : pValue;
 
-  // TODO : Ajouter le parsing de "true" / "false" ... et étendre ça a des helpers sur StringUtils
+  // TODO : Ajouter le parsing de "true" / "false" ... et étendre ça a des helpers sur stringUtils
 
   // Split every & and browse
   const outputVarBag = {};

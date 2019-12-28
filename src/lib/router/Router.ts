@@ -1,13 +1,13 @@
 import { Signal } from "../helpers/Signal";
 import { IPageStack } from "./IPageStack";
-import { inArray } from "../utils/ArrayUtils";
+import { inArray } from "../utils/arrayUtils";
 import {
   extractPathFromBase,
   getBaseFromPath,
   leadingSlash,
   slugify,
   trailingSlash
-} from "../utils/StringUtils";
+} from "../utils/stringUtils";
 
 // ----------------------------------------------------------------------------- STRUCT
 

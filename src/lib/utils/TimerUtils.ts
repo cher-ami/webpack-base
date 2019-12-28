@@ -1,5 +1,5 @@
 import TweenLite from "gsap/all";
-import { limitRange } from "./MathUtils";
+import { limitRange } from "./mathUtils";
 
 export interface IFrameHandler {
   externalHandler: (pEvent: Event) => void;

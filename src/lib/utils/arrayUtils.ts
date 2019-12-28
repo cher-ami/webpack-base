@@ -103,7 +103,7 @@ export function countFrom(
   pTo: number,
   pHandler: (pIndex: number) => any
 ): any[] {
-  return this.countWith(pFrom, pTo, 1, pHandler);
+  return countWith(pFrom, pTo, 1, pHandler);
 }
 
 /**
@@ -116,7 +116,7 @@ export function countFrom(
  * @returns {any[]}
  */
 export function countTo(pTo: number, pHandler: (pIndex: number) => any): any[] {
-  return this.countWith(0, pTo, 1, pHandler);
+  return countWith(0, pTo, 1, pHandler);
 }
 
 /**

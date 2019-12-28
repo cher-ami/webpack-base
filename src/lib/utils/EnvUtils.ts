@@ -1,6 +1,19 @@
 // Si on est sur le vrai IE 11, et non pas la détection user agent qui ne marche plus ...
-import { dashToCamelCase } from "./StringUtils";
+import { dashToCamelCase } from "./stringUtils";
 
+/**
+ * Browser Only
+ * Execute callback only on browser side.
+ * It depend of some conditions
+ * @param callback
+ */
+export const browserOnly = (callback: any) => {
+  return typeof window !== "undefined" ? callback?.() : null;
+};
+
+/**
+ * is Real IE11
+ */
 export const isRealIE11 = !window["ActiveXObject"] && "ActiveXObject" in window;
 
 /**
