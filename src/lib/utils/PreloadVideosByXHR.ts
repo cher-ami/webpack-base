@@ -1,4 +1,4 @@
-import { Signal } from "../../helpers/Signal";
+import { Signal } from "../helpers/Signal";
 
 /**
  * Preload videos via XHR

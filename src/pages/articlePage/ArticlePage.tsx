@@ -3,7 +3,7 @@ import React, { RefObject } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { ReactPage } from "../../lib/react/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
-import Metas from "../../components/metas";
+import Metas from "../../lib/react/components/metas";
 
 interface IProps {
   classNames?: string[];

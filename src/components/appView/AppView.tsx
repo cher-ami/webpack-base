@@ -13,7 +13,7 @@ import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import { merge } from "../../helpers/classNameHelper";
 import { atoms } from "../../atoms/atoms";
-import Metas from "../metas";
+import Metas from "../../lib/react/components/metas";
 
 // ------------------------------------------------------------------------------- STRUCT
 

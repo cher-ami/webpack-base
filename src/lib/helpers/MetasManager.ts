@@ -1,5 +1,5 @@
-import { prepareComponent } from "../../helpers/prepareComponent";
-const { log } = prepareComponent("MetasManager");
+import debug from "debug";
+const { log } = debug("lib:MetasManager");
 
 /**
  * IMetas properties type
@@ -27,6 +27,7 @@ export type TMetas = {
 /**
  * Default Meta properties
  */
+// prettier-ignore
 const METAS_PROPERTIES: TMetas = {
   title: [
     { selectorAttr: "property", selectorValue: "og:title", setAttr: "content" },
@@ -34,32 +35,16 @@ const METAS_PROPERTIES: TMetas = {
   ],
   description: [
     { selectorAttr: "name", selectorValue: "description", setAttr: "content" },
-    {
-      selectorAttr: "property",
-      selectorValue: "og:description",
-      setAttr: "content"
-    },
-    {
-      selectorAttr: "name",
-      selectorValue: "twitter:description",
-      setAttr: "content"
-    }
+    { selectorAttr: "property", selectorValue: "og:description", setAttr: "content" },
+    { selectorAttr: "name", selectorValue: "twitter:description", setAttr: "content" }
   ],
   imageURL: [
     { selectorAttr: "property", selectorValue: "og:image", setAttr: "content" },
-    {
-      selectorAttr: "name",
-      selectorValue: "twitter:image",
-      setAttr: "content"
-    },
+    { selectorAttr: "name", selectorValue: "twitter:image", setAttr: "content" },
     { selectorAttr: "rel", selectorValue: "image_src", setAttr: "href" }
   ],
   siteName: [
-    {
-      selectorAttr: "property",
-      selectorValue: "og:site_name",
-      setAttr: "content"
-    },
+    { selectorAttr: "property", selectorValue: "og:site_name", setAttr: "content" },
     { selectorAttr: "name", selectorValue: "twitter:site", setAttr: "content" }
   ],
   pageURL: [
