@@ -1,5 +1,5 @@
-import { MathUtils } from "./MathUtils";
 import TweenLite from "gsap/all";
+import { limitRange } from "./MathUtils";
 
 export interface IFrameHandler {
   externalHandler: (pEvent: Event) => void;
@@ -43,7 +43,7 @@ export class TimerUtils {
   }
   static set fps(pValue: number) {
     // Clamp it and store it
-    this.__fps = MathUtils.limitRange(0.1, pValue, 120);
+    this.__fps = limitRange(0.1, pValue, 120);
 
     // Apply on tweenlite
     TweenLite.ticker?.["fps"](this.__fps);

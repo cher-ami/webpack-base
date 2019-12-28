@@ -1,8 +1,6 @@
-// TODO : Ajouter le test de l'autoplay : https://github.com/Modernizr/Modernizr/blob/master/feature-detects/video/autoplay.js
-// TODO : A faire optionnel (ajouté avec un import depuis l'extérieur de ce fichier)
-// TODO : Car la mini video embed dans le fichier pèse un minimum
-
 // Si on est sur le vrai IE 11, et non pas la détection user agent qui ne marche plus ...
+import { dashToCamelCase } from "./StringUtils";
+
 export const isRealIE11 = !window["ActiveXObject"] && "ActiveXObject" in window;
 
 /**
@@ -10,7 +8,6 @@ export const isRealIE11 = !window["ActiveXObject"] && "ActiveXObject" in window;
  * Just handheld or desktop, no mobile / phone / laptop because we manage this via mediaQueries.
  * If not found, will be desktop by default
  */
-import { StringUtils } from "./StringUtils";
 export enum EDeviceType {
   HANDHELD,
   DESKTOP
@@ -317,9 +314,7 @@ export class EnvUtils {
         EPlatform[EnvUtils.__PLATFORM]
       ].map(el => {
         // add class to dom
-        domRoot.classList.add(
-          pPrefix + "is-" + StringUtils.dashToCamelCase(el, "_")
-        );
+        domRoot.classList.add(pPrefix + "is-" + dashToCamelCase(el, "_"));
       });
 
       // Add capabilites

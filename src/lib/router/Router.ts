@@ -1,7 +1,13 @@
-import { StringUtils } from "../utils/StringUtils";
-import { ArrayUtils } from "../utils/ArrayUtils";
 import { Signal } from "../helpers/Signal";
 import { IPageStack } from "./IPageStack";
+import { inArray } from "../utils/ArrayUtils";
+import {
+  extractPathFromBase,
+  getBaseFromPath,
+  leadingSlash,
+  slugify,
+  trailingSlash
+} from "../utils/StringUtils";
 
 // ----------------------------------------------------------------------------- STRUCT
 
@@ -197,12 +203,12 @@ export class Router {
   static set base(value: string) {
     // Auto base if empty
     if (value == "") {
-      value = StringUtils.getBaseFromPath(window.location.pathname);
+      value = getBaseFromPath(window.location.pathname);
     }
 
     // Add leading and trailing slash
-    value = StringUtils.leadingSlash(value, true);
-    value = StringUtils.trailingSlash(value, true);
+    value = leadingSlash(value, true);
+    value = trailingSlash(value, true);
 
     // Set
     this._base = value;
@@ -362,7 +368,7 @@ export class Router {
   protected static trackCurrentPage() {
     // Page path, starting with a /
     // @see : https://developers.google.com/analytics/devguides/collection/gtagjs/pages
-    const path = StringUtils.leadingSlash(this._currentPath, true);
+    const path = leadingSlash(this._currentPath, true);
 
     // If old GA lib is loaded
     if ("ga" in window) {
@@ -682,12 +688,12 @@ export class Router {
     }
 
     // Force leading slash on URL
-    pURL = StringUtils.leadingSlash(pURL, true);
+    pURL = leadingSlash(pURL, true);
 
     // If our URL doesn't include base
     if (pURL.indexOf(this._base) != 0) {
       // Add base to URL
-      pURL = this._base + StringUtils.leadingSlash(pURL, false);
+      pURL = this._base + leadingSlash(pURL, false);
     }
 
     // Return prepared URL
@@ -703,8 +709,8 @@ export class Router {
     pURL = this.prepareURL(pURL);
 
     // Remove base and add leading slash
-    let pathWithoutBase = StringUtils.leadingSlash(
-      StringUtils.extractPathFromBase(pURL, this._base),
+    let pathWithoutBase = leadingSlash(
+      extractPathFromBase(pURL, this._base),
       true
     );
 
@@ -792,7 +798,7 @@ export class Router {
       ) {
         // Check if given parameters exists in this route
         for (let i in pRouteMatch.parameters) {
-          if (!ArrayUtils.inArray(route._matchingParameter, i)) {
+          if (!inArray(route._matchingParameter, i)) {
             return true;
           }
         }
@@ -823,7 +829,7 @@ export class Router {
           // Slugify it if this is a string only
           return typeof matchedParam === "number"
             ? matchedParam.toString(10)
-            : StringUtils.slugify(matchedParam as string);
+            : slugify(matchedParam as string);
         });
 
         // Search is finished
@@ -838,9 +844,7 @@ export class Router {
     if (foundURL == null) return null;
 
     // Return found URL
-    return pPrependBase
-      ? this._base + StringUtils.leadingSlash(foundURL, false)
-      : foundURL;
+    return pPrependBase ? this._base + leadingSlash(foundURL, false) : foundURL;
   }
 
   // ------------------------------------------------------------------------- CHANGE ROUTE

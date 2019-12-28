@@ -1,6 +1,6 @@
 import { Disposable } from "../core/Disposable";
 import { TimerUtils } from "../utils/TimerUtils";
-import { ArrayUtils } from "../utils/ArrayUtils";
+import { deleteWhere } from "../utils/ArrayUtils";
 
 /**
  * Delegate interface to handle touch dragging events
@@ -403,7 +403,7 @@ export class TouchDispatcher extends Disposable {
       }
 
       // Remove this point
-      this._points = ArrayUtils.deleteWhere(this._points, {
+      this._points = deleteWhere(this._points, {
         id: pOriginalPoint.identifier
       });
     }
