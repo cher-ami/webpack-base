@@ -4,7 +4,7 @@ import * as React from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { ReactPage } from "../../lib/react/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
-import { Helmet } from "react-helmet-async";
+import Metas from "../../components/metas";
 
 interface IProps {
   classNames?: string[];
@@ -75,9 +75,10 @@ class HomePage extends ReactPage<IProps, IStates> {
   render() {
     return (
       <div className={css.HomePage} ref={this.rootRef}>
-        <Helmet>
-          <title>{component}</title>
-        </Helmet>
+        <Metas
+          title={`${component} title`}
+          description={`${component} description`}
+        />
         {component}
       </div>
     );

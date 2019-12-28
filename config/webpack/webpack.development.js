@@ -118,8 +118,7 @@ const developmentConfig = {
      * @doc https://webpack.js.org/plugins/html-webpack-plugin/
      */
     new HtmlWebpackPlugin({
-      title: "Webpack base",
-      favicon: paths.src + "/images/favicon.png",
+      title: require("../../package").name,
       template: paths.src + "/template.html",
       filename: "index.html"
     })

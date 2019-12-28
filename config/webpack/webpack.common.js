@@ -84,8 +84,7 @@ commonConfig = {
     ...(config.generateHtmlIndex
       ? [
           new HtmlWebpackPlugin({
-            title: "Webpack base",
-            favicon: paths.src + "/images/favicon.png",
+            title: require("../../package").name,
             template: paths.src + "/template.html",
             filename: "index.html"
           })

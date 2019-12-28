@@ -5,7 +5,6 @@ import { GlobalConfig } from "./data/GlobalConfig";
 import { prepareComponent } from "./helpers/prepareComponent";
 import { Router } from "./lib/navigation/Router";
 import { Provider } from "react-redux";
-import { HelmetProvider } from "react-helmet-async";
 import configureStore from "./stores/index";
 import AppView from "./components/appView";
 import { EnvUtils } from "./lib/utils/EnvUtils";
@@ -101,9 +100,7 @@ export default class Main extends App {
     // React render
     ReactDOM.render(
       <Provider store={configureStore()}>
-        <HelmetProvider>
-          <AppView />
-        </HelmetProvider>
+        <AppView />
       </Provider>,
       document.getElementById("AppContainer")
     );

@@ -13,6 +13,7 @@ import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import { merge } from "../../helpers/classNameHelper";
 import { atoms } from "../../atoms/atoms";
+import Metas from "../metas";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -55,6 +56,7 @@ class AppView extends Component<IProps, IStates> {
   componentDidMount() {
     // initialize router
     this.initRouter();
+
     // toggle grid layout visibility
     this.toggleGridVisibilityHandler();
   }
@@ -68,7 +70,10 @@ class AppView extends Component<IProps, IStates> {
 
   // --------------------------------------------------------------------------- ROUTER
 
-  protected initRouter() {
+  /**
+   * Initialize Router
+   */
+  protected initRouter(): void {
     // Setup viewStack to show pages from Router automatically
     Router.registerStack("main", this._viewStack);
 
@@ -166,6 +171,18 @@ class AppView extends Component<IProps, IStates> {
             maxWidth={atoms.maxWidthGrid}
           />
         )}
+        {/* Default Metas */}
+        <Metas
+          defaultMetas={true}
+          title={require("../../../package.json").name}
+          description={""}
+          keywords={""}
+          author={""}
+          imageURL={""}
+          pageURL={`${window.location.href}`}
+          siteName={require("../../../package.json").name}
+        />
+
         <div className={merge([css._wrapper, css._wrapper__green])}>
           {/* Main Menu */}
           <MainMenu classNames={[css._mainMenu]} />
