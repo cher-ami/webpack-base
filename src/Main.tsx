@@ -9,7 +9,7 @@ import configureStore from "./stores/index";
 import AppView from "./components/appView";
 import { EnvUtils } from "./lib/utils/EnvUtils";
 import { App } from "./lib/core/App";
-import MetasManager from "./components/metas/injectMetas";
+import MetasManager from "./components/metas/MetasManager";
 
 // prepare
 const { log } = prepareComponent("Main");
@@ -49,13 +49,11 @@ export default class Main extends App {
   // ----------------------------------------------------------------------------- METAS
 
   protected initMetas(): void {
-    // instance
-    const metasManagerInstance = new MetasManager();
-
     // set default meta
-    metasManagerInstance.defaultMetas = {
+    MetasManager.defaultMetas = {
       title: "default metas title",
-      description: "default meta"
+      description: "default meta",
+      siteName: require("../package.json").name
     };
   }
 

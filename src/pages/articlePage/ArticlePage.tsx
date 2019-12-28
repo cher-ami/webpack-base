@@ -72,9 +72,9 @@ class ArticlePage extends ReactPage<IProps, IStates> {
     return (
       <div className={css.ArticlePage} ref={this.rootRef}>
         <Metas
-          title={component}
+          // title={component}
           description={`${component} desc`}
-          siteName={`${component} site name`}
+          // siteName={`${component} site name`}
           pageURL={`${component} http://foo`}
           imageURL={`${component} image URL`}
         />
