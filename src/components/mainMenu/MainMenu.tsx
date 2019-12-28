@@ -1,5 +1,5 @@
 import css from "./MainMenu.module.less";
-import React from "react";
+import React, { useRef } from "react";
 import { Router } from "../../lib/navigation/Router";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Main from "../../Main";
@@ -18,10 +18,12 @@ const { component, log } = prepareComponent("MainMenu");
 function MainMenu(props: IProps) {
   // --------------------------------------------------------------------------- PREPARE RENDER
 
+  const rootRef = useRef(null);
+
   // --------------------------------------------------------------------------- RENDER
 
   return (
-    <nav className={merge([css.MainMenu, props.classNames])}>
+    <nav className={merge([css.MainMenu, props.classNames])} ref={rootRef}>
       <ul className={css._items}>
         {/* Map availables routes */}
         {Main.routes.map((el, i) => {
