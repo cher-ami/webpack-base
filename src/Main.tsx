@@ -53,7 +53,8 @@ export default class Main extends App {
     MetasManager.defaultMetas = {
       title: "default metas title",
       description: "default meta",
-      siteName: require("../package.json").name
+      siteName: require("../package.json").name,
+      author: require("../package.json").author
     };
   }
 

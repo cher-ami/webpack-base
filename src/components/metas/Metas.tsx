@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import MetasManager, { IMetas } from "./MetasManager";
+import MetasManager, { TMetas } from "./MetasManager";
 
-type IProps = IMetas;
+type IProps = TMetas;
 
 /**
  * @name Metas
