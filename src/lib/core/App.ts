@@ -19,7 +19,6 @@ export class App extends Disposable {
     // Launch init sequence
     if (pInitSequence) {
       this.initConfig();
-      this.initMetas();
       this.initEnv();
       this.initRoutes();
     }
@@ -38,14 +37,6 @@ export class App extends Disposable {
    * Can be overridden.
    */
   protected initConfig() {}
-
-  // --------------------------------------------------------------------------- METAS
-
-  /**
-   * Init env dependent stuff.
-   * Can be overridden.
-   */
-  protected initMetas(): void {}
 
   // --------------------------------------------------------------------------- ENV
 

@@ -4,6 +4,7 @@ import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { ReactPage } from "../../lib/react/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Metas from "../../components/metas";
+import { Router } from "../../lib/navigation/Router";
 
 interface IProps {
   classNames?: string[];
@@ -72,11 +73,10 @@ class ArticlePage extends ReactPage<IProps, IStates> {
     return (
       <div className={css.ArticlePage} ref={this.rootRef}>
         <Metas
-          // title={component}
+          title={component}
           description={`${component} des"c`}
-          // siteName={`${component} site name`}
-          pageURL={`${component} http://foo`}
           imageURL={`${component} image URL`}
+          pageURL={`${window.location.origin}${Router.currentPath}`}
         />
         {component}
         <h5>id {this.props.parameters.id}</h5>

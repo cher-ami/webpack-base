@@ -5,7 +5,8 @@ const { log } = prepareComponent("MetasManager");
  * IMetas properties type
  */
 export type TMetaProperty = {
-  selector: string;
+  selectorAttr: string;
+  selectorValue: string;
   setAttr: string;
 };
 
@@ -28,32 +29,32 @@ export type TMetas = {
 // prettier-ignore
 const METAS_PROPERTIES: TMetas = {
   title: [
-    { selector: "property='og:title'", setAttr: "content" },
-    { selector: "name='twitter:title'", setAttr: "content" }
+    { selectorAttr: "property", selectorValue:"og:title", setAttr: "content" },
+    { selectorAttr: "name", selectorValue:"twitter:title", setAttr: "content" }
   ],
   description: [
-    { selector: "name='description'", setAttr: "content" },
-    { selector: "property='og:description'", setAttr: "content" },
-    { selector: "name='twitter:description'", setAttr: "content" }
+    { selectorAttr: "name", selectorValue:"description", setAttr: "content" },
+    { selectorAttr: "property", selectorValue:"og:description", setAttr: "content" },
+    { selectorAttr: "name", selectorValue:"twitter:description", setAttr: "content" }
   ],
   imageURL: [
-    { selector: "property='og:image'", setAttr: "content" },
-    { selector: "name='twitter:image'", setAttr: "content" }
+    { selectorAttr: "property", selectorValue:"og:image", setAttr: "content" },
+    { selectorAttr: "name", selectorValue:"twitter:image", setAttr: "content" }
   ],
   siteName: [
-    { selector: "property='og:site_name'", setAttr: "content" },
-    { selector: "name='twitter:site'", setAttr: "content" }
+    { selectorAttr: "property", selectorValue:"og:site_name", setAttr: "content" },
+    { selectorAttr: "name", selectorValue:"twitter:site", setAttr: "content" }
   ],
   pageURL: [
-    { selector: "property='og:url'", setAttr: "content" },
-    { selector: "name='twitter:url'", setAttr: "content" },
-    { selector: "rel='canonical'", setAttr: "href" }
+    { selectorAttr: "property", selectorValue:"og:url", setAttr: "content" },
+    { selectorAttr: "name", selectorValue:"twitter:url", setAttr: "content" },
+    { selectorAttr: "rel", selectorValue:"canonical", setAttr: "href" }
   ],
   author: [
-    { selector: "name='author'", setAttr: "content" }
+    { selectorAttr: "name", selectorValue:"author", setAttr: "content" }
   ],
   keywords: [
-    { selector: "name='keywords'", setAttr: "content" }
+    { selectorAttr: "name", selectorValue:"keywords", setAttr: "content" }
   ]
 };
 
@@ -102,16 +103,16 @@ class MetasManager {
   // --------------------------------------------------------------------------- PRIVATE
 
   /**
-   * TODO
    * Format Meta string
    * @param pMetaValue
    * @param pType
    * @private
    */
   private _formatMeta(pMetaValue: string, pType: string): string {
+    // TODO
     // check if there is specific caracters who can break HTML structure
     // if should be URL, check if this is a real one
-    return "";
+    return pMetaValue;
   }
 
   /**
@@ -148,13 +149,11 @@ class MetasManager {
    * @param pCustomMetas
    * @param pDefaultMetas
    * @param pProperties
-   * @param pCreateTagElementIfNotExist
    */
   public inject(
     pCustomMetas: TMetas = null,
     pDefaultMetas: TMetas = this.defaultMetas,
-    pProperties: TMetas = this._metaProperties,
-    pCreateTagElementIfNotExist = true
+    pProperties: TMetas = this._metaProperties
   ): void {
     // specific case: update main document title
     document.title = this._selectMetaValue(
@@ -174,28 +173,21 @@ class MetasManager {
 
       // target properties {selector, setAttr} of this specific meta type
       const propertiesMetaType: TMetaProperty[] = pProperties[metaType];
+
       // for each properties of this specific meta type
       for (let property of propertiesMetaType) {
+        // format selector
+        const selector = `[${property.selectorAttr}="${property.selectorValue}"]`;
+
         // if tag element exist
-        if (document.head.querySelector(`[${property.selector}]`) !== null) {
+        if (document.head.querySelector(selector) !== null) {
           // set meta in tag element
           document.head
-            .querySelector(`[${property.selector}]`)
-            .setAttribute(`${property.setAttr}`, metaValue);
-        }
-
-        // else if option "create tag element" is enable
-        else if (pCreateTagElementIfNotExist) {
-          /*
-          // create meta
-          const metaElement = document.createElement("meta");
-          // add attr (ex: "content") and set meta value
-          metaElement[property.setAttr] = metaValue;
-          // append metaElement in head element
-          document.getElementsByTagName("head")[0].appendChild(metaElement);
-          // create tag element
-           */
-          log("create tag element");
+            .querySelector(selector)
+            .setAttribute(
+              property.setAttr,
+              this._formatMeta(metaValue, metaType)
+            );
         }
         // else, return do nothing
         else return;

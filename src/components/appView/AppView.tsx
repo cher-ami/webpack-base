@@ -13,6 +13,8 @@ import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import { merge } from "../../helpers/classNameHelper";
 import { atoms } from "../../atoms/atoms";
+import MetasManager from "../metas/MetasManager";
+import { GlobalConfig } from "../../data/GlobalConfig";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -55,6 +57,10 @@ class AppView extends Component<IProps, IStates> {
   componentDidMount() {
     // initialize router
     this.initRouter();
+
+    // initialize meta
+    this.initMetas();
+
     // toggle grid layout visibility
     this.toggleGridVisibilityHandler();
   }
@@ -68,7 +74,10 @@ class AppView extends Component<IProps, IStates> {
 
   // --------------------------------------------------------------------------- ROUTER
 
-  protected initRouter() {
+  /**
+   * Initialize Router
+   */
+  protected initRouter(): void {
     // Setup viewStack to show pages from Router automatically
     Router.registerStack("main", this._viewStack);
 
@@ -81,6 +90,22 @@ class AppView extends Component<IProps, IStates> {
 
     // Start router
     Router.start();
+  }
+
+  /**
+   * Initialize Metas
+   */
+  protected initMetas(): void {
+    // target package
+    const packageJSON = require("../../../package.json");
+
+    // set default meta
+    MetasManager.defaultMetas = {
+      title: "default metas title from appView",
+      description: "default meta",
+      siteName: packageJSON.name,
+      author: packageJSON.author
+    };
   }
 
   // --------------------------------------------------------------------------- HANDLERS
