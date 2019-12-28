@@ -75,27 +75,23 @@ class MetasManager {
 
   /**
    *
-   * @param pCustomMeta
-   * @param pDefaultMeta
+   * @param pCustomMetas
+   * @param pDefaultMetas
+   * @param pType
    * @private
    */
-  private _selectMetaValue(pCustomMeta, pDefaultMeta): string {
-    // if a custom metatype is define
-    if (pCustomMeta) {
-      // keep this custom value
-      return pCustomMeta;
-      // if there is no custom value and default value is set
-    } else if (pDefaultMeta) {
-      // keep this default value
-      return pDefaultMeta;
-      // else, there is any custom value and any default value
-    } else {
-      // return an empty string
-      return "";
-    }
+  private _selectMetaValue(
+    pCustomMetas: IMetas,
+    pDefaultMetas: IMetas,
+    pType: string
+  ): string {
+    // if a custom metatype is define, keep this custom value
+    if (pCustomMetas?.[pType]) return pCustomMetas[pType];
+    // else if default value is set, keep this default value
+    else if (pDefaultMetas?.[pType]) return pDefaultMetas[pType];
+    // else, there is any custom or default value, return an empty string
+    else return "";
   }
-
-  //private _setHead
 
   // --------------------------------------------------------------------------- PULBIC API
 
@@ -103,8 +99,10 @@ class MetasManager {
    * @name inject
    * @description Inject metas in document <head>
    *
-   * If no pMetas is returned, set defaultMetas
-   * If no defaultMetas exist, return an empty string
+   * Meta priority order:
+   * - custom meta
+   * - default meta
+   * - empty string
    *
    * @param pCustomMetas
    * @param pDefaultMetas
@@ -117,16 +115,18 @@ class MetasManager {
   ): void {
     // specific case: update main document title
     document.title = this._selectMetaValue(
-      pCustomMetas?.title,
-      pDefaultMetas?.title
+      pCustomMetas,
+      pDefaultMetas,
+      "title"
     );
 
     // loop on pMetas (ex: title, description...)
     for (let metaType of Object.keys(pProperties)) {
       // set a default value;
       let metaValue = this._selectMetaValue(
-        pCustomMetas?.[metaType],
-        pDefaultMetas?.[metaType]
+        pCustomMetas,
+        pDefaultMetas,
+        metaType
       );
 
       log("meta", { metaType, metaValue });
