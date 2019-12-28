@@ -1,7 +1,7 @@
 import css from "./NotFoundPage.module.less";
 import React, { RefObject } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
-import { ReactPage } from "../../lib/react/ReactPage";
+import { ReactPage } from "../../lib/core/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
 
 interface IProps {

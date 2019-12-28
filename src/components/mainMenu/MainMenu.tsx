@@ -1,9 +1,9 @@
 import css from "./MainMenu.module.less";
 import React, { useRef } from "react";
-import { Router } from "../../lib/navigation/Router";
+import { Router } from "../../lib/router/Router";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Main from "../../Main";
-import { merge } from "../../helpers/classNameHelper";
+import { merge } from "../../lib/helpers/classNameHelper";
 
 interface IProps {
   classNames?: string[];

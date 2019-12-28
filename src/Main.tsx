@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import * as React from "react";
 import { GlobalConfig } from "./data/GlobalConfig";
 import { prepareComponent } from "./helpers/prepareComponent";
-import { Router } from "./lib/navigation/Router";
+import { Router } from "./lib/router/Router";
 import { Provider } from "react-redux";
 import configureStore from "./stores/index";
 import AppView from "./components/appView";

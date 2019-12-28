@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { findDOMNode } from "react-dom";
-import { IPage } from "../navigation/IPage";
-import { IPageStack } from "../navigation/IPageStack";
-import { IActionParameters } from "../navigation/Router";
+import { IPage } from "../router/IPage";
+import { IPageStack } from "../router/IPageStack";
+import { IActionParameters } from "../router/Router";
 
 // ----------------------------------------------------------------------------- STRUCT
 

@@ -1,19 +1,16 @@
 import css from "./AppView.module.less";
 import React, { Component } from "react";
-import {
-  ReactViewStack,
-  ETransitionType
-} from "../../lib/react/ReactViewStack";
-import { IRouteMatch, Router } from "../../lib/navigation/Router";
-import { IPage } from "../../lib/navigation/IPage";
+import { ReactViewStack, ETransitionType } from "../../lib/core/ReactViewStack";
+import { IRouteMatch, Router } from "../../lib/router/Router";
+import { IPage } from "../../lib/router/IPage";
 import MainMenu from "../mainMenu";
 import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
 import { EEnv } from "../../types";
 import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
-import { merge } from "../../helpers/classNameHelper";
+import { merge } from "../../lib/helpers/classNameHelper";
 import { atoms } from "../../atoms/atoms";
-import Metas from "../../lib/react/components/metas";
+import Metas from "../../lib/react-components/metas";
 
 // ------------------------------------------------------------------------------- STRUCT
 

@@ -2,9 +2,9 @@ import css from "./HomePage.module.less";
 import { RefObject } from "react";
 import * as React from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
-import { ReactPage } from "../../lib/react/ReactPage";
+import { ReactPage } from "../../lib/core/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
-import Metas from "../../lib/react/components/metas";
+import Metas from "../../lib/react-components/metas";
 
 interface IProps {
   classNames?: string[];

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import MetasManager, { TMetas } from "../../../helpers/MetasManager";
+import MetasManager, { TMetas } from "../../helpers/MetasManager";
 
 type IProps = TMetas & {
   defaultMetas?: boolean;

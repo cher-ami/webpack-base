@@ -1,5 +1,5 @@
-import { EPagePlayState, IPage } from "../navigation/IPage";
-import { IActionParameters } from "../navigation/Router";
+import { EPagePlayState, IPage } from "../router/IPage";
+import { IActionParameters } from "../router/Router";
 import { Component } from "react";
 
 /**
