@@ -9,7 +9,7 @@ export interface IPageStack {
   /**
    * Current displayed page. Can be null.
    */
-  readonly currentPage: IPage;
+  readonly currentPage: any;
 
   /**
    * If we are in transition state.

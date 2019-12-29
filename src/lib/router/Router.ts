@@ -657,7 +657,14 @@ export class Router {
           });
         }
 
-        log("updateCurrentRoute", stack);
+        log("updateCurrentRoute", {
+          stack,
+          "this._currentRouteMatch.page": this._currentRouteMatch.page,
+          currentRoutePageImporter: currentRoutePageImporter,
+          "this._currentRouteMatch.action": this._currentRouteMatch.action,
+          "this._currentRouteMatch.parameters": this._currentRouteMatch
+            .parameters
+        });
         // Show page on stack
         stack != null &&
           stack.showPage(

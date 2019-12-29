@@ -26,8 +26,6 @@ class PageTransitionHelper {
     return new Promise(resolve => {
       // si pas de ref, exit
       if (!pRef.current) return;
-
-      log('playIn')
       // anim
       gsap.fromTo(pRef.current, {
           autoAlpha:0,
@@ -57,7 +55,6 @@ class PageTransitionHelper {
     return new Promise(resolve => {
       // si pas de ref, exit
       if (!pRef.current) return;
-
       // anim
       gsap.fromTo(pRef.current, {
           autoAlpha:1,

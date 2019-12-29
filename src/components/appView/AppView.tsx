@@ -187,7 +187,7 @@ class AppView extends Component<IProps, IStates> {
           {/* View Stack */}
           <ReactViewStack
             ref={r => (this._viewStack = r)}
-            transitionType={ETransitionType.PAGE_SEQUENTIAL}
+            transitionType={ETransitionType.PAGE_CROSSED}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}
           />
