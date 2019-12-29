@@ -1,6 +1,6 @@
 import css from "./AppView.module.less";
 import React, { Component } from "react";
-import { ReactViewStack, ETransitionType } from "../../lib/core/ReactViewStack";
+import { ViewStack, ETransitionType } from "../../lib/router/ViewStack";
 import { IRouteMatch, Router } from "../../lib/router/Router";
 import { IPage } from "../../lib/router/IPage";
 import MainMenu from "../mainMenu";
@@ -31,7 +31,7 @@ const { component, log } = prepareComponent("AppView");
  */
 class AppView extends Component<IProps, IStates> {
   // React view stack, showing pages when route changes
-  protected _viewStack: ReactViewStack;
+  protected _viewStack: ViewStack;
 
   // --------------------------------------------------------------------------- INIT
 
@@ -54,7 +54,6 @@ class AppView extends Component<IProps, IStates> {
   componentDidMount() {
     // initialize router
     this.initRouter();
-
     // toggle grid layout visibility
     this.toggleGridVisibilityHandler();
   }
@@ -74,14 +73,11 @@ class AppView extends Component<IProps, IStates> {
   protected initRouter(): void {
     // Setup viewStack to show pages from Router automatically
     Router.registerStack("main", this._viewStack);
-
     // Listen to routes not found
     Router.onNotFound.add(this.routeNotFoundHandler, this);
     Router.onRouteChanged.add(this.routeChangedHandler, this);
-
     // Enable auto link listening
     Router.listenLinks();
-
     // Start router
     Router.start();
   }
@@ -94,23 +90,18 @@ class AppView extends Component<IProps, IStates> {
    * You can setup a generic transition between all pages and do special cases here.
    * If you want to act on pages beyond just playIn and playOut methods, it's recommended to create an interface or an abstract.
    * To enable this feature, set prop transitionType to ETransitionType.CONTROLLED onto ReactViewStack component.
-   * @param {HTMLElement} $oldPage Old page HTMLElement. Can be null.
-   * @param {HTMLElement} $newPage New page HTMLElement.
-   * @param {IPage} pOldPage Old page component instance. Can be null.
-   * @param {IPage} pNewPage New page component instance.
    * @return {Promise<any>}
    */
   protected transitionControl(
-    $oldPage: HTMLElement,
-    $newPage: HTMLElement,
-    pOldPage: IPage,
-    pNewPage: IPage
+    pOldPageName: any,
+    pNewPageName: any
   ): Promise<any> {
     return new Promise(async resolve => {
-      // You can implement your transition here.
-      // Do not forget to call playIn and playOut on pages.
-      pOldPage != null && pOldPage.playOut();
-      await pNewPage.playIn();
+      // playOut old page
+      pOldPageName && (await pagesTransitionsList?.[pOldPageName]?.playOut?.());
+
+      // playIn old page
+      pNewPageName && (await pagesTransitionsList?.[pNewPageName]?.playIn?.());
 
       // All done
       resolve();
@@ -185,22 +176,12 @@ class AppView extends Component<IProps, IStates> {
           {/* Main Menu */}
           <MainMenu classNames={[css._mainMenu]} />
           {/* View Stack */}
-          <ReactViewStack
+          <ViewStack
             ref={r => (this._viewStack = r)}
             transitionType={ETransitionType.PAGE_CROSSED}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}
           />
-
-          <button
-            style={{ padding: "10em" }}
-            onClick={async () => {
-              log("hello");
-              await pagesTransitionsList?.["HomePage"]?.playOut?.();
-            }}
-          >
-            Bla
-          </button>
         </div>
       </div>
     );
