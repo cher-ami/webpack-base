@@ -105,7 +105,13 @@ interface States {
   currentPage?: IPageState;
 }
 
+/**
+ * View Stack
+ */
 export class ViewStack extends Component<Props, States> implements IPageStack {
+  //
+  // --------------------------------------------------------------------------- LOCAL
+
   /**
    * Current page name
    */

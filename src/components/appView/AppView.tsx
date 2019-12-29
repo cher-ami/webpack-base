@@ -2,7 +2,6 @@ import css from "./AppView.module.less";
 import React, { Component } from "react";
 import { ViewStack, ETransitionType } from "../../lib/router/ViewStack";
 import { IRouteMatch, Router } from "../../lib/router/Router";
-import { IPage } from "../../lib/router/IPage";
 import MainMenu from "../mainMenu";
 import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
 import { EEnv } from "../../types";
@@ -99,10 +98,8 @@ class AppView extends Component<IProps, IStates> {
     return new Promise(async resolve => {
       // playOut old page
       pOldPageName && (await pagesTransitionsList?.[pOldPageName]?.playOut?.());
-
       // playIn old page
       pNewPageName && (await pagesTransitionsList?.[pNewPageName]?.playIn?.());
-
       // All done
       resolve();
     });
