@@ -3,9 +3,8 @@ import { findDOMNode } from "react-dom";
 import { IPage } from "../router/IPage";
 import { IPageStack } from "../router/IPageStack";
 import { IActionParameters, Router } from "../router/Router";
-
-import debug from "debug";
 import { pagesTransitionsList } from "../router/usePageTransitionRegister";
+import debug from "debug";
 const log = debug("lib:ReactViewStack");
 
 // ----------------------------------------------------------------------------- STRUCT
@@ -205,10 +204,8 @@ export class ReactViewStack extends Component<Props, States>
   render() {
     // Page types from state
     // Use alias with CapitalCase so react detects it
-    const CurrentPageType =
-      this.state.currentPage == null ? null : this.state.currentPage.pageClass;
-    const OldPageType =
-      this.state.oldPage == null ? null : this.state.oldPage.pageClass;
+    const CurrentPageType = this.state?.currentPage?.pageClass;
+    const OldPageType = this.state?.oldPage?.pageClass;
 
     // Return DOM with current page
     return (
@@ -242,12 +239,13 @@ export class ReactViewStack extends Component<Props, States>
   componentDidUpdate(pOldProps: Props, pOldStates: States) {
     log("this.state.oldPage", this.state.oldPage);
     log("this.state.currentPage", this.state.currentPage);
-    pagesTransitionsList?.["HomePage"]?.playOut;
 
     // If current page changed only, we need a playIn
     if (pOldStates.currentPage != this.state.currentPage) {
       // If we are in controlled transition type mode
       if (this._transitionType == ETransitionType.CONTROLLED) {
+        /*
+
         // We need the control handler, check if.
         if (this.props.transitionControl == null) {
           throw new Error(
@@ -277,32 +275,39 @@ export class ReactViewStack extends Component<Props, States>
               oldPage: null
             });
           });
+
+
+        */
       } else {
         // If we have an old page (crossed transition only)
-        if (this._oldPage != null) {
+        if (this.state.oldPage != null) {
           // Play it out
-          pagesTransitionsList?.["HomePage"]?.playOut?.().then(() => {
-            // Update transition state and check if we still need the old page
-            this._playedOut = true;
-            this.checkOldPage();
-          });
+          pagesTransitionsList?.[this.state.oldPage.pageClass]
+            ?.playOut?.()
+            .then(() => {
+              // Update transition state and check if we still need the old page
+              this._playedOut = true;
+              this.checkOldPage();
+            });
         }
 
         // If we have a new page
-        if (this._currentPage != null) {
+        if (this.state.currentPage != null) {
           // Play it in
 
-          pagesTransitionsList?.["HomePage"]?.playIn?.().then(() => {
-            // Update transition state and check if we still need the old page
-            this._playedIn = true;
-            this.checkOldPage();
-          });
+          pagesTransitionsList?.[this.state.currentPage.pageClass]
+            ?.playIn?.()
+            .then(() => {
+              // Update transition state and check if we still need the old page
+              this._playedIn = true;
+              this.checkOldPage();
+            });
         }
       }
 
       // Call page mounted event on props
-      this.props.onPageMounted != null &&
-        this.props.onPageMounted(this._currentPage);
+      // this.props.onPageMounted != null &&
+      //   this.props.onPageMounted(this._currentPage);
     }
   }
 
@@ -319,7 +324,7 @@ export class ReactViewStack extends Component<Props, States>
       this._playedIn &&
       this._playedOut &&
       // Only if we have an old page (do we ?)
-      this._oldPage != null
+      this.state.oldPage != null
     ) {
       // Remove old page from state
       this.setState({
@@ -435,6 +440,7 @@ export class ReactViewStack extends Component<Props, States>
 
     // Record page name
     this._currentPageName = pPageName;
+    log("addNewPage > this._currentPage pPageName", this._currentPage);
 
     // Class of the new page, can be null if no new page is required
     let NewPageClass: any;

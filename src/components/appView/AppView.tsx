@@ -196,7 +196,7 @@ class AppView extends Component<IProps, IStates> {
             style={{ padding: "10em" }}
             onClick={async () => {
               log("hello");
-              await pagesTransitionsList?.["HomePage"].playOut();
+              await pagesTransitionsList?.["HomePage"]?.playOut?.();
             }}
           >
             Bla

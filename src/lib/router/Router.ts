@@ -8,6 +8,8 @@ import {
   slugify,
   trailingSlash
 } from "../utils/stringUtils";
+import debug from "debug";
+const log = debug("lib:Router");
 
 // ----------------------------------------------------------------------------- STRUCT
 
@@ -655,6 +657,7 @@ export class Router {
           });
         }
 
+        log("updateCurrentRoute", stack);
         // Show page on stack
         stack != null &&
           stack.showPage(
