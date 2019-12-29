@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { findDOMNode } from "react-dom";
 import { IPage } from "../router/IPage";
 import { IPageStack } from "../router/IPageStack";
-import { IActionParameters } from "../router/Router";
+import { IActionParameters, Router } from "../router/Router";
+
+import debug from "debug";
+import { pagesTransitionsList } from "../router/usePageTransitionRegister";
+const log = debug("lib:ReactViewStack");
 
 // ----------------------------------------------------------------------------- STRUCT
 
@@ -213,7 +217,7 @@ export class ReactViewStack extends Component<Props, States>
         {OldPageType != null && (
           <OldPageType
             key={this.state.currentPageIndex - 1}
-            ref={r => (this._oldPage = r)}
+            //ref={r => (this._oldPage = r)}
             action={this.state.oldPage.action}
             parameters={this.state.oldPage.parameters}
           />
@@ -223,7 +227,7 @@ export class ReactViewStack extends Component<Props, States>
         {CurrentPageType != null && (
           <CurrentPageType
             key={this.state.currentPageIndex}
-            ref={r => (this._currentPage = r)}
+            //ref={r => (this._currentPage = r)}
             action={this.state.currentPage.action}
             parameters={this.state.currentPage.parameters}
           />
@@ -233,14 +237,13 @@ export class ReactViewStack extends Component<Props, States>
   }
 
   /**
-   * Component is created
-   */
-  componentDidMount() {}
-
-  /**
    * Component is updated
    */
   componentDidUpdate(pOldProps: Props, pOldStates: States) {
+    log("this.state.oldPage", this.state.oldPage);
+    log("this.state.currentPage", this.state.currentPage);
+    pagesTransitionsList?.["HomePage"]?.playOut;
+
     // If current page changed only, we need a playIn
     if (pOldStates.currentPage != this.state.currentPage) {
       // If we are in controlled transition type mode
@@ -251,7 +254,6 @@ export class ReactViewStack extends Component<Props, States>
             "ReactViewStack.transitionControl // Please set transitionControl handler."
           );
         }
-
         // Set transition state as started
         this._playedIn = false;
         this._playedOut = false;
@@ -279,7 +281,7 @@ export class ReactViewStack extends Component<Props, States>
         // If we have an old page (crossed transition only)
         if (this._oldPage != null) {
           // Play it out
-          this._oldPage.playOut().then(() => {
+          pagesTransitionsList?.["HomePage"]?.playOut?.().then(() => {
             // Update transition state and check if we still need the old page
             this._playedOut = true;
             this.checkOldPage();
@@ -289,7 +291,8 @@ export class ReactViewStack extends Component<Props, States>
         // If we have a new page
         if (this._currentPage != null) {
           // Play it in
-          this._currentPage.playIn().then(() => {
+
+          pagesTransitionsList?.["HomePage"]?.playIn?.().then(() => {
             // Update transition state and check if we still need the old page
             this._playedIn = true;
             this.checkOldPage();
@@ -397,7 +400,9 @@ export class ReactViewStack extends Component<Props, States>
       this._playedOut = false;
 
       // Else we have to play out the current page first
-      this._currentPage.playOut().then(boundAddNewPage);
+      pagesTransitionsList?.[this.state.currentPage.pageClass]
+        ?.playOut()
+        .then(boundAddNewPage);
     }
 
     // Everything is ok
@@ -542,9 +547,9 @@ export class ReactViewStack extends Component<Props, States>
     // FIXME : Peut-être qu'on doit vérifier si les paramètres de page et action ont changés pour éviter call inutiles ?
 
     if (this._currentPage == null || this.state.currentPage == null) return;
-    this._currentPage.action(
-      this.state.currentPage.action,
-      this.state.currentPage.parameters
+    this._currentPage.action?.(
+      this.state.currentPage?.action,
+      this.state.currentPage?.parameters
     );
   }
 }

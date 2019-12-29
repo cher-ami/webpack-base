@@ -27,6 +27,7 @@ class PageTransitionHelper {
       // si pas de ref, exit
       if (!pRef.current) return;
 
+      log('playIn')
       // anim
       gsap.fromTo(pRef.current, {
           autoAlpha:0,

@@ -11,6 +11,7 @@ import { prepareComponent } from "../../helpers/prepareComponent";
 import { merge } from "../../lib/helpers/classNameHelper";
 import { atoms } from "../../atoms/atoms";
 import Metas from "../../lib/react-components/metas";
+import { pagesTransitionsList } from "../../lib/router/usePageTransitionRegister";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -186,10 +187,20 @@ class AppView extends Component<IProps, IStates> {
           {/* View Stack */}
           <ReactViewStack
             ref={r => (this._viewStack = r)}
-            transitionType={ETransitionType.PAGE_CROSSED}
+            transitionType={ETransitionType.PAGE_SEQUENTIAL}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}
           />
+
+          <button
+            style={{ padding: "10em" }}
+            onClick={async () => {
+              log("hello");
+              await pagesTransitionsList?.["HomePage"].playOut();
+            }}
+          >
+            Bla
+          </button>
         </div>
       </div>
     );
