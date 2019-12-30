@@ -1,73 +1,50 @@
 import { MutableRefObject, useLayoutEffect } from "react";
 import debug from "debug";
+import { IActionParameters } from "./Router";
 const log = debug("lib:usePageStack");
 
 /**
- *  Page transition object type
+ *  Pages stack type
  */
-export type IPagesStackList = {
-  readonly [name: string]: IPageStackObject;
+export type TPagesStack = {
+  [name: string]: TPageStackObject;
 };
 
-export type IPageStackObject = {
+/**
+ * Single page stack object type
+ */
+export type TPageStackObject = {
   playIn: () => Promise<any>;
   playOut: () => Promise<any>;
   rootRef: MutableRefObject<any>;
+  action?: string;
+  parameters?: IActionParameters;
 };
 
 /**
- * Page transition register Object
- * All page transition are store in this object when page declare "usePageTransitionRegister" hook
+ * Pages stack accessor
+ * All pages stack were store in pagesStack.list
  */
-export let pagesStackList: IPagesStackList = {};
+export const pagesStack = {
+  set register(pPage: TPageStackObject | Object) {
+    this.list = pPage;
+  },
+  list: {} as TPagesStack
+};
 
 /**
  * @name usePageStack
- * @description This Hook allow to keep each page transition in "pagesTransitionsList" object
- * This list can be call from everywhere
+ * @description This Hook allow to register each pageStack
+ * This pages stack list can be call from everywhere
  */
 export const usePageStack = ({
   componentName,
   playIn,
   playOut,
-  rootRef
-}: {
-  componentName: string;
-  playIn: () => Promise<any>;
-  playOut: () => Promise<any>;
-  rootRef: MutableRefObject<any>;
-}) => {
-  // --------------------------------------------------------------------------- PREPARE
-
-  /**
-   * @name register
-   * @description Register all new transitions in object
-   * @param componentName
-   * @param playIn
-   * @param playOut
-   * @param rootRef
-   */
-  const register = (
-    componentName: string,
-    playIn: () => Promise<any>,
-    playOut: () => Promise<any>,
-    rootRef: MutableRefObject<any>
-  ): void => {
-    // build route object
-    const newPageRegister: IPagesStackList = {
-      [componentName]: {
-        playIn,
-        playOut,
-        rootRef
-      }
-    };
-    // merge new object on page transition object
-    pagesStackList = {
-      ...pagesStackList,
-      ...newPageRegister
-    };
-  };
-
+  rootRef,
+  action,
+  parameters
+}: { componentName: string } & TPageStackObject) => {
   /**
    * @name pageIsAlreadyRegister
    * @description Check if a page is already register in object
@@ -75,18 +52,52 @@ export const usePageStack = ({
    * @param name
    */
   const pageIsAlreadyRegister = (
-    page = pagesStackList,
+    page = pagesStack.list,
     name: string
   ): boolean => Object.keys(page).some(el => el === name);
+
+  /**
+   * @name registerFn
+   * @description Register all new transitions in object
+   * @param componentName
+   * @param playIn
+   * @param playOut
+   * @param rootRef
+   * @param action
+   * @param parameters
+   */
+  const registerFn = (
+    componentName: string,
+    playIn: () => Promise<any>,
+    playOut: () => Promise<any>,
+    rootRef: MutableRefObject<any>,
+    action?: string,
+    parameters?: IActionParameters
+  ): void => {
+    // build page object
+    const newPageRegister: TPagesStack = {
+      [componentName]: {
+        playIn,
+        playOut,
+        rootRef,
+        action,
+        parameters
+      }
+    };
+    // merge new object on page stack object
+    pagesStack.register = {
+      ...pagesStack.list,
+      ...newPageRegister
+    };
+  };
 
   // --------------------------------------------------------------------------- REGISTER
 
   /**
-   * Register pages stack
+   * Register pages stack before render
    */
   useLayoutEffect(() => {
-    register(componentName, playIn, playOut, rootRef);
-
-    log("pagesStackList", pagesStackList);
+    registerFn(componentName, playIn, playOut, rootRef, action, parameters);
+    log("pagesStackList", pagesStack.list);
   }, []);
 };

@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Metas from "../../lib/react-components/metas";
-import { pagesStackList, usePageStack } from "../../lib/router/usePageStack";
+import { pagesStack, usePageStack } from "../../lib/router/usePageStack";
 
 interface IProps {
   classNames?: string[];
@@ -27,15 +27,13 @@ const ArticlePage = (props: IProps) => {
   // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
 
   const playIn = (): Promise<any> =>
-    PageTransitionHelper.promisePlayIn(rootRef, () => log(`playIn complete`));
+    PageTransitionHelper.promisePlayIn(rootRef);
 
   const playOut = (): Promise<any> =>
-    PageTransitionHelper.promisePlayOut(rootRef, () => log(`playOut complete`));
+    PageTransitionHelper.promisePlayOut(rootRef);
 
   // register page transition
   usePageStack({ componentName, rootRef, playIn, playOut });
-
-  useEffect(() => log("pagesStackList", pagesStackList), []);
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 

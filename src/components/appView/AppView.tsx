@@ -10,10 +10,7 @@ import { prepareComponent } from "../../helpers/prepareComponent";
 import { merge } from "../../lib/helpers/classNameHelper";
 import { atoms } from "../../atoms/atoms";
 import Metas from "../../lib/react-components/metas";
-import {
-  IPageStackObject,
-  pagesStackList
-} from "../../lib/router/usePageStack";
+import { TPageStackObject, pagesStack } from "../../lib/router/usePageStack";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -95,8 +92,8 @@ class AppView extends Component<IProps, IStates> {
    * @return {Promise<any>}
    */
   protected transitionControl(
-    pOldPage: IPageStackObject,
-    pNewPage: IPageStackObject
+    pOldPage: TPageStackObject,
+    pNewPage: TPageStackObject
   ): Promise<any> {
     return new Promise(async resolve => {
       // target ref
@@ -104,7 +101,7 @@ class AppView extends Component<IProps, IStates> {
       const newPageRef = pNewPage?.rootRef?.current;
 
       // set style to new page
-      newPageRef.style.opacity = 0;
+      newPageRef.style.visibility = "hidden";
 
       // playOut old page
       pOldPage && (await pOldPage?.playOut?.());
