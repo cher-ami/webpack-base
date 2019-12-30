@@ -39,6 +39,8 @@ export enum ETransitionType {
 interface IPageState {
   // Page class to instanciate with react
   pageClass?: any;
+  // if connect to store with decorator
+  WrappedComponent?: any;
   // Associated action
   action?: string;
   // Associated parameters
@@ -148,7 +150,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   /**
    * Page stack list
    */
-  protected pagesStackList: TPagesRegister;
+  protected pagesRegisterList: TPagesRegister;
 
   // --------------------------------------------------------------------------- INIT
 
@@ -193,7 +195,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If current page changed only, we need a playIn
     if (pOldStates.currentPage != this.state.currentPage) {
       // update page stack list
-      this.pagesStackList = pagesRegister?.list;
+      this.pagesRegisterList = pagesRegister?.list;
 
       /**
        * Sequential transition
@@ -229,7 +231,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have an old page
     if (this.state.oldPage !== null) {
       // Play out transition
-      await this.pagesStackList?.[
+      await this.pagesRegisterList?.[
         this.state.oldPage?.pageClass?.name
       ]?.playOut?.();
 
@@ -245,7 +247,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have a new page
     if (this.state.currentPage !== null) {
       // Play in transition
-      await this.pagesStackList?.[this._currentPageName]?.playIn?.();
+      await this.pagesRegisterList?.[this._currentPageName]?.playIn?.();
 
       // transition is completed
       this._playedIn = true;
@@ -260,7 +262,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have an old page
     if (this.state.oldPage !== null) {
       // Play out transition
-      this.pagesStackList?.[this.state.oldPage?.pageClass?.name]
+      this.pagesRegisterList?.[this.state.oldPage?.pageClass?.name]
         ?.playOut?.()
         .then(() => {
           // empty old page
@@ -276,7 +278,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have a new page
     if (this.state.currentPage !== null) {
       // Play in transition
-      this.pagesStackList?.[this._currentPageName]?.playIn?.().then(() => {
+      this.pagesRegisterList?.[this._currentPageName]?.playIn?.().then(() => {
         // transition is completed
         this._playedIn = true;
       });
@@ -288,16 +290,23 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     this._playedIn = false;
     this._playedOut = false;
 
-    //log("ref",pagesTransitionsList[this._currentPageName]?.rootRef?.current);
-
-    const oldPageName = this.state?.oldPage?.pageClass?.name;
-    const currentPageName = this.state?.currentPage?.pageClass?.name;
+    // FIXME : Généraliser la référence aux nom de page dans this._oldPageName & this._currentPageName,
+    const oldPageName =
+      // if page component is export default Page
+      this.state?.oldPage?.pageClass?.name ||
+      // if page component is export default connector(Page) with decorator
+      this.state?.oldPage?.pageClass?.WrappedComponent?.name;
+    const currentPageName =
+      // if page component is export default Page
+      this.state?.currentPage?.pageClass?.name ||
+      // if page component is export default connector(Page) with decorator
+      this.state?.currentPage?.pageClass?.WrappedComponent?.name;
 
     // Call transition control handler with old and new pages instances
     // Listen when finished through promise
     await this.props.transitionControl(
-      this.pagesStackList?.[oldPageName],
-      this.pagesStackList?.[currentPageName]
+      this.pagesRegisterList?.[oldPageName],
+      this.pagesRegisterList?.[currentPageName]
     );
 
     // Set transition state as ended
@@ -376,7 +385,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
       this._playedOut = false;
 
       // Else we have to play out the current page first
-      this.pagesStackList?.[this._currentPageName]
+      this.pagesRegisterList?.[this._currentPageName]
         ?.playOut?.()
         .then(boundAddNewPage);
     }

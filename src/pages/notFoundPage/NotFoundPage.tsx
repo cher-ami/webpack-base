@@ -1,7 +1,5 @@
 import css from "./NotFoundPage.module.less";
-import React, { RefObject, useRef } from "react";
-import PageTransitionHelper from "../../helpers/PageTransitionHelper";
-import { ReactPage } from "../../lib/core/ReactPage";
+import React, { useRef } from "react";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import { usePageRegister } from "../../lib/router/usePageRegister";
 import Metas from "../../lib/react-components/metas";
@@ -23,13 +21,8 @@ const NotFoundPage = (props: IProps) => {
 
   // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
 
-  const playIn = (): Promise<any> => {
-    return new Promise<any>(resolve => resolve);
-  };
-  const playOut = (): Promise<any> => {
-    return new Promise<any>(resolve => resolve);
-  };
-
+  const playIn = (): Promise<any> => new Promise(resolve => resolve);
+  const playOut = (): Promise<any> => new Promise(resolve => resolve);
   usePageRegister({ componentName, rootRef, playIn, playOut });
 
   // -------------------–-------------------–-------------------–--------------- RENDER
