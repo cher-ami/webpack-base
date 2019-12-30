@@ -10,7 +10,10 @@ import { prepareComponent } from "../../helpers/prepareComponent";
 import { merge } from "../../lib/helpers/classNameHelper";
 import { atoms } from "../../atoms/atoms";
 import Metas from "../../lib/react-components/metas";
-import { TPageStackObject, pagesStack } from "../../lib/router/usePageStack";
+import {
+  TPageRegisterObject,
+  pagesRegister
+} from "../../lib/router/usePageRegister";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -92,8 +95,8 @@ class AppView extends Component<IProps, IStates> {
    * @return {Promise<any>}
    */
   protected transitionControl(
-    pOldPage: TPageStackObject,
-    pNewPage: TPageStackObject
+    pOldPage: TPageRegisterObject,
+    pNewPage: TPageRegisterObject
   ): Promise<any> {
     return new Promise(async resolve => {
       // target ref

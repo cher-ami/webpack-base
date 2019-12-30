@@ -4,7 +4,10 @@ import * as React from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Metas from "../../lib/react-components/metas";
-import { pagesStack, usePageStack } from "../../lib/router/usePageStack";
+import {
+  pagesRegister,
+  usePageRegister
+} from "../../lib/router/usePageRegister";
 
 interface IProps {
   classNames?: string[];
@@ -36,7 +39,7 @@ const HomePage = (props: IProps) => {
   const playOut = (): Promise<any> =>
     PageTransitionHelper.promisePlayOut(rootRef, () => log(`playOut complete`));
 
-  usePageStack({ componentName, rootRef, playIn, playOut });
+  usePageRegister({ componentName, rootRef, playIn, playOut });
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 

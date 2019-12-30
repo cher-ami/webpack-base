@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { IPageStack } from "./IPageStack";
 import { IActionParameters } from "./Router";
-import { TPagesStack, TPageStackObject, pagesStack } from "./usePageStack";
+import {
+  TPagesRegister,
+  TPageRegisterObject,
+  pagesRegister
+} from "./usePageRegister";
 import debug from "debug";
 const log = debug("lib:ReactViewStack");
 
@@ -50,7 +54,7 @@ interface ITransitionControl {
    * Set props.transitionType to ETransitionType.CONTROLLER to enable custom transition control.
    * Please return promise and resolve it when old page can be removed.
    */
-  (pOldPage: TPageStackObject, pNewPage: TPageStackObject): Promise<any>;
+  (pOldPage: TPageRegisterObject, pNewPage: TPageRegisterObject): Promise<any>;
 }
 
 interface Props {
@@ -144,7 +148,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   /**
    * Page stack list
    */
-  protected pagesStackList: TPagesStack;
+  protected pagesStackList: TPagesRegister;
 
   // --------------------------------------------------------------------------- INIT
 
@@ -189,7 +193,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If current page changed only, we need a playIn
     if (pOldStates.currentPage != this.state.currentPage) {
       // update page stack list
-      this.pagesStackList = pagesStack?.list;
+      this.pagesStackList = pagesRegister?.list;
 
       /**
        * Sequential transition

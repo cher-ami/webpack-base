@@ -3,7 +3,10 @@ import React, { useEffect, useRef } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Metas from "../../lib/react-components/metas";
-import { pagesStack, usePageStack } from "../../lib/router/usePageStack";
+import {
+  pagesRegister,
+  usePageRegister
+} from "../../lib/router/usePageRegister";
 
 interface IProps {
   classNames?: string[];
@@ -33,7 +36,7 @@ const ArticlePage = (props: IProps) => {
     PageTransitionHelper.promisePlayOut(rootRef);
 
   // register page transition
-  usePageStack({ componentName, rootRef, playIn, playOut });
+  usePageRegister({ componentName, rootRef, playIn, playOut });
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 
