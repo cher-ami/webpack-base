@@ -3,7 +3,7 @@ import { MutableRefObject } from "react";
 import { prepareComponent } from "./prepareComponent";
 
 // prepare
-const { component, log } = prepareComponent("PageTransitionHelper");
+const { componentName, log } = prepareComponent("PageTransitionHelper");
 
 /**
  * @name PageTransitionHelper

@@ -10,7 +10,10 @@ import { prepareComponent } from "../../helpers/prepareComponent";
 import { merge } from "../../lib/helpers/classNameHelper";
 import { atoms } from "../../atoms/atoms";
 import Metas from "../../lib/react-components/metas";
-import { pagesTransitionsList } from "../../lib/router/usePageTransitionRegister";
+import {
+  IPageStackObject,
+  pagesStackList
+} from "../../lib/router/usePageStack";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -21,7 +24,7 @@ export interface IStates {
 }
 
 // prepare
-const { component, log } = prepareComponent("AppView");
+const { componentName, log } = prepareComponent("AppView");
 
 /**
  * @name AppView
@@ -92,14 +95,24 @@ class AppView extends Component<IProps, IStates> {
    * @return {Promise<any>}
    */
   protected transitionControl(
-    pOldPageName: any,
-    pNewPageName: any
+    pOldPage: IPageStackObject,
+    pNewPage: IPageStackObject
   ): Promise<any> {
     return new Promise(async resolve => {
+      // target ref
+      const oldPageRef = pOldPage?.rootRef?.current;
+      const newPageRef = pNewPage?.rootRef?.current;
+
+      // set style to new page
+      newPageRef.style.opacity = 0;
+
       // playOut old page
-      pOldPageName && (await pagesTransitionsList?.[pOldPageName]?.playOut?.());
+      pOldPage && (await pOldPage?.playOut?.());
       // playIn old page
-      pNewPageName && (await pagesTransitionsList?.[pNewPageName]?.playIn?.());
+
+      newPageRef.style.opacity = 1;
+
+      pNewPage && (await pNewPage?.playIn?.());
       // All done
       resolve();
     });
@@ -175,7 +188,7 @@ class AppView extends Component<IProps, IStates> {
           {/* View Stack */}
           <ViewStack
             ref={r => (this._viewStack = r)}
-            transitionType={ETransitionType.PAGE_CROSSED}
+            transitionType={ETransitionType.CONTROLLED}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}
           />

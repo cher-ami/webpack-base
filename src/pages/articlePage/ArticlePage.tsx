@@ -1,9 +1,9 @@
 import css from "./ArticlePage.module.less";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Metas from "../../lib/react-components/metas";
-import { usePageTransitionRegister } from "../../lib/router/usePageTransitionRegister";
+import { pagesStackList, usePageStack } from "../../lib/router/usePageStack";
 
 interface IProps {
   classNames?: string[];
@@ -15,7 +15,7 @@ interface IProps {
 }
 
 // prepare
-const { component, log } = prepareComponent("ArticlePage");
+const { componentName, log } = prepareComponent("ArticlePage");
 
 /**
  * @name ArticlePage
@@ -33,17 +33,19 @@ const ArticlePage = (props: IProps) => {
     PageTransitionHelper.promisePlayOut(rootRef, () => log(`playOut complete`));
 
   // register page transition
-  usePageTransitionRegister(component, playIn, playOut);
+  usePageStack({ componentName, rootRef, playIn, playOut });
+
+  useEffect(() => log("pagesStackList", pagesStackList), []);
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 
   return (
     <div ref={rootRef} className={css.ArticlePage}>
       <Metas
-        title={`${component} title`}
-        description={`${component} description`}
+        title={`${componentName} title`}
+        description={`${componentName} description`}
       />
-      {component}
+      {componentName}
       <h5>id {props.parameters.id}</h5>
       <h1>slug {props.parameters.slug}</h1>
     </div>

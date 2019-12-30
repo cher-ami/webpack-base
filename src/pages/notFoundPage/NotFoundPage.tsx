@@ -10,7 +10,7 @@ interface IProps {
 interface IStates {}
 
 // prepare
-const { component, log } = prepareComponent("NotFoundPage");
+const { componentName, log } = prepareComponent("NotFoundPage");
 
 /**
  * @name NotFoundPage
@@ -66,7 +66,7 @@ class NotFoundPage extends ReactPage<IProps, IStates> {
   render() {
     return (
       <div className={css.NotFoundPage} ref={this.rootRef}>
-        {component}
+        {componentName}
       </div>
     );
   }

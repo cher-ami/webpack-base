@@ -10,7 +10,7 @@ interface IProps {
 }
 
 // Prepare
-const { component, log } = prepareComponent("MainMenu");
+const { componentName, log } = prepareComponent("MainMenu");
 
 /**
  * @name MainMenu

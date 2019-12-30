@@ -1,13 +1,10 @@
 import css from "./HomePage.module.less";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as React from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Metas from "../../lib/react-components/metas";
-import {
-  pagesTransitionsList,
-  usePageTransitionRegister
-} from "../../lib/router/usePageTransitionRegister";
+import { pagesStackList, usePageStack } from "../../lib/router/usePageStack";
 
 interface IProps {
   classNames?: string[];
@@ -18,7 +15,7 @@ interface IProps {
 }
 
 // prepare
-const { component, log } = prepareComponent("HomePage");
+const { componentName, log } = prepareComponent("HomePage");
 
 interface IProps {
   classNames?: string[];
@@ -39,20 +36,19 @@ const HomePage = (props: IProps) => {
   const playOut = (): Promise<any> =>
     PageTransitionHelper.promisePlayOut(rootRef, () => log(`playOut complete`));
 
-  // register page transition
-  usePageTransitionRegister(component, playIn, playOut);
+  usePageStack({ componentName, rootRef, playIn, playOut });
 
-  log(pagesTransitionsList);
+  useEffect(() => log("pagesStackList", pagesStackList), []);
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 
   return (
     <div ref={rootRef} className={css.HomePage}>
       <Metas
-        title={`${component} title`}
-        description={`${component} description`}
+        title={`${componentName} title`}
+        description={`${componentName} description`}
       />
-      {component}
+      {componentName}
     </div>
   );
 };

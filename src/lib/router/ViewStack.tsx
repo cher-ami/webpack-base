@@ -1,7 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, MutableRefObject } from "react";
 import { IPageStack } from "./IPageStack";
 import { IActionParameters } from "./Router";
-import { pagesTransitionsList } from "./usePageTransitionRegister";
+import {
+  IPagesStackList,
+  IPageStackObject,
+  pagesStackList
+} from "./usePageStack";
 import debug from "debug";
 const log = debug("lib:ReactViewStack");
 
@@ -50,7 +54,7 @@ interface ITransitionControl {
    * Set props.transitionType to ETransitionType.CONTROLLER to enable custom transition control.
    * Please return promise and resolve it when old page can be removed.
    */
-  (pOldPageName: any, pNewPageName: any): Promise<any>;
+  (pOldPage: IPageStackObject, pNewPage: IPageStackObject): Promise<any>;
 }
 
 interface Props {
@@ -178,8 +182,8 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
    * Component is updated
    */
   componentDidUpdate(pOldProps: Props, pOldStates: States) {
-    log("this.state.oldPage", this.state.oldPage);
-    log("this.state.currentPage", this.state.currentPage);
+    // log("this.state.oldPage", this.state.oldPage);
+    // log("this.state.currentPage", this.state.currentPage);
 
     // If current page changed only, we need a playIn
     if (pOldStates.currentPage != this.state.currentPage) {
@@ -217,9 +221,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have an old page
     if (this.state.oldPage !== null) {
       // Play out transition
-      await pagesTransitionsList?.[
-        this.state.oldPage?.pageClass?.name
-      ]?.playOut?.();
+      await pagesStackList?.[this.state.oldPage?.pageClass?.name]?.playOut?.();
 
       // empty old page
       await this.setState({
@@ -233,9 +235,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have a new page
     if (this.state.currentPage !== null) {
       // Play in transition
-      await pagesTransitionsList?.[
-        this.state.currentPage?.pageClass?.name
-      ]?.playIn?.();
+      await pagesStackList?.[this._currentPageName]?.playIn?.();
 
       // transition is completed
       this._playedIn = true;
@@ -250,7 +250,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have an old page
     if (this.state.oldPage !== null) {
       // Play out transition
-      pagesTransitionsList?.[this.state.oldPage?.pageClass?.name]
+      pagesStackList?.[this.state.oldPage?.pageClass?.name]
         ?.playOut?.()
         .then(() => {
           // empty old page
@@ -266,12 +266,10 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have a new page
     if (this.state.currentPage !== null) {
       // Play in transition
-      pagesTransitionsList?.[this.state.currentPage?.pageClass?.name]
-        ?.playIn?.()
-        .then(() => {
-          // transition is completed
-          this._playedIn = true;
-        });
+      pagesStackList?.[this._currentPageName]?.playIn?.().then(() => {
+        // transition is completed
+        this._playedIn = true;
+      });
     }
   }
 
@@ -280,11 +278,16 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     this._playedIn = false;
     this._playedOut = false;
 
+    //log("ref",pagesTransitionsList[this._currentPageName]?.rootRef?.current);
+
+    const oldPageName = this.state?.oldPage?.pageClass?.name;
+    const currentPageName = this.state?.currentPage?.pageClass?.name;
+
     // Call transition control handler with old and new pages instances
     // Listen when finished through promise
     await this.props.transitionControl(
-      this.state?.oldPage?.pageClass?.name,
-      this.state?.currentPage?.pageClass?.name
+      pagesStackList?.[oldPageName],
+      pagesStackList?.[currentPageName]
     );
 
     // Set transition state as ended
@@ -328,7 +331,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
         this.setState(
           {
             currentPage: {
-              pageClass: this.state.currentPage?.pageClass?.name,
+              pageClass: this._currentPageName,
               action: pActionName,
               parameters: pParameters
             }
@@ -363,7 +366,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
       this._playedOut = false;
 
       // Else we have to play out the current page first
-      pagesTransitionsList?.[this.state.currentPage?.pageClass?.name]
+      pagesStackList?.[this._currentPageName]
         ?.playOut?.()
         .then(boundAddNewPage);
     }
@@ -502,8 +505,8 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   render() {
     // Page types from state
     // Use alias with CapitalCase so react detects it
-    const CurrentPageType = this.state?.currentPage?.pageClass;
     const OldPageType = this.state?.oldPage?.pageClass;
+    const CurrentPageType = this.state?.currentPage?.pageClass;
 
     // Return DOM with current page
     return (
