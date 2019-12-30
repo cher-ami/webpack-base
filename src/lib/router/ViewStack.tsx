@@ -524,13 +524,14 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   render() {
     // Page types from state
     // Use alias with CapitalCase so react detects it
+    // ?? component Name doesn't work but pageClass works ??
     const OldPageType = this.state?.oldPage?.pageClass;
     const CurrentPageType = this.state?.currentPage?.pageClass;
 
     // Return DOM with current page
     return (
       <div className="ReactViewStack">
-        {/* Show the old page in cas of crossed transition */}
+        {/* Show the old page */}
         {OldPageType && (
           <OldPageType
             key={this.state.currentPageIndex - 1}
