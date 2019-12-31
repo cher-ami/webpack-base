@@ -153,9 +153,6 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     this._allowSamePageTransition = value;
   }
 
-  /**
-   * Page register list
-   */
   // target old page register
   protected _oldPageRegister: TPageRegisterObject;
 

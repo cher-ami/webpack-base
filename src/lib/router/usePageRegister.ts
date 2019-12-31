@@ -7,20 +7,55 @@ const log = debug("lib:usePageRegister");
  *  Pages register type
  */
 export type TPagesRegister = {
-  [currentPage: string]: TPageRegisterObject;
+  [currentPath: string]: TPageRegisterObject;
 };
 
 /**
  * Single page register object type
  */
 export type TPageRegisterObject = {
+  // current route path
+  currentPath?: string;
+
+  // component name
   componentName: string;
-  playIn: () => Promise<any>;
-  playOut: () => Promise<any>;
+
+  // playIn page transition promise hanlder
+  // if not set, new promise is set by default
+  playIn?: () => Promise<any>;
+
+  // playout page transition promise hanlder
+  // if not set, new promise is set by default
+  playOut?: () => Promise<any>;
+
+  // component ref
   rootRef: MutableRefObject<any>;
+
+  // stack name
+  stackName?: string;
+
+  // action name
   actionName?: string;
+
+  // action parameters
   actionParameters?: IActionParameters;
 };
+
+/**
+ * Props type
+ */
+export type TProps = TPageRegisterObject;
+
+/**
+ * Default props
+ */
+usePageRegister.defaultProps = {
+  currentPath: Router.currentPath,
+  playIn: () => new Promise(resolve => resolve),
+  playOut: () => new Promise(resolve => resolve),
+  actionName: Router.DEFAULT_ACTION_NAME,
+  stackName: Router.DEFAULT_STACK_NAME
+} as TProps;
 
 /**
  * Pages register accessor
@@ -38,14 +73,7 @@ export const pagesRegister = {
  * @description This Hook allow to register each page properties
  * This pages stack list can be call from everywhere
  */
-export const usePageRegister = ({
-  componentName,
-  playIn,
-  playOut,
-  rootRef,
-  actionName,
-  actionParameters
-}: TPageRegisterObject) => {
+export function usePageRegister(props: TProps) {
   /**
    * pageIsAlreadyRegister
    * @description Check if a page is already register in object
@@ -66,12 +94,12 @@ export const usePageRegister = ({
     // Build a new page register object
     const newPageRegister: TPagesRegister = {
       [Router.currentPath]: {
-        componentName,
-        playIn,
-        playOut,
-        rootRef,
-        actionName,
-        actionParameters
+        componentName: props.componentName,
+        playIn: props.playIn,
+        playOut: props.playOut,
+        rootRef: props.rootRef,
+        actionName: props.actionName,
+        actionParameters: props.actionParameters
       }
     };
 
@@ -82,6 +110,6 @@ export const usePageRegister = ({
     };
 
     // log the page register list
-    log(`${componentName} list`, pagesRegister.list);
+    log(`pages register list`, pagesRegister.list);
   }, []);
-};
+}

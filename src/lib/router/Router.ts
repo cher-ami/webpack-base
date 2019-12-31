@@ -185,6 +185,16 @@ export class Router {
    */
   static PARAMETER_REPLACE_RULE = /\{(.*?)\}/g;
 
+  /**
+   * Default action name
+   */
+  static DEFAULT_ACTION_NAME: string = "index";
+
+  /**
+   * Default stack name
+   */
+  static DEFAULT_STACK_NAME: string = "main";
+
   // --------------------------------------------------------------------------- LOCALS
 
   // If our router is started and is listening to route changes
@@ -795,12 +805,12 @@ export class Router {
     // Default properties for route match
     // Default action to "index"
     if (pRouteMatch.action == null || pRouteMatch.action == "") {
-      pRouteMatch.action = "index";
+      pRouteMatch.action = Router.DEFAULT_ACTION_NAME;
     }
 
     // Default stack to "main"
     if (pRouteMatch.stack == null || pRouteMatch.stack == "") {
-      pRouteMatch.stack = "main";
+      pRouteMatch.stack = Router.DEFAULT_STACK_NAME;
     }
 
     // Default parameters to empty object

@@ -35,9 +35,9 @@ const ArticlePage = (props: IProps) => {
   // register page transition
   usePageRegister({
     componentName,
-    rootRef,
     playIn,
     playOut,
+    rootRef,
     actionParameters: props.parameters
   });
 
