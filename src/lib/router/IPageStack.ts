@@ -1,5 +1,3 @@
-import { IPage } from "./IPage";
-
 export interface IPageStack {
   /**
    * Old loaded page name. Can be null.
@@ -10,11 +8,6 @@ export interface IPageStack {
    * Current loaded page name. Can be null.
    */
   readonly currentPageName: string;
-
-  /**
-   * Current displayed page. Can be null.
-   */
-  // readonly currentPage: IPage;
 
   /**
    * If we are in transition state.
