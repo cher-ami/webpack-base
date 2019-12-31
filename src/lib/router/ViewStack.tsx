@@ -1,11 +1,7 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import { IPageStack } from "./IPageStack";
 import { IActionParameters, Router } from "./Router";
-import {
-  TPagesRegister,
-  TPageRegisterObject,
-  pagesRegister
-} from "./usePageRegister";
+import { TPageRegisterObject, pagesRegister } from "./usePageRegister";
 import debug from "debug";
 const log = debug("lib:ReactViewStack");
 
