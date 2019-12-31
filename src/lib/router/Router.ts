@@ -32,7 +32,7 @@ export interface IRouteMatch {
    * Page name.
    * Can be a page to show in stack or any name that is fine to you.
    */
-  page: string;
+  pageName: string;
 
   /**
    * Page importer, to get page class.
@@ -79,10 +79,10 @@ export interface IRoute {
   url: string;
 
   /**
-   * Page name.
+   * PageName.
    * Can be a page to show in stack or any name that is fine to you.
    */
-  page: string;
+  pageName: string;
 
   /**
    * Page importer, to get page class.
@@ -97,6 +97,11 @@ export interface IRoute {
   action?: string;
 
   /**
+   * Parameters matching with this route.
+   */
+  parameters?: IActionParameters;
+
+  /**
    * Optional, called when route is triggered.
    * @param pRouteMatch Matching route with action and parameters
    */
@@ -107,6 +112,14 @@ export interface IRoute {
    * Default is "main"
    */
   stack?: string;
+
+  /**
+   * Metas properties
+   *
+   */
+  metas?: {
+    [x: string]: any;
+  };
 
   /**
    * Route regex for matching.
@@ -129,7 +142,7 @@ export interface IDynamicPageImporter {
   /**
    * Page name to associate with importer
    */
-  page: string;
+  pageName: string;
 
   /**
    * Page importer, to get page class.
@@ -464,7 +477,7 @@ export class Router {
    */
   protected static prepareRoute(pRoute: IRoute) {
     // Check route config
-    if (pRoute.page == null || pRoute.page == "") {
+    if (pRoute.pageName == null || pRoute.pageName == "") {
       throw new Error(
         `Router.prepareRoute // Invalid route "${pRoute.url}", property "page" have to be not null ans not empty.`
       );
@@ -651,24 +664,16 @@ export class Router {
         if (currentRoutePageImporter == null) {
           // Check if we have one inside dynamic page importers
           this._dynamicPageImporters.map(pageImporter => {
-            if (pageImporter.page == this._currentRouteMatch.page) {
+            if (pageImporter.pageName == this._currentRouteMatch.pageName) {
               currentRoutePageImporter = pageImporter.importer;
             }
           });
         }
 
-        log("updateCurrentRoute", {
-          stack,
-          "this._currentRouteMatch.page": this._currentRouteMatch.page,
-          currentRoutePageImporter: currentRoutePageImporter,
-          "this._currentRouteMatch.action": this._currentRouteMatch.action,
-          "this._currentRouteMatch.parameters": this._currentRouteMatch
-            .parameters
-        });
         // Show page on stack
         stack != null &&
           stack.showPage(
-            this._currentRouteMatch.page,
+            this._currentRouteMatch.pageName,
             currentRoutePageImporter,
             this._currentRouteMatch.action,
             this._currentRouteMatch.parameters
@@ -747,7 +752,7 @@ export class Router {
 
         // Create route match object and configure it from route
         foundRoute = {
-          page: route.page,
+          pageName: route.pageName,
           importer: route.importer,
           action: route.action,
           stack: route.stack,
@@ -800,7 +805,7 @@ export class Router {
       // Check if this route is ok with this match
       if (
         // Check page
-        route.page == pRouteMatch.page &&
+        route.pageName == pRouteMatch.pageName &&
         // Check action
         route.action == pRouteMatch.action &&
         // Check stack

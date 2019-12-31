@@ -44,7 +44,7 @@ const HomePage = (props: IProps) => {
   // -------------------–-------------------–-------------------–--------------- RENDER
 
   return (
-    <div ref={rootRef} className={css.HomePage}>
+    <div ref={rootRef} className={css.Root}>
       <Metas
         title={`${componentName} title`}
         description={`${componentName} description`}

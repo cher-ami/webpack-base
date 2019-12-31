@@ -34,7 +34,7 @@ class PageTransitionHelper {
           duration: this._duration,
           autoAlpha:1,
           y: 0,
-         clearProps:"all",
+         clearProps:"transform",
           onComplete: () => {
             pCallBack?.();
             resolve();

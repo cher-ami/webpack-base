@@ -10,10 +10,7 @@ import { prepareComponent } from "../../helpers/prepareComponent";
 import { merge } from "../../lib/helpers/classNameHelper";
 import { atoms } from "../../atoms/atoms";
 import Metas from "../../lib/react-components/metas";
-import {
-  TPageRegisterObject,
-  pagesRegister
-} from "../../lib/router/usePageRegister";
+import { TPageRegisterObject } from "../../lib/router/usePageRegister";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -103,15 +100,11 @@ class AppView extends Component<IProps, IStates> {
       const oldPageRef = pOldPage?.rootRef?.current;
       const newPageRef = pNewPage?.rootRef?.current;
 
-      // set style to new page
-      newPageRef.style.visibility = "hidden";
-
+      // hide new page by default
+      if (newPageRef !== null) newPageRef.style.visibility = "hidden";
       // playOut old page
       pOldPage && (await pOldPage?.playOut?.());
       // playIn old page
-
-      newPageRef.style.opacity = 1;
-
       pNewPage && (await pNewPage?.playIn?.());
       // All done
       resolve();
@@ -188,7 +181,8 @@ class AppView extends Component<IProps, IStates> {
           {/* View Stack */}
           <ViewStack
             ref={r => (this._viewStack = r)}
-            transitionType={ETransitionType.CONTROLLED}
+            allowSamePageTransition={["ArticlePage"]}
+            transitionType={ETransitionType.PAGE_CROSSED}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}
           />

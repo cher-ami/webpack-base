@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import { IPageStack } from "./IPageStack";
 import { IActionParameters } from "./Router";
 import {
@@ -38,7 +38,7 @@ export enum ETransitionType {
  */
 interface IPageState {
   // Page class to instanciate with react
-  pageClass?: any;
+  pageComponent?: any;
   // Associated action
   action?: string;
   // Associated parameters
@@ -167,6 +167,9 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     transitionType: ETransitionType.PAGE_SEQUENTIAL
   };
 
+  olPageRef;
+  currentPageRef;
+
   /**
    * Constructor
    * @param props
@@ -183,6 +186,9 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
       currentPage: null
     };
 
+    this.olPageRef = createRef();
+    this.currentPageRef = createRef();
+
     // Set allowSamePageTransition from props if defined
     if ("allowSamePageTransition" in this.props) {
       this._allowSamePageTransition = this.props.allowSamePageTransition;
@@ -195,6 +201,11 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
    * Component is updated
    */
   componentDidUpdate(pOldProps: Props, pOldStates: States) {
+    // log("page state:",{
+    //   "this.state.currentPage": this.state.currentPage,
+    //   "this.state.oldPage": this.state.oldPage
+    // });
+
     // If current page changed only, we need a playIn
     if (pOldStates.currentPage != this.state.currentPage) {
       // update page stack list
@@ -249,6 +260,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   protected crossed() {
     // If we have an old page
     if (this.state.oldPage !== null) {
+      log("old page pas null", this.state.oldPage);
       // Play out transition
       this.pagesRegisterList?.[this._oldPageName]?.playOut?.().then(() => {
         // empty old page
@@ -326,7 +338,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
         this.setState(
           {
             currentPage: {
-              pageClass: this._currentPageName,
+              pageComponent: this.state.currentPage.pageComponent,
               action: pActionName,
               parameters: pParameters
             }
@@ -436,7 +448,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
 
           // New page and associated action and parameters
           currentPage: {
-            pageClass: NewPageComponent,
+            pageComponent: NewPageComponent,
             action: pActionName,
             parameters: pParameters
           }
@@ -474,6 +486,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
 
     // Execute importer
     const importResult = pPageImporter();
+
     // If this is a promise from an async import
     if (importResult instanceof Promise) {
       // Catch and throw errors
@@ -497,11 +510,14 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   protected updateActionOnCurrentPage() {
     if (this.state.currentPage === null) return;
 
-    //  TODO : récupérer l'action de la dans un register action (comme pour les pages transition)
-    // this.state.currentPage?.(
+    //  TODO : récupérer l'action de la dans page register (comme pour les transitions)
+    // this._currentPage.action(
     //   this.state.currentPage?.action,
     //   this.state.currentPage?.parameters
     // );
+
+    // log("action", this.state.currentPage.action);
+    // log("params", this.state.currentPage.parameters);
   }
 
   // ------------------------------------------------------------------------- RENDERING
@@ -509,9 +525,8 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   render() {
     // Page types from state
     // Use alias with CapitalCase so react detects it
-    // ?? component Name doesn't work but pageClass works ??
-    const OldPageType = this.state?.oldPage?.pageClass;
-    const CurrentPageType = this.state?.currentPage?.pageClass;
+    const OldPageType = this.state?.oldPage?.pageComponent;
+    const CurrentPageType = this.state?.currentPage?.pageComponent;
 
     // Return DOM with current page
     return (
@@ -519,6 +534,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
         {/* Show the old page */}
         {OldPageType && (
           <OldPageType
+            //ref={this.olPageRef}
             key={this.state.currentPageIndex - 1}
             action={this.state.oldPage.action}
             parameters={this.state.oldPage.parameters}
@@ -528,6 +544,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
         {/* Show the new page */}
         {CurrentPageType && (
           <CurrentPageType
+            //ref={this.currentPageRef}
             key={this.state.currentPageIndex}
             action={this.state.currentPage.action}
             parameters={this.state.currentPage.parameters}

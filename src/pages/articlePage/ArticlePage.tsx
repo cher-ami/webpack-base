@@ -1,12 +1,9 @@
 import css from "./ArticlePage.module.less";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Metas from "../../lib/react-components/metas";
-import {
-  pagesRegister,
-  usePageRegister
-} from "../../lib/router/usePageRegister";
+import { usePageRegister } from "../../lib/router/usePageRegister";
 
 interface IProps {
   classNames?: string[];
@@ -36,18 +33,23 @@ const ArticlePage = (props: IProps) => {
     PageTransitionHelper.promisePlayOut(rootRef);
 
   // register page transition
-  usePageRegister({ componentName, rootRef, playIn, playOut });
+  usePageRegister({
+    componentName,
+    rootRef,
+    playIn,
+    playOut,
+    actionParameters: props.parameters
+  });
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 
   return (
-    <div ref={rootRef} className={css.ArticlePage}>
+    <div ref={rootRef} className={css.Root}>
       <Metas
         title={`${componentName} title`}
         description={`${componentName} description`}
       />
       {componentName}
-      <h5>id {props.parameters.id}</h5>
       <h1>slug {props.parameters.slug}</h1>
     </div>
   );

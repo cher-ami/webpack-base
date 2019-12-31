@@ -27,17 +27,17 @@ function MainMenu(props: IProps) {
       <ul className={css._items}>
         {/* Map availables routes */}
         {Main.routes.map((el, i) => {
-          const parameters = {
-            id: el?.parameters?.id,
-            slug: el?.parameters?.slug
-          };
           return (
             <li key={i} className={css._item}>
               <a
                 className={css._link}
                 href={Router.generateURL({
-                  page: el.page,
-                  parameters: el.parameters ? parameters : null
+                  pageName: el.pageName,
+                  parameters: el.parameters
+                    ? {
+                        slug: el.parameters.slug
+                      }
+                    : null
                 })}
                 children={el.metas.name}
                 data-internal-link

@@ -17,8 +17,8 @@ export type TPageRegisterObject = {
   playIn: () => Promise<any>;
   playOut: () => Promise<any>;
   rootRef: MutableRefObject<any>;
-  action?: string;
-  parameters?: IActionParameters;
+  actionName?: string;
+  actionParameters?: IActionParameters;
 };
 
 /**
@@ -42,8 +42,8 @@ export const usePageRegister = ({
   playIn,
   playOut,
   rootRef,
-  action,
-  parameters
+  actionName,
+  actionParameters
 }: { componentName: string } & TPageRegisterObject) => {
   /**
    * @name pageIsAlreadyRegister
@@ -63,16 +63,16 @@ export const usePageRegister = ({
    * @param playIn
    * @param playOut
    * @param rootRef
-   * @param action
-   * @param parameters
+   * @param actionName
+   * @param actionParameters
    */
   const registerFn = (
     componentName: string,
     playIn: () => Promise<any>,
     playOut: () => Promise<any>,
     rootRef: MutableRefObject<any>,
-    action?: string,
-    parameters?: IActionParameters
+    actionName?: string,
+    actionParameters?: IActionParameters
   ): void => {
     // build page object
     const newPageRegister: TPagesRegister = {
@@ -80,8 +80,8 @@ export const usePageRegister = ({
         playIn,
         playOut,
         rootRef,
-        action,
-        parameters
+        actionName,
+        actionParameters
       }
     };
     // merge new object on page register object
@@ -97,7 +97,14 @@ export const usePageRegister = ({
    * Register pages register before render
    */
   useLayoutEffect(() => {
-    registerFn(componentName, playIn, playOut, rootRef, action, parameters);
+    registerFn(
+      componentName,
+      playIn,
+      playOut,
+      rootRef,
+      actionName,
+      actionParameters
+    );
     log(`${componentName} list`, pagesRegister.list);
   }, []);
 };
