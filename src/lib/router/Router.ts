@@ -11,7 +11,7 @@ import {
 import debug from "debug";
 const log = debug("lib:Router");
 
-// ----------------------------------------------------------------------------- STRUCT
+// ------------------------------------------------------------------------------- STRUCT
 
 /**
  * Interface for action parameters.
@@ -32,7 +32,7 @@ export interface IRouteMatch {
    * Page name.
    * Can be a page to show in stack or any name that is fine to you.
    */
-  pageName: string;
+  page: string;
 
   /**
    * Page importer, to get page class.
@@ -82,7 +82,7 @@ export interface IRoute {
    * PageName.
    * Can be a page to show in stack or any name that is fine to you.
    */
-  pageName: string;
+  page: string;
 
   /**
    * Page importer, to get page class.
@@ -142,7 +142,7 @@ export interface IDynamicPageImporter {
   /**
    * Page name to associate with importer
    */
-  pageName: string;
+  page: string;
 
   /**
    * Page importer, to get page class.
@@ -156,7 +156,7 @@ export interface IDynamicPageImporter {
  * IE 10+
  */
 export class Router {
-  // ------------------------------------------------------------------------- STATICS
+  // --------------------------------------------------------------------------- STATICS
 
   /**
    * Left delimiter for URL parameters templating
@@ -185,12 +185,12 @@ export class Router {
    */
   static PARAMETER_REPLACE_RULE = /\{(.*?)\}/g;
 
-  // ------------------------------------------------------------------------- LOCALS
+  // --------------------------------------------------------------------------- LOCALS
 
   // If our router is started and is listening to route changes
   protected static _isStarted = false;
 
-  // ------------------------------------------------------------------------- PROPERTIES
+  // --------------------------------------------------------------------------- PROPERTIES
 
   /**
    * Application base.
@@ -238,7 +238,8 @@ export class Router {
   }
 
   /**
-   * With fake mode, Router is working without address bar. Usefull when embedded inside a web view for example.
+   * With fake mode, Router is working without address bar.
+   * Usefull when embedded inside a web view for example.
    */
   protected static _fakeMode: boolean;
   static get fakeMode(): boolean {
@@ -302,14 +303,15 @@ export class Router {
     return Router._dynamicPageImporters;
   }
 
-  // ------------------------------------------------------------------------- INIT
+  // --------------------------------------------------------------------------- INIT
 
   /**
    * Router constructor.
    * Please use before accessing with singleton static methods.
    * @param pBase The base of the app from the server. @see Router.base
    * @param pRoutes List of declared routes.
-   * @param pFakeMode With fake mode, Router is working without address bar. Usefull when embedded inside a web view for example.
+   * @param pFakeMode With fake mode, Router is working without address bar.
+   * Usefull when embedded inside a web view for example.
    */
   static init(pBase: string = "", pRoutes: IRoute[] = null, pFakeMode = false) {
     // Set base
@@ -342,7 +344,7 @@ export class Router {
     });
   }
 
-  // ------------------------------------------------------------------------- LINKS LISTENING
+  // --------------------------------------------------------------------------- LINKS LISTENING
 
   /**
    * Listen links to fire internal router.
@@ -380,7 +382,7 @@ export class Router {
     return true;
   };
 
-  // ------------------------------------------------------------------------- ANALYTICS
+  // --------------------------------------------------------------------------- ANALYTICS
 
   // GTAG id from dataLayer
   protected static _gtagId: string;
@@ -458,7 +460,7 @@ export class Router {
     window!["gtag"]("event", pAction, eventData);
   }
 
-  // ------------------------------------------------------------------------- ROUTE INIT
+  // --------------------------------------------------------------------------- ROUTE INIT
 
   /**
    * Register new set of routes.
@@ -485,7 +487,7 @@ export class Router {
    */
   protected static prepareRoute(pRoute: IRoute) {
     // Check route config
-    if (pRoute.pageName == null || pRoute.pageName == "") {
+    if (pRoute.page == null || pRoute.page == "") {
       throw new Error(
         `Router.prepareRoute // Invalid route "${pRoute.url}", property "page" have to be not null ans not empty.`
       );
@@ -564,7 +566,7 @@ export class Router {
     pRoute._matchingRegex = new RegExp(`^${pattern}$`);
   }
 
-  // ------------------------------------------------------------------------- STACK MANAGEMENT
+  // --------------------------------------------------------------------------- STACK MANAGEMENT
 
   // Stacks by names
   protected static _stacks: { [index: string]: IPageStack } = {};
@@ -594,7 +596,7 @@ export class Router {
     return pStackName in this._stacks ? this._stacks[pStackName] : null;
   }
 
-  // ------------------------------------------------------------------------- ROUTE IS CHANGING
+  // --------------------------------------------------------------------------- ROUTE IS CHANGING
 
   /**
    * When state is popped.
@@ -673,7 +675,7 @@ export class Router {
         if (currentRoutePageImporter == null) {
           // Check if we have one inside dynamic page importers
           this._dynamicPageImporters.map(pageImporter => {
-            if (pageImporter.pageName == this._currentRouteMatch.pageName) {
+            if (pageImporter.page == this._currentRouteMatch.page) {
               currentRoutePageImporter = pageImporter.importer;
             }
           });
@@ -682,7 +684,7 @@ export class Router {
         // Show page on stack
         stack != null &&
           stack.showPage(
-            this._currentRouteMatch.pageName,
+            this._currentRouteMatch.page,
             currentRoutePageImporter,
             this._currentRouteMatch.action,
             this._currentRouteMatch.parameters
@@ -691,7 +693,7 @@ export class Router {
     }
   }
 
-  // ------------------------------------------------------------------------- URL / ROUTE CONVERTING
+  // --------------------------------------------------------------------------- URL / ROUTE CONVERTING
 
   /**
    * Prepare URL to be compatible with router from several formats :
@@ -761,7 +763,7 @@ export class Router {
 
         // Create route match object and configure it from route
         foundRoute = {
-          pageName: route.pageName,
+          page: route.page,
           importer: route.importer,
           action: route.action,
           stack: route.stack,
@@ -814,7 +816,7 @@ export class Router {
       // Check if this route is ok with this match
       if (
         // Check page
-        route.pageName == pRouteMatch.pageName &&
+        route.page == pRouteMatch.page &&
         // Check action
         route.action == pRouteMatch.action &&
         // Check stack
@@ -871,7 +873,7 @@ export class Router {
     return pPrependBase ? this._base + leadingSlash(foundURL, false) : foundURL;
   }
 
-  // ------------------------------------------------------------------------- CHANGE ROUTE
+  // --------------------------------------------------------------------------- CHANGE ROUTE
 
   /**
    * Open an URL with pushState or replaceState methods.
@@ -925,7 +927,7 @@ export class Router {
     this.openURL(url, pAddToHistory);
   }
 
-  // ------------------------------------------------------------------------- ENGINE
+  // --------------------------------------------------------------------------- ENGINE
 
   /**
    * Start route changes listening.

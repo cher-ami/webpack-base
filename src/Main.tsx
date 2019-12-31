@@ -64,7 +64,7 @@ export default class Main extends App {
   public static routes: IRoute[] = [
     {
       url: "/",
-      pageName: "HomePage",
+      page: "HomePage",
       // Use require to load synchronously
       importer: () => require("./pages/homePage"),
       // Use import to load asynchronously -> importer: () => import("./pages/homePage")
@@ -75,7 +75,7 @@ export default class Main extends App {
     },
     {
       url: "/article-{slug}",
-      pageName: "ArticlePage",
+      page: "ArticlePage",
       importer: () => import("./pages/articlePage"),
       parameters: {
         slug: "custom-slug-article"
@@ -87,7 +87,7 @@ export default class Main extends App {
     },
     {
       url: "/article-{slug}",
-      pageName: "ArticlePage",
+      page: "ArticlePage",
       importer: () => import("./pages/articlePage"),
       parameters: {
         slug: "custom-slug-article-2"

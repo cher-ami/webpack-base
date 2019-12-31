@@ -171,7 +171,7 @@ class AppView extends Component<IProps, IStates> {
           keywords={""}
           author={""}
           imageURL={""}
-          pageURL={`${window.location.href}`}
+          pageURL={window.location.href}
           siteName={require("../../../package.json").name}
         />
 

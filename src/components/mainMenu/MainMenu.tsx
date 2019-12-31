@@ -32,7 +32,7 @@ function MainMenu(props: IProps) {
               <a
                 className={css._link}
                 href={Router.generateURL({
-                  pageName: el.pageName,
+                  page: el.page,
                   parameters: el.parameters
                     ? {
                         slug: el.parameters.slug

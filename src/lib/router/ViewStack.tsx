@@ -165,7 +165,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   // --------------------------------------------------------------------------- INIT
 
   /**
-   * default props
+   * Default props
    */
   static defaultProps = {
     transitionType: ETransitionType.PAGE_SEQUENTIAL
@@ -206,16 +206,11 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
       // set current page register
       this._currentPageRegister = pagesRegister?.list?.[Router.currentPath];
 
+      const transitionType = this.props.transitionType;
       // execute transition depend of props.transitionType
-      if (this.props.transitionType === ETransitionType.PAGE_SEQUENTIAL) {
-        this.sequential();
-      }
-      if (this.props.transitionType === ETransitionType.PAGE_CROSSED) {
-        this.crossed();
-      }
-      if (this.props.transitionType == ETransitionType.CONTROLLED) {
-        this.controlled();
-      }
+      if (transitionType === ETransitionType.PAGE_SEQUENTIAL) this.sequential();
+      if (transitionType === ETransitionType.PAGE_CROSSED) this.crossed();
+      if (transitionType === ETransitionType.CONTROLLED) this.controlled();
 
       // Call page mounted event on props
       this.props?.onPageMounted?.(this.state.currentPage);
@@ -232,9 +227,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
       // Play out transition
       await this._oldPageRegister?.playOut?.();
       // empty old page
-      await this.setState({
-        oldPage: null
-      });
+      await this.setState({ oldPage: null });
       // transition is completed
       this._playedOut = true;
     }
@@ -258,9 +251,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
       // Play out transition
       this._oldPageRegister?.playOut?.().then(() => {
         // empty old page
-        this.setState({
-          oldPage: null
-        });
+        this.setState({ oldPage: null });
         // transition is completed
         this._playedOut = true;
       });
@@ -296,9 +287,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     this._playedOut = true;
 
     // Remove old page from state
-    this.setState({
-      oldPage: null
-    });
+    this.setState({ oldPage: null });
   }
 
   // --------------------------------------------------------------------------- PAGES
@@ -500,16 +489,13 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
    * We call action on the new page once, and only when it's ready.
    */
   protected updateActionOnCurrentPage() {
+    // TODO Still useFull ?
     if (this.state.currentPage === null) return;
 
-    //  TODO : récupérer l'action de la dans page register (comme pour les transitions)
     // this._currentPage.action(
     //   this.state.currentPage?.action,
     //   this.state.currentPage?.parameters
     // );
-
-    // log("action", this.state.currentPage.action);
-    // log("params", this.state.currentPage.parameters);
   }
 
   // ------------------------------------------------------------------------- RENDERING
