@@ -39,8 +39,6 @@ export enum ETransitionType {
 interface IPageState {
   // Page class to instanciate with react
   pageClass?: any;
-  // if connect to store with decorator
-  WrappedComponent?: any;
   // Associated action
   action?: string;
   // Associated parameters
@@ -119,6 +117,14 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   // --------------------------------------------------------------------------- LOCAL
 
   /**
+   * Old page name
+   */
+  protected _oldPageName: string;
+  get oldPageName(): string {
+    return this._oldPageName;
+  }
+
+  /**
    * Current page name
    */
   protected _currentPageName: string;
@@ -189,31 +195,18 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
    * Component is updated
    */
   componentDidUpdate(pOldProps: Props, pOldStates: States) {
-    // log("this.state.oldPage", this.state.oldPage);
-    // log("this.state.currentPage", this.state.currentPage);
-
     // If current page changed only, we need a playIn
     if (pOldStates.currentPage != this.state.currentPage) {
       // update page stack list
       this.pagesRegisterList = pagesRegister?.list;
 
-      /**
-       * Sequential transition
-       */
+      // execute transition depend of props.transitionType
       if (this.props.transitionType === ETransitionType.PAGE_SEQUENTIAL) {
         this.sequential();
       }
-
-      /**
-       * Crossed transition
-       */
       if (this.props.transitionType === ETransitionType.PAGE_CROSSED) {
         this.crossed();
       }
-
-      /**
-       * Controlled transition
-       */
       if (this.props.transitionType == ETransitionType.CONTROLLED) {
         this.controlled();
       }
@@ -231,15 +224,11 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have an old page
     if (this.state.oldPage !== null) {
       // Play out transition
-      await this.pagesRegisterList?.[
-        this.state.oldPage?.pageClass?.name
-      ]?.playOut?.();
-
+      await this.pagesRegisterList?.[this._oldPageName]?.playOut?.();
       // empty old page
       await this.setState({
         oldPage: null
       });
-
       // transition is completed
       this._playedOut = true;
     }
@@ -248,7 +237,6 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     if (this.state.currentPage !== null) {
       // Play in transition
       await this.pagesRegisterList?.[this._currentPageName]?.playIn?.();
-
       // transition is completed
       this._playedIn = true;
     }
@@ -262,17 +250,14 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have an old page
     if (this.state.oldPage !== null) {
       // Play out transition
-      this.pagesRegisterList?.[this.state.oldPage?.pageClass?.name]
-        ?.playOut?.()
-        .then(() => {
-          // empty old page
-          this.setState({
-            oldPage: null
-          });
-
-          // transition is completed
-          this._playedOut = true;
+      this.pagesRegisterList?.[this._oldPageName]?.playOut?.().then(() => {
+        // empty old page
+        this.setState({
+          oldPage: null
         });
+        // transition is completed
+        this._playedOut = true;
+      });
     }
 
     // If we have a new page
@@ -285,28 +270,19 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     }
   }
 
+  /**
+   * CONTROLLED
+   * If transition type is page controlled
+   */
   protected async controlled() {
     // Set transition state as started
     this._playedIn = false;
     this._playedOut = false;
 
-    // FIXME : Généraliser la référence aux nom de page dans this._oldPageName & this._currentPageName,
-    const oldPageName =
-      // if page component is export default Page
-      this.state?.oldPage?.pageClass?.name ||
-      // if page component is export default connector(Page) with decorator
-      this.state?.oldPage?.pageClass?.WrappedComponent?.name;
-    const currentPageName =
-      // if page component is export default Page
-      this.state?.currentPage?.pageClass?.name ||
-      // if page component is export default connector(Page) with decorator
-      this.state?.currentPage?.pageClass?.WrappedComponent?.name;
-
-    // Call transition control handler with old and new pages instances
-    // Listen when finished through promise
+    // Call transition control handler with old and new pages register
     await this.props.transitionControl(
-      this.pagesRegisterList?.[oldPageName],
-      this.pagesRegisterList?.[currentPageName]
+      this.pagesRegisterList?.[this._oldPageName],
+      this.pagesRegisterList?.[this._currentPageName]
     );
 
     // Set transition state as ended
@@ -319,7 +295,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     });
   }
 
-  // ------------------------------------------------------------------------- PAGES
+  // --------------------------------------------------------------------------- PAGES
 
   /**
    * Show a new page in this stack.
@@ -357,7 +333,6 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
           },
           this.updateActionOnCurrentPage.bind(this)
         );
-
         // Do not go further
         return true;
       }
@@ -415,94 +390,104 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     }
     // We are playing in new page from here.
     this._playedIn = false;
-    // Record page name
+    // Record old page name
+    this._oldPageName = this._currentPageName;
+    // Record new page name
     this._currentPageName = pPageName;
+
+    // Only require new page if pageName is not null, else exit.
+    if (pPageName === null) return;
     // Class of the new page, can be null if no new page is required
-    let NewPageClass: any;
-    // Only require new page if pageName is not null
-    if (pPageName != null) {
-      // When page is imported
-      const pageImortedHandler = moduleExports => {
+    let NewPageComponent: any;
+
+    /**
+     * When page is imported
+     * @param moduleExports
+     */
+    const pageImortedHandler = moduleExports => {
+      // Loading state changed, we are not loading anymore
+      this.props?.onLoadStateChanged?.(false);
+      // If this is a string, we certainly loaded a 404 ...
+      if (typeof moduleExports === "string") {
+        // Call not found handler
+        this.props?.onNotFound?.(pPageName);
+        return;
+      }
+      // Target export with default or page name
+      NewPageComponent =
+        // Target exports with page name or try default
+        pPageName in moduleExports
+          ? moduleExports[pPageName]
+          : moduleExports["default"];
+
+      // Set state with new page class, action and parameters
+      // React will do its magic !
+      this.setState(
+        {
+          // Incrément index for keys so react isn't lost between old and new pages
+          currentPageIndex: this.state.currentPageIndex + 1,
+
+          // Record current page as old page if we are in crossed or controlled transition type
+          oldPage:
+            this.props.transitionType == ETransitionType.PAGE_CROSSED ||
+            this.props.transitionType == ETransitionType.CONTROLLED
+              ? this.state.currentPage
+              : null,
+
+          // New page and associated action and parameters
+          currentPage: {
+            pageClass: NewPageComponent,
+            action: pActionName,
+            parameters: pParameters
+          }
+        },
+        this.updateActionOnCurrentPage.bind(this)
+      );
+    };
+
+    // Loading state changed, we are loading
+    this.props?.onLoadStateChanged?.(true);
+    // Remember window.onerror handler if already set
+    const oldWindowOnError = window.onerror;
+
+    /**
+     * Reset global error handler and optionnaly throw a not page found
+     * @param pThrow
+     * @param pRestParameters
+     */
+    const resetError = (pThrow = false, pRestParameters: any = null) => {
+      // If we have to throw a page not found error
+      if (pThrow) {
         // Loading state changed, we are not loading anymore
         this.props?.onLoadStateChanged?.(false);
-        // If this is a string, we certainly loaded a 404 ...
-        if (typeof moduleExports === "string") {
-          // Call not found handler
-          this.props?.onNotFound?.(pPageName);
-          return;
-        }
-        // Target export with default or page name
-        NewPageClass =
-          // Target exports with page name
-          pPageName in moduleExports
-            ? moduleExports[pPageName]
-            : // Or try default
-              moduleExports["default"];
-        // Set state with new page class, action and parameters
-        // React will do its magic !
-        this.setState(
-          {
-            // Incrément index for keys so react isn't lost between old and new pages
-            currentPageIndex: this.state.currentPageIndex + 1,
-
-            // Record current page as old page if we are in crossed or controlled transition type
-            oldPage:
-              this.props.transitionType == ETransitionType.PAGE_CROSSED ||
-              this.props.transitionType == ETransitionType.CONTROLLED
-                ? this.state.currentPage
-                : null,
-
-            // New page and associated action and parameters
-            currentPage: {
-              pageClass: NewPageClass,
-              action: pActionName,
-              parameters: pParameters
-            }
-          },
-          this.updateActionOnCurrentPage.bind(this)
-        );
-      };
-
-      // Loading state changed, we are loading
-      this.props?.onLoadStateChanged?.(true);
-      // Remember window.onerror handler if already set
-      const oldWindowOnError = window.onerror;
-
-      // Reset global error handler and optionnaly throw a not page found
-      const resetError = (pThrow = false, pRestParameters: any = null) => {
-        // If we have to throw a page not found error
-        if (pThrow) {
-          // Loading state changed, we are not loading anymore
-          this.props?.onLoadStateChanged?.(false);
-          // Delegate original global window onerror
-          oldWindowOnError?.apply(window, pRestParameters);
-          // Throw a not found page
-          this.props?.onNotFound?.(pPageName);
-        }
-        // Reset global on error handler with remembered one
-        window.onerror = oldWindowOnError;
-      };
-
-      // Set it to detect blocked promises due to XHR errors
-      window.onerror = (...rest) => resetError(true, rest);
-
-      // Execute importer
-      const importResult = pPageImporter();
-      // If this is a promise from an async import
-      if (importResult instanceof Promise) {
-        // Catch and throw errors
-        importResult.catch(() => resetError(true));
-        // Import succeed
-        importResult.then(moduleExports => {
-          resetError();
-          pageImortedHandler(moduleExports);
-        });
+        // Delegate original global window onerror
+        oldWindowOnError?.apply(window, pRestParameters);
+        // Throw a not found page
+        this.props?.onNotFound?.(pPageName);
       }
-      // Else, this is a sync require call
-      else {
+      // Reset global on error handler with remembered one
+      window.onerror = oldWindowOnError;
+    };
+
+    // Set it to detect blocked promises due to XHR errors
+    window.onerror = (...rest) => resetError(true, rest);
+
+    // Execute importer
+    const importResult = pPageImporter();
+    // If this is a promise from an async import
+    if (importResult instanceof Promise) {
+      // Catch and throw errors
+      importResult.catch(() => resetError(true));
+      // Import succeed
+      importResult.then(moduleExports => {
         resetError();
-        pageImortedHandler(importResult);
-      }
+        pageImortedHandler(moduleExports);
+      });
+    }
+    // Else, this is a sync require call
+    else {
+      resetError();
+      pageImortedHandler(importResult);
     }
   }
 
