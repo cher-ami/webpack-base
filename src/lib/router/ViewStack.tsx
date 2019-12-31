@@ -1,6 +1,6 @@
 import React, { Component, createRef } from "react";
 import { IPageStack } from "./IPageStack";
-import { IActionParameters } from "./Router";
+import { IActionParameters, Router } from "./Router";
 import {
   TPagesRegister,
   TPageRegisterObject,
@@ -154,9 +154,13 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   }
 
   /**
-   * Page stack list
+   * Page register list
    */
-  protected pagesRegisterList: TPagesRegister;
+  // target old page register
+  protected _oldPageRegister: TPageRegisterObject;
+
+  // target current page register
+  protected _currentPageRegister: TPageRegisterObject;
 
   // --------------------------------------------------------------------------- INIT
 
@@ -166,9 +170,6 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   static defaultProps = {
     transitionType: ETransitionType.PAGE_SEQUENTIAL
   };
-
-  olPageRef;
-  currentPageRef;
 
   /**
    * Constructor
@@ -186,9 +187,6 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
       currentPage: null
     };
 
-    this.olPageRef = createRef();
-    this.currentPageRef = createRef();
-
     // Set allowSamePageTransition from props if defined
     if ("allowSamePageTransition" in this.props) {
       this._allowSamePageTransition = this.props.allowSamePageTransition;
@@ -201,15 +199,12 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
    * Component is updated
    */
   componentDidUpdate(pOldProps: Props, pOldStates: States) {
-    // log("page state:",{
-    //   "this.state.currentPage": this.state.currentPage,
-    //   "this.state.oldPage": this.state.oldPage
-    // });
-
     // If current page changed only, we need a playIn
     if (pOldStates.currentPage != this.state.currentPage) {
-      // update page stack list
-      this.pagesRegisterList = pagesRegister?.list;
+      // set old page register
+      this._oldPageRegister = pagesRegister?.list?.[Router.previousPath];
+      // set current page register
+      this._currentPageRegister = pagesRegister?.list?.[Router.currentPath];
 
       // execute transition depend of props.transitionType
       if (this.props.transitionType === ETransitionType.PAGE_SEQUENTIAL) {
@@ -235,7 +230,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have an old page
     if (this.state.oldPage !== null) {
       // Play out transition
-      await this.pagesRegisterList?.[this._oldPageName]?.playOut?.();
+      await this._oldPageRegister?.playOut?.();
       // empty old page
       await this.setState({
         oldPage: null
@@ -247,7 +242,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have a new page
     if (this.state.currentPage !== null) {
       // Play in transition
-      await this.pagesRegisterList?.[this._currentPageName]?.playIn?.();
+      await this._currentPageRegister?.playIn?.();
       // transition is completed
       this._playedIn = true;
     }
@@ -260,9 +255,8 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
   protected crossed() {
     // If we have an old page
     if (this.state.oldPage !== null) {
-      log("old page pas null", this.state.oldPage);
       // Play out transition
-      this.pagesRegisterList?.[this._oldPageName]?.playOut?.().then(() => {
+      this._oldPageRegister?.playOut?.().then(() => {
         // empty old page
         this.setState({
           oldPage: null
@@ -275,7 +269,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     // If we have a new page
     if (this.state.currentPage !== null) {
       // Play in transition
-      this.pagesRegisterList?.[this._currentPageName]?.playIn?.().then(() => {
+      this._currentPageRegister?.playIn?.().then(() => {
         // transition is completed
         this._playedIn = true;
       });
@@ -293,8 +287,8 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
 
     // Call transition control handler with old and new pages register
     await this.props.transitionControl(
-      this.pagesRegisterList?.[this._oldPageName],
-      this.pagesRegisterList?.[this._currentPageName]
+      this._oldPageRegister,
+      this._currentPageRegister
     );
 
     // Set transition state as ended
@@ -338,7 +332,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
         this.setState(
           {
             currentPage: {
-              pageComponent: this.state.currentPage.pageComponent,
+              pageComponent: this.state?.currentPage?.pageComponent,
               action: pActionName,
               parameters: pParameters
             }
@@ -372,9 +366,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
       this._playedOut = false;
 
       // Else we have to play out the current page first
-      this.pagesRegisterList?.[this._currentPageName]
-        ?.playOut?.()
-        .then(boundAddNewPage);
+      this._currentPageRegister?.playOut?.().then(boundAddNewPage);
     }
 
     // Everything is ok

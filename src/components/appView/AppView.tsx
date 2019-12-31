@@ -182,7 +182,7 @@ class AppView extends Component<IProps, IStates> {
           <ViewStack
             ref={r => (this._viewStack = r)}
             allowSamePageTransition={["ArticlePage"]}
-            transitionType={ETransitionType.PAGE_CROSSED}
+            transitionType={ETransitionType.CONTROLLED}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}
           />

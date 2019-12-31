@@ -246,6 +246,14 @@ export class Router {
   }
 
   /**
+   * Previous path, including base.
+   */
+  protected static _previousPath: string;
+  static get previousPath(): string {
+    return this._previousPath;
+  }
+
+  /**
    * Current path, including base.
    */
   protected static _currentPath: string;
@@ -605,6 +613,7 @@ export class Router {
     if (this._isStarted) {
       // Record path from address bar if we are not in fake mode
       if (!this._fakeMode) {
+        this._previousPath = this._currentPath;
         this._currentPath = location.pathname;
       }
 

@@ -1,19 +1,20 @@
 import { MutableRefObject, useLayoutEffect } from "react";
 import debug from "debug";
-import { IActionParameters } from "./Router";
+import { IActionParameters, Router } from "./Router";
 const log = debug("lib:usePageRegister");
 
 /**
  *  Pages register type
  */
 export type TPagesRegister = {
-  [name: string]: TPageRegisterObject;
+  [currentPage: string]: TPageRegisterObject;
 };
 
 /**
  * Single page register object type
  */
 export type TPageRegisterObject = {
+  componentName: string;
   playIn: () => Promise<any>;
   playOut: () => Promise<any>;
   rootRef: MutableRefObject<any>;
@@ -44,9 +45,9 @@ export const usePageRegister = ({
   rootRef,
   actionName,
   actionParameters
-}: { componentName: string } & TPageRegisterObject) => {
+}: TPageRegisterObject) => {
   /**
-   * @name pageIsAlreadyRegister
+   * pageIsAlreadyRegister
    * @description Check if a page is already register in object
    * @param page
    * @param name
@@ -56,27 +57,16 @@ export const usePageRegister = ({
     name: string
   ): boolean => Object.keys(page).some(el => el === name);
 
+  // --------------------------------------------------------------------------- REGISTER
+
   /**
-   * @name registerFn
-   * @description Register all new transitions in object
-   * @param componentName
-   * @param playIn
-   * @param playOut
-   * @param rootRef
-   * @param actionName
-   * @param actionParameters
+   * Register pages before render
    */
-  const registerFn = (
-    componentName: string,
-    playIn: () => Promise<any>,
-    playOut: () => Promise<any>,
-    rootRef: MutableRefObject<any>,
-    actionName?: string,
-    actionParameters?: IActionParameters
-  ): void => {
-    // build page object
+  useLayoutEffect(() => {
+    // Build a new page register object
     const newPageRegister: TPagesRegister = {
-      [componentName]: {
+      [Router.currentPath]: {
+        componentName,
         playIn,
         playOut,
         rootRef,
@@ -84,27 +74,14 @@ export const usePageRegister = ({
         actionParameters
       }
     };
+
     // merge new object on page register object
     pagesRegister.register = {
       ...pagesRegister.list,
       ...newPageRegister
     };
-  };
 
-  // --------------------------------------------------------------------------- REGISTER
-
-  /**
-   * Register pages register before render
-   */
-  useLayoutEffect(() => {
-    registerFn(
-      componentName,
-      playIn,
-      playOut,
-      rootRef,
-      actionName,
-      actionParameters
-    );
+    // log the page register list
     log(`${componentName} list`, pagesRegister.list);
   }, []);
 };
