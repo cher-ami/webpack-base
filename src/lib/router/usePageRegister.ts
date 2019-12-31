@@ -70,8 +70,6 @@ export function usePageRegister({
    * Register pages before render
    */
   useLayoutEffect(() => {
-    log(Router.DEFAULT_STACK_NAME);
-
     // Build a new page register object
     const newPageRegister: TPagesRegister = {
       [currentPath]: {
