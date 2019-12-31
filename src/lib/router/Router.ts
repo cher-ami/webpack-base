@@ -272,6 +272,14 @@ export class Router {
   }
 
   /**
+   * Previous route matching with current URL
+   */
+  protected static _previousRouteMatch: IRouteMatch;
+  static get previousRouteMatch(): IRouteMatch {
+    return this._previousRouteMatch;
+  }
+
+  /**
    * Current route matching with current URL
    */
   protected static _currentRouteMatch: IRouteMatch;
@@ -644,6 +652,8 @@ export class Router {
         this.trackCurrentPage();
       }
 
+      // Register previous route match
+      this._previousRouteMatch = this._currentRouteMatch;
       // Convert URL to route and store it
       this._currentRouteMatch = this.URLToRoute(this._currentPath);
 
