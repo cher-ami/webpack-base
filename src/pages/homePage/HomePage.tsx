@@ -33,13 +33,13 @@ const HomePage = (props: IProps) => {
 
   // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
 
-  const playIn = (): Promise<any> =>
-    PageTransitionHelper.promisePlayIn(rootRef, () => log(`playIn complete`));
-
-  const playOut = (): Promise<any> =>
-    PageTransitionHelper.promisePlayOut(rootRef, () => log(`playOut complete`));
-
-  usePageRegister({ componentName, rootRef, playIn, playOut });
+  // register page transition
+  usePageRegister({
+    componentName,
+    rootRef,
+    playIn: (): Promise<any> => PageTransitionHelper.promisePlayIn(rootRef),
+    playOut: (): Promise<any> => PageTransitionHelper.promisePlayOut(rootRef)
+  });
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 

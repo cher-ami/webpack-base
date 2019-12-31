@@ -4,10 +4,12 @@ import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Metas from "../../lib/react-components/metas";
 import { usePageRegister } from "../../lib/router/usePageRegister";
+import { IActionParameters } from "../../lib/router/Router";
 
 interface IProps {
   classNames?: string[];
-  parameters?: any;
+  parameters?: IActionParameters;
+  action?: string;
 
   // from store
   setcurrentPageName?: (pPageName: string) => void;
@@ -26,18 +28,13 @@ const ArticlePage = (props: IProps) => {
 
   // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
 
-  const playIn = (): Promise<any> =>
-    PageTransitionHelper.promisePlayIn(rootRef);
-
-  const playOut = (): Promise<any> =>
-    PageTransitionHelper.promisePlayOut(rootRef);
-
   // register page transition
   usePageRegister({
     componentName,
-    playIn,
-    playOut,
     rootRef,
+    playIn: (): Promise<any> => PageTransitionHelper.promisePlayIn(rootRef),
+    playOut: (): Promise<any> => PageTransitionHelper.promisePlayOut(rootRef),
+    actionName: props.action,
     actionParameters: props.parameters
   });
 

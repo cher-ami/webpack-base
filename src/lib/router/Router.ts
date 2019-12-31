@@ -115,7 +115,6 @@ export interface IRoute {
 
   /**
    * Metas properties
-   *
    */
   metas?: {
     [x: string]: any;
