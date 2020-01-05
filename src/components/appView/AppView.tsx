@@ -4,7 +4,7 @@ import { ReactViewStack, ETransitionType } from "../../lib/core/ReactViewStack";
 import { IRouteMatch, Router } from "../../lib/router/Router";
 import { IPage } from "../../lib/router/IPage";
 import MainMenu from "../mainMenu";
-import { GridLayout } from "react-grid-layout-component/lib/GridLayout";
+import { GridLayout } from "@wbe/libraries";
 import { EEnv } from "../../types";
 import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
