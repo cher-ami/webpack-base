@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@solid-js/css-flat": "^1.0.1",
-    "@wbe/libraries": "^0.0.20",
+    "@wbe/libraries": "0.0.21",
     "gsap": "^3.0.4",
     "preact": "^10.1.1",
     "preact-compat": "^3.19.0",
