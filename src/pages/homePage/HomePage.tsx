@@ -17,7 +17,7 @@ interface IProps {
 interface IStates {}
 
 // prepare
-const { component, log } = prepareComponent("HomePage");
+const { componentName, log } = prepareComponent("HomePage");
 
 /**
  * @name HomePage
@@ -42,7 +42,7 @@ class HomePage extends ReactPage<IProps, IStates> {
 
   componentDidMount(): void {
     // set current page name in store
-    this.props?.setcurrentPageName?.(component);
+    this.props?.setcurrentPageName?.(componentName);
   }
 
   // --------------------------------------------------------------------------- TRANSITION
@@ -75,12 +75,12 @@ class HomePage extends ReactPage<IProps, IStates> {
 
   render() {
     return (
-      <div className={merge([css.Root, component])} ref={this.rootRef}>
+      <div className={merge([css.Root, componentName])} ref={this.rootRef}>
         <Metas
-          title={`${component} title`}
-          description={`${component} description`}
+          title={`${componentName} title`}
+          description={`${componentName} description`}
         />
-        {component}
+        {componentName}
       </div>
     );
   }

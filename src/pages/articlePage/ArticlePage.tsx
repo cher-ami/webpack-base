@@ -18,7 +18,7 @@ interface IProps {
 interface IStates {}
 
 // prepare
-const { component, log } = prepareComponent("ArticlePage");
+const { componentName, log } = prepareComponent("ArticlePage");
 
 /**
  * @name ArticlePage
@@ -38,7 +38,7 @@ class ArticlePage extends ReactPage<IProps, IStates> {
 
   componentDidMount(): void {
     // set current page name in store
-    this.props?.setcurrentPageName?.(component);
+    this.props?.setcurrentPageName?.(componentName);
   }
 
   // --------------------------------------------------------------------------- TRANSITION
@@ -71,12 +71,12 @@ class ArticlePage extends ReactPage<IProps, IStates> {
 
   render() {
     return (
-      <div className={merge([css.Root, component])} ref={this.rootRef}>
+      <div className={merge([css.Root, componentName])} ref={this.rootRef}>
         <Metas
-          title={`${component} title`}
-          description={`${component} description`}
+          title={`${componentName} title`}
+          description={`${componentName} description`}
         />
-        {component}
+        {componentName}
         <h5>id {this.props.parameters.id}</h5>
         <h1>slug {this.props.parameters.slug}</h1>
       </div>

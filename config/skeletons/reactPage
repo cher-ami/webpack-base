@@ -7,7 +7,7 @@ interface IProps {}
 interface IStates {}
 
 // prepare
-const { component, log } = prepareComponent("%%capitalComponentName%%");
+const { componentName, log } = prepareComponent("%%capitalComponentName%%");
 
 /**
  * @name %%capitalComponentName%%

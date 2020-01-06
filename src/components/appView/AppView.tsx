@@ -21,7 +21,7 @@ export interface IStates {
 }
 
 // prepare
-const { component, log } = prepareComponent("AppView");
+const { componentName, log } = prepareComponent("AppView");
 
 /**
  * @name AppView
@@ -159,7 +159,7 @@ class AppView extends Component<IProps, IStates> {
 
   render() {
     return (
-      <div className={merge([css.Root, component])}>
+      <div className={merge([css.Root, componentName])}>
         {/* Grid */}
         {isEnv(EEnv.DEV) && this.state.showGrid && (
           <GridLayout

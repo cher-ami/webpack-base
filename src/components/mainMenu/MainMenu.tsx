@@ -10,7 +10,7 @@ interface IProps {
 }
 
 // Prepare
-const { component, log } = prepareComponent("MainMenu");
+const { componentName, log } = prepareComponent("MainMenu");
 
 /**
  * @name MainMenu
@@ -24,7 +24,7 @@ function MainMenu(props: IProps) {
 
   return (
     <nav
-      className={merge([css.Root, props.classNames, component])}
+      className={merge([css.Root, props.classNames, componentName])}
       ref={rootRef}
     >
       <ul className={css._items}>
