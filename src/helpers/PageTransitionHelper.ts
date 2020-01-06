@@ -3,7 +3,7 @@ import { MutableRefObject } from "react";
 import { prepareComponent } from "./prepareComponent";
 
 // prepare
-const { component, log } = prepareComponent("PageTransitionHelper");
+const { componentName, log } = prepareComponent("PageTransitionHelper");
 
 /**
  * @name PageTransitionHelper
@@ -26,7 +26,6 @@ class PageTransitionHelper {
     return new Promise(resolve => {
       // si pas de ref, exit
       if (!pRef.current) return;
-
       // anim
       gsap.fromTo(pRef.current, {
           autoAlpha:0,
@@ -35,7 +34,7 @@ class PageTransitionHelper {
           duration: this._duration,
           autoAlpha:1,
           y: 0,
-         clearProps:"all",
+         clearProps:"transform",
           onComplete: () => {
             pCallBack?.();
             resolve();
@@ -56,7 +55,6 @@ class PageTransitionHelper {
     return new Promise(resolve => {
       // si pas de ref, exit
       if (!pRef.current) return;
-
       // anim
       gsap.fromTo(pRef.current, {
           autoAlpha:1,

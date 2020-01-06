@@ -10,7 +10,7 @@ interface IProps {
 }
 
 // Prepare
-const { component, log } = prepareComponent("MainMenu");
+const { componentName, log } = prepareComponent("MainMenu");
 
 /**
  * @name MainMenu
@@ -24,23 +24,24 @@ function MainMenu(props: IProps) {
 
   return (
     <nav
-      className={merge([css.Root, props.classNames, component])}
+      className={merge([css.Root, props.classNames, componentName])}
       ref={rootRef}
     >
       <ul className={css._items}>
         {/* Map availables routes */}
         {Main.routes.map((el, i) => {
-          const parameters = {
-            id: el?.parameters?.id,
-            slug: el?.parameters?.slug
-          };
           return (
             <li key={i} className={css._item}>
               <a
                 className={css._link}
                 href={Router.generateURL({
                   page: el.page,
-                  parameters: el.parameters ? parameters : null
+                  action: el.action,
+                  parameters: el.parameters
+                    ? {
+                        slug: el.parameters.slug
+                      }
+                    : null
                 })}
                 children={el.metas.name}
                 data-internal-link

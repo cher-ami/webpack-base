@@ -30,4 +30,4 @@ const connector = connect(mapStateToProps, mapDispatchToProps, null, {
   forwardRef: true
 });
 
-export default connector(ArticlePage);
+export default ArticlePage;

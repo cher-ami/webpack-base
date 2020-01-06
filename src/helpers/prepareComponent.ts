@@ -7,14 +7,14 @@ import debug from "debug";
  */
 export const prepareComponent = (
   pComponentName: string
-): { component: string; log: debug } => {
+): { componentName: string; log: debug } => {
   // get component name
-  const component: string = pComponentName;
+  const componentName: string = pComponentName;
   // prepare log
-  const log = debug(`${require("../../package.json").name}:${component}`);
+  const log = debug(`${require("../../package.json").name}:${componentName}`);
 
   return {
-    component,
+    componentName,
     log
   };
 };

@@ -3,7 +3,7 @@ import { Disposable } from "./Disposable";
 /**
  * This is a simple DOM based view.
  */
-export class DOMView extends Disposable {
+export class DomView extends Disposable {
   // ------------------------------------------------------------------------- DOM
 
   // Starting node of our component

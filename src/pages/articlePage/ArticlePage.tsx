@@ -1,87 +1,52 @@
 import css from "./ArticlePage.module.less";
-import React, { RefObject } from "react";
+import React, { useRef } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
-import { ReactPage } from "../../lib/core/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Metas from "../../lib/react-components/metas";
-import { merge } from "../../lib/helpers/classNameHelper";
+import { usePageRegister } from "../../lib/router/usePageRegister";
+import { IActionParameters } from "../../lib/router/Router";
 
 interface IProps {
   classNames?: string[];
-  parameters?: any;
+  parameters?: IActionParameters;
+  action?: string;
 
   // from store
   setcurrentPageName?: (pPageName: string) => void;
   currentPageName?: string;
 }
 
-interface IStates {}
-
 // prepare
-const { component, log } = prepareComponent("ArticlePage");
+const { componentName, log } = prepareComponent("ArticlePage");
 
-/**
- * @name ArticlePage
- */
-class ArticlePage extends ReactPage<IProps, IStates> {
-  // define ref
-  protected rootRef: RefObject<HTMLDivElement>;
+const ArticlePage = (props: IProps) => {
+  // get current route
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  constructor(pProps: IProps, pContext: any) {
-    // relay
-    super(pProps, pContext);
-    // create ref
-    this.rootRef = React.createRef();
-  }
+  // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
 
-  // --------------------------------------------------------------------------- LIFE
+  // register page transition
+  usePageRegister({
+    componentName,
+    rootRef,
+    playIn: (): Promise<any> => PageTransitionHelper.promisePlayIn(rootRef),
+    playOut: (): Promise<any> => PageTransitionHelper.promisePlayOut(rootRef),
+    actionName: props?.action,
+    actionParameters: props?.parameters
+  });
 
-  componentDidMount(): void {
-    // set current page name in store
-    this.props?.setcurrentPageName?.(component);
-  }
+  // -------------------–-------------------–-------------------–--------------- RENDER
 
-  // --------------------------------------------------------------------------- TRANSITION
-
-  /**
-   * Action on this page.
-   * Check props.action and props.parameters to show proper content.
-   */
-  action() {
-    // Remove if not used
-  }
-
-  /**
-   * Play in animation.
-   * Call complete handler when animation is done.
-   */
-  protected playInHandler(pCompleteHandler: () => void) {
-    return PageTransitionHelper.promisePlayIn(this.rootRef, pCompleteHandler);
-  }
-
-  /**
-   * Play out animation.
-   * Call complete handler when animation is done.
-   */
-  protected playOutHandler(pCompleteHandler: () => void) {
-    return PageTransitionHelper.promisePlayOut(this.rootRef, pCompleteHandler);
-  }
-
-  // --------------------------------------------------------------------------- RENDER
-
-  render() {
-    return (
-      <div className={merge([css.Root, component])} ref={this.rootRef}>
-        <Metas
-          title={`${component} title`}
-          description={`${component} description`}
-        />
-        {component}
-        <h5>id {this.props.parameters.id}</h5>
-        <h1>slug {this.props.parameters.slug}</h1>
-      </div>
-    );
-  }
-}
+  return (
+    <div ref={rootRef} className={css.Root}>
+      <Metas
+        title={`${componentName} title`}
+        description={`${componentName} description`}
+      />
+      {componentName}
+      <h1>slug {props?.parameters?.slug}</h1>
+    </div>
+  );
+};
 
 export default ArticlePage;

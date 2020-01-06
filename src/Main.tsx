@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import * as React from "react";
 import { GlobalConfig } from "./data/GlobalConfig";
 import { prepareComponent } from "./helpers/prepareComponent";
-import { Router } from "./lib/router/Router";
+import { IRoute, Router } from "./lib/router/Router";
 import { Provider } from "react-redux";
 import configureStore from "./stores/index";
 import AppView from "./components/appView";
@@ -61,7 +61,7 @@ export default class Main extends App {
   /**
    * Routes List
    */
-  public static routes = [
+  public static routes: IRoute[] = [
     {
       url: "/",
       page: "HomePage",
@@ -69,19 +69,32 @@ export default class Main extends App {
       importer: () => require("./pages/homePage"),
       // Use import to load asynchronously -> importer: () => import("./pages/homePage")
       metas: {
-        name: "Home"
+        name: "Home",
+        showInMenu: true
       }
     },
     {
-      url: "/article-{#id}-{slug}",
+      url: "/article-{slug}",
       page: "ArticlePage",
-      importer: () => require("./pages/articlePage"),
-      metas: {
-        name: "Article"
-      },
+      importer: () => import("./pages/articlePage"),
       parameters: {
-        id: 10,
         slug: "custom-slug-article"
+      },
+      metas: {
+        name: "Article 1",
+        showInMenu: true
+      }
+    },
+    {
+      url: "/article-{slug}",
+      page: "ArticlePage",
+      importer: () => import("./pages/articlePage"),
+      parameters: {
+        slug: "custom-slug-article-2"
+      },
+      metas: {
+        name: "Article 2",
+        showInMenu: true
       }
     }
   ];
