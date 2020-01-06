@@ -61,7 +61,7 @@ class %%capitalComponentName%% extends ReactPage<IProps, IStates> {
 
   render() {
     return (
-      <div className={css.%%capitalComponentName%%} ref={this.rootRef}>
+      <div className={merge([css.Root, component])} ref={this.rootRef}>
         {component}
       </div>
     );

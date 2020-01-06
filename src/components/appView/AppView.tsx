@@ -159,7 +159,7 @@ class AppView extends Component<IProps, IStates> {
 
   render() {
     return (
-      <div className={css.AppView}>
+      <div className={merge([css.Root, component])}>
         {/* Grid */}
         {isEnv(EEnv.DEV) && this.state.showGrid && (
           <GridLayout
@@ -180,9 +180,9 @@ class AppView extends Component<IProps, IStates> {
           siteName={require("../../../package.json").name}
         />
 
-        <div className={merge([css._wrapper, css._wrapper__green])}>
+        <div className={merge([css.wrapper, css.wrapper_green])}>
           {/* Main Menu */}
-          <MainMenu classNames={[css._mainMenu]} />
+          <MainMenu classNames={[css.mainMenu]} />
           {/* View Stack */}
           <ReactViewStack
             ref={r => (this._viewStack = r)}
