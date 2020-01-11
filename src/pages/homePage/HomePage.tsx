@@ -5,6 +5,7 @@ import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { ReactPage } from "../../lib/core/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
 import Metas from "../../lib/react-components/metas";
+import { merge } from "../../lib/helpers/classNameHelper";
 
 interface IProps {
   classNames?: string[];
@@ -16,7 +17,7 @@ interface IProps {
 interface IStates {}
 
 // prepare
-const { component, log } = prepareComponent("HomePage");
+const { componentName, log } = prepareComponent("HomePage");
 
 /**
  * @name HomePage
@@ -41,7 +42,7 @@ class HomePage extends ReactPage<IProps, IStates> {
 
   componentDidMount(): void {
     // set current page name in store
-    this.props?.setcurrentPageName?.(component);
+    this.props?.setcurrentPageName?.(componentName);
   }
 
   // --------------------------------------------------------------------------- TRANSITION
@@ -74,12 +75,12 @@ class HomePage extends ReactPage<IProps, IStates> {
 
   render() {
     return (
-      <div className={css.HomePage} ref={this.rootRef}>
+      <div className={merge([css.Root, componentName])} ref={this.rootRef}>
         <Metas
-          title={`${component} title`}
-          description={`${component} description`}
+          title={`${componentName} title`}
+          description={`${componentName} description`}
         />
-        {component}
+        {componentName}
       </div>
     );
   }

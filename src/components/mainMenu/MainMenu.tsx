@@ -10,7 +10,7 @@ interface IProps {
 }
 
 // Prepare
-const { component, log } = prepareComponent("MainMenu");
+const { componentName, log } = prepareComponent("MainMenu");
 
 /**
  * @name MainMenu
@@ -23,7 +23,10 @@ function MainMenu(props: IProps) {
   // --------------------------------------------------------------------------- RENDER
 
   return (
-    <nav className={merge([css.MainMenu, props.classNames])} ref={rootRef}>
+    <nav
+      className={merge([css.Root, props.classNames, componentName])}
+      ref={rootRef}
+    >
       <ul className={css._items}>
         {/* Map availables routes */}
         {Main.routes.map((el, i) => {

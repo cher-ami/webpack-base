@@ -6,26 +6,23 @@
 
 // ----------------------------------------------------------------------------- BLOCK
 
-.AppView {
+.Root {
   .gridContainer();
 }
 
 // ----------------------------------------------------------------------------- ELEMENT
 
-._wrapper {
+.wrapper {
   position: relative;
   .gridFactor(margin-left, 1, true);
 
-  // modifier with two "__" allow to target "css._wrapper__green"
-  &__green {
+  // modifier with one "_" allow to target "css.wrapper_green"
+  &_green {
+    // color: green;
   }
 }
 
-// scd example modifier
-._wrapper__green {
-}
-
-._mainMenu {
+.mainMenu {
   margin-top: 1rem;
   font-size: 2rem;
 }

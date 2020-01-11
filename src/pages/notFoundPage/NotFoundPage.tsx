@@ -3,6 +3,7 @@ import React, { RefObject } from "react";
 import PageTransitionHelper from "../../helpers/PageTransitionHelper";
 import { ReactPage } from "../../lib/core/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
+import { merge } from "../../lib/helpers/classNameHelper";
 
 interface IProps {
   classNames?: string[];
@@ -10,7 +11,7 @@ interface IProps {
 interface IStates {}
 
 // prepare
-const { component, log } = prepareComponent("NotFoundPage");
+const { componentName, log } = prepareComponent("NotFoundPage");
 
 /**
  * @name NotFoundPage
@@ -65,8 +66,8 @@ class NotFoundPage extends ReactPage<IProps, IStates> {
 
   render() {
     return (
-      <div className={css.NotFoundPage} ref={this.rootRef}>
-        {component}
+      <div className={merge([css.Root, componentName])} ref={this.rootRef}>
+        {componentName}
       </div>
     );
   }
