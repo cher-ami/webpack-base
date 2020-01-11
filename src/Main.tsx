@@ -106,8 +106,3 @@ export default class Main extends App {
     );
   }
 }
-
-/**
- * Start Main App
- */
-new Main();

@@ -17,7 +17,7 @@ commonConfig = {
    * The first place Webpack looks to start building the bundle.
    */
   entry: {
-    main: `${paths.src}/Main.tsx`
+    main: `${paths.src}/index.ts`
   },
 
   /**
