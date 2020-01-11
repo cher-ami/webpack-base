@@ -19,6 +19,9 @@ interface IProps {
 // prepare
 const { componentName, log } = prepareComponent("ArticlePage");
 
+/**
+ * @name ArticlePage
+ */
 const ArticlePage = (props: IProps) => {
   // get current route
   const rootRef = useRef<HTMLDivElement>(null);

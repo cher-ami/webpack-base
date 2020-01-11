@@ -18,6 +18,10 @@ interface IProps {
 // prepare
 const { componentName, log } = prepareComponent("HomePage");
 
+/**
+ * @name HomePage
+ */
+
 const HomePage = (props: IProps) => {
   // get current route
   const rootRef = useRef<HTMLDivElement>(null);

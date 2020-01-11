@@ -1,6 +1,6 @@
 import { Disposable } from "../core/Disposable";
 import { TimerUtils } from "../utils/TimerUtils";
-import { deleteWhere } from "../utils/ArrayUtils";
+import { deleteWhere } from "../utils/arrayUtils";
 
 /**
  * Delegate interface to handle touch dragging events
