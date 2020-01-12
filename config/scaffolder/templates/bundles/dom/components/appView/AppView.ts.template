@@ -1,0 +1,46 @@
+import { DOMView } from "../../common/lib/core/DOMView";
+import "./AppView.less";
+import { prepareComponent } from "../../common/helpers/prepareComponent";
+const { log } = prepareComponent("AppView");
+
+/**
+ * @name DOMView
+ */
+class AppView extends DOMView {
+  /**
+   * Prepare dependencies with DependenciyManager
+   */
+  protected prepareDependencies() {}
+
+  /**
+   * Middleware called just before init sequence
+   */
+  protected beforeInit() {}
+
+  /**
+   * Target our root if not already defined via constructor params
+   */
+  protected targetRoot() {}
+
+  /**
+   * Prepare node targeting from $root
+   */
+  protected prepareNodes() {}
+
+  /**
+   * Init components
+   */
+  protected initComponents() {}
+
+  /**
+   * Prepare events
+   */
+  protected prepareEvents() {}
+
+  /**
+   * Middleware called just after init sequence
+   */
+  protected afterInit() {}
+}
+
+export default AppView;
