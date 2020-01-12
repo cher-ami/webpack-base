@@ -1,10 +1,10 @@
 import css from "./ArticlePage.module.less";
 import React, { useRef } from "react";
-import PageTransitionHelper from "../../helpers/PageTransitionHelper";
-import { prepareComponent } from "../../helpers/prepareComponent";
-import Metas from "../../lib/react-components/metas";
-import { usePageRegister } from "../../lib/router/usePageRegister";
-import { IActionParameters } from "../../lib/router/Router";
+import { usePageRegister } from "../../common/lib/router/usePageRegister";
+import Metas from "../../common/lib/react-components/metas";
+import PageTransitionHelper from "../../common/helpers/PageTransitionHelper";
+import { prepareComponent } from "../../common/helpers/prepareComponent";
+import {IActionParameters} from "../../common/lib/router/Router"
 
 interface IProps {
   classNames?: string[];

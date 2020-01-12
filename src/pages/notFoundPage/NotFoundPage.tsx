@@ -1,9 +1,9 @@
 import css from "./NotFoundPage.module.less";
 import React, { useRef } from "react";
-import { prepareComponent } from "../../helpers/prepareComponent";
-import { merge } from "../../lib/helpers/classNameHelper";
-import { usePageRegister } from "../../lib/router/usePageRegister";
-import Metas from "../../lib/react-components/metas";
+import { usePageRegister } from "../../common/lib/router/usePageRegister";
+import Metas from "../../common/lib/react-components/metas";
+import { prepareComponent } from "../../common/helpers/prepareComponent";
+import {merge} from "../../common/lib/helpers/classNameHelper"
 
 interface IProps {
   classNames?: string[];

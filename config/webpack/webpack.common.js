@@ -85,7 +85,7 @@ commonConfig = {
       ? [
           new HtmlWebpackPlugin({
             title: require("../../package").name,
-            template: paths.src + "/template.html",
+            template: paths.srcCommon + "/template.html",
             filename: "index.html"
           })
         ]

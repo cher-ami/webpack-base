@@ -1,11 +1,11 @@
 import css from "./HomePage.module.less";
-import { useEffect, useRef } from "react";
-import * as React from "react";
-import PageTransitionHelper from "../../helpers/PageTransitionHelper";
-import { prepareComponent } from "../../helpers/prepareComponent";
-import Metas from "../../lib/react-components/metas";
-import { usePageRegister } from "../../lib/router/usePageRegister";
-import { merge } from "../../lib/helpers/classNameHelper";
+import React, { useRef } from "react";
+import { usePageRegister } from "../../common/lib/router/usePageRegister";
+import Metas from "../../common/lib/react-components/metas";
+import PageTransitionHelper from "../../common/helpers/PageTransitionHelper";
+import { prepareComponent } from "../../common/helpers/prepareComponent";
+import {merge} from "../../common/lib/helpers/classNameHelper"
+
 
 interface IProps {
   classNames?: string[];

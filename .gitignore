@@ -1,16 +1,24 @@
+
+# ------------------------------------------------------------------------------ IDE / OTHERS
+
 .DS_Store
 .idea
-node_modules
-dist
+
+# ------------------------------------------------------------------------------ ENV
+
 .env
 
-# Generated
-src/atoms/atoms.ts
+# ------------------------------------------------------------------------------ GENERATED
 
-# Generated sprites
-# à ajouter quand le prebuild sera configuré
+src/common/atoms/atoms.ts
+node_modules
 
-#src/*/sprites/*.less
-#src/*/sprites/*.png
-#src/*/sprites/*.ts
-#src/*/sprites/*.cache
+# Do not forgot to change this one if you need to keep content inside dist/ folder
+dist
+
+
+
+
+# TODO REMOVE after first install
+#  or generate a gitignore without some files and folder in setup first install?
+config/install.cache

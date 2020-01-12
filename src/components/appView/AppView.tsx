@@ -1,16 +1,16 @@
 import css from "./AppView.module.less";
 import React, { Component } from "react";
-import { ViewStack, ETransitionType } from "../../lib/router/ViewStack";
-import { IRouteMatch, Router } from "../../lib/router/Router";
-import MainMenu from "../mainMenu";
-import { EEnv } from "../../types";
-import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
-import { prepareComponent } from "../../helpers/prepareComponent";
-import { merge } from "../../lib/helpers/classNameHelper";
-import { atoms } from "../../atoms/atoms";
-import Metas from "../../lib/react-components/metas";
+import { IRouteMatch, Router } from "../../common/lib/router/Router";
+import { EEnv } from "../../common/types";
+import { isEnv, showGridByDefault } from "../../common/helpers/nodeHelper";
+import { prepareComponent } from "../../common/helpers/prepareComponent";
+import { merge } from "../../common/lib/helpers/classNameHelper";
+import { atoms } from "../../common/atoms/atoms";
+import Metas from "../../common/lib/react-components/metas";
 import { GridLayout } from "@wbe/libraries";
-import { TPageRegisterObject } from "../../lib/router/usePageRegister";
+import Main from "../../Main";
+import { ETransitionType, ViewStack } from "../../common/lib/router/ViewStack";
+import { TPageRegisterObject } from "../../common/lib/router/usePageRegister";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -71,7 +71,7 @@ class AppView extends Component<IProps, IStates> {
    */
   protected initRouter(): void {
     // Setup viewStack to show pages from Router automatically
-    Router.registerStack("main", this._viewStack);
+    Router.registerStack("main", this._viewStack as any);
     // Listen to routes not found
     Router.onNotFound.add(this.routeNotFoundHandler, this);
     Router.onRouteChanged.add(this.routeChangedHandler, this);
@@ -163,6 +163,7 @@ class AppView extends Component<IProps, IStates> {
             maxWidth={atoms.maxWidthGrid}
           />
         )}
+
         {/* Default Metas */}
         <Metas
           defaultMetas={true}
@@ -175,9 +176,32 @@ class AppView extends Component<IProps, IStates> {
           siteName={require("../../../package.json").name}
         />
 
-        <div className={merge([css.wrapper, css.wrapper_green])}>
-          {/* Main Menu */}
-          <MainMenu classNames={[css.mainMenu]} />
+        {/* AppView Wrapper */}
+        <div className={css.wrapper}>
+          {/* Menu example */}
+          <ul className={css.items}>
+            {/* Map availables routes */}
+            {Main.routes.map((el, i) => {
+              return (
+                <li key={i} className={css.item}>
+                  <a
+                    className={css.link}
+                    href={Router.generateURL({
+                      page: el.page,
+                      parameters: el.parameters
+                        ? {
+                            slug: el.parameters.slug
+                          }
+                        : null
+                    })}
+                    children={el.metas.name}
+                    data-internal-link
+                  />
+                </li>
+              );
+            })}
+          </ul>
+
           {/* View Stack */}
           <ViewStack
             ref={r => (this._viewStack = r)}

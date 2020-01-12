@@ -16,10 +16,5 @@ module.exports = {
   /**
    * Clean outputfolder before every build
    */
-  cleanOutputfolder: true,
-
-  /**
-   * Scaffold compatible folder
-   */
-  componentCompatibleFolders: ["components", "pages", "views"]
+  cleanOutputfolder: true
 };

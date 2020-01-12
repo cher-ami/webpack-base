@@ -24,6 +24,10 @@ module.exports = () => {
       
   ${"npm run sprites".white.bold}
   > generate sprites from src/sprites/ folder.
+  
+  ${"npm run setup".white.bold}
+  > setup this project again like the first time you installed webpack-base.
+  
       `
   );
 };
