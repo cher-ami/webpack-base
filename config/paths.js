@@ -25,9 +25,6 @@ module.exports = {
   // Path to fonts folder from src
   fontsPath: appRoot.resolve("src/fonts/"),
 
-  // Skeletons path
-  skeletonsPath: appRoot.resolve("config/skeletons"),
-
   // Sprite path
   spritesPath: appRoot.resolve("src/sprites"),
 

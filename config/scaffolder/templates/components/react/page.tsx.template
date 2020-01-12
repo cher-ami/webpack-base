@@ -1,18 +1,19 @@
-import css from "./%%capitalComponentName%%.module.less";
+import css from "./%%upperComponentName%%.module.less";
 import React, { RefObject } from "react";
-import {ReactPage} from "../../lib/solidify/react/ReactPage";
 import { prepareComponent } from "../../helpers/prepareComponent";
+import {ReactPage} from "../../lib/core/ReactPage"
+import {merge} from "../../lib/helpers/classNameHelper"
 
 interface IProps {}
 interface IStates {}
 
 // prepare
-const { componentName, log } = prepareComponent("%%capitalComponentName%%");
+const { componentName, log } = prepareComponent("%%upperComponentName%%");
 
 /**
- * @name %%capitalComponentName%%
+ * @name %%upperComponentName%%
  */
-class %%capitalComponentName%% extends ReactPage<IProps, IStates> {
+class %%upperComponentName%% extends ReactPage<IProps, IStates> {
 
   // --------------------------------------------------------------------------- INIT
 
@@ -61,11 +62,11 @@ class %%capitalComponentName%% extends ReactPage<IProps, IStates> {
 
   render() {
     return (
-      <div className={merge([css.Root, component])} ref={this.rootRef}>
-        {component}
+      <div className={merge([css.Root, componentName])} ref={this.rootRef}>
+        {componentName}
       </div>
     );
   }
 }
 
-export default %%capitalComponentName%%;
+export default %%upperComponentName%%;

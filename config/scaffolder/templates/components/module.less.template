@@ -1,6 +1,6 @@
 @import (reference) "../../References.less";
 
-@COMPONENT: %%capitalComponentName%%;
+@COMPONENT: %%upperComponentName%%;
 
 // ----------------------------------------------------------------------------- CONFIG
 

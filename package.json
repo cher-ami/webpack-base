@@ -22,7 +22,7 @@
     "clean": "scripts/clean.sh",
     "reset": "scripts/reset.sh",
     "prettier": "scripts/prettier.sh",
-    "scaffold": "node config/tasks/scaffold.js",
+    "scaffold": "node config/scaffolder/scaffold.js",
     "sprites": "node config/tasks/sprites.js"
   },
   "dependencies": {

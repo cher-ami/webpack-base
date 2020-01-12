@@ -1,4 +1,4 @@
-import css from './%%capitalComponentName%%.module.less';
+import css from './%%upperComponentName%%.module.less';
 import React from 'react';
 import { merge } from "../../lib/helpers/classNameHelper";
 import { prepareComponent } from "../../helpers/prepareComponent";
@@ -8,19 +8,19 @@ interface IProps {
 }
 
 // prepare
-const { componentName, log } = prepareComponent("%%capitalComponentName%%");
+const { componentName, log } = prepareComponent("%%upperComponentName%%");
 
 /**
- * @name %%capitalComponentName%%
+ * @name %%upperComponentName%%
  */
-function %%capitalComponentName%% (props: IProps) {
+function %%upperComponentName%% (props: IProps) {
   // --------------------------------------------------------------------------- PREPARE
 
   // --------------------------------------------------------------------------- RENDER
 
-  <div className={merge([css.Root, component])} ref={this.rootRef}>
-      {component}
+  return <div className={merge([css.Root, componentName])}>
+      {componentName}
   </div>
 }
 
-export default %%capitalComponentName%%
+export default %%upperComponentName%%

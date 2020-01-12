@@ -1,4 +1,4 @@
-import %%capitalComponentName%% from "./%%capitalComponentName%%";
+import %%upperComponentName%% from "./%%upperComponentName%%";
 import { connect } from "react-redux";
 
 /**
@@ -24,4 +24,4 @@ const connector = connect(mapStateToProps, mapDispatchToProps, null, {
   forwardRef: true
 });
 
-export default connector(%%capitalComponentName%%);
+export default connector(%%upperComponentName%%);
