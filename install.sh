@@ -1,6 +1,6 @@
 echo ""
 echo "> Install dependencies..."
-# npm i
+npm i
 echo "Done."
 
 echo "> Start setup..."

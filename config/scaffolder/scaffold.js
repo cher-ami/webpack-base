@@ -53,6 +53,8 @@ const scaffold = () =>
       // Start this scaffolder
       _scaffolders[scaffolderIndex].exec();
     });
+
+    resolve();
   });
 
 module.exports = scaffold();

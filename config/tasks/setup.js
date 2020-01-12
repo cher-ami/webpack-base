@@ -19,7 +19,7 @@ const fakeMode = false;
 // error
 const logError = message => {
   console.log(`❌ ${message}`.red, "\n");
-}
+};
 
 // start
 const logStart = (message, clear = true) => {
@@ -166,15 +166,27 @@ const initCacheInstall = () => {
 
 /**
  * Setup
- *
  * TODO Add init back cockpit
+ * TODO install react, depend of with bundle type
  */
 const setup = () => {
   return new Promise(async resolve => {
-
     logStart(`Check if cache install file exist...`);
-    if ( Files.getFiles(cacheInstallFilePath).files.length > 0 ) {
-      logError('install.cache file exist, first install as already been setup, Aborting.');
+    if (Files.getFiles(cacheInstallFilePath).files.length > 0) {
+      logError(
+        "install.cache file exist, first install as already been setup, Aborting."
+      );
+      console.log(`
+      If you want to setup this project again like the first time you installed webpack-base, you need to: \n
+      - remove ${cacheInstallFilePath} file
+      - npm run setup
+      \n
+      ${"WARNING!".red.bold}\n
+      ${"npm run setup".bold} erase a part of source project: \n
+      - setup bundle: erase every files in src/ folder except common/ folder
+      - setup package.json: erase name, description, author & version keys
+      - ${".git will be removed!".bold}    
+      `);
       return;
     }
 
