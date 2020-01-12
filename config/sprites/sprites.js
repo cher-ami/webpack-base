@@ -3,7 +3,7 @@ const path = require("path");
 const nsg = require("@zouloux/node-sprite-generator");
 const Handlebars = require("handlebars");
 const { optimizeFiles } = require("./imagemin");
-const paths = require("../paths");
+const config = require("./config");
 require("colors");
 
 // ----------------------------------------------------------------------------- CONFIG
@@ -71,16 +71,14 @@ const sprites = () =>
       {
         extension: "less",
         template: Handlebars.compile(
-          Files.getFiles(`${paths.skeletonsPath}/spriteTemplateLess`).read()
+          Files.getFiles(`${config.templatesPath}/sprite.less.template`).read()
         )
       },
       // JSON Template
       {
         extension: "ts",
         template: Handlebars.compile(
-          Files.getFiles(
-            `${paths.skeletonsPath}/spriteTemplateTypescript`
-          ).read()
+          Files.getFiles(`${config.templatesPath}/sprite.ts.template`).read()
         )
       }
     ];
@@ -155,7 +153,7 @@ const sprites = () =>
     let totalSprites = 0;
 
     // Browse bundles
-    Files.getFolders(`${paths.spritesPath}/*/`).all(folder => {
+    Files.getFolders(`${config.spritesPath}/*/`).all(folder => {
       // Browser sprites folders
 
       ++totalSprites;
@@ -184,11 +182,11 @@ const sprites = () =>
       );
 
       // Bundle sprite folder path
-      const spritesPath = `${paths.spritesPath}`;
+      const spritesPath = `${config.spritesPath}`;
 
       // Output path for styles / typescript and PNG file
       const outputPath = `${spritesPath}/${spritePrefix}${separator}${spriteName}`;
-      const PNGOutputPath = `${paths.outputSpritesFolder}${spritePrefix}${separator}${spriteName}`;
+      const PNGOutputPath = `${config.outputSpritesFolder}${spritePrefix}${separator}${spriteName}`;
 
       // Styles sheet path options
       const stylesheetOptions = {

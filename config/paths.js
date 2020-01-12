@@ -27,15 +27,6 @@ module.exports = {
   // Path to fonts folder from src
   fontsPath: appRoot.resolve("src/common/fonts/"),
 
-  // Sprite path
-  spritesPath: appRoot.resolve("src/common/sprites"),
-
-  // Sprite folder
-  spritesFolder: "sprites/",
-
-  // Sprite PNG output
-  outputSpritesFolder: "src/common/sprites/",
-
   // --------------------------------------------------------------------------- ATOMS
 
   // atoms path

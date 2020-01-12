@@ -23,7 +23,7 @@
     "reset": "scripts/reset.sh",
     "prettier": "scripts/prettier.sh",
     "scaffold": "node config/scaffolder/scaffold.js",
-    "sprites": "node config/tasks/sprites.js"
+    "sprites": "node config/sprites/sprites.js"
   },
   "dependencies": {
     "@solid-js/css-flat": "^1.0.1",

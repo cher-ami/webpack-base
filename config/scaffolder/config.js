@@ -1,8 +1,9 @@
 const appRoot = require("app-root-path");
+const paths = require("../paths");
 
 module.exports = {
   // bundle path
-  bundlePath: appRoot.resolve("src"),
+  bundlePath: paths.src,
 
   // Skeletons path
   templatesPath: appRoot.resolve("config/scaffolder/templates"),
