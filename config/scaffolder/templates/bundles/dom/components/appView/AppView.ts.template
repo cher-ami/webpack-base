@@ -1,11 +1,12 @@
-import {DOMView} from "../../common/lib/core/DOMView";
-import './%%upperComponentName%%.less';
+import { DOMView } from "../../common/lib/core/DOMView";
+import "./AppView.less";
+import { prepareComponent } from "../../common/helpers/prepareComponent";
+const { log } = prepareComponent("AppView");
 
 /**
  * @name DOMView
  */
-class %%upperComponentName%% extends DOMView {
-
+class AppView extends DOMView {
   /**
    * Prepare dependencies with DependenciyManager
    */
@@ -40,9 +41,6 @@ class %%upperComponentName%% extends DOMView {
    * Middleware called just after init sequence
    */
   protected afterInit() {}
-
 }
 
-
-export default %%upperComponentName%%;
-
+export default AppView;

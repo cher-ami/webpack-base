@@ -1,3 +1,6 @@
+import { prepareComponent } from "../helpers/prepareComponent";
+const { log } = prepareComponent("GlobalConfig");
+
 /**
  * Add your custom properties here
  */
@@ -13,30 +16,19 @@ export class GlobalConfigProperties {
   // Locale translation code
   locale: string;
   // site data
-  data: any;
+  appData: any;
 }
 
 /**
  * Singleton Config class
  */
-export class GlobalConfig extends GlobalConfigProperties {
-  // ------------------------------------------------------------------------- SINGLETON
-
-  // Singleton
-  protected static __instance: GlobalConfig;
+class GlobalConfig extends GlobalConfigProperties {
+  // --------------------------------------------------------------------------- METHODS
 
   /**
-   * Get GlobalConfig singleton instance.
+   * Log Global config
    */
-  public static get instance(): GlobalConfig {
-    // Create instance
-    if (GlobalConfig.__instance == null) {
-      GlobalConfig.__instance = new GlobalConfig();
-    }
-
-    // Return singleton instance
-    return GlobalConfig.__instance;
-  }
+  public log = () => log(this);
 
   // ------------------------------------------------------------------------- INJECT
 
@@ -53,3 +45,6 @@ export class GlobalConfig extends GlobalConfigProperties {
     }
   }
 }
+
+// export with singleton
+export default new GlobalConfig();

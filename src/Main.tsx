@@ -1,17 +1,13 @@
 import "./Main.less";
 import ReactDOM from "react-dom";
 import * as React from "react";
-import { GlobalConfig } from "./common/data/GlobalConfig";
-import { prepareComponent } from "./common/helpers/prepareComponent";
+import GlobalConfig from "./common/data/GlobalConfig";
 import { Router } from "./common/lib/router/Router";
 import { Provider } from "react-redux";
 import configureStore from "./stores/index";
 import AppView from "./components/appView";
 import { EnvUtils } from "./common/lib/utils/EnvUtils";
 import { App } from "./common/lib/core/App";
-
-// prepare
-const { log } = prepareComponent("Main");
 
 export default class Main extends App {
   // ----------------------------------------------------------------------------- SINGLETON
@@ -32,18 +28,14 @@ export default class Main extends App {
    */
   protected initConfig(): void {
     // Inject params into config
-    GlobalConfig.instance.inject({
+    GlobalConfig.inject({
       version: require("../package.json").version,
       base: process.env.BASE_URL,
       env: process.env.ENV
     });
 
-    // log Global config
-    log("GlobalConfig", {
-      version: GlobalConfig.instance.version,
-      base: GlobalConfig.instance.base,
-      env: GlobalConfig.instance.env
-    });
+    // log all global config
+    GlobalConfig.log();
   }
 
   // ----------------------------------------------------------------------------- ENV
@@ -91,7 +83,7 @@ export default class Main extends App {
    */
   protected initRoutes(): void {
     // Init router
-    Router.init(GlobalConfig.instance.base, Main.routes);
+    Router.init(GlobalConfig.base, Main.routes);
   }
 
   // ----------------------------------------------------------------------------- READY

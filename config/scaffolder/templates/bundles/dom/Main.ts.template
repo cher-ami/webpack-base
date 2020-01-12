@@ -1,0 +1,60 @@
+import "./Main.less";
+import { GlobalConfig } from "./common/data/GlobalConfig";
+import { prepareComponent } from "./common/helpers/prepareComponent";
+import { EnvUtils } from "./common/lib/utils/EnvUtils";
+import { App } from "./common/lib/core/App";
+import AppView from "./components/appView/AppView"
+
+// prepare
+const { log } = prepareComponent("Main");
+
+export default class Main extends App {
+  // ----------------------------------------------------------------------------- SINGLETON
+
+  // singleton
+  protected static __instance: Main;
+
+  /**
+   * Get Main class singleton instance.
+   */
+  public static get instance(): Main {
+    return Main.__instance;
+  }
+
+  // ----------------------------------------------------------------------------- CONFIG
+  /**
+   * Init app config
+   */
+  protected initConfig(): void {
+    // Inject params into config
+    GlobalConfig.instance.inject({
+      version: require("../package.json").version,
+      base: process.env.BASE_URL,
+      env: process.env.ENV
+    });
+
+    // log Global config
+    log("GlobalConfig", {
+      version: GlobalConfig.instance.version,
+      base: GlobalConfig.instance.base,
+      env: GlobalConfig.instance.env
+    });
+  }
+
+  // ----------------------------------------------------------------------------- ENV
+
+  /**
+   * Init env
+   */
+  protected initEnv(): void {
+    // add env class to body
+    EnvUtils.addClasses();
+  }
+
+  // ----------------------------------------------------------------------------- READY
+
+  protected ready(): void {
+    // start appView
+    new AppView();
+  }
+}
