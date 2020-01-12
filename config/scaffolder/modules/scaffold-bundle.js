@@ -12,7 +12,7 @@ const _askBundleType = () => {
   return Inquirer.prompt({
     type: "list",
     name: "bundleType",
-    message: "bundle Type?",
+    message: "Witch Bundle project type do you want to create?",
     choices: config.bundleType
   });
 };
@@ -55,24 +55,29 @@ const _removeCurrentBundle = async ({ destinationFolder }) => {
 /**
  * @name _bundleBuilder
  * @description Build bundle
+ * @param firstScaffold
  * @param templateBundleDirPath
  * @param destinationFolder
  * @private
  */
 const _bundleBuilder = async ({
+  firstScaffold = false,
   templateBundleDirPath,
   destinationFolder = config.bundlePath
 }) => {
-  // ask if we are sure to want to create new bundle
-  let createNewBundle = false;
-  await _askCreateNewBundle().then(
-    resolve => (createNewBundle = resolve.createNewBundle)
-  );
+  // if is not the first scaffold
+  if (!firstScaffold) {
+    // ask if we are sure to want to create new bundle
+    let createNewBundle = false;
+    await _askCreateNewBundle().then(
+      resolve => (createNewBundle = resolve.createNewBundle)
+    );
 
-  // if response is false
-  if (!createNewBundle) {
-    console.log(`No bundle created. Aborting`.red);
-    return;
+    // if response is false
+    if (!createNewBundle) {
+      console.log(`No bundle created. Aborting`.red);
+      return;
+    }
   }
 
   // remove current bundle selected files
@@ -103,10 +108,10 @@ const _bundleBuilder = async ({
 // ----------------------------------------------------------------------------- PUBLIC
 
 /**
- * @name bundleScaffolder
+ * @name scaffoldBundle
  * @returns {Promise<unknown>}
  */
-const bundleScaffolder = async () => {
+const scaffoldBundle = async (firstScaffold = false) => {
   return new Promise(async resolve => {
     // create bundle type var
     let bundleType = "";
@@ -117,10 +122,10 @@ const bundleScaffolder = async () => {
     const templateBundleDirPath = `${config.templatesPath}/bundles/${bundleType}`;
 
     // scaffold bundle folder as src with the response
-    await _bundleBuilder({ templateBundleDirPath });
+    await _bundleBuilder({ firstScaffold, templateBundleDirPath });
 
     resolve();
   });
 };
 
-module.exports = bundleScaffolder;
+module.exports = scaffoldBundle;

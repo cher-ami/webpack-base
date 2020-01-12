@@ -7,7 +7,7 @@ require("colors");
 const log = require("debug")("lib:scaffold");
 
 const scaffoldComponent = require("./modules/scaffold-component");
-const bundleScaffolder = require("./modules/scaffold-bundle");
+const scaffoldBundle = require("./modules/scaffold-bundle");
 
 // ----------------------------------------------------------------------------- COMMON TASKS
 
@@ -29,7 +29,7 @@ const _scaffolders = [
   },
   {
     name: "Bundle",
-    exec: () => bundleScaffolder()
+    exec: () => scaffoldBundle()
   }
 ];
 

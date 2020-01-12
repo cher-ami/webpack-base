@@ -82,7 +82,6 @@ export default class Main extends App {
    * Init routes
    */
   protected initRoutes(): void {
-    // Init router
     Router.init(GlobalConfig.base, Main.routes);
   }
 
