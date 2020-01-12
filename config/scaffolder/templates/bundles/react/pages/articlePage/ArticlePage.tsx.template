@@ -1,4 +1,4 @@
-import css from "./ArticlePage.module.less.template";
+import css from "./ArticlePage.module.less";
 import React, { RefObject } from "react";
 import PageTransitionHelper from "../../common/helpers/PageTransitionHelper";
 import { ReactPage } from "../../common/lib/core/ReactPage";

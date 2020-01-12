@@ -1,4 +1,4 @@
-import HomePage from "./HomePage.tsx.template";
+import HomePage from "./HomePage";
 import { connect } from "react-redux";
 import { setcurrentPageName } from "../../stores/common/actions";
 

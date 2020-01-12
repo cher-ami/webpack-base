@@ -26,7 +26,12 @@ const _reactBundleBuilder = ({
   templateBundleDirPath,
   destinationFolder = config.bundlePath
 }) => {
-  const { Files } = require("@zouloux/files");
+
+  if (Files.getFiles(`${destinationFolder}/index.ts`).files.length > 0) {
+    console.log(`src/index.ts exist.`.red);
+    console.log(`Bundle type as been already setup. Aborting.`.red);
+    return;
+  }
 
   // copy template bundle directory content files in new bundle directory
   Files.any(`${templateBundleDirPath}/*`).copyTo(`${destinationFolder}/`);
@@ -42,7 +47,7 @@ const _reactBundleBuilder = ({
 
       // Check if component already exists
       if (Files.getFiles(filePathWithoutExt).files.length > 0) {
-        console.log(`This file already exists. Aborting.`.red.bold);
+        console.log(`This file already exists. Aborting.`.red);
         return;
       }
 

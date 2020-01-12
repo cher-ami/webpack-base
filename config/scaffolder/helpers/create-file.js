@@ -16,7 +16,7 @@ const createFile = ({
 }) => {
   // Check if component already exists
   if (Files.getFiles(destinationFilePath).files.length > 0) {
-    console.log(`This file already exists. Aborting.`.red.bold);
+    console.log(`This file already exists. Aborting.`.red);
     return;
   }
 

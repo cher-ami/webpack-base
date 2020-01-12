@@ -1,16 +1,18 @@
+
+# ------------------------------------------------------------------------------ IDE / OTHERS
+
 .DS_Store
 .idea
-node_modules
-dist
+
+# ------------------------------------------------------------------------------ ENV
+
 .env
+
+# ------------------------------------------------------------------------------ GENERATED
 
 # Generated
 src/common/atoms/atoms.ts
+node_modules
 
-# Generated sprites
-# à ajouter quand le prebuild sera configuré
-
-#src/*/sprites/*.less
-#src/*/sprites/*.png
-#src/*/sprites/*.ts
-#src/*/sprites/*.cache
+# Do not forgot to change this one if you need to keep content inside dist/ folder
+dist

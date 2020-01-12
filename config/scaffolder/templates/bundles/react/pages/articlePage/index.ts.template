@@ -1,4 +1,4 @@
-import ArticlePage from "./ArticlePage.tsx.template";
+import ArticlePage from "./ArticlePage";
 import { connect } from "react-redux";
 import { setcurrentPageName } from "../../stores/common/actions";
 
