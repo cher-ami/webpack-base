@@ -152,6 +152,7 @@ const showHelp = () => {
  */
 const setup = () => {
   return new Promise(async resolve => {
+
     // bundle
     await _setupBundle();
     // package
@@ -164,6 +165,8 @@ const setup = () => {
     await showHelp();
     // end
     resolve();
+
+    Files.new(`${paths.config}/install.cache`).write(`${new Date()}`);
 
     logDone({ message: "Webpack-base is ready!" });
   });

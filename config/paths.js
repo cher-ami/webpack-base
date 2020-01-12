@@ -15,6 +15,9 @@ module.exports = {
   // static folder
   static: appRoot.resolve("dist/static"),
 
+  // config folder
+  config: appRoot.resolve("config"),
+
   // node modules
   nodeModules: appRoot.resolve("node_modules"),
 
