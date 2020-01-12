@@ -1,6 +1,8 @@
 const appRoot = require("app-root-path");
 
 module.exports = {
+  bundlePath: appRoot.resolve("_srcTest"),
+
   // Skeletons path
   templatesPath: appRoot.resolve("config/scaffolder/templates"),
 
@@ -8,5 +10,5 @@ module.exports = {
   componentCompatibleFolders: ["components", "pages", "views"],
 
   // Scaffold bundle type
-  bundleType: ["dom", "react"]
+  bundleType: ["react", "dom"]
 };

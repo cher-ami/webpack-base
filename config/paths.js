@@ -7,6 +7,8 @@ module.exports = {
   // src folder
   src: appRoot.resolve("src"),
 
+  srcCommon: appRoot.resolve("src/common"),
+
   // dist folder
   dist: appRoot.resolve("dist"),
 
@@ -23,27 +25,27 @@ module.exports = {
   env: appRoot.resolve(".env"),
 
   // Path to fonts folder from src
-  fontsPath: appRoot.resolve("src/fonts/"),
+  fontsPath: appRoot.resolve("src/common/fonts/"),
 
   // Sprite path
-  spritesPath: appRoot.resolve("src/sprites"),
+  spritesPath: appRoot.resolve("src/common/sprites"),
 
   // Sprite folder
   spritesFolder: "sprites/",
 
   // Sprite PNG output
-  outputSpritesFolder: "src/sprites/",
+  outputSpritesFolder: "src/common/sprites/",
 
   // --------------------------------------------------------------------------- ATOMS
 
   // atoms path
-  atomsPath: appRoot.resolve("src/atoms"),
+  atomsPath: appRoot.resolve("src/common/atoms"),
 
   // atoms partial path
-  atomsPartialsPath: appRoot.resolve("src/atoms/partials"),
+  atomsPartialsPath: appRoot.resolve("src/common/atoms/partials"),
 
   // atoms files to watch: can be glob
-  atomsFilesToWatch: appRoot.resolve("src/atoms/partials/*.less"),
+  atomsFilesToWatch: appRoot.resolve("src/common/atoms/partials/*.less"),
 
   // auto generated atoms file name
   atomsGeneratedFilename: "atoms.ts"

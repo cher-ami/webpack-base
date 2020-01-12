@@ -1,14 +1,14 @@
 import "./Main.less";
 import ReactDOM from "react-dom";
 import * as React from "react";
-import { GlobalConfig } from "./data/GlobalConfig";
-import { prepareComponent } from "./helpers/prepareComponent";
-import { Router } from "./lib/router/Router";
+import { GlobalConfig } from "./common/data/GlobalConfig";
+import { prepareComponent } from "./common/helpers/prepareComponent";
+import { Router } from "./common/lib/router/Router";
 import { Provider } from "react-redux";
 import configureStore from "./stores/index";
 import AppView from "./components/appView";
-import { EnvUtils } from "./lib/utils/EnvUtils";
-import { App } from "./lib/core/App";
+import { EnvUtils } from "./common/lib/utils/EnvUtils";
+import { App } from "./common/lib/core/App";
 
 // prepare
 const { log } = prepareComponent("Main");

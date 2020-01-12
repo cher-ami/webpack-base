@@ -1,5 +1,6 @@
 const { Files } = require("@zouloux/files");
 const { QuickTemplate } = require("./template-helper");
+const log = require("debug")("lib:create-file");
 require("colors");
 
 /**
@@ -11,7 +12,7 @@ require("colors");
 const createFile = ({
   templateFilePath = "",
   destinationFilePath = "",
-  replaceExpressions = {}
+  replaceExpressions = null
 }) => {
   // Check if component already exists
   if (Files.getFiles(destinationFilePath).files.length > 0) {
@@ -19,10 +20,18 @@ const createFile = ({
     return;
   }
 
-  // create file with template
-  Files.new(destinationFilePath).write(
-    QuickTemplate(Files.getFiles(templateFilePath).read(), replaceExpressions)
-  );
+  // replace expression
+  if (replaceExpressions !== null) {
+    log("create file with template and replace expression");
+    Files.new(destinationFilePath).write(
+      QuickTemplate(Files.getFiles(templateFilePath).read(), replaceExpressions)
+    );
+
+    // no replace expression
+  } else {
+    log("Create file with template");
+    Files.getFiles(templateFilePath).copyTo(destinationFilePath);
+  }
 };
 
 module.exports = createFile;

@@ -1,0 +1,2 @@
+// reset & flat
+@import (inline) '~@solid-js/css-flat/css-flat.css';

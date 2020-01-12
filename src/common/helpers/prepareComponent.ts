@@ -11,7 +11,9 @@ export const prepareComponent = (
   // get component name
   const componentName: string = pComponentName;
   // prepare log
-  const log = debug(`${require("../../package.json").name}:${componentName}`);
+  const log = debug(
+    `${require("../../../package.json").name}:${componentName}`
+  );
 
   return {
     componentName,

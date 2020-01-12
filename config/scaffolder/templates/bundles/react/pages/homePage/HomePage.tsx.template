@@ -1,5 +1,6 @@
-import css from "./ArticlePage.module.less";
-import React, { RefObject } from "react";
+import css from "./HomePage.module.less.template";
+import { RefObject } from "react";
+import * as React from "react";
 import PageTransitionHelper from "../../common/helpers/PageTransitionHelper";
 import { ReactPage } from "../../common/lib/core/ReactPage";
 import { prepareComponent } from "../../common/helpers/prepareComponent";
@@ -8,25 +9,28 @@ import { merge } from "../../common/lib/helpers/classNameHelper";
 
 interface IProps {
   classNames?: string[];
-  parameters?: any;
 
   // from store
   setcurrentPageName?: (pPageName: string) => void;
   currentPageName?: string;
 }
-
 interface IStates {}
 
 // prepare
-const { componentName, log } = prepareComponent("ArticlePage");
+const { componentName, log } = prepareComponent("HomePage");
 
 /**
- * @name ArticlePage
+ * @name HomePage
  */
-class ArticlePage extends ReactPage<IProps, IStates> {
+class HomePage extends ReactPage<IProps, IStates> {
   // define ref
   protected rootRef: RefObject<HTMLDivElement>;
 
+  /**
+   * Constructor
+   * @param pProps
+   * @param pContext
+   */
   constructor(pProps: IProps, pContext: any) {
     // relay
     super(pProps, pContext);
@@ -77,11 +81,9 @@ class ArticlePage extends ReactPage<IProps, IStates> {
           description={`${componentName} description`}
         />
         {componentName}
-        <h5>id {this.props.parameters.id}</h5>
-        <h1>slug {this.props.parameters.slug}</h1>
       </div>
     );
   }
 }
 
-export default ArticlePage;
+export default HomePage;

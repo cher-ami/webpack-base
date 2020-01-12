@@ -1,4 +1,4 @@
-import css from "./AppView.module.less";
+import css from "./AppView.module.less.template";
 import React, { Component } from "react";
 import {
   ReactViewStack,
