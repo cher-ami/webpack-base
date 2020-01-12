@@ -1,21 +1,25 @@
 const Inquirer = require("inquirer");
 const { Files } = require("@zouloux/files");
 const packageJson = require("../../package.json");
-const { execSync, banner, print, task } = require("@solid-js/cli");
+const { execSync } = require("@solid-js/cli");
 const paths = require("../paths");
 const help = require("./help");
 const changeCase = require("change-case");
 require("colors");
 const scaffoldBundle = require("../scaffolder/modules/scaffold-bundle");
+const cacheInstallFilePath = `${paths.config}/install.cache`;
 
-// ----------------------------------------------------------------------------- LOG
+// ----------------------------------------------------------------------------- FAKE MODE
 
-const fakeMode = true;
+// If you need to manage this script pass fakeMode to true
+const fakeMode = false;
 
 // ----------------------------------------------------------------------------- LOG
 
 // error
-const logError = pMessage => console.log(`${pMessage}`.red, "\n");
+const logError = message => {
+  console.log(`❌ ${message}`.red, "\n");
+}
 
 // start
 const logStart = (message, clear = true) => {
@@ -56,7 +60,7 @@ const _setupPackageJson = () => {
 
     // Get package infos if this is the first setup
     if (projectName !== "webpack-base") {
-      logError("> package.json is already setup. Aborting.");
+      logError("package.json is already setup. Aborting.");
       return resolve();
     }
 
@@ -108,7 +112,7 @@ const setupEnvFile = () => {
 
     // check
     if (Files.getFiles(paths.env).files.length > 0) {
-      logError("> .env file already exists. Aborting.".red);
+      logError(".env file already exists. Aborting.".red);
       setTimeout(() => resolve(), 1000);
       return;
     }
@@ -145,13 +149,34 @@ const showHelp = () => {
   });
 };
 
+/**
+ * Init Cache file
+ * @returns {Promise<unknown>}
+ */
+const initCacheInstall = () => {
+  return new Promise(async resolve => {
+    logStart(`Create cache file in ${cacheInstallFilePath}...`);
+    // write file
+    Files.new(cacheInstallFilePath).write(`${new Date()}`);
+    logDone({ resolve });
+  });
+};
+
 // ----------------------------------------------------------------------------- FINAL
 
 /**
- * Setup Final
+ * Setup
+ *
+ * TODO Add init back cockpit
  */
 const setup = () => {
   return new Promise(async resolve => {
+
+    logStart(`Check if cache install file exist...`);
+    if ( Files.getFiles(cacheInstallFilePath).files.length > 0 ) {
+      logError('install.cache file exist, first install as already been setup, Aborting.');
+      return;
+    }
 
     // bundle
     await _setupBundle();
@@ -161,12 +186,12 @@ const setup = () => {
     await setupEnvFile();
     // remove unused files and directories
     await removeUnused();
+    // create cache file if is the first install;
+    await initCacheInstall();
     // show help
     await showHelp();
     // end
     resolve();
-
-    Files.new(`${paths.config}/install.cache`).write(`${new Date()}`);
 
     logDone({ message: "Webpack-base is ready!" });
   });
