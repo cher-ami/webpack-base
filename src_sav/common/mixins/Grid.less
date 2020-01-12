@@ -1,0 +1,65 @@
+@import (reference) "../References.less";
+
+/**
+ * Grid Container
+ */
+.gridContainer(@max-width: unit(@max-width-grid, px)) {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: @max-width;
+}
+
+/**
+ * Use grid on every selector
+ * ex: .gridFactor(padding, 3, true);
+ */
+.gridFactor
+  (@selector, @el-column-number, @with-last-gutter:false, @with-margin: 0) {
+  & when (@with-last-gutter = false) {
+    @{selector}: ~"calc(
+    (
+      (100% / @{column-number}) * @{el-column-number})
+      +
+      (@{gutter-size}px / @{column-number} * @{el-column-number})
+      -
+      @{gutter-size}px
+    )
+  ";
+  }
+  // with last gutter
+  & when (@with-last-gutter = true) {
+    @{selector}: ~"calc(
+    (
+      (100% / @{column-number}) * @{el-column-number})
+      +
+      (@{gutter-size}px / @{column-number} * @{el-column-number})
+    )
+  ";
+  }
+}
+/**
+ * Center element in grid
+ */
+.gridCenter (@el-column-number:10) {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: ~"calc(
+    (
+      (100% / @{column-number}) * @{el-column-number})
+      +
+      (@{gutter-size}px / @{column-number} * @{el-column-number})
+      -
+      @{gutter-size}px
+    )
+  ";
+}
+/**
+ * Reset center column grid
+ */
+.resetGridCenter() {
+  margin-left: 0;
+  margin-right: 0;
+  width: auto;
+}

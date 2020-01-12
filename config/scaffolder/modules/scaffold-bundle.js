@@ -20,6 +20,7 @@ const _askBundleType = () => {
   });
 };
 
+// prettier-ignore
 const _reactBundleBuilder = ({
   bundleType = "react",
   templateBundleDirPath,
@@ -27,54 +28,28 @@ const _reactBundleBuilder = ({
 }) => {
   const { Files } = require("@zouloux/files");
 
-  //log({ bundleType, templateBundleDirPath, destinationFolder });
-
-  // // scaffold index entry file
-  // createFile({
-  //   templateFilePath: `${templateBundleDirPath}/index.ts.template`,
-  //   destinationFilePath: `${destinationFolder}/index.ts`,
-  // });
-  //
-  // // scaffold Main tsx
-  // createFile({
-  //   templateFilePath: `${templateBundleDirPath}/Main.tsx.template`,
-  //   destinationFilePath: `${destinationFolder}/Main.tsx`,
-  // });
-  //
-  // // scaffold Main tsx
-  // createFile({
-  //   templateFilePath: `${templateBundleDirPath}/Main.less.template`,
-  //   destinationFilePath: `${destinationFolder}/Main.less`,
-  // });
-  //
-  // // scaffold Main tsx
-  // createFile({
-  //   templateFilePath: `${templateBundleDirPath}/stores/*`,
-  //   destinationFilePath: `${destinationFolder}/`,
-  // });
-
-  const bundleFiles = Files.any(`${templateBundleDirPath}/**/**/*`).files;
-
-  log(bundleFiles);
-
-  // copy all content
+  // copy template bundle directory content files in new bundle directory
   Files.any(`${templateBundleDirPath}/*`).copyTo(`${destinationFolder}/`);
 
-  // re write each files in new directory
+  // loop on each files in new directory
   Files.any(`${destinationFolder}/**/**/*`).files.map(el => {
+
     // if file name contains ".template" extension
     if (el.endsWith(".template")) {
-      // get new file path witout extention
-      const filePath = path.parse(el).dir;
-      const fileName = path.parse(el).name;
-      const filePathWithoutExt = `${filePath}/${fileName}`;
 
-      log("filePathWithoutExt", filePathWithoutExt);
-      log("new file", el);
+      // get new file path witout extention
+      const filePathWithoutExt = `${path.parse(el).dir}/${path.parse(el).name}`;
+
+      // Check if component already exists
+      if (Files.getFiles(filePathWithoutExt).files.length > 0) {
+        console.log(`This file already exists. Aborting.`.red.bold);
+        return;
+      }
 
       // write this new file witout extension
       Files.new(filePathWithoutExt).write(Files.getFiles(el).read());
 
+      // delete old file
       Files.getFiles(el).delete();
     }
   });
