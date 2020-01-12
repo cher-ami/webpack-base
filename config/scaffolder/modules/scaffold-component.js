@@ -67,7 +67,7 @@ const _reactComponentBuilder = ({
 
   // scaffold less module
   createFile({
-    templateFilePath: `${config.templatesPath}/components/module.less.template`,
+    templateFilePath: `${config.templatesPath}/components/react/component.less.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.module.less`,
     replaceExpressions: { upperComponentName }
   });
@@ -88,7 +88,7 @@ const _domComponentBuilder = ({ componentPath, upperComponentName }) => {
   });
   // scaffold less module
   createFile({
-    templateFilePath: `${config.templatesPath}/components/module.less.template`,
+    templateFilePath: `${config.templatesPath}/components/dom/component.less.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.less`,
     replaceExpressions: { upperComponentName }
   });
