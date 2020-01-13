@@ -7,10 +7,15 @@ const { log } = prepareComponent("GlobalConfig");
 export class GlobalConfigProperties {
   // Compiled version of the app, from package.json and process.env
   version: string;
+  // from process env
   // env
   env: string;
-  // Base http path to access to the app, from process.env
-  base: string;
+  // app url
+  appURL: string;
+  // base url
+  baseURL: string;
+  // router base url
+  routerBaseURL: string;
   // Root node where the app DOM will be append
   root: HTMLElement;
   // Locale translation code

@@ -12,11 +12,7 @@
 
 src/common/atoms/atoms.ts
 node_modules
-
-# Do not forgot to change this one if you need to keep content inside dist/ folder
-dist
-
-
+dist/static
 
 
 # TODO REMOVE after first install

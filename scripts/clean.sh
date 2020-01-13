@@ -3,7 +3,7 @@ set -e
 
 echo "> Clean..."
 
-echo "> Remove dist folder..."
-rm -rf dist
+echo "> Remove dist/static/ folder..."
+rm -rf dist/static
 
 echo "> Done."

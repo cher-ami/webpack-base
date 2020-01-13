@@ -2,7 +2,7 @@ import "./Main.less";
 import ReactDOM from "react-dom";
 import * as React from "react";
 import GlobalConfig from "./common/data/GlobalConfig";
-import {IRoute, Router} from "./common/lib/router/Router"
+import { IRoute, Router } from "./common/lib/router/Router";
 import { Provider } from "react-redux";
 import configureStore from "./stores/index";
 import AppView from "./components/appView";
@@ -10,7 +10,7 @@ import { EnvUtils } from "./common/lib/utils/EnvUtils";
 import { App } from "./common/lib/core/App";
 
 export default class Main extends App {
-  // ----------------------------------------------------------------------------- SINGLETON
+  // --------------------------------------------------------------------------- SINGLETON
 
   // singleton
   protected static __instance: Main;
@@ -30,7 +30,13 @@ export default class Main extends App {
     // Inject params into config
     GlobalConfig.inject({
       version: require("../package.json").version,
-      base: process.env.BASE_URL,
+      appURL: process.env.APP_URL,
+      baseURL: process.env.BASE_URL,
+      routerBaseURL:
+        // because we use proxy by default
+        process.env.NODE_ENV === "production"
+          ? `${process.env.BASE_URL}/`
+          : "/",
       env: process.env.ENV
     });
 
@@ -38,7 +44,7 @@ export default class Main extends App {
     GlobalConfig.log();
   }
 
-  // ----------------------------------------------------------------------------- ENV
+  // --------------------------------------------------------------------------- ENV
 
   /**
    * Init env
@@ -48,7 +54,7 @@ export default class Main extends App {
     EnvUtils.addClasses();
   }
 
-  // ----------------------------------------------------------------------------- ROUTES
+  // --------------------------------------------------------------------------- ROUTES
 
   /**
    * Routes List
@@ -95,10 +101,10 @@ export default class Main extends App {
    * Init routes
    */
   protected initRoutes(): void {
-    Router.init(GlobalConfig.base, Main.routes);
+    Router.init(GlobalConfig.routerBaseURL, Main.routes);
   }
 
-  // ----------------------------------------------------------------------------- READY
+  // --------------------------------------------------------------------------- READY
 
   protected ready(): void {
     // React render

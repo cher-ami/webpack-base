@@ -1,11 +1,6 @@
 import css from "./AppView.module.less";
 import React, { Component } from "react";
-import {
-  ReactViewStack,
-  ETransitionType
-} from "../../common/lib/core/ReactViewStack";
 import { IRouteMatch, Router } from "../../common/lib/router/Router";
-import { IPage } from "../../common/lib/router/IPage";
 import { EEnv } from "../../common/types";
 import { isEnv, showGridByDefault } from "../../common/helpers/nodeHelper";
 import { prepareComponent } from "../../common/helpers/prepareComponent";
@@ -14,6 +9,8 @@ import { atoms } from "../../common/atoms/atoms";
 import Metas from "../../common/lib/react-components/metas";
 import { GridLayout } from "@wbe/libraries";
 import Main from "../../Main";
+import { ETransitionType, ViewStack } from "../../common/lib/router/ViewStack";
+import { TPageRegisterObject } from "../../common/lib/router/usePageRegister";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -33,7 +30,7 @@ const { componentName, log } = prepareComponent("AppView");
  */
 class AppView extends Component<IProps, IStates> {
   // React view stack, showing pages when route changes
-  protected _viewStack: ReactViewStack;
+  protected _viewStack: ViewStack;
 
   // --------------------------------------------------------------------------- INIT
 
@@ -56,7 +53,6 @@ class AppView extends Component<IProps, IStates> {
   componentDidMount() {
     // initialize router
     this.initRouter();
-
     // toggle grid layout visibility
     this.toggleGridVisibilityHandler();
   }
@@ -75,15 +71,12 @@ class AppView extends Component<IProps, IStates> {
    */
   protected initRouter(): void {
     // Setup viewStack to show pages from Router automatically
-    Router.registerStack("main", this._viewStack);
-
+    Router.registerStack("main", this._viewStack as any);
     // Listen to routes not found
     Router.onNotFound.add(this.routeNotFoundHandler, this);
     Router.onRouteChanged.add(this.routeChangedHandler, this);
-
     // Enable auto link listening
     Router.listenLinks();
-
     // Start router
     Router.start();
   }
@@ -96,24 +89,23 @@ class AppView extends Component<IProps, IStates> {
    * You can setup a generic transition between all pages and do special cases here.
    * If you want to act on pages beyond just playIn and playOut methods, it's recommended to create an interface or an abstract.
    * To enable this feature, set prop transitionType to ETransitionType.CONTROLLED onto ReactViewStack component.
-   * @param {HTMLElement} $oldPage Old page HTMLElement. Can be null.
-   * @param {HTMLElement} $newPage New page HTMLElement.
-   * @param {IPage} pOldPage Old page component instance. Can be null.
-   * @param {IPage} pNewPage New page component instance.
    * @return {Promise<any>}
    */
   protected transitionControl(
-    $oldPage: HTMLElement,
-    $newPage: HTMLElement,
-    pOldPage: IPage,
-    pNewPage: IPage
+    pOldPage: TPageRegisterObject,
+    pNewPage: TPageRegisterObject
   ): Promise<any> {
     return new Promise(async resolve => {
-      // You can implement your transition here.
-      // Do not forget to call playIn and playOut on pages.
-      pOldPage != null && pOldPage.playOut();
-      await pNewPage.playIn();
+      // target ref
+      const oldPageRef = pOldPage?.rootRef?.current;
+      const newPageRef = pNewPage?.rootRef?.current;
 
+      // hide new page by default
+      if (newPageRef !== null) newPageRef.style.visibility = "hidden";
+      // playOut old page
+      pOldPage && (await pOldPage?.playOut?.());
+      // playIn old page
+      pNewPage && (await pNewPage?.playIn?.());
       // All done
       resolve();
     });
@@ -180,27 +172,27 @@ class AppView extends Component<IProps, IStates> {
           keywords={""}
           author={""}
           imageURL={""}
-          pageURL={`${window.location.href}`}
+          pageURL={window.location.href}
           siteName={require("../../../package.json").name}
         />
 
         {/* AppView Wrapper */}
-        <div className={merge([css.wrapper, css.wrapper_green])}>
+        <div className={css.wrapper}>
           {/* Menu example */}
           <ul className={css.items}>
             {/* Map availables routes */}
             {Main.routes.map((el, i) => {
-              const parameters = {
-                id: el?.parameters?.id,
-                slug: el?.parameters?.slug
-              };
               return (
                 <li key={i} className={css.item}>
                   <a
                     className={css.link}
                     href={Router.generateURL({
                       page: el.page,
-                      parameters: el.parameters ? parameters : null
+                      parameters: el.parameters
+                        ? {
+                            slug: el.parameters.slug
+                          }
+                        : null
                     })}
                     children={el.metas.name}
                     data-internal-link
@@ -211,8 +203,9 @@ class AppView extends Component<IProps, IStates> {
           </ul>
 
           {/* View Stack */}
-          <ReactViewStack
+          <ViewStack
             ref={r => (this._viewStack = r)}
+            allowSamePageTransition={["ArticlePage"]}
             transitionType={ETransitionType.PAGE_CROSSED}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}
