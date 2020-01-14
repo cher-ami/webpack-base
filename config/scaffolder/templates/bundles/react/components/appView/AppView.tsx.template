@@ -167,11 +167,8 @@ class AppView extends Component<IProps, IStates> {
         {/* Default Metas */}
         <Metas
           defaultMetas={true}
-          title={require("../../../package.json").name}
+          title={""}
           description={""}
-          keywords={""}
-          author={""}
-          imageURL={""}
           pageURL={window.location.href}
           siteName={require("../../../package.json").name}
         />
