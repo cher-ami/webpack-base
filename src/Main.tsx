@@ -8,6 +8,7 @@ import configureStore from "./stores/index";
 import AppView from "./components/appView";
 import { EnvUtils } from "./common/lib/utils/EnvUtils";
 import { App } from "./common/lib/core/App";
+import { EEnv, ENodeEnv } from "./common/types";
 
 export default class Main extends App {
   // --------------------------------------------------------------------------- SINGLETON
@@ -34,7 +35,7 @@ export default class Main extends App {
       baseURL: process.env.BASE_URL,
       routerBaseURL:
         // because we use proxy by default
-        process.env.NODE_ENV === "production" ? process.env.BASE_URL : "",
+        process.env.NODE_ENV === ENodeEnv.PROD ? process.env.BASE_URL : "",
       env: process.env.ENV
     });
 
