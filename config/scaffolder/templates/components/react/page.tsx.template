@@ -19,18 +19,17 @@ const %%upperComponentName%% = (props: IProps) => {
   // get current route
   const rootRef = useRef<HTMLDivElement>(null);
 
-  // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
+  // -------------------–-------------------–-------------------–--------------- REGISTER PAGE
 
-  const playIn = (): Promise<any> => new Promise(resolve => resolve);
-  const playOut = (): Promise<any> => new Promise(resolve => resolve);
-  usePageRegister({ componentName, rootRef, playIn, playOut });
+  // register page
+  usePageRegister({ componentName, rootRef });
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 
   return (
-    <div ref={rootRef} className={merge([css.Root, componentName])}>
+    <div className={merge([css.Root, componentName])} ref={rootRef}>
       <Metas
-        title={`${componentName} 404`}
+        title={`${componentName} title`}
         description={`${componentName} description`}
       />
       {componentName}
@@ -39,6 +38,7 @@ const %%upperComponentName%% = (props: IProps) => {
 };
 
 export default %%upperComponentName%%;
+
 
 
 
