@@ -24,7 +24,7 @@ export class GlobalConfigProperties {
 }
 
 /**
- * Singleton Config class
+ * @name GlobalConfig
  */
 class GlobalConfig extends GlobalConfigProperties {
   // --------------------------------------------------------------------------- METHODS
