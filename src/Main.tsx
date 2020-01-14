@@ -8,9 +8,10 @@ import configureStore from "./stores/index";
 import AppView from "./components/appView";
 import { EnvUtils } from "./common/lib/utils/EnvUtils";
 import { App } from "./common/lib/core/App";
-import { EEnv, ENodeEnv } from "./common/types";
+import { ENodeEnv } from "./common/types";
 
 export default class Main extends App {
+
   // --------------------------------------------------------------------------- SINGLETON
 
   // singleton
@@ -23,7 +24,8 @@ export default class Main extends App {
     return Main.__instance;
   }
 
-  // ----------------------------------------------------------------------------- CONFIG
+  // --------------------------------------------------------------------------- CONFIG
+
   /**
    * Init app config
    */

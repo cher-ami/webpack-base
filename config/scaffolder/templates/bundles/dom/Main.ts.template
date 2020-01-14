@@ -5,7 +5,7 @@ import { App } from "./common/lib/core/App";
 import AppView from "./components/appView/AppView"
 
 export default class Main extends App {
-  // ----------------------------------------------------------------------------- SINGLETON
+  // --------------------------------------------------------------------------- SINGLETON
 
   // singleton
   protected static __instance: Main;
@@ -17,7 +17,7 @@ export default class Main extends App {
     return Main.__instance;
   }
 
-  // ----------------------------------------------------------------------------- CONFIG
+  // --------------------------------------------------------------------------- CONFIG
   /**
    * Init app config
    */
@@ -25,7 +25,8 @@ export default class Main extends App {
     // Inject params into config
     GlobalConfig.inject({
       version: require("../package.json").version,
-      base: process.env.BASE_URL,
+      appURL: process.env.APP_URL,
+      baseURL: process.env.BASE_URL,
       env: process.env.ENV
     });
 
@@ -33,7 +34,7 @@ export default class Main extends App {
     GlobalConfig.log();
   }
 
-  // ----------------------------------------------------------------------------- ENV
+  // --------------------------------------------------------------------------- ENV
 
   /**
    * Init env
@@ -43,7 +44,7 @@ export default class Main extends App {
     EnvUtils.addClasses();
   }
 
-  // ----------------------------------------------------------------------------- READY
+  // --------------------------------------------------------------------------- READY
 
   protected ready(): void {
     // start appView
