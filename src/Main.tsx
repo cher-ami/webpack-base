@@ -34,9 +34,7 @@ export default class Main extends App {
       baseURL: process.env.BASE_URL,
       routerBaseURL:
         // because we use proxy by default
-        process.env.NODE_ENV === "production"
-          ? `${process.env.BASE_URL}/`
-          : "/",
+        process.env.NODE_ENV === "production" ? process.env.BASE_URL : "",
       env: process.env.ENV
     });
 
@@ -80,18 +78,6 @@ export default class Main extends App {
       },
       metas: {
         name: "Article 1",
-        showInMenu: true
-      }
-    },
-    {
-      url: "/article-{slug}",
-      page: "ArticlePage",
-      importer: () => import("./pages/articlePage"),
-      parameters: {
-        slug: "custom-slug-article-2"
-      },
-      metas: {
-        name: "Article 2",
         showInMenu: true
       }
     }
