@@ -153,7 +153,7 @@ commonConfig = {
           name: "[path][name].[ext]",
           // prevent display of src/ in filename
           // TODO pause problème avec le sprite
-          context: "src"
+          context: "src/common"
         }
       },
 
@@ -168,7 +168,7 @@ commonConfig = {
           limit: 8192,
           name: "[path][name].[ext]",
           // prevent display of src/ in filename
-          context: "src"
+          context: "src/common"
         }
       }
     ]

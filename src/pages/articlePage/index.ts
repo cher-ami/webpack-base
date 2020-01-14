@@ -1,6 +1,7 @@
 import ArticlePage from "./ArticlePage";
 import { connect } from "react-redux";
 import { setcurrentPageName } from "../../stores/common/actions";
+import HomePage from "../homePage/HomePage"
 
 /**
  * Map state to component props

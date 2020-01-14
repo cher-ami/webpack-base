@@ -2,6 +2,7 @@ const paths = require("../paths");
 const webpack = require("webpack");
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
+const config = require("../config");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
@@ -111,17 +112,7 @@ const developmentConfig = {
      * Enables Hot Module Replacement, otherwise known as HMR
      * @doc https://webpack.js.org/plugins/hot-module-replacement-plugin/
      */
-    new webpack.HotModuleReplacementPlugin(),
-
-    /**
-     * The HtmlWebpackPlugin simplifies creation of HTML files to serve your webpack bundles.
-     * @doc https://webpack.js.org/plugins/html-webpack-plugin/
-     */
-    new HtmlWebpackPlugin({
-      title: require("../../package").name,
-      template: paths.srcCommon + "/template.html",
-      filename: "index.html"
-    })
+    new webpack.HotModuleReplacementPlugin()
   ],
 
   /**
@@ -135,8 +126,24 @@ const developmentConfig = {
     hot: true,
     inline: true,
     compress: true,
-    writeToDisk: false,
     historyApiFallback: true,
+
+    // Write file to dist on each compile
+    writeToDisk: true,
+
+    // if use proxy option is enable
+    ...(config.useProxy
+      ? {
+          proxy: {
+            "/": {
+              // target something like http://localhost/project/dist/path/to/index/file
+              target: `${process.env.APP_URL}${process.env.BASE_URL}`,
+              changeOrigin: true,
+              secure: false
+            }
+          }
+        }
+      : {}),
 
     // display error overlay on screen
     overlay: true,

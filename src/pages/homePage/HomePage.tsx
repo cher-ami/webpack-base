@@ -1,11 +1,11 @@
 import css from "./HomePage.module.less";
-import { RefObject } from "react";
-import * as React from "react";
-import PageTransitionHelper from "../../common/helpers/PageTransitionHelper";
-import { ReactPage } from "../../common/lib/core/ReactPage";
-import { prepareComponent } from "../../common/helpers/prepareComponent";
+import React, { useRef } from "react";
+import { usePageRegister } from "../../common/lib/router/usePageRegister";
 import Metas from "../../common/lib/react-components/metas";
-import { merge } from "../../common/lib/helpers/classNameHelper";
+import PageTransitionHelper from "../../common/helpers/PageTransitionHelper";
+import { prepareComponent } from "../../common/helpers/prepareComponent";
+import {merge} from "../../common/lib/helpers/classNameHelper"
+
 
 interface IProps {
   classNames?: string[];
@@ -14,7 +14,6 @@ interface IProps {
   setcurrentPageName?: (pPageName: string) => void;
   currentPageName?: string;
 }
-interface IStates {}
 
 // prepare
 const { componentName, log } = prepareComponent("HomePage");
@@ -22,68 +21,32 @@ const { componentName, log } = prepareComponent("HomePage");
 /**
  * @name HomePage
  */
-class HomePage extends ReactPage<IProps, IStates> {
-  // define ref
-  protected rootRef: RefObject<HTMLDivElement>;
 
-  /**
-   * Constructor
-   * @param pProps
-   * @param pContext
-   */
-  constructor(pProps: IProps, pContext: any) {
-    // relay
-    super(pProps, pContext);
-    // create ref
-    this.rootRef = React.createRef();
-  }
+const HomePage = (props: IProps) => {
+  // get current route
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  // --------------------------------------------------------------------------- LIFE
+  // -------------------–-------------------–-------------------–--------------- PAGE TRANSITION
 
-  componentDidMount(): void {
-    // set current page name in store
-    this.props?.setcurrentPageName?.(componentName);
-  }
+  // register page transition
+  usePageRegister({
+    componentName,
+    rootRef,
+    playIn: (): Promise<any> => PageTransitionHelper.promisePlayIn(rootRef),
+    playOut: (): Promise<any> => PageTransitionHelper.promisePlayOut(rootRef)
+  });
 
-  // --------------------------------------------------------------------------- TRANSITION
+  // -------------------–-------------------–-------------------–--------------- RENDER
 
-  /**
-   * Action on this page.
-   * Check props.action and props.parameters to show proper content.
-   */
-  action() {
-    // Remove if not used
-  }
-
-  /**
-   * Play in animation.
-   * Call complete handler when animation is done.
-   */
-  protected playInHandler(pCompleteHandler: () => void) {
-    return PageTransitionHelper.promisePlayIn(this.rootRef, pCompleteHandler);
-  }
-
-  /**
-   * Play out animation.
-   * Call complete handler when animation is done.
-   */
-  protected playOutHandler(pCompleteHandler: () => void) {
-    return PageTransitionHelper.promisePlayOut(this.rootRef, pCompleteHandler);
-  }
-
-  // --------------------------------------------------------------------------- RENDER
-
-  render() {
-    return (
-      <div className={merge([css.Root, componentName])} ref={this.rootRef}>
-        <Metas
-          title={`${componentName} title`}
-          description={`${componentName} description`}
-        />
-        {componentName}
-      </div>
-    );
-  }
-}
+  return (
+    <div className={merge([css.Root, componentName])} ref={rootRef}>
+      <Metas
+        title={`${componentName} title`}
+        description={`${componentName} description`}
+      />
+      {componentName}
+    </div>
+  );
+};
 
 export default HomePage;

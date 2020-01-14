@@ -7,10 +7,14 @@ const { log } = prepareComponent("GlobalConfig");
 export class GlobalConfigProperties {
   // Compiled version of the app, from package.json and process.env
   version: string;
-  // env
+  // env (staging, qa, production...)
   env: string;
-  // Base http path to access to the app, from process.env
-  base: string;
+  // App URL
+  appURL: string;
+  // Base URL
+  baseURL: string;
+  // Router base url
+  routerBaseURL: string;
   // Root node where the app DOM will be append
   root: HTMLElement;
   // Locale translation code
@@ -20,7 +24,7 @@ export class GlobalConfigProperties {
 }
 
 /**
- * Singleton Config class
+ * @name GlobalConfig
  */
 class GlobalConfig extends GlobalConfigProperties {
   // --------------------------------------------------------------------------- METHODS
