@@ -1,4 +1,4 @@
-const { prebuildAtoms } = require("../../tasks/prebuildAtoms");
+const { prebuildAtoms } = require("./prebuild-atoms");
 const { Files } = require("@zouloux/files");
 
 // params

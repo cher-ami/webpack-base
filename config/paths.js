@@ -7,7 +7,7 @@ module.exports = {
   // src folder
   src: appRoot.resolve("src"),
 
-  srcCommon: appRoot.resolve("src/common"),
+  common: appRoot.resolve("src/common"),
 
   // dist folder
   dist: appRoot.resolve("dist"),
@@ -17,6 +17,8 @@ module.exports = {
 
   // config folder
   config: appRoot.resolve("config"),
+
+  configWebpackTemplatePath: appRoot.resolve("config/webpack/templates"),
 
   // node modules
   nodeModules: appRoot.resolve("node_modules"),

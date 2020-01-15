@@ -17,14 +17,15 @@
     "url": "git://github.com/willybrauner/webpack-base.git"
   },
   "scripts": {
-    "dev": "cross-env env-cmd -f .env webpack-dev-server --config config/webpack/webpack.development.js",
-    "build": "cross-env webpack -p --config config/webpack/webpack.production.js",
-    "clean": "scripts/clean.sh",
-    "reset": "scripts/reset.sh",
-    "prettier": "scripts/prettier.sh",
-    "scaffold": "node config/scaffolder/scaffold.js",
-    "sprites": "node config/sprites/sprites.js",
-    "setup": "node config/tasks/setup.js"
+    "dev": "node config/tasks/dev/dev.js",
+    "build": "node config/tasks/build/build.js",
+    "clean": "node config/tasks/clean/clean.js",
+    "reset": "node config/tasks/reset/reset.js",
+    "scaffold": "node config/tasks/scaffold/scaffold.js",
+    "sprites": "node config/tasks/sprites/sprites.js",
+    "setup": "node config/tasks/setup/setup.js",
+    "help": "node config/tasks/help/help.js",
+    "prettier": "prettier --write './src/**/**/*.{tsx,ts,jsx,js,less,css,json,md}'"
   },
   "dependencies": {
     "@solid-js/css-flat": "^1.0.1",
@@ -61,7 +62,6 @@
     "app-root-path": "^3.0.0",
     "babel-loader": "^8.0.6",
     "change-case": "^4.1.1",
-    "clean-webpack-plugin": "^3.0.0",
     "colors": "^1.4.0",
     "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^6.0.3",

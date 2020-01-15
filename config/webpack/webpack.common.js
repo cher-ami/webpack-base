@@ -1,7 +1,6 @@
 const paths = require("../paths");
-const config = require("../config");
+const config = require("./config");
 const webpack = require("webpack");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
@@ -72,12 +71,6 @@ commonConfig = {
     new ForkTsCheckerWebpackPlugin({ async: false }),
 
     /**
-     * CleanWebpackPlugin
-     * Removes/cleans build folders and unused assets when rebuilding.
-     */
-    ...(config.cleanOutputfolder ? [new CleanWebpackPlugin()] : []),
-
-    /**
      * HtmlWebpackPlugin
      * Generates an HTML file from a template.
      */
@@ -85,7 +78,7 @@ commonConfig = {
       ? [
           new HtmlWebpackPlugin({
             title: require("../../package").name,
-            template: paths.srcCommon + "/template.html",
+            template: paths.configWebpackTemplatePath + "/index.html.template",
             filename: "index.html"
           })
         ]
