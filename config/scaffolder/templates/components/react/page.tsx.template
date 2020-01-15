@@ -2,15 +2,13 @@ import css from "./%%upperComponentName%%.module.less";
 import React, { useRef } from "react";
 import { usePageRegister } from "../../common/lib/router/usePageRegister";
 import Metas from "../../common/lib/react-components/metas";
-import { prepareComponent } from "../../common/helpers/prepareComponent";
+import { prepare } from "../../common/helpers/prepare";
 import {merge} from "../../common/lib/helpers/classNameHelper"
 
-interface IProps {
-  classNames?: string[];
-}
+interface IProps { }
 
 // prepare
-const { componentName, log } = prepareComponent("%%upperComponentName%%");
+const { componentName, log } = prepare("%%upperComponentName%%");
 
 /**
  * @name %%upperComponentName%%

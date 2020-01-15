@@ -1,9 +1,9 @@
 import { gsap } from "gsap";
 import { MutableRefObject } from "react";
-import { prepareComponent } from "./prepareComponent";
+import { prepare } from "./prepare";
 
 // prepare
-const { componentName, log } = prepareComponent("PageTransitionHelper");
+const { componentName, log } = prepare("PageTransitionHelper");
 
 /**
  * @name PageTransitionHelper

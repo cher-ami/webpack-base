@@ -2,15 +2,15 @@ import css from "./NotFoundPage.module.less";
 import React, { useRef } from "react";
 import { usePageRegister } from "../../common/lib/router/usePageRegister";
 import Metas from "../../common/lib/react-components/metas";
-import { prepareComponent } from "../../common/helpers/prepareComponent";
-import {merge} from "../../common/lib/helpers/classNameHelper"
+import { prepare } from "../../common/helpers/prepare";
+import { merge } from "../../common/lib/helpers/classNameHelper";
 
 interface IProps {
   classNames?: string[];
 }
 
 // prepare
-const { componentName, log } = prepareComponent("NotFoundPage");
+const { componentName, log } = prepare("NotFoundPage");
 
 /**
  * @name NotFoundPage

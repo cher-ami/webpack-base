@@ -1,5 +1,9 @@
 import {DOMView} from "../../common/lib/core/DOMView";
 import './%%upperComponentName%%.less';
+import { prepare } from "../../common/helpers/prepare";
+
+// prepare
+const { componentName, log } = prepare("%%upperComponentName%%");
 
 /**
  * @name DOMView

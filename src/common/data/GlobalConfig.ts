@@ -1,5 +1,5 @@
-import { prepareComponent } from "../helpers/prepareComponent";
-const { log } = prepareComponent("GlobalConfig");
+import { prepare } from "../helpers/prepare";
+const { log } = prepare("GlobalConfig");
 
 /**
  * Add your custom properties here

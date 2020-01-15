@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { IRouteMatch, Router } from "../../common/lib/router/Router";
 import { EEnv } from "../../common/types";
 import { isEnv, showGridByDefault } from "../../common/helpers/nodeHelper";
-import { prepareComponent } from "../../common/helpers/prepareComponent";
+import { prepare } from "../../common/helpers/prepare";
 import { merge } from "../../common/lib/helpers/classNameHelper";
 import { atoms } from "../../common/atoms/atoms";
 import Metas from "../../common/lib/react-components/metas";
@@ -21,7 +21,7 @@ export interface IStates {
 }
 
 // prepare
-const { componentName, log } = prepareComponent("AppView");
+const { componentName, log } = prepare"AppView");
 
 /**
  * @name AppView

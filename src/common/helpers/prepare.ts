@@ -1,11 +1,11 @@
 import debug from "debug";
 
 /**
- * @name prepareComponent
+ * @name prepare
  * @description return component name and log debug tool
  * @param pComponentName
  */
-export const prepareComponent = (
+export const prepare = (
   pComponentName: string
 ): { componentName: string; log: debug } => {
   // get component name

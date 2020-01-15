@@ -1,7 +1,9 @@
-import { DOMView } from "../../common/lib/core/DOMView";
 import "./AppView.less";
-import { prepareComponent } from "../../common/helpers/prepareComponent";
-const { log } = prepareComponent("AppView");
+import { DOMView } from "../../common/lib/core/DOMView";
+import { prepare } from "../../common/helpers/prepare";
+
+// prepare
+const { log } = prepare("AppView");
 
 /**
  * @name DOMView
