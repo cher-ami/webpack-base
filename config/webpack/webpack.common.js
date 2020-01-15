@@ -6,7 +6,6 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin");
-// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 /**
  * Common Webpack Configuration
@@ -70,12 +69,6 @@ commonConfig = {
      * @doc https://github.com/gaearon/react-hot-loader#typescript
      */
     new ForkTsCheckerWebpackPlugin({ async: false }),
-
-    /**
-     * CleanWebpackPlugin
-     * Removes/cleans build folders and unused assets when rebuilding.
-     */
-    //...(config.cleanOutputfolder ? [new CleanWebpackPlugin()] : []),
 
     /**
      * HtmlWebpackPlugin

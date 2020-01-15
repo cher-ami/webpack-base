@@ -20,9 +20,4 @@ module.exports = {
    * an index.php for example
    */
   useProxy: false
-
-  /**
-   * Clean outputfolder before every build
-   */
-  // cleanOutputfolder: false,
 };
