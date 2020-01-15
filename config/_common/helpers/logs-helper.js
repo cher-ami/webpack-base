@@ -15,7 +15,7 @@ const logError = message => {
  */
 const logStart = (message, clear = false) => {
   if (clear) execSync("clear", 3);
-  console.log(`➤  ${message}`.brightBlue, "\n");
+  console.log(`➤  ${message}`.brightBlue);
 };
 
 /**

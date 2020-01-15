@@ -17,14 +17,14 @@
     "url": "git://github.com/willybrauner/webpack-base.git"
   },
   "scripts": {
-    "dev": "node config/tasks/dev/dev.js",
-    "build": "node config/tasks/build/build.js",
-    "clean": "node config/tasks/clean/clean.js",
-    "reset": "node config/tasks/reset/reset.js",
-    "scaffold": "node config/tasks/scaffold/scaffold.js",
-    "sprites": "node config/tasks/sprites/sprites.js",
-    "setup": "node config/tasks/setup/setup.js",
-    "help": "node config/tasks/help/help.js",
+    "dev": "node config/tasks/commands.js dev",
+    "build": "node config/tasks/commands.js build",
+    "clean": "node config/tasks/commands.js clean",
+    "reset": "node config/tasks/commands.js reset",
+    "scaffold": "node config/tasks/commands.js scaffold",
+    "sprites": "node config/tasks/commands.js sprites",
+    "setup": "node config/tasks/commands.js setup",
+    "help": "node config/tasks/commands.js help",
     "prettier": "prettier --write './src/**/**/*.{tsx,ts,jsx,js,less,css,json,md}'"
   },
   "dependencies": {

@@ -199,4 +199,4 @@ const setup = () => {
 };
 
 // return
-module.exports = setup();
+module.exports = { setup };

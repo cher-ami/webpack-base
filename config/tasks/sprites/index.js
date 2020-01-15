@@ -3,6 +3,11 @@ const path = require("path");
 const nsg = require("@zouloux/node-sprite-generator");
 const Handlebars = require("handlebars");
 const { optimizeFiles } = require("./imagemin");
+const {
+  logStart,
+  logDone,
+  logError
+} = require("../../_common/helpers/logs-helper");
 const config = require("./config");
 require("colors");
 
@@ -61,9 +66,11 @@ const optimizeImages = () => {
 /**
  * Sprites Task
  */
-const sprites = () =>
+const index = () =>
   new Promise(resolve => {
     // ------------------------------------------------------------------------- PREPARE
+
+    logStart("Build sprites...");
 
     // Get skeletons
     let skeletons = [
@@ -143,8 +150,6 @@ const sprites = () =>
       }
 
       // Write sprite PNG file
-
-      console.log("pSpriteOutputPath", pSpriteOutputPath);
       Files.new(`${pSpriteOutputPath}.png`).write(pSpriteBuffer);
     };
 
@@ -171,7 +176,7 @@ const sprites = () =>
         // Default sprite config
         console.log(
           `Config file not found for ${spriteName}. Using default config...`
-            .yellow
+            .grey
         );
         spriteConfig = defaultSpriteConfig;
       }
@@ -233,8 +238,8 @@ const sprites = () =>
       // When a sprite is generated
       const completeHandler = (error, cache) => {
         cache != null
-          ? console.log(`    → Sprite ${spriteName} already in cache.`.grey)
-          : console.log(`    → Sprite ${spriteName} generated.`.grey);
+          ? console.log(`Sprite ${spriteName} already in cache.`.grey)
+          : console.log(`Sprite ${spriteName} generated.`.grey);
 
         // If there is an imagemin config
         if ("imagemin" in spriteConfig) {
@@ -249,17 +254,14 @@ const sprites = () =>
 
         // If we have an error
         if (error) {
-          console.log(`  →  Error while creating sprite ${error}`.red.bold);
+          logError(`Error while creating sprite ${error}`);
           console.log("\007");
           process.exit(1);
         }
 
         // If every sprite has compiled
         else if (--totalSprites === 0) {
-          console.log(`  → Done !`.green);
-
-          // Generate the new sprites.less file including new import
-          //solidPreBuild.preBuildSprites();
+          logDone({});
 
           // Optimise images
           Promise.all(optimizeImages()).then(resolve);
@@ -308,9 +310,8 @@ const sprites = () =>
     }
 
     console.log(
-      `  → Generating ${totalSprites} sprite${totalSprites > 1 ? "s" : ""} ...`
-        .cyan
+      `Generating ${totalSprites} sprite${totalSprites > 1 ? "s" : ""}...`.grey
     );
   });
 
-module.exports = sprites();
+module.exports = { sprites: index };

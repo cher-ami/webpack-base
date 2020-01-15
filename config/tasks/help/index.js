@@ -4,15 +4,12 @@ require("colors");
  * Node command line
  */
 
-const init = () => {
+const help = () => {
   console.log(
     `${"Available tasks: "}
 
   ${"npm run dev".brightBlue}
   > start dev server.
-      
-  ${"npm run clean".brightBlue}
-  > clean cache. 
       
   ${"npm run reset".brightBlue}
   > remove compile files and node_modules + npm i.
@@ -32,4 +29,4 @@ const init = () => {
   );
 };
 
-module.exports = init();
+module.exports = { help };

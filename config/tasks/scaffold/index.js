@@ -53,4 +53,4 @@ const scaffold = () =>
     resolve();
   });
 
-module.exports = scaffold();
+module.exports = { scaffold };

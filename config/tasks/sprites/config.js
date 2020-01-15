@@ -6,7 +6,7 @@ module.exports = {
   bundlePath: paths.src,
 
   // Templates path
-  templatesPath: appRoot.resolve("config/sprites/templates"),
+  templatesPath: appRoot.resolve("config/tasks/sprites/templates"),
 
   // Sprite path
   spritesPath: appRoot.resolve("src/common/sprites"),

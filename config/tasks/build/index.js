@@ -1,12 +1,9 @@
 require("colors");
+const { logStart, logDone } = require("../../_common/helpers/logs-helper");
 const { execSync } = require("@solid-js/cli");
-const prebuild = require("../prebuild/prebuild");
-const {
-  logStart,
-  logDone,
-  logError
-} = require("../../_common/helpers/logs-helper");
-const clean = require("../clean/clean");
+const { clean } = require("../clean");
+const { prebuild } = require("../prebuild");
+const { sprites } = require("../sprites");
 
 // ----------------------------------------------------------------------------- PRIVATE
 
@@ -15,13 +12,14 @@ const clean = require("../clean/clean");
  * @returns {Promise<void>}
  * @private
  */
-const _startDevServer = async () => {
-  logStart("Start dev server...");
+const _build = async () => {
+  logStart("Start dev server", false);
   // start webpack
   await execSync(
-    "cross-env env-cmd -f .env webpack-dev-server --config config/webpack/webpack.development.js",
+    "cross-env webpack -p --config config/webpack/webpack.production.js",
     3
   );
+  logDone({});
 };
 
 // ----------------------------------------------------------------------------- PUBLIC
@@ -30,16 +28,19 @@ const _startDevServer = async () => {
  * Init Start
  * @returns {Promise<unknown>}
  */
-const init = () =>
+const build = () =>
   new Promise(async resolve => {
-    // clean dist folder
-    await clean;
+    // clean folder
+    await clean();
     // start prebuid
     await prebuild();
+    // compile sprites
+    await sprites();
+
     // start dev server
-    await _startDevServer();
+    await _build();
     // end
     resolve();
   });
 
-module.exports = init();
+module.exports = { build };
