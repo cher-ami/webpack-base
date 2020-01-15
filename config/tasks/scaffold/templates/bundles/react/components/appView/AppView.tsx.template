@@ -21,7 +21,7 @@ export interface IStates {
 }
 
 // prepare
-const { componentName, log } = prepare"AppView");
+const { componentName, log } = prepare("AppView");
 
 /**
  * @name AppView

@@ -1,6 +1,4 @@
 import Main from "./Main";
 
-/**
- * Start Main App
- */
+// Start Main app
 new Main();

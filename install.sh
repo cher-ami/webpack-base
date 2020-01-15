@@ -4,5 +4,5 @@ npm i
 echo "Done."
 
 echo "> Start setup..."
-node ./config/tasks/setup.js
+node ./config/tasks/setup/setup.js
 

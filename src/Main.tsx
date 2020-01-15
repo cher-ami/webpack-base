@@ -11,7 +11,6 @@ import { App } from "./common/lib/core/App";
 import { ENodeEnv } from "./common/types";
 
 export default class Main extends App {
-
   // --------------------------------------------------------------------------- SINGLETON
 
   // singleton
@@ -73,14 +72,14 @@ export default class Main extends App {
       }
     },
     {
-      url: "/article-{slug}",
-      page: "ArticlePage",
-      importer: () => import("./pages/articlePage"),
+      url: "/work-{slug}",
+      page: "WorkPage",
+      importer: () => import("./pages/workPage"),
       parameters: {
-        slug: "custom-slug-article"
+        slug: "custom-slug-work"
       },
       metas: {
-        name: "Article 1",
+        name: "Work 1",
         showInMenu: true
       }
     }

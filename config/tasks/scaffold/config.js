@@ -6,7 +6,7 @@ module.exports = {
   bundlePath: paths.src,
 
   // Skeletons path
-  templatesPath: appRoot.resolve("config/scaffold/templates"),
+  templatesPath: appRoot.resolve("config/tasks/scaffold/templates"),
 
   // Scaffold compatible folder
   componentCompatibleFolders: ["components", "pages"],

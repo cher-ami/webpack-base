@@ -1,10 +1,9 @@
 require("colors");
 const path = require("path");
 const Inquirer = require("inquirer");
-const log = require("debug")("lib:scaffold-component");
-const createFile = require("../helpers/create-file");
 const config = require("../config");
 const { Files } = require("@zouloux/files");
+const log = require("debug")("lib:scaffold-component");
 
 // ----------------------------------------------------------------------------- PRIVATE
 

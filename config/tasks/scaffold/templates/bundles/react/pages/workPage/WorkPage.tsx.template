@@ -1,4 +1,4 @@
-import css from "./ArticlePage.module.less";
+import css from "./WorkPage.module.less";
 import React, { useRef } from "react";
 import { usePageRegister } from "../../common/lib/router/usePageRegister";
 import Metas from "../../common/lib/react-components/metas";
@@ -7,15 +7,16 @@ import {merge} from "../../common/lib/helpers/classNameHelper"
 
 interface IProps {
   classNames?: string[];
+  parameters: any
 }
 
 // prepare
-const { componentName, log } = prepare("ArticlePage");
+const { componentName, log } = prepare("WorkPage");
 
 /**
- * @name ArticlePage
+ * @name WorkPage
  */
-const ArticlePage = (props: IProps) => {
+const WorkPage = (props: IProps) => {
   // get current route
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -33,8 +34,9 @@ const ArticlePage = (props: IProps) => {
         description={`${componentName} description`}
       />
       {componentName}
+      <div>{props.parameters?.slug}</div>
     </div>
   );
 };
 
-export default ArticlePage;
+export default WorkPage;

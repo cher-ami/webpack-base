@@ -1,11 +1,10 @@
+require("colors");
 const Inquirer = require("inquirer");
 const { Files } = require("@zouloux/files");
 const packageJson = require("../../../package.json");
 const { execSync } = require("@solid-js/cli");
 const paths = require("../../paths");
-const help = require("../help/help");
 const changeCase = require("change-case");
-require("colors");
 const scaffoldBundle = require("../scaffold/modules/scaffold-bundle");
 const cacheInstallFilePath = `${paths.config}/install.cache`;
 const {
@@ -134,7 +133,7 @@ const removeUnused = () => {
 const showHelp = () => {
   return new Promise(async resolve => {
     logStart("Show help...", true);
-    help();
+    require("../help/help");
     resolve();
   });
 };
