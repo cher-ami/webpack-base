@@ -59,8 +59,8 @@ export const pagesRegister = {
 export function usePageRegister({
   currentPath = Router.currentPath,
   componentName,
-  playIn = () => new Promise(resolve => resolve),
-  playOut = () => new Promise(resolve => resolve),
+  playIn = () => new Promise(resolve => resolve()),
+  playOut = () => new Promise(resolve => resolve()),
   rootRef,
   actionName = Router.DEFAULT_ACTION_NAME,
   stackName = Router.DEFAULT_STACK_NAME,
