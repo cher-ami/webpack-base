@@ -1,15 +1,11 @@
-const Inquirer = require("inquirer");
-const path = require("path");
-const paths = require("../paths");
-const config = require("../config");
-// Some colors in the terminal @see : https://github.com/marak/colors.js/
 require("colors");
+const Inquirer = require("inquirer");
 const log = require("debug")("lib:scaffold");
+
+// ----------------------------------------------------------------------------- COMMON TASKS
 
 const scaffoldComponent = require("./modules/scaffold-component");
 const scaffoldBundle = require("./modules/scaffold-bundle");
-
-// ----------------------------------------------------------------------------- COMMON TASKS
 
 /**
  * Ask bundle Type to

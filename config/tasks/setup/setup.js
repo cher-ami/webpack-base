@@ -1,47 +1,37 @@
 const Inquirer = require("inquirer");
 const { Files } = require("@zouloux/files");
-const packageJson = require("../../package.json");
+const packageJson = require("../../../package.json");
 const { execSync } = require("@solid-js/cli");
-const paths = require("../paths");
-const help = require("./help");
+const paths = require("../../paths");
+const help = require("../help/help");
 const changeCase = require("change-case");
 require("colors");
-const scaffoldBundle = require("../scaffolder/modules/scaffold-bundle");
+const scaffoldBundle = require("../scaffold/modules/scaffold-bundle");
 const cacheInstallFilePath = `${paths.config}/install.cache`;
+const {
+  logStart,
+  logDone,
+  logError
+} = require("../../_common/helpers/logs-helper");
 
 // ----------------------------------------------------------------------------- FAKE MODE
 
-// If you need to manage this script pass fakeMode to true
-const fakeMode = false;
+// SECURITY: If you need to manage this script pass fakeMode to true
+const fakeMode = true;
 
 // ----------------------------------------------------------------------------- LOG
 
-// error
-const logError = message => {
-  console.log(`❌ ${message}`.red, "\n");
-};
-
-// start
-const logStart = (message, clear = true) => {
-  if (clear) execSync("clear", 3);
-  console.log(`\n➤  ${message}`.bold.yellow, "\n");
-};
-
-// done
-const logDone = ({ message = "Done.", resolve }) => {
-  console.log(`✔ ${message}`.green, "\n");
-  setTimeout(() => resolve && resolve(), 1500);
-};
+const logDoneDelay = 1500;
 
 // ----------------------------------------------------------------------------- TASKS
 
 const _setupBundle = async () => {
   return new Promise(async resolve => {
-    logStart("Setup Bundle project Type...");
+    logStart("Setup Bundle project Type...", true);
 
     // start scaffold
     await scaffoldBundle(true);
-    logDone({ resolve });
+    logDone({ resolve, delay: logDoneDelay });
   });
 };
 
@@ -50,7 +40,7 @@ const _setupBundle = async () => {
  */
 const _setupPackageJson = () => {
   return new Promise(async resolve => {
-    logStart("Setup package.json...");
+    logStart("Setup package.json...", true);
 
     // Read package.json
     let projectName = packageJson.name;
@@ -99,7 +89,7 @@ const _setupPackageJson = () => {
       });
     }
 
-    logDone({ resolve });
+    logDone({ resolve, delay: logDoneDelay });
   });
 };
 
@@ -108,7 +98,7 @@ const _setupPackageJson = () => {
  */
 const setupEnvFile = () => {
   return new Promise(async resolve => {
-    logStart("Setup .env file...");
+    logStart("Setup .env file...", true);
 
     // check
     if (Files.getFiles(paths.env).files.length > 0) {
@@ -119,7 +109,7 @@ const setupEnvFile = () => {
     // Create new .env file with .env.example template
     Files.new(paths.env).write(Files.getFiles(paths.envExample).read());
 
-    logDone({ resolve });
+    logDone({ resolve, delay: logDoneDelay });
   });
 };
 
@@ -128,13 +118,13 @@ const setupEnvFile = () => {
  */
 const removeUnused = () => {
   return new Promise(async resolve => {
-    logStart("Remove .git folder... ");
+    logStart("Remove .git folder... ", true);
     if (!fakeMode) await execSync("rm -rf .git", 3);
-    logDone({ resolve });
+    logDone({ resolve, delay: logDoneDelay });
 
-    logStart("Remove install.sh file... ");
+    logStart("Remove install.sh file... ", true);
     if (!fakeMode) await execSync("rm -rf install.sh", 3);
-    logDone({ resolve });
+    logDone({ resolve, delay: logDoneDelay });
   });
 };
 
@@ -143,7 +133,7 @@ const removeUnused = () => {
  */
 const showHelp = () => {
   return new Promise(async resolve => {
-    logStart("Show help...");
+    logStart("Show help...", true);
     help();
     resolve();
   });
@@ -155,10 +145,10 @@ const showHelp = () => {
  */
 const initCacheInstall = () => {
   return new Promise(async resolve => {
-    logStart(`Create cache file in ${cacheInstallFilePath}...`);
+    logStart(`Create cache file in ${cacheInstallFilePath}...`, true);
     // write file
     Files.new(cacheInstallFilePath).write(`${new Date()}`);
-    logDone({ resolve });
+    logDone({ resolve, delay: logDoneDelay });
   });
 };
 

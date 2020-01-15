@@ -3,7 +3,7 @@ const imagemin = require("imagemin");
 const imageminJpegtran = require("imagemin-jpegtran");
 const imageminPngquant = require("imagemin-pngquant");
 const path = require("path");
-const paths = require("../paths");
+const paths = require("../../paths");
 
 // ----------------------------------------------------------------------------- DEFAULTS
 
@@ -11,7 +11,7 @@ const paths = require("../paths");
 const imagesMiniMatch = "*.{jpg,png}";
 
 // Load config
-const imageminConfig = require("../imagemin.config");
+const imageminConfig = require("./imagemin.config");
 
 let tempUniqid = Date.now();
 let counter = 0;

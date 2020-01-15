@@ -1,12 +1,12 @@
 const appRoot = require("app-root-path");
-const paths = require("../paths");
+const paths = require("../../paths");
 
 module.exports = {
   // bundle path
   bundlePath: paths.src,
 
   // Skeletons path
-  templatesPath: appRoot.resolve("config/scaffolder/templates"),
+  templatesPath: appRoot.resolve("config/scaffold/templates"),
 
   // Scaffold compatible folder
   componentCompatibleFolders: ["components", "pages"],

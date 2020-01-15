@@ -1,4 +1,4 @@
-const paths = require("./paths");
+const paths = require("../paths");
 
 module.exports = {
   /**
@@ -19,11 +19,10 @@ module.exports = {
    * Usefull if we are not generated html index and we want to target
    * an index.php for example
    */
-  useProxy: false,
+  useProxy: false
 
   /**
    * Clean outputfolder before every build
    */
-  cleanOutputfolder: true,
-
+  // cleanOutputfolder: false,
 };

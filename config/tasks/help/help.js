@@ -3,31 +3,33 @@ require("colors");
 /**
  * Node command line
  */
-module.exports = () => {
+
+const init = () => {
   console.log(
     `${"Available tasks: "}
 
-  ${"npm run dev".white.bold}
+  ${"npm run dev".brightBlue}
   > start dev server.
       
-  ${"npm run clean".white.bold}
+  ${"npm run clean".brightBlue}
   > clean cache. 
       
-  ${"npm run reset".white.bold}
+  ${"npm run reset".brightBlue}
   > remove compile files and node_modules + npm i.
-      
-  ${"npm run prettier".white.bold}
-  > prettify sources. This appended on each pre-commit.
-     
-  ${"npm run scaffold".white.bold}
+         
+  ${"npm run scaffold".brightBlue}
   > create a new component.
       
-  ${"npm run sprites".white.bold}
+  ${"npm run sprites".brightBlue}
   > generate sprites from src/sprites/ folder.
   
-  ${"npm run setup".white.bold}
+  ${"npm run setup".brightBlue}
   > setup this project again like the first time you installed webpack-base.
   
+  ${"npm run prettier".brightBlue}
+  > prettify sources. This appended on each pre-commit.
       `
   );
 };
+
+module.exports = init();
