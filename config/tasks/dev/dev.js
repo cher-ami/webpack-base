@@ -6,6 +6,7 @@ const {
   logDone,
   logError
 } = require("../../_common/helpers/logs-helper");
+const clean = require("../clean/clean");
 
 // ----------------------------------------------------------------------------- PRIVATE
 
@@ -31,6 +32,8 @@ const _startDevServer = async () => {
  */
 const init = () =>
   new Promise(async resolve => {
+    // clean dist folder
+    await clean;
     // start prebuid
     await prebuild();
     // start dev server
