@@ -1,4 +1,4 @@
-const paths = require("../global.paths");
+const globalPaths = require("../global.paths");
 const config = require("../global.config");
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");

@@ -1,4 +1,4 @@
-const paths = require("../global.paths");
+const globalPaths = require("../global.paths");
 const webpack = require("webpack");
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
@@ -120,7 +120,7 @@ const developmentConfig = {
    * Spin up a server for quick development.
    */
   devServer: {
-    contentBase: paths.dist,
+    contentBase: globalPaths.dist,
     port: 3000,
     open: false,
     hot: true,

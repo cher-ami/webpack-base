@@ -1,4 +1,4 @@
-const paths = require("../global.paths");
+const globalPaths = require("../global.paths");
 const config = require("../global.config");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -16,7 +16,7 @@ commonConfig = {
    * The first place Webpack looks to start building the bundle.
    */
   entry: {
-    main: `${paths.src}/index.ts`
+    main: `${globalPaths.src}/index.ts`
   },
 
   /**
@@ -48,7 +48,7 @@ commonConfig = {
       // "react-dom/test-utils": "preact/test-utils",
       // "react-dom": "preact/compat"
     },
-    modules: [paths.nodeModules, paths.src]
+    modules: [globalPaths.nodeModules, globalPaths.src]
   },
 
   /**
@@ -78,7 +78,7 @@ commonConfig = {
       ? [
           new HtmlWebpackPlugin({
             title: require("../../package").name,
-            template: paths.configWebpackTemplatePath + "/index.html.template",
+            template: globalPaths.webpackTemplatePath + "/index.html.template",
             filename: "index.html"
           })
         ]
@@ -89,7 +89,7 @@ commonConfig = {
      * @doc https://github.com/mrsteele/dotenv-webpack
      */
     new Dotenv({
-      path: paths.env,
+      path: globalPaths.env,
       systemvars: true
     }),
 
@@ -113,9 +113,9 @@ commonConfig = {
      * and expose it in generated javascript file.
      */
     new lessToJsPlugin({
-      watcher: paths.atomsFilesToWatch,
-      outputPath: paths.atomsPath,
-      outputFilename: paths.atomsGeneratedFilename
+      watcher: globalPaths.atomsFilesToWatch,
+      outputPath: globalPaths.atomsPath,
+      outputFilename: globalPaths.atomsGeneratedFilename
     })
   ],
 

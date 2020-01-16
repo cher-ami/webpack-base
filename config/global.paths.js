@@ -42,7 +42,7 @@ module.exports = {
   config: appRoot.resolve("config"),
 
   // webpack template - move ?
-  configWebpackTemplatePath: appRoot.resolve("config/webpack/templates"),
+  webpackTemplatePath: appRoot.resolve("config/webpack/templates"),
 
   // node modules
   nodeModules: appRoot.resolve("node_modules"),

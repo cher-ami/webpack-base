@@ -3,7 +3,7 @@ const Inquirer = require("inquirer");
 const changeCase = require("change-case");
 const log = require("debug")("lib:scaffold-component");
 const createFile = require("../helpers/create-file");
-const config = require("../config");
+const paths = require("../paths");
 const { logs } = require("../../../_common/helpers/logs-helper");
 
 // ----------------------–----------------------–----------------------–-------- PRIVATE
@@ -13,7 +13,7 @@ const _askWhichComponentFolder = () => {
     type: "list",
     name: "subFolder",
     message: "Which component folder?",
-    choices: config.componentCompatibleFolders
+    choices: paths.componentCompatibleFolders
   });
 };
 
@@ -52,7 +52,7 @@ const _reactComponentBuilder = ({
   const componentType = subFolder === "pages" ? "page" : "component";
   // scaffold component file
   createFile({
-    templateFilePath: `${config.templatesPath}/components/react/${componentType}.tsx.template`,
+    templateFilePath: `${paths.templatesPath}/components/react/${componentType}.tsx.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.tsx`,
     replaceExpressions: { upperComponentName }
   });
@@ -61,14 +61,14 @@ const _reactComponentBuilder = ({
   const indexType = `index${connectToStore ? "-redux" : ""}`;
   // scaffold index
   createFile({
-    templateFilePath: `${config.templatesPath}/components/react/${indexType}.ts.template`,
+    templateFilePath: `${paths.templatesPath}/components/react/${indexType}.ts.template`,
     destinationFilePath: `${componentPath}/index.ts`,
     replaceExpressions: { upperComponentName }
   });
 
   // scaffold less module
   createFile({
-    templateFilePath: `${config.templatesPath}/components/react/component.less.template`,
+    templateFilePath: `${paths.templatesPath}/components/react/component.less.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.module.less`,
     replaceExpressions: { upperComponentName }
   });
@@ -83,13 +83,13 @@ const _reactComponentBuilder = ({
 const _domComponentBuilder = ({ componentPath, upperComponentName }) => {
   // scaffold component file
   createFile({
-    templateFilePath: `${config.templatesPath}/components/dom/component.ts.template`,
+    templateFilePath: `${paths.templatesPath}/components/dom/component.ts.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.ts`,
     replaceExpressions: { upperComponentName }
   });
   // scaffold less module
   createFile({
-    templateFilePath: `${config.templatesPath}/components/dom/component.less.template`,
+    templateFilePath: `${paths.templatesPath}/components/dom/component.less.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.less`,
     replaceExpressions: { upperComponentName }
   });

@@ -1,7 +1,7 @@
 require("colors");
 const path = require("path");
 const Inquirer = require("inquirer");
-const config = require("../config");
+const paths = require("../paths");
 const { Files } = require("@zouloux/files");
 const log = require("debug")("lib:scaffold-component");
 const { logs } = require("../../../_common/helpers/logs-helper");
@@ -13,7 +13,7 @@ const _askBundleType = () => {
     type: "list",
     name: "bundleType",
     message: "Witch Bundle project type do you want to create?",
-    choices: config.bundleType
+    choices: paths.bundleType
   });
 };
 
@@ -63,7 +63,7 @@ const _removeCurrentBundle = async ({ destinationFolder }) => {
 const _bundleBuilder = async ({
   firstScaffold = false,
   templateBundleDirPath,
-  destinationFolder = config.bundlePath
+  destinationFolder = paths.bundlePath
 }) => {
   // if is not the first scaffold
   if (!firstScaffold) {
@@ -119,7 +119,7 @@ const scaffoldBundle = async (firstScaffold = false) => {
     await _askBundleType().then(resolve => (bundleType = resolve.bundleType));
 
     // get template dir path
-    const templateBundleDirPath = `${config.templatesPath}/bundles/${bundleType}`;
+    const templateBundleDirPath = `${paths.templatesPath}/bundles/${bundleType}`;
 
     // scaffold bundle folder as src with the response
     await _bundleBuilder({ firstScaffold, templateBundleDirPath });
