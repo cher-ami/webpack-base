@@ -152,6 +152,25 @@ const initCacheInstall = () => {
   });
 };
 
+/**
+ * Manage Gitignore
+ * @returns {Promise<unknown>}
+ */
+const manageGitignore = () => {
+  return new Promise(resolve => {
+    logStart(`Manage .gitignore file...`, true);
+    Files.getFiles(`${paths.root}/.gitignore`).alter(fileContent => {
+      return (
+        fileContent
+          // remove install.cache, we need to add it into git
+          .replace(/config\/install.cache/, "# config/install.cache")
+      );
+    });
+
+    logDone({ resolve, delay: logDoneDelay });
+  });
+};
+
 // ----------------------------------------------------------------------------- FINAL
 
 /**
@@ -179,6 +198,7 @@ const setup = () => {
       `);
       return;
     }
+    await manageGitignore();
 
     // bundle
     await _setupBundle();

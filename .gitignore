@@ -1,12 +1,10 @@
+# values auto-deleted during first setup
+config/install.cache
 
 # ------------------------------------------------------------------------------ GENERATED
 
 # Output application depend of project
 dist
-
-# TODO Not ignore this file after first install
-#  or generate a gitignore without some files and folder in setup first install?
-config/install.cache
 
 # Auto generated
 src/common/atoms/atoms.ts
@@ -23,3 +21,5 @@ node_modules
 # ------------------------------------------------------------------------------ ENV
 
 .env
+
+
