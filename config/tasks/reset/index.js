@@ -1,7 +1,7 @@
 require("colors");
 const { Files } = require("@zouloux/files");
 const { execSync } = require("@solid-js/cli");
-const { logStart, logDone } = require("../../_common/helpers/logs-helper");
+const { logs } = require("../../_common/helpers/logs-helper");
 
 // folder to clean
 const folderToClean = require("../../webpack/config").outputPath;
@@ -14,20 +14,20 @@ const folderToClean = require("../../webpack/config").outputPath;
  */
 const reset = () =>
   new Promise(async resolve => {
-    logStart("Clean...");
+    logs.start("Clean...");
 
-    logStart("Remove output compile folder...");
+    logs.start("Remove output compile folder...");
     Files.any(folderToClean).remove();
-    logDone({});
+    logs.done();
 
-    logStart("Remove node modules...");
+    logs.start("Remove node modules...");
     execSync("rm -rf node_modules", 3);
-    logDone({});
+    logs.done();
 
-    logStart("Re install dependencies...");
+    logs.start("Re install dependencies...");
     execSync("npm i", 3);
 
-    logDone({});
+    logs.done();
     resolve();
   });
 

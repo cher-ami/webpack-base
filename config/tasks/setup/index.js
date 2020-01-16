@@ -8,11 +8,7 @@ const changeCase = require("change-case");
 const scaffoldBundle = require("../scaffold/modules/scaffold-bundle");
 const cacheInstallFilePath = `${paths.config}/install.cache`;
 const { help } = require("../help");
-const {
-  logStart,
-  logDone,
-  logError
-} = require("../../_common/helpers/logs-helper");
+const { logs } = require("../../_common/helpers/logs-helper");
 
 // ----------------------------------------------------------------------------- FAKE MODE
 
@@ -27,11 +23,10 @@ const logDoneDelay = 1500;
 
 const _setupBundle = async () => {
   return new Promise(async resolve => {
-    logStart("Setup Bundle project Type...", true);
-
-    // start scaffold
+    logs.start("Setup bundle project type...", true);
     await scaffoldBundle(true);
-    logDone({ resolve, delay: logDoneDelay });
+    logs.done();
+    setTimeout(resolve, logDoneDelay);
   });
 };
 
@@ -40,7 +35,7 @@ const _setupBundle = async () => {
  */
 const _setupPackageJson = () => {
   return new Promise(async resolve => {
-    logStart("Setup package.json...", true);
+    logs.start("Setup package.json...", true);
 
     // Read package.json
     let projectName = packageJson.name;
@@ -50,7 +45,7 @@ const _setupPackageJson = () => {
 
     // Get package infos if this is the first setup
     if (projectName !== "webpack-base") {
-      logError("package.json is already setup. Aborting.");
+      logs.error("package.json is already setup. Aborting.");
       return resolve();
     }
 
@@ -89,51 +84,55 @@ const _setupPackageJson = () => {
       });
     }
 
-    logDone({ resolve, delay: logDoneDelay });
+    logs.done();
+    setTimeout(resolve, logDoneDelay);
   });
 };
 
 /**
  * Setup env file
  */
-const setupEnvFile = () => {
+const _setupEnvFile = () => {
   return new Promise(async resolve => {
-    logStart("Setup .env file...", true);
+    logs.start("Setup .env file...", true);
 
     // check
     if (Files.getFiles(paths.env).files.length > 0) {
-      logError(".env file already exists. Aborting.".red);
+      logs.error(".env file already exists. Aborting.");
       setTimeout(() => resolve(), 1000);
       return;
     }
     // Create new .env file with .env.example template
     Files.new(paths.env).write(Files.getFiles(paths.envExample).read());
 
-    logDone({ resolve, delay: logDoneDelay });
+    logs.done();
+    setTimeout(resolve, logDoneDelay);
   });
 };
 
 /**
  * remove Files and directories
  */
-const removeUnused = () => {
+const _removeUnused = () => {
   return new Promise(async resolve => {
-    logStart("Remove .git folder... ", true);
+    logs.start("Remove .git folder... ", true);
     if (!fakeMode) await execSync("rm -rf .git", 3);
-    logDone({ resolve, delay: logDoneDelay });
+    logs.done();
+    setTimeout(resolve, logDoneDelay);
 
-    logStart("Remove install.sh file... ", true);
+    logs.start("Remove install.sh file... ", true);
     if (!fakeMode) await execSync("rm -rf install.sh", 3);
-    logDone({ resolve, delay: logDoneDelay });
+    logs.done();
+    setTimeout(resolve, logDoneDelay);
   });
 };
 
 /**
  * Show help
  */
-const showHelp = () => {
+const _showHelp = () => {
   return new Promise(async resolve => {
-    logStart("Show help...", true);
+    logs.start("Show help...", true);
     help();
     resolve();
   });
@@ -143,12 +142,13 @@ const showHelp = () => {
  * Init Cache file
  * @returns {Promise<unknown>}
  */
-const initCacheInstall = () => {
+const _initCacheInstall = () => {
   return new Promise(async resolve => {
-    logStart(`Create cache file in ${cacheInstallFilePath}...`, true);
+    logs.start(`Create cache file in ${cacheInstallFilePath}...`, true);
     // write file
     Files.new(cacheInstallFilePath).write(`${new Date()}`);
-    logDone({ resolve, delay: logDoneDelay });
+    logs.done();
+    setTimeout(resolve, logDoneDelay);
   });
 };
 
@@ -156,19 +156,47 @@ const initCacheInstall = () => {
  * Manage Gitignore
  * @returns {Promise<unknown>}
  */
-const manageGitignore = () => {
+const _manageGitignore = () => {
   return new Promise(resolve => {
-    logStart(`Manage .gitignore file...`, true);
-    Files.getFiles(`${paths.root}/.gitignore`).alter(fileContent => {
-      return (
-        fileContent
-          // remove install.cache, we need to add it into git
-          .replace(/config\/install.cache/, "# config/install.cache")
-      );
-    });
+    logs.start(`Manage .gitignore file...`, true);
 
-    logDone({ resolve, delay: logDoneDelay });
+    if (!fakeMode) {
+      Files.getFiles(`${paths.root}/.gitignore`).alter(fileContent => {
+        return (
+          fileContent
+            // remove install.cache, we need to add it into git
+            .replace(/config\/install.cache/, "# config/install.cache")
+        );
+      });
+    }
+
+    logs.done();
+    setTimeout(resolve, logDoneDelay);
   });
+};
+
+/**
+ * Check if install file cache exist
+ * @returns boolean
+ */
+const _checkCacheFile = () => {
+  if (Files.getFiles(cacheInstallFilePath).files.length > 0) {
+    execSync("clear", 3);
+    logs.error(
+      "install.cache file exist, first install as already been setup, Aborting."
+    );
+    console.log(`If you want to setup this project again like the first time you installed webpack-base, you need to: \n
+  - remove ${cacheInstallFilePath} file
+  - npm run setup
+  \n
+  ${"WARNING!".red.bold}\n
+  ${"npm run setup".bold} erase a part of source project:\n
+  - setup bundle: erase every files in src/ folder except common/ folder
+  - setup package.json: erase name, description, author & version keys
+  - ${".git will be removed!".bold}    
+      `);
+    return false;
+  } else return true;
 };
 
 // ----------------------------------------------------------------------------- FINAL
@@ -180,43 +208,26 @@ const manageGitignore = () => {
  */
 const setup = () => {
   return new Promise(async resolve => {
-    logStart(`Check if cache install file exist...`);
-    if (Files.getFiles(cacheInstallFilePath).files.length > 0) {
-      execSync("clear", 3);
-      logError(
-        "install.cache file exist, first install as already been setup, Aborting."
-      );
-      console.log(`If you want to setup this project again like the first time you installed webpack-base, you need to: \n
-  - remove ${cacheInstallFilePath} file
-  - npm run setup
-  \n
-  ${"WARNING!".red.bold}\n
-  ${"npm run setup".bold} erase a part of source project:\n
-  - setup bundle: erase every files in src/ folder except common/ folder
-  - setup package.json: erase name, description, author & version keys
-  - ${".git will be removed!".bold}    
-      `);
-      return;
-    }
-
+    // check if cache file exist, if exist, do not contiue
+    if (!_checkCacheFile()) return;
     // bundle
     await _setupBundle();
     // package
     await _setupPackageJson();
     // env
-    await setupEnvFile();
+    await _setupEnvFile();
     // remove unused files and directories
-    await removeUnused();
+    await _removeUnused();
     // create cache file if is the first install;
-    await initCacheInstall();
+    await _initCacheInstall();
     // manage gitignore (add and remove values)
-    await manageGitignore();
+    await _manageGitignore();
     // show help
-    await showHelp();
+    await _showHelp();
     // end
     resolve();
 
-    logDone({ message: "Webpack-base is ready!" });
+    logs.done("Webpack-base is ready!");
   });
 };
 

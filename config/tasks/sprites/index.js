@@ -3,11 +3,7 @@ const path = require("path");
 const nsg = require("@zouloux/node-sprite-generator");
 const Handlebars = require("handlebars");
 const { optimizeFiles } = require("./imagemin");
-const {
-  logStart,
-  logDone,
-  logError
-} = require("../../_common/helpers/logs-helper");
+const { logs } = require("../../_common/helpers/logs-helper");
 const config = require("./config");
 require("colors");
 
@@ -70,7 +66,7 @@ const index = () =>
   new Promise(resolve => {
     // ------------------------------------------------------------------------- PREPARE
 
-    logStart("Build sprites...");
+    logs.start("Build sprites...");
 
     // Get skeletons
     let skeletons = [
@@ -174,9 +170,8 @@ const index = () =>
         )}/${spritePrefix}${separator}${spriteName}${configExt}`);
       } catch (error) {
         // Default sprite config
-        console.log(
+        logs.note(
           `Config file not found for ${spriteName}. Using default config...`
-            .grey
         );
         spriteConfig = defaultSpriteConfig;
       }
@@ -238,8 +233,8 @@ const index = () =>
       // When a sprite is generated
       const completeHandler = (error, cache) => {
         cache != null
-          ? console.log(`Sprite ${spriteName} already in cache.`.grey)
-          : console.log(`Sprite ${spriteName} generated.`.grey);
+          ? logs.note(`Sprite ${spriteName} already in cache.`)
+          : logs.note(`Sprite ${spriteName} generated.`);
 
         // If there is an imagemin config
         if ("imagemin" in spriteConfig) {
@@ -254,14 +249,14 @@ const index = () =>
 
         // If we have an error
         if (error) {
-          logError(`Error while creating sprite ${error}`);
+          logs.error(`Error while creating sprite ${error}`);
           console.log("\007");
           process.exit(1);
         }
 
         // If every sprite has compiled
         else if (--totalSprites === 0) {
-          logDone({});
+          logs.done();
 
           // Optimise images
           Promise.all(optimizeImages()).then(resolve);
@@ -309,8 +304,8 @@ const index = () =>
       return;
     }
 
-    console.log(
-      `Generating ${totalSprites} sprite${totalSprites > 1 ? "s" : ""}...`.grey
+    logs.note(
+      `Generating ${totalSprites} sprite${totalSprites > 1 ? "s" : ""}...`
     );
   });
 

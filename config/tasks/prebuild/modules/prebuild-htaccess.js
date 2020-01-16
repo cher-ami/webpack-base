@@ -1,6 +1,6 @@
 const { Files } = require("@zouloux/files");
 const paths = require("../../../paths");
-const { logStart, logDone } = require("../../../_common/helpers/logs-helper");
+const { logs } = require("../../../_common/helpers/logs-helper");
 const webPackConfig = require("../../../webpack/config");
 
 /**
@@ -8,7 +8,7 @@ const webPackConfig = require("../../../webpack/config");
  * Usefull is this file
  */
 const prebuildHtaccess = () => {
-  logStart("Prebuild htaccess...");
+  logs.start("Prebuild htaccess...");
   //
   const newFilePath = `${webPackConfig.outputPath}/.htaccess`;
   // target file
@@ -17,7 +17,7 @@ const prebuildHtaccess = () => {
   // create file
   Files.new(newFilePath).write(Files.getFiles(templateFilePath).read());
 
-  logDone({});
+  logs.done();
 };
 
 module.exports = prebuildHtaccess;

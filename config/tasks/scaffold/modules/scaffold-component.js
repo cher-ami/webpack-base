@@ -4,6 +4,7 @@ const changeCase = require("change-case");
 const log = require("debug")("lib:scaffold-component");
 const createFile = require("../helpers/create-file");
 const config = require("../config");
+const { logs } = require("../../../_common/helpers/logs-helper");
 
 // ----------------------–----------------------–----------------------–-------- PRIVATE
 
@@ -157,7 +158,8 @@ const scaffoldComponent = pComponentType => {
       });
     }
 
-    console.log(`→ ${"component created!"}\n`.cyan);
+    // final log
+    logs.done("Component created.");
     resolve();
   });
 };

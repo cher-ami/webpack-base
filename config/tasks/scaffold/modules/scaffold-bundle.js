@@ -4,6 +4,7 @@ const Inquirer = require("inquirer");
 const config = require("../config");
 const { Files } = require("@zouloux/files");
 const log = require("debug")("lib:scaffold-component");
+const { logs } = require("../../../_common/helpers/logs-helper");
 
 // ----------------------------------------------------------------------------- PRIVATE
 
@@ -74,7 +75,7 @@ const _bundleBuilder = async ({
 
     // if response is false
     if (!createNewBundle) {
-      console.log(`No bundle created. Aborting`.red);
+      logs.error(`No bundle created. Aborting`);
       return;
     }
   }
@@ -99,7 +100,7 @@ const _bundleBuilder = async ({
       Files.getFiles(el).delete();
 
       // final log
-      console.log(`→ ${"bundle created."}\n`.cyan);
+      logs.done("Bundle created.");
     }
   });
 };

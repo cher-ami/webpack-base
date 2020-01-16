@@ -1,6 +1,7 @@
 const { Files } = require("@zouloux/files");
 const { QuickTemplate } = require("./template-helper");
 const log = require("debug")("lib:create-file");
+const { logs } = require("../../../_common/helpers/logs-helper");
 require("colors");
 
 /**
@@ -16,7 +17,7 @@ const createFile = ({
 }) => {
   // Check if component already exists
   if (Files.getFiles(destinationFilePath).files.length > 0) {
-    console.log(`This file already exists. Aborting.`.red);
+    logs.error(`This file already exists. Aborting.`);
     return;
   }
 
