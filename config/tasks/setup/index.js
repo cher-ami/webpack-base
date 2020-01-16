@@ -7,6 +7,7 @@ const paths = require("../../paths");
 const changeCase = require("change-case");
 const scaffoldBundle = require("../scaffold/modules/scaffold-bundle");
 const cacheInstallFilePath = `${paths.config}/install.cache`;
+const { help } = require("../help");
 const {
   logStart,
   logDone,
@@ -133,7 +134,7 @@ const removeUnused = () => {
 const showHelp = () => {
   return new Promise(async resolve => {
     logStart("Show help...", true);
-    require("../help/help");
+    help();
     resolve();
   });
 };
@@ -162,19 +163,19 @@ const setup = () => {
   return new Promise(async resolve => {
     logStart(`Check if cache install file exist...`);
     if (Files.getFiles(cacheInstallFilePath).files.length > 0) {
+      execSync("clear", 3);
       logError(
         "install.cache file exist, first install as already been setup, Aborting."
       );
-      console.log(`
-      If you want to setup this project again like the first time you installed webpack-base, you need to: \n
-      - remove ${cacheInstallFilePath} file
-      - npm run setup
-      \n
-      ${"WARNING!".red.bold}\n
-      ${"npm run setup".bold} erase a part of source project: \n
-      - setup bundle: erase every files in src/ folder except common/ folder
-      - setup package.json: erase name, description, author & version keys
-      - ${".git will be removed!".bold}    
+      console.log(`If you want to setup this project again like the first time you installed webpack-base, you need to: \n
+  - remove ${cacheInstallFilePath} file
+  - npm run setup
+  \n
+  ${"WARNING!".red.bold}\n
+  ${"npm run setup".bold} erase a part of source project:\n
+  - setup bundle: erase every files in src/ folder except common/ folder
+  - setup package.json: erase name, description, author & version keys
+  - ${".git will be removed!".bold}    
       `);
       return;
     }
