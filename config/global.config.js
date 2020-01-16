@@ -19,5 +19,5 @@ module.exports = {
    * Usefull if we are not generated html index and we want to target
    * an index.php for example.
    */
-  useProxy: true
+  useProxy: false
 };
