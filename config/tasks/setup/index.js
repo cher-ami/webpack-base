@@ -198,7 +198,6 @@ const setup = () => {
       `);
       return;
     }
-    await manageGitignore();
 
     // bundle
     await _setupBundle();
@@ -210,6 +209,8 @@ const setup = () => {
     await removeUnused();
     // create cache file if is the first install;
     await initCacheInstall();
+    // manage gitignore (add and remove values)
+    await manageGitignore();
     // show help
     await showHelp();
     // end
