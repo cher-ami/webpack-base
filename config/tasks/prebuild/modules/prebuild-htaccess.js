@@ -1,6 +1,6 @@
 const { Files } = require("@zouloux/files");
 const paths = require("../../../global.paths");
-const { logs } = require("../../../_common/helpers/logs-helper");
+const { logs } = require("../../../helpers/logs-helper");
 const webPackConfig = require("../../../global.config");
 
 /**

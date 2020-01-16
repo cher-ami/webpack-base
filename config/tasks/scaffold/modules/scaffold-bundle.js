@@ -4,7 +4,7 @@ const Inquirer = require("inquirer");
 const paths = require("../paths");
 const { Files } = require("@zouloux/files");
 const log = require("debug")("lib:scaffold-component");
-const { logs } = require("../../../_common/helpers/logs-helper");
+const { logs } = require("../../../helpers/logs-helper");
 
 // ----------------------------------------------------------------------------- PRIVATE
 
@@ -100,9 +100,9 @@ const _bundleBuilder = async ({
       Files.getFiles(el).delete();
 
       // final log
-      logs.done("Bundle created.");
     }
   });
+  logs.done("Bundle created.");
 };
 
 // ----------------------------------------------------------------------------- PUBLIC
@@ -123,8 +123,7 @@ const scaffoldBundle = async (firstScaffold = false) => {
 
     // scaffold bundle folder as src with the response
     await _bundleBuilder({ firstScaffold, templateBundleDirPath });
-
-    resolve();
+    resolve(bundleType);
   });
 };
 

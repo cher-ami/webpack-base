@@ -1,5 +1,5 @@
 require("colors");
-const { logs } = require("../../_common/helpers/logs-helper");
+const { logs } = require("../../helpers/logs-helper");
 const { execSync } = require("@solid-js/cli");
 const { clean } = require("../clean");
 const { prebuild } = require("../prebuild");
