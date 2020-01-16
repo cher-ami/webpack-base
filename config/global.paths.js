@@ -4,31 +4,12 @@ module.exports = {
   // root folder
   root: appRoot.resolve(""),
 
+  // --------------------------------------------------------------------------- SRC
+
   // src folder
   src: appRoot.resolve("src"),
 
   common: appRoot.resolve("src/common"),
-
-  // dist folder
-  dist: appRoot.resolve("dist"),
-
-  // static folder
-  static: appRoot.resolve("dist/static"),
-
-  // config folder
-  config: appRoot.resolve("config"),
-
-  // webpack template - move ?
-  configWebpackTemplatePath: appRoot.resolve("config/webpack/templates"),
-
-  // node modules
-  nodeModules: appRoot.resolve("node_modules"),
-
-  // .env example file
-  envExample: appRoot.resolve(".env.example"),
-
-  // .env file
-  env: appRoot.resolve(".env"),
 
   // Path to fonts folder from src
   fontsPath: appRoot.resolve("src/common/fonts/"),
@@ -45,5 +26,30 @@ module.exports = {
   atomsFilesToWatch: appRoot.resolve("src/common/atoms/partials/*.less"),
 
   // auto generated atoms file name
-  atomsGeneratedFilename: "atoms.ts"
+  atomsGeneratedFilename: "atoms.ts",
+
+  // --------------------------------------------------------------------------- DIST
+
+  // dist folder
+  dist: appRoot.resolve("dist"),
+
+  // static folder
+  static: appRoot.resolve("dist/static"),
+
+  // --------------------------------------------------------------------------- CONFIG
+
+  // config folder
+  config: appRoot.resolve("config"),
+
+  // webpack template - move ?
+  configWebpackTemplatePath: appRoot.resolve("config/webpack/templates"),
+
+  // node modules
+  nodeModules: appRoot.resolve("node_modules"),
+
+  // .env example file
+  envExample: appRoot.resolve(".env.example"),
+
+  // .env file
+  env: appRoot.resolve(".env")
 };

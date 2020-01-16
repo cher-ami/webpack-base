@@ -9,7 +9,7 @@ const logs = {
    */
   start: (pMessage = "", pClear = false) => {
     if (pClear) execSync("clear", 3);
-    console.log(`➤  ${pMessage}`.brightBlue);
+    console.log(`> ${pMessage}`.brightBlue);
   },
 
   /**
@@ -33,7 +33,7 @@ const logs = {
    * @param pMessage
    */
   error: (pMessage = "") => {
-    console.log(`❌ ${pMessage}`.red, "\n");
+    console.log(`${pMessage}`.red, "\n");
   }
 };
 
