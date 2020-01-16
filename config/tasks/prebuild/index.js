@@ -6,7 +6,7 @@ const prebuildHtaccess = require("./modules/prebuild-htaccess");
 const index = () =>
   new Promise(async resolve => {
     // prebuild modules
-    await prebuildHtaccess();
+    // await prebuildHtaccess();
     // add your modules here...
     resolve();
   });
