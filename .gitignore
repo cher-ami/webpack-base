@@ -6,8 +6,14 @@ config/install.cache
 # Output application depend of project
 dist
 
-# Auto generated
+# Auto generated atoms
 src/common/atoms/atoms.ts
+
+# Auto generated sprites
+src/common/sprites/*.less
+src/common/sprites/*.png
+src/common/sprites/*.ts
+src/common/sprites/*.cache
 
 # ------------------------------------------------------------------------------ DEP
 

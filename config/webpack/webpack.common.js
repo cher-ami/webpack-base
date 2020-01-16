@@ -1,5 +1,5 @@
-const paths = require("../paths");
-const config = require("./config");
+const paths = require("../global.paths");
+const config = require("../global.config");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");

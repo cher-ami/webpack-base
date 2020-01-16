@@ -1,5 +1,5 @@
 const appRoot = require("app-root-path");
-const paths = require("../../paths");
+const paths = require("../../global.paths");
 
 module.exports = {
   // bundle path

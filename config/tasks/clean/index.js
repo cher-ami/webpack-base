@@ -1,7 +1,7 @@
 require("colors");
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../_common/helpers/logs-helper");
-const folderToClean = require("../../webpack/config").outputPath;
+const folderToClean = require("../../global.config").outputPath;
 
 // ----------------------------------------------------------------------------- PUBLIC
 

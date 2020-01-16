@@ -4,7 +4,7 @@ const { execSync } = require("@solid-js/cli");
 const { logs } = require("../../_common/helpers/logs-helper");
 
 // folder to clean
-const folderToClean = require("../../webpack/config").outputPath;
+const folderToClean = require("../../global.config").outputPath;
 
 // ----------------------------------------------------------------------------- PUBLIC
 

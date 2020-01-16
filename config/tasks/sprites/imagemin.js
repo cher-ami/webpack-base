@@ -3,7 +3,7 @@ const imagemin = require("imagemin");
 const imageminJpegtran = require("imagemin-jpegtran");
 const imageminPngquant = require("imagemin-pngquant");
 const path = require("path");
-const paths = require("../../paths");
+const paths = require("../../global.paths");
 
 // ----------------------------------------------------------------------------- DEFAULTS
 

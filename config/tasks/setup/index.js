@@ -3,7 +3,7 @@ const Inquirer = require("inquirer");
 const { Files } = require("@zouloux/files");
 const packageJson = require("../../../package.json");
 const { execSync } = require("@solid-js/cli");
-const paths = require("../../paths");
+const paths = require("../../global.paths");
 const changeCase = require("change-case");
 const scaffoldBundle = require("../scaffold/modules/scaffold-bundle");
 const cacheInstallFilePath = `${paths.config}/install.cache`;
@@ -165,7 +165,7 @@ const _manageGitignore = () => {
         return (
           fileContent
             // remove install.cache, we need to add it into git
-            .replace(/config\/install.cache/, "# config/install.cache")
+            .replace(/global.config\/install.cache/, "# config/install.cache")
         );
       });
     }

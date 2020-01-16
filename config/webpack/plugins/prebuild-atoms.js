@@ -1,6 +1,6 @@
 const { Files } = require("@zouloux/files");
 const path = require("path");
-const paths = require("../../paths");
+const paths = require("../../global.paths");
 const log = require("debug")("config:prebuild-atoms");
 const changeCase = require("change-case");
 

@@ -1,7 +1,7 @@
 const { Files } = require("@zouloux/files");
-const paths = require("../../../paths");
+const paths = require("../../../global.paths");
 const { logs } = require("../../../_common/helpers/logs-helper");
-const webPackConfig = require("../../../webpack/config");
+const webPackConfig = require("../../../global.config");
 
 /**
  * Prebuild .htaccess file
