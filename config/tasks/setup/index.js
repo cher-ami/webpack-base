@@ -7,6 +7,7 @@ const { manageReadme } = require("./modules/manage-readme");
 const { setupBundle } = require("./modules/setup-bundle");
 const { checkConfigFile } = require("./modules/check-config-file");
 const { managePackageJson } = require("./modules/manage-package-json");
+const { setupEnvFile } = require("./modules/setup-env-file");
 
 // ----------------------------------------------------------------------------- PATHS / CONFIG
 
@@ -18,30 +19,9 @@ const config = require("./config");
 // ----------------------------------------------------------------------------- TASKS
 
 /**
- * Setup env file
- */
-const _setupEnvFile = () => {
-  return new Promise(async resolve => {
-    logs.start("Setup .env file...", true);
-
-    // check
-    if (Files.getFiles(paths.env).files.length > 0) {
-      logs.error(".env file already exists. Aborting.");
-      setTimeout(() => resolve(), 1000);
-      return;
-    }
-    // Create new .env file with .env.example template
-    Files.new(paths.env).write(Files.getFiles(paths.envExample).read());
-
-    logs.done();
-    setTimeout(resolve, config.logDoneDelay);
-  });
-};
-
-/**
  * remove Files and directories
  */
-const _removeUnused = () => {
+const _cleanFrameworkFiles = () => {
   return new Promise(async resolve => {
     logs.start("Remove .git folder... ", true);
     if (!config.fakeMode) await execSync("rm -rf .git", 3);
@@ -133,10 +113,10 @@ const setup = () => {
     await managePackageJson({});
     // manage readme // TODO pass package infos
     await manageReadme({});
-    // env
-    await _setupEnvFile();
+    // setup .env
+    await setupEnvFile({});
     // remove unused files and directories
-    await _removeUnused();
+    await _cleanFrameworkFiles();
     // create cache file if is the first install;
     await _initInstallConfig(bundleType);
     // manage gitignore (add and remove values)
