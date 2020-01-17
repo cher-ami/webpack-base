@@ -11,7 +11,6 @@ import { App } from "./common/lib/core/App";
 import { ENodeEnv } from "./common/types";
 
 export default class Main extends App {
-
   // --------------------------------------------------------------------------- SINGLETON
 
   // singleton

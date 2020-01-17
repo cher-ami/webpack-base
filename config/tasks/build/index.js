@@ -13,7 +13,7 @@ const { sprites } = require("../sprites");
  * @private
  */
 const _build = async () => {
-  logs.start("Start dev server");
+  logs.start("Start build...");
   // start webpack
   await execSync(
     "cross-env webpack -p --config config/webpack/webpack.production.js",

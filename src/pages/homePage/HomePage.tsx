@@ -2,7 +2,6 @@ import css from "./HomePage.module.less";
 import React, { useRef } from "react";
 import { usePageRegister } from "../../common/lib/router/usePageRegister";
 import Metas from "../../common/lib/react-components/metas";
-import PageTransitionHelper from "../../common/helpers/PageTransitionHelper";
 import { prepare } from "../../common/helpers/prepare";
 import { merge } from "../../common/lib/helpers/classNameHelper";
 
