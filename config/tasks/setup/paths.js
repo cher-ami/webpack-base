@@ -28,5 +28,7 @@ module.exports = {
   // install.config path file
   installConfig: globalPaths.installConfig,
   // gitigore
-  gitignore: globalPaths.gitignore
+  gitignore: globalPaths.gitignore,
+  // package.json
+  packageJson: globalPaths.packageJson
 };

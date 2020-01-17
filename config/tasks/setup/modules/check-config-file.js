@@ -1,0 +1,41 @@
+const { Files } = require("@zouloux/files");
+const { execSync } = require("@solid-js/cli");
+const { logs } = require("../../../helpers/logs-helper");
+const debug = require("debug")("config:check-config-file");
+
+// ----------------------------------------------------------------------------- PATHS / CONFIG
+
+// target local path files
+const paths = require("../paths");
+// get local task config
+const config = require("../config");
+
+// ----------------------------------------------------------------------------- MODULE
+
+/**
+ * Check if install file cache exist
+ * @returns boolean
+ */
+const checkConfigFile = () => {
+  if (Files.getFiles(paths.installConfig).files.length > 0) {
+    execSync("clear", 3);
+    debug(`${paths.installConfig} exist, error message and return false.`);
+    logs.error("install.config.js already file exist, Aborting.");
+    console.log(`If you want to setup this project again like the first time you installed webpack-base, you need to: \n
+  - remove ${paths.installConfig} file
+  - npm run setup
+  \n
+  ${"WARNING!".red.bold}\n
+  ${"npm run setup".bold} erase a part of source project:\n
+  - setup bundle: erase every files in src/ folder except common/ folder
+  - setup package.json: erase name, description, author & version keys
+  - ${".git will be removed!".bold}    
+      `);
+    return false;
+  } else {
+    debug(`${paths.installConfig} doesn't exist, continue`);
+    return true;
+  }
+};
+
+module.exports = { checkConfigFile };

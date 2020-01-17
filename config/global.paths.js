@@ -15,6 +15,8 @@ module.exports = {
   envExample: appRoot.resolve(".env.example"),
   // .env file
   env: appRoot.resolve(".env"),
+  // package.json
+  packageJson: appRoot.resolve("package.json"),
 
   // --------------------------------------------------------------------------- SRC
 
