@@ -1,8 +1,8 @@
-# [ PROJECT NAME ]
+# %%projectName%%
 
 ## About
 
-[ PROJECT DESCRIPTION ]
+%%projectDescription%%
 
 ## Installation
 
@@ -16,4 +16,4 @@ $ npm run help
 
 ## Credits
 
-[ PROJECT AUTHOR ]
+%%projectAuthor%%

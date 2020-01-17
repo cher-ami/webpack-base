@@ -1,5 +1,6 @@
 require("colors");
 const Inquirer = require("inquirer");
+const debug = require("debug")("config:setup");
 const { Files } = require("@zouloux/files");
 const packageJson = require("../../../package.json");
 const { execSync } = require("@solid-js/cli");
@@ -7,6 +8,7 @@ const changeCase = require("change-case");
 const scaffoldBundle = require("../scaffold/modules/scaffold-bundle");
 const { help } = require("../help");
 const { logs } = require("../../helpers/logs-helper");
+const { manageReadme } = require("./modules/manage-readme");
 
 // ----------------------------------------------------------------------------- PATHS / FILES
 
@@ -225,6 +227,8 @@ const _checkConfigFile = () => {
  */
 const setup = () => {
   return new Promise(async resolve => {
+    await manageReadme({});
+
     // check if cache file exist, if exist, do not contiue
     if (!_checkConfigFile()) return;
     // create bundle return bundle type

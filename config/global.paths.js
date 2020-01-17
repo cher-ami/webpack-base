@@ -45,6 +45,9 @@ module.exports = {
   // config folder
   config: appRoot.resolve("config"),
 
+  // tasks
+  tasks: appRoot.resolve("config/tasks"),
+
   // webpack template - move ?
   webpackTemplatePath: appRoot.resolve("config/webpack/templates"),
 
