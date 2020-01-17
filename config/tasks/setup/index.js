@@ -17,11 +17,12 @@ const installConfigFilePath = `${globalPaths.config}/install.config.js`;
 
 // ----------------------------------------------------------------------------- FAKE MODE
 
-// SECURITY: If you need to manage this script pass fakeMode to true
+// TODO use config file var
 const fakeMode = true;
 
 // ----------------------------------------------------------------------------- LOG
 
+// TODO use config file var
 const logDoneDelay = 1500;
 
 // ----------------------------------------------------------------------------- TASKS
@@ -223,18 +224,17 @@ const _checkConfigFile = () => {
 /**
  * Setup
  * TODO Add init back cockpit
- * TODO install react, depend of with bundle type
  */
 const setup = () => {
   return new Promise(async resolve => {
-    await manageReadme({});
-
     // check if cache file exist, if exist, do not contiue
     if (!_checkConfigFile()) return;
     // create bundle return bundle type
     const bundleType = await _setupBundle();
     // package
     await _setupPackageJson();
+    // manage readme // TODO pass package infos
+    await manageReadme({});
     // env
     await _setupEnvFile();
     // remove unused files and directories
