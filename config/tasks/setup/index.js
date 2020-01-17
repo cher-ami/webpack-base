@@ -10,20 +10,12 @@ const { help } = require("../help");
 const { logs } = require("../../helpers/logs-helper");
 const { manageReadme } = require("./modules/manage-readme");
 
-// ----------------------------------------------------------------------------- PATHS / FILES
+// ----------------------------------------------------------------------------- PATHS / CONFIG
 
-const globalPaths = require("../../global.paths");
-const installConfigFilePath = `${globalPaths.config}/install.config.js`;
-
-// ----------------------------------------------------------------------------- FAKE MODE
-
-// TODO use config file var
-const fakeMode = true;
-
-// ----------------------------------------------------------------------------- LOG
-
-// TODO use config file var
-const logDoneDelay = 1500;
+// target local path files
+const paths = require("./paths");
+// get local task config
+const config = require("./config");
 
 // ----------------------------------------------------------------------------- TASKS
 
@@ -32,7 +24,7 @@ const _setupBundle = async () => {
     logs.start("Setup bundle project type...", true);
     const bundleType = await scaffoldBundle(true);
     logs.done();
-    setTimeout(() => resolve(bundleType), logDoneDelay);
+    setTimeout(() => resolve(bundleType), config.logDoneDelay);
   });
 };
 
@@ -80,7 +72,7 @@ const _setupPackageJson = () => {
     projectVersion = "0.1.0";
 
     // Set name and version into package.json
-    if (!fakeMode) {
+    if (!config.fakeMode) {
       Files.getFiles("package.json").alterJSON(packageObject => {
         packageObject.version = projectVersion;
         packageObject.name = projectName;
@@ -91,7 +83,7 @@ const _setupPackageJson = () => {
     }
 
     logs.done();
-    setTimeout(resolve, logDoneDelay);
+    setTimeout(resolve, config.logDoneDelay);
   });
 };
 
@@ -103,18 +95,16 @@ const _setupEnvFile = () => {
     logs.start("Setup .env file...", true);
 
     // check
-    if (Files.getFiles(globalPaths.env).files.length > 0) {
+    if (Files.getFiles(paths.env).files.length > 0) {
       logs.error(".env file already exists. Aborting.");
       setTimeout(() => resolve(), 1000);
       return;
     }
     // Create new .env file with .env.example template
-    Files.new(globalPaths.env).write(
-      Files.getFiles(globalPaths.envExample).read()
-    );
+    Files.new(paths.env).write(Files.getFiles(paths.envExample).read());
 
     logs.done();
-    setTimeout(resolve, logDoneDelay);
+    setTimeout(resolve, config.logDoneDelay);
   });
 };
 
@@ -124,14 +114,14 @@ const _setupEnvFile = () => {
 const _removeUnused = () => {
   return new Promise(async resolve => {
     logs.start("Remove .git folder... ", true);
-    if (!fakeMode) await execSync("rm -rf .git", 3);
+    if (!config.fakeMode) await execSync("rm -rf .git", 3);
     logs.done();
-    setTimeout(resolve, logDoneDelay);
+    setTimeout(resolve, config.logDoneDelay);
 
     logs.start("Remove install.sh file... ", true);
-    if (!fakeMode) await execSync("rm -rf install.sh", 3);
+    if (!config.fakeMode) await execSync("rm -rf install.sh", 3);
     logs.done();
-    setTimeout(resolve, logDoneDelay);
+    setTimeout(resolve, config.logDoneDelay);
   });
 };
 
@@ -152,7 +142,7 @@ const _showHelp = () => {
  */
 const _initInstallConfig = bundleType => {
   return new Promise(async resolve => {
-    logs.start(`Create config file in ${installConfigFilePath}...`, true);
+    logs.start(`Create config file in ${paths.installConfig}...`, true);
 
     // init install config template
     const template = (pFileTabRegex = new RegExp(`\n(${"\t\t\t"})`, "gmi")) => {
@@ -168,9 +158,9 @@ const _initInstallConfig = bundleType => {
     };
 
     // write file
-    Files.new(installConfigFilePath).write(template());
+    Files.new(paths.installConfig).write(template());
     logs.done();
-    setTimeout(resolve, logDoneDelay);
+    setTimeout(resolve, config.logDoneDelay);
   });
 };
 
@@ -182,8 +172,8 @@ const _manageGitignore = () => {
   return new Promise(resolve => {
     logs.start(`Manage .gitignore file...`, true);
 
-    if (!fakeMode) {
-      Files.getFiles(`${globalPaths.root}/.gitignore`).alter(fileContent => {
+    if (!config.fakeMode) {
+      Files.getFiles(paths.gitignore).alter(fileContent => {
         return (
           fileContent
             // remove install.cache, we need to add it into git
@@ -193,7 +183,7 @@ const _manageGitignore = () => {
     }
 
     logs.done();
-    setTimeout(resolve, logDoneDelay);
+    setTimeout(resolve, config.logDoneDelay);
   });
 };
 
@@ -202,11 +192,11 @@ const _manageGitignore = () => {
  * @returns boolean
  */
 const _checkConfigFile = () => {
-  if (Files.getFiles(installConfigFilePath).files.length > 0) {
+  if (Files.getFiles(paths.installConfig).files.length > 0) {
     execSync("clear", 3);
     logs.error("install.config.js already file exist, Aborting.");
     console.log(`If you want to setup this project again like the first time you installed webpack-base, you need to: \n
-  - remove ${installConfigFilePath} file
+  - remove ${paths.installConfig} file
   - npm run setup
   \n
   ${"WARNING!".red.bold}\n
