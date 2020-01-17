@@ -1,3 +1,4 @@
+require("colors");
 const { logs } = require("../../../helpers/logs-helper");
 const { QuickTemplate } = require("../../../helpers/template-helper");
 const { Files } = require("@zouloux/files");
@@ -25,6 +26,7 @@ const setupReadme = ({
   readmeFileName = "README.md",
   readmeTemplateFileName = "README.md.template",
   fakeMode = config.fakeMode,
+  logDoneDelay = config.logDoneDelay,
   readmeFrameworkFileName = "README-framework.md",
   projectName = "[ PROJECT NAME ]",
   projectAuthor = "[ PROJECT AUTHOR ]",
@@ -96,7 +98,7 @@ const setupReadme = ({
 
     logs.note(`${readmeFileName} is created.`);
     logs.done();
-    setTimeout(resolve, config.logDoneDelay);
+    setTimeout(resolve, logDoneDelay);
   });
 };
 

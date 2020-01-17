@@ -26,7 +26,7 @@ const config = require("./config");
 const setup = () => {
   return new Promise(async resolve => {
     // check if cache file exist, if exist, do not contiue
-    if (!checkConfigFile()) return;
+    if (!checkConfigFile({})) return;
     // create bundle return bundle type
     const bundleType = await setupBundle({});
     // manage package json and get values

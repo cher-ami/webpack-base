@@ -1,3 +1,4 @@
+require("colors");
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../../helpers/logs-helper");
 const debug = require("debug")("config:setup-install-config");
@@ -18,7 +19,8 @@ const config = require("../config");
 const setupInstallConfig = ({
   bundleType,
   installConfigPath = paths.installConfig,
-  logDoneDelay = config.logDoneDelay
+  logDoneDelay = config.logDoneDelay,
+  fakeMode = config.fakeMode
 }) => {
   debug("setupInstallConfig params:", {
     bundleType,
@@ -45,7 +47,7 @@ const setupInstallConfig = ({
     debug("This template will be print in new config file:", template());
 
     debug(`write ${installConfigPath} file...`);
-    if (!config.fakeMode) {
+    if (!fakeMode) {
       Files.new(installConfigPath).write(template());
     } else {
       debug("FakeMode is activated, do nothing.".red);

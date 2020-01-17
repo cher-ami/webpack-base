@@ -1,3 +1,4 @@
+require("colors");
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../../helpers/logs-helper");
 const debug = require("debug")("config:setup-env-file");
@@ -18,7 +19,8 @@ const config = require("../config");
 const setupEnvFile = ({
   envPath = paths.env,
   envExamplePath = paths.envExample,
-  logDoneDelay = config.logDoneDelay
+  logDoneDelay = config.logDoneDelay,
+  fakeMode = config.fakeMode
 }) => {
   debug("setupEnvFile params", {
     envPath,
@@ -32,11 +34,11 @@ const setupEnvFile = ({
     // check
     if (Files.getFiles(envPath).files.length > 0) {
       logs.error(".env file already exists. Aborting.");
-      setTimeout(() => resolve(), 1000);
+      setTimeout(resolve, logDoneDelay);
       return;
     }
 
-    if (!config.fakeMode) {
+    if (!fakeMode) {
       logs.note("Create new .env file from .env.example template...");
       Files.new(envPath).write(Files.getFiles(envExamplePath).read());
     } else {

@@ -1,3 +1,4 @@
+require("colors");
 const { logs } = require("../../../helpers/logs-helper");
 const { execSync } = require("@solid-js/cli");
 const debug = require("debug")("config:clean-framework-files");
@@ -19,7 +20,8 @@ const cleanFrameworkFiles = ({
   // TODO pass install.sh in paths files
   gitFolder = paths.gitFolder,
   installScriptFile = paths.installScript,
-  logDoneDelay = config.logDoneDelay
+  logDoneDelay = config.logDoneDelay,
+  fakeMode = config.fakeMode
 }) => {
   debug("cleanFrameworkFiles params:", {
     gitFolder,
@@ -32,16 +34,16 @@ const cleanFrameworkFiles = ({
       "We don't need git folder because this is .git of webpack-base, so we remove it."
     );
     logs.start("Remove .git folder... ", true);
-    if (!config.fakeMode) {
+    if (!fakeMode) {
       await execSync(`rm -rf ${gitFolder}`, 3);
     } else {
       debug("FakeMode is activated, do nothing.".red);
     }
     logs.done();
-    setTimeout(resolve, config.logDoneDelay);
+    setTimeout(resolve, logDoneDelay);
 
     logs.start("Remove install.sh file... ", true);
-    if (!config.fakeMode) {
+    if (!fakeMode) {
       await execSync(`rm -rf ${installScriptFile}`, 3);
     } else {
       debug("FakeMode is activated, do nothing.".red);

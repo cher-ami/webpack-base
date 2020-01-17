@@ -1,3 +1,4 @@
+require("colors");
 const { Files } = require("@zouloux/files");
 const Inquirer = require("inquirer");
 const changeCase = require("change-case");
@@ -15,6 +16,7 @@ const config = require("../config");
 
 /**
  * Setup package.json
+ * @description
  */
 const setupPackageJson = ({
   packageJson = require(paths.packageJson),

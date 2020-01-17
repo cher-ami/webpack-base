@@ -1,3 +1,4 @@
+require("colors");
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../../helpers/logs-helper");
 const debug = require("debug")("config:setup-gitignore");
