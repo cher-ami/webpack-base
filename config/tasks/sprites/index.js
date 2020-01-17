@@ -3,7 +3,7 @@ const path = require("path");
 const nsg = require("@zouloux/node-sprite-generator");
 const Handlebars = require("handlebars");
 const { optimizeFiles } = require("./imagemin");
-const { logs } = require("../../_common/helpers/logs-helper");
+const { logs } = require("../../helpers/logs-helper");
 const paths = require("./paths");
 require("colors");
 

@@ -1,7 +1,7 @@
 require("colors");
 const { Files } = require("@zouloux/files");
 const { execSync } = require("@solid-js/cli");
-const { logs } = require("../../_common/helpers/logs-helper");
+const { logs } = require("../../helpers/logs-helper");
 
 // folder to clean
 const folderToClean = require("../../global.config").outputPath;

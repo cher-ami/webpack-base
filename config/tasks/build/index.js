@@ -1,5 +1,5 @@
 require("colors");
-const { logs } = require("../../_common/helpers/logs-helper");
+const { logs } = require("../../helpers/logs-helper");
 const { execSync } = require("@solid-js/cli");
 const { clean } = require("../clean");
 const { prebuild } = require("../prebuild");
@@ -13,7 +13,7 @@ const { sprites } = require("../sprites");
  * @private
  */
 const _build = async () => {
-  logs.start("Start dev server");
+  logs.start("Start build...");
   // start webpack
   await execSync(
     "cross-env webpack -p --config config/webpack/webpack.production.js",

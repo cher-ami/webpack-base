@@ -4,7 +4,7 @@ const changeCase = require("change-case");
 const log = require("debug")("lib:scaffold-component");
 const createFile = require("../helpers/create-file");
 const paths = require("../paths");
-const { logs } = require("../../../_common/helpers/logs-helper");
+const { logs } = require("../../../helpers/logs-helper");
 
 // ----------------------–----------------------–----------------------–-------- PRIVATE
 

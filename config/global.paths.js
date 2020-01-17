@@ -16,6 +16,10 @@ module.exports = {
 
   // --------------------------------------------------------------------------- ATOMS
 
+  /**
+   * These are used by custom less-to-js-webpack-plugin
+   */
+
   // atoms path
   atomsPath: appRoot.resolve("src/common/atoms"),
 

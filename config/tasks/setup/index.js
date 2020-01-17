@@ -3,12 +3,15 @@ const Inquirer = require("inquirer");
 const { Files } = require("@zouloux/files");
 const packageJson = require("../../../package.json");
 const { execSync } = require("@solid-js/cli");
-const paths = require("../../global.paths");
 const changeCase = require("change-case");
 const scaffoldBundle = require("../scaffold/modules/scaffold-bundle");
-const cacheInstallFilePath = `${paths.config}/install.cache`;
 const { help } = require("../help");
-const { logs } = require("../../_common/helpers/logs-helper");
+const { logs } = require("../../helpers/logs-helper");
+
+// ----------------------------------------------------------------------------- PATHS / FILES
+
+const globalPaths = require("../../global.paths");
+const installConfigFilePath = `${globalPaths.config}/install.config.js`;
 
 // ----------------------------------------------------------------------------- FAKE MODE
 
@@ -24,9 +27,9 @@ const logDoneDelay = 1500;
 const _setupBundle = async () => {
   return new Promise(async resolve => {
     logs.start("Setup bundle project type...", true);
-    await scaffoldBundle(true);
+    const bundleType = await scaffoldBundle(true);
     logs.done();
-    setTimeout(resolve, logDoneDelay);
+    setTimeout(() => resolve(bundleType), logDoneDelay);
   });
 };
 
@@ -97,13 +100,15 @@ const _setupEnvFile = () => {
     logs.start("Setup .env file...", true);
 
     // check
-    if (Files.getFiles(paths.env).files.length > 0) {
+    if (Files.getFiles(globalPaths.env).files.length > 0) {
       logs.error(".env file already exists. Aborting.");
       setTimeout(() => resolve(), 1000);
       return;
     }
     // Create new .env file with .env.example template
-    Files.new(paths.env).write(Files.getFiles(paths.envExample).read());
+    Files.new(globalPaths.env).write(
+      Files.getFiles(globalPaths.envExample).read()
+    );
 
     logs.done();
     setTimeout(resolve, logDoneDelay);
@@ -139,14 +144,28 @@ const _showHelp = () => {
 };
 
 /**
- * Init Cache file
+ * Init Install config
  * @returns {Promise<unknown>}
  */
-const _initCacheInstall = () => {
+const _initInstallConfig = bundleType => {
   return new Promise(async resolve => {
-    logs.start(`Create cache file in ${cacheInstallFilePath}...`, true);
+    logs.start(`Create config file in ${installConfigFilePath}...`, true);
+
+    // init install config template
+    const template = (pFileTabRegex = new RegExp(`\n(${"\t\t\t"})`, "gmi")) => {
+      return `
+			/**
+			 * WARNING
+			 * Auto-generated file, do not edit!
+			 */
+			exports.module = {
+		  date: "${new Date()}",
+      bundleType: "${bundleType}",
+			};`.replace(pFileTabRegex, "\n");
+    };
+
     // write file
-    Files.new(cacheInstallFilePath).write(`${new Date()}`);
+    Files.new(installConfigFilePath).write(template());
     logs.done();
     setTimeout(resolve, logDoneDelay);
   });
@@ -161,11 +180,11 @@ const _manageGitignore = () => {
     logs.start(`Manage .gitignore file...`, true);
 
     if (!fakeMode) {
-      Files.getFiles(`${paths.root}/.gitignore`).alter(fileContent => {
+      Files.getFiles(`${globalPaths.root}/.gitignore`).alter(fileContent => {
         return (
           fileContent
             // remove install.cache, we need to add it into git
-            .replace(/global.config\/install.cache/, "# config/install.cache")
+            .replace(/config\/install.config.js/, `# config/install.config.js`)
         );
       });
     }
@@ -179,14 +198,12 @@ const _manageGitignore = () => {
  * Check if install file cache exist
  * @returns boolean
  */
-const _checkCacheFile = () => {
-  if (Files.getFiles(cacheInstallFilePath).files.length > 0) {
+const _checkConfigFile = () => {
+  if (Files.getFiles(installConfigFilePath).files.length > 0) {
     execSync("clear", 3);
-    logs.error(
-      "install.cache file exist, first install as already been setup, Aborting."
-    );
+    logs.error("install.config.js already file exist, Aborting.");
     console.log(`If you want to setup this project again like the first time you installed webpack-base, you need to: \n
-  - remove ${cacheInstallFilePath} file
+  - remove ${installConfigFilePath} file
   - npm run setup
   \n
   ${"WARNING!".red.bold}\n
@@ -209,9 +226,9 @@ const _checkCacheFile = () => {
 const setup = () => {
   return new Promise(async resolve => {
     // check if cache file exist, if exist, do not contiue
-    if (!_checkCacheFile()) return;
-    // bundle
-    await _setupBundle();
+    if (!_checkConfigFile()) return;
+    // create bundle return bundle type
+    const bundleType = await _setupBundle();
     // package
     await _setupPackageJson();
     // env
@@ -219,7 +236,7 @@ const setup = () => {
     // remove unused files and directories
     await _removeUnused();
     // create cache file if is the first install;
-    await _initCacheInstall();
+    await _initInstallConfig(bundleType);
     // manage gitignore (add and remove values)
     await _manageGitignore();
     // show help
