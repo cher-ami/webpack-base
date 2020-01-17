@@ -9,19 +9,30 @@ module.exports = {
   /**
    * Inside this task folder
    */
-
   // local root path
   localRootPath: localRoot,
-
   // local templates folder path
-  localTemplatesPath: `${localRoot}/templates`,
+  templatesFolder: `${localRoot}/templates`,
 
   // --------------------------------------------------------------------------- GLOBAL
 
   /**
-   *  On Route project
+   * external folder Paths
    */
-
-  // global root readme
-  readmeFilePath: `${globalPaths.root}/README.md`
+  // .env
+  env: globalPaths.env,
+  // .env.example
+  envExample: globalPaths.envExample,
+  // root readme
+  readme: globalPaths.readme,
+  // install.config
+  installConfig: globalPaths.installConfig,
+  // .gitigore
+  gitignore: globalPaths.gitignore,
+  // package.json
+  packageJson: globalPaths.packageJson,
+  // .git
+  gitFolder: globalPaths.gitFolder,
+  // install script
+  installScript: globalPaths.installScript
 };
