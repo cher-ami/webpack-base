@@ -19,23 +19,25 @@ const config = require("../config");
  * @returns {Promise<unknown>}
  * @private
  */
-const manageReadme = ({
+const setupReadme = ({
   templatesPath = paths.templatesFolder,
   readmeFilePath = paths.readme,
   readmeFileName = "README.md",
+  readmeTemplateFileName = "README.md.template",
+  fakeMode = config.fakeMode,
   readmeFrameworkFileName = "README-framework.md",
   projectName = "[ PROJECT NAME ]",
-  projectDescription = "[ PROJECT DESCRIPTION ]",
-  projectAuthor = "[ PROJECT AUTHOR ]"
+  projectAuthor = "[ PROJECT AUTHOR ]",
+  projectDescription = "[ PROJECT DESCRIPTION ]"
 }) => {
-  debug("manageReadme params", {
+  debug("setupReadme params", {
     templatesPath,
     readmeFilePath,
     readmeFileName,
     readmeFrameworkFileName,
     projectName,
-    projectDescription,
-    projectAuthor
+    projectAuthor,
+    projectDescription
   });
 
   return new Promise(async resolve => {
@@ -45,8 +47,8 @@ const manageReadme = ({
     );
 
     // create new readme and add content on it
-    if (!config.fakeMode) {
-      debug("create new readme and add content on it");
+    debug("create new readme and add content on it...");
+    if (!fakeMode) {
       await Files.new(readmeFrameworkFileName).write(
         Files.getFiles(readmeFilePath).read()
       );
@@ -54,16 +56,16 @@ const manageReadme = ({
     } else {
       debug("FakeMode is activated, do nothing.".red);
     }
-    logs.done(`${readmeFrameworkFileName} is created.`);
+    logs.note(`${readmeFrameworkFileName} is created.`);
+    logs.done();
 
     // if file exist
     if (Files.getFiles(readmeFilePath).files.length > 0) {
-      // remove it
       logs.start(`Remove ${readmeFilePath}...`);
 
       // if no fake mode
-      if (!config.fakeMode) {
-        debug("file exist, remove it...");
+      debug("file exist, remove it...");
+      if (!fakeMode) {
         Files.getFiles(readmeFilePath).remove();
         // else, if fake mode
       } else {
@@ -75,12 +77,11 @@ const manageReadme = ({
       logs.error(`${readmeFilePath} doesn't exist.`);
     }
 
-    // create new template README.md from template
-    if (!config.fakeMode) {
-      debug("create new template README.md from template...");
+    debug("create new template README.md from template...");
+    if (!fakeMode) {
       await Files.new(readmeFileName).write(
         QuickTemplate(
-          Files.getFiles(`${templatesPath}/README.md.template`).read(),
+          Files.getFiles(`${templatesPath}/${readmeTemplateFileName}`).read(),
           // replace these variables
           {
             projectName,
@@ -93,9 +94,10 @@ const manageReadme = ({
       debug("FakeMode is activated, do nothing.".red);
     }
 
-    logs.done(`${readmeFileName} is created.`);
+    logs.note(`${readmeFileName} is created.`);
+    logs.done();
     setTimeout(resolve, config.logDoneDelay);
   });
 };
 
-module.exports = { manageReadme };
+module.exports = { setupReadme };

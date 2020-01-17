@@ -15,12 +15,12 @@ const config = require("../config");
  * Setup Bundle
  * @returns {Promise<unknown>}
  */
-const setupBundle = async () => {
+const setupBundle = async ({ logDoneDelay = config.logDoneDelay }) => {
   return new Promise(async resolve => {
     logs.start("Setup bundle project type...", true);
     const bundleType = await scaffoldBundle(true);
     logs.done();
-    setTimeout(() => resolve(bundleType), config.logDoneDelay);
+    setTimeout(() => resolve(bundleType), logDoneDelay);
   });
 };
 

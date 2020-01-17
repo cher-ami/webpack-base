@@ -16,10 +16,11 @@ const config = require("../config");
 /**
  * Setup package.json
  */
-const managePackageJson = ({
+const setupPackageJson = ({
   packageJson = require(paths.packageJson),
   logDoneDelay = config.logDoneDelay,
-  defaultProjectName = "webpack-base"
+  defaultProjectName = "webpack-base",
+  fakeMode = config.fakeMode
 }) => {
   return new Promise(async resolve => {
     logs.start("Setup package.json...", true);
@@ -31,8 +32,8 @@ const managePackageJson = ({
     let projectDescription = packageJson.description;
 
     debug("current package properties:", {
-      projectName,
       projectVersion,
+      projectName,
       projectAuthor,
       projectDescription
     });
@@ -45,7 +46,7 @@ const managePackageJson = ({
       `);
 
       logs.error("package.json is already setup. Aborting.");
-      return resolve(projectName, projectAuthor, projectDescription);
+      return resolve({ projectName, projectAuthor, projectDescription });
     }
 
     // Ask user for project name
@@ -54,8 +55,7 @@ const managePackageJson = ({
       message: "What's the project name? (dash-case)",
       name: "projectName"
     }).then(answer => (projectName = changeCase.paramCase(answer.projectName)));
-
-    debug("new projectName:", projectName);
+    debug("> new project name:", projectName);
 
     // Ask user for author
     await Inquirer.prompt({
@@ -63,26 +63,23 @@ const managePackageJson = ({
       message: "What's the author name?",
       name: "projectAuthor"
     }).then(answer => (projectAuthor = answer.projectAuthor));
-
-    debug("new projectAuthor:", projectAuthor);
+    debug("> new project author:", projectAuthor);
 
     // Ask user for desc
     await Inquirer.prompt({
       type: "input",
       message: "Descripton?",
       name: "projectDescription"
-    }).then(answer => (projectAuthor = answer.projectDescription));
-
-    debug("new projectDescription:", projectDescription);
+    }).then(answer => (projectDescription = answer.projectDescription));
+    debug("> new project description:", projectDescription);
 
     // Reset project version
     projectVersion = "0.1.0";
-
-    debug("new projectVersion:", projectVersion);
+    debug("> new project version:", projectVersion);
 
     // Set name and version into package.json
-    if (!config.fakeMode) {
-      debug("Modify packageJson...");
+    if (!fakeMode) {
+      debug("Modify package.json...");
       Files.getFiles(packageJson).alterJSON(packageObject => {
         packageObject.version = projectVersion;
         packageObject.name = projectName;
@@ -101,10 +98,10 @@ const managePackageJson = ({
       projectDescription
     });
     setTimeout(
-      () => resolve(projectName, projectAuthor, projectDescription),
+      () => resolve({ projectName, projectAuthor, projectDescription }),
       logDoneDelay
     );
   });
 };
 
-module.exports = { managePackageJson };
+module.exports = { setupPackageJson };

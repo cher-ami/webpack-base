@@ -17,6 +17,10 @@ module.exports = {
   env: appRoot.resolve(".env"),
   // package.json
   packageJson: appRoot.resolve("package.json"),
+  // .git
+  gitFolder: appRoot.resolve(".git"),
+  // install.sh
+  installScript: appRoot.resolve("install.sh"),
 
   // --------------------------------------------------------------------------- SRC
 

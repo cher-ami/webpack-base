@@ -1,4 +1,3 @@
-const { Files } = require("@zouloux/files");
 const { logs } = require("../../../helpers/logs-helper");
 const { execSync } = require("@solid-js/cli");
 const debug = require("debug")("config:clean-framework-files");
@@ -18,10 +17,16 @@ const config = require("../config");
  */
 const cleanFrameworkFiles = ({
   // TODO pass install.sh in paths files
-  gitFolder = ".git",
-  installScriptFile = "install.sh",
+  gitFolder = paths.gitFolder,
+  installScriptFile = paths.installScript,
   logDoneDelay = config.logDoneDelay
 }) => {
+  debug("cleanFrameworkFiles params:", {
+    gitFolder,
+    installScriptFile,
+    logDoneDelay
+  });
+
   return new Promise(async resolve => {
     debug(
       "We don't need git folder because this is .git of webpack-base, so we remove it."

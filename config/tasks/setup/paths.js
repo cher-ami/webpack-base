@@ -17,18 +17,22 @@ module.exports = {
   // --------------------------------------------------------------------------- GLOBAL
 
   /**
-   * Path from route config/ folder
+   * external folder Paths
    */
-  // env file path
+  // .env
   env: globalPaths.env,
-  // env example file path
+  // .env.example
   envExample: globalPaths.envExample,
-  // global root readme
+  // root readme
   readme: globalPaths.readme,
-  // install.config path file
+  // install.config
   installConfig: globalPaths.installConfig,
-  // gitigore
+  // .gitigore
   gitignore: globalPaths.gitignore,
   // package.json
-  packageJson: globalPaths.packageJson
+  packageJson: globalPaths.packageJson,
+  // .git
+  gitFolder: globalPaths.gitFolder,
+  // install script
+  installScript: globalPaths.installScript
 };
