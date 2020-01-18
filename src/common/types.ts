@@ -27,16 +27,3 @@ export enum EEnv {
   STAGING = "staging",
   PROD = "production"
 }
-
-/**
- * Breakpoints
- * TODO remove, need to be sync via atoms
- */
-export const breakPoint = {
-  MOBILE: 320,
-  PHABLET: 600,
-  TABLET: 768,
-  PHLAPTOP: 1024,
-  LAPTOP: 1440,
-  DESKTOP: 1680
-};
