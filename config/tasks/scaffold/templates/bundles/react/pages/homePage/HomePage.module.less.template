@@ -1,6 +1,5 @@
 @import (reference) "../../common/References.less";
 
-
 // --------------------------------------------------------------------------- CONFIG
 
 @COMPONENT: HomePage;

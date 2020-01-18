@@ -1,10 +1,15 @@
+const globalConfig = require("../../global.config");
+
 module.exports = {
   /**
    * SECURITY
-   * If you need to manage this script pass fakeMode to true
+   * If you need to work on this task,
+   * fakeMode allow to not really write/erase files.
    */
-  fakeMode: true,
+  fakeMode: globalConfig.fakeMode,
 
-  // show log done for x ms
-  logDoneDelay: 1500
+  /**
+   * Show log done for x ms
+   */
+  logDoneDelay: globalConfig.logDoneDelay
 };

@@ -1,6 +1,8 @@
 const paths = require("./global.paths");
 
 module.exports = {
+  // --------------------------------------------------------------------------- WEBPACK
+
   /**
    * Output Path
    * Where assets and bundle are build in production
@@ -19,5 +21,19 @@ module.exports = {
    * Usefull if we are not generated html index and we want to target
    * an index.php for example.
    */
-  useProxy: false
+  useProxy: false,
+
+  // --------------------------------------------------------------------------- TASKS
+
+  /**
+   * SECURITY
+   * If you need to work on tasks like setup,
+   * fakeMode allow to not really write/erase files.
+   */
+  fakeMode: false,
+
+  /**
+   * Show log done for x ms.
+   */
+  logDoneDelay: 1500
 };

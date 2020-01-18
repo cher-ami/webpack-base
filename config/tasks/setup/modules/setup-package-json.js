@@ -19,7 +19,7 @@ const config = require("../config");
  * @description
  */
 const setupPackageJson = ({
-  packageJson = require(paths.packageJson),
+  packageJson = "package.json",
   logDoneDelay = config.logDoneDelay,
   defaultProjectName = "webpack-base",
   fakeMode = config.fakeMode
