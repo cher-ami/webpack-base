@@ -1,6 +1,6 @@
 import css from './%%upperComponentName%%.module.less';
 import React from 'react';
-import { merge } from "../../lib/helpers/classNameHelper";
+import { merge } from "../../common/lib/helpers/classNameHelper";
 import { prepare } from "../../common/helpers/prepare";
 
 interface IProps {

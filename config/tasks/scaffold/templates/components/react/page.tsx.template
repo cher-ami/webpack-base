@@ -3,9 +3,9 @@ import React, { useRef } from "react";
 import { usePageRegister } from "../../common/lib/router/usePageRegister";
 import Metas from "../../common/lib/react-components/metas";
 import { prepare } from "../../common/helpers/prepare";
-import {merge} from "../../common/lib/helpers/classNameHelper"
+import { merge } from "../../common/lib/helpers/classNameHelper";
 
-interface IProps { }
+interface IProps {}
 
 // prepare
 const { componentName, log } = prepare("%%upperComponentName%%");
@@ -19,8 +19,29 @@ const %%upperComponentName%% = (props: IProps) => {
 
   // -------------------–-------------------–-------------------–--------------- REGISTER PAGE
 
-  // register page
-  usePageRegister({ componentName, rootRef });
+  /**
+   * playIn page transition
+   * (remove if not use)
+   */
+  const playIn = (): Promise<any> => {
+    return new Promise<any>(resolve => resolve());
+  };
+
+  /**
+   * playOut page transition
+   * (remove if not use)
+   */
+  const playOut = (): Promise<any> => {
+    return new Promise<any>(resolve => resolve());
+  };
+
+  /**
+   * Register page for ViewStack
+   * NOTE: each page of ViewStack need to be register to work.
+   * Minimal register should be: usePageRegister({ componentName, rootRef });
+   * (remove playIn and playOut if not use)
+   */
+  usePageRegister({ componentName, rootRef, playIn, playOut });
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 
@@ -36,20 +57,6 @@ const %%upperComponentName%% = (props: IProps) => {
 };
 
 export default %%upperComponentName%%;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

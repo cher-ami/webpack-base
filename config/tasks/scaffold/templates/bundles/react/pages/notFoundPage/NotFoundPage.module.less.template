@@ -1,8 +1,8 @@
 @import (reference) "../../common/References.less";
 
-@COMPONENT: NotFoundPage;
-
 // --------------------------------------------------------------------------- CONFIG
+
+@COMPONENT: NotFoundPage;
 
 // --------------------------------------------------------------------------- BLOCK
 

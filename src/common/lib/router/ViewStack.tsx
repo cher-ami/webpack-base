@@ -3,7 +3,7 @@ import { IPageStack } from "./IPageStack";
 import { IActionParameters, Router } from "./Router";
 import { TPageRegisterObject, pagesRegister } from "./usePageRegister";
 import debug from "debug";
-const log = debug("lib:ReactViewStack");
+const log = debug("lib:ViewStack");
 
 // ----------------------------------------------------------------------------- STRUCT
 
@@ -501,7 +501,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
 
     // Return DOM with current page
     return (
-      <div className="ReactViewStack">
+      <div className="ViewStack">
         {/* Show the old page */}
         {OldPageType && (
           <OldPageType

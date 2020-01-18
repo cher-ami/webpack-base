@@ -6,19 +6,29 @@
 
 // ----------------------------------------------------------------------------- BLOCK
 
+/**
+ * BEM block (.PascalCase)
+ * is always "Root"
+ */
 .Root {
   .gridContainer();
 }
 
 // ----------------------------------------------------------------------------- ELEMENT
 
+/**
+ * BEM element (.camelCase)
+ */
 .wrapper {
   position: relative;
   .gridFactor(margin-left, 1, true);
 
-  // modifier with one "_" allow to target "css.wrapper_green"
-  &_green {
-    // color: green;
+  /**
+   * BEM modifier (&_camelCase)
+   * sep with "_" allow to target it like this: "css.wrapper_myModifier"
+   */
+  &_myModifier {
+    // ...
   }
 }
 

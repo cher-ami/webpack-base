@@ -4,6 +4,7 @@ import { usePageRegister } from "../../common/lib/router/usePageRegister";
 import Metas from "../../common/lib/react-components/metas";
 import { prepare } from "../../common/helpers/prepare";
 import { merge } from "../../common/lib/helpers/classNameHelper";
+import PageTransitionHelper from "../../common/helpers/PageTransitionHelper";
 
 interface IProps {
   classNames?: string[];
@@ -21,8 +22,29 @@ const HomePage = (props: IProps) => {
 
   // -------------------–-------------------–-------------------–--------------- REGISTER PAGE
 
-  // register page
-  usePageRegister({ componentName, rootRef });
+  /**
+   * playIn page transition
+   * (remove this exemple if not use)
+   */
+  const playIn = (): Promise<any> => {
+    return PageTransitionHelper.promisePlayIn(rootRef);
+  };
+
+  /**
+   * playOut page transition
+   * (remove this exemple if not use)
+   */
+  const playOut = (): Promise<any> => {
+    return PageTransitionHelper.promisePlayOut(rootRef);
+  };
+
+  /**
+   * Register page for ViewStack
+   * NOTE: each page of ViewStack need to be register to work.
+   * Minimal register should be: usePageRegister({ componentName, rootRef });
+   * (remove playIn and playOut if not use)
+   */
+  usePageRegister({ componentName, rootRef, playIn, playOut });
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 

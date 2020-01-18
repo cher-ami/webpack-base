@@ -9,8 +9,8 @@ import { atoms } from "../../common/atoms/atoms";
 import Metas from "../../common/lib/react-components/metas";
 import { GridLayout } from "@wbe/libraries";
 import Main from "../../Main";
-import { ETransitionType, ViewStack } from "../../common/lib/router/ViewStack";
 import { TPageRegisterObject } from "../../common/lib/router/usePageRegister";
+import { ETransitionType, ViewStack } from "../../common/lib/router/ViewStack";
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -96,6 +96,8 @@ class AppView extends Component<IProps, IStates> {
     pNewPage: TPageRegisterObject
   ): Promise<any> {
     return new Promise(async resolve => {
+      log({ pOldPage, pNewPage });
+
       // target ref
       const oldPageRef = pOldPage?.rootRef?.current;
       const newPageRef = pNewPage?.rootRef?.current;
@@ -115,7 +117,7 @@ class AppView extends Component<IProps, IStates> {
    * When route has changed
    */
   protected routeChangedHandler(pRouteMatch: IRouteMatch) {
-    // log("Route changed", pRouteMatch);
+    log("Route changed", pRouteMatch);
   }
 
   /**
@@ -175,9 +177,10 @@ class AppView extends Component<IProps, IStates> {
 
         {/* AppView Wrapper */}
         <div className={css.wrapper}>
-          {/* Menu example */}
+          {/*
+             Menu example
+          */}
           <ul className={css.items}>
-            {/* Map availables routes */}
             {Main.routes.map((el, i) => {
               return (
                 <li key={i} className={css.item}>
@@ -202,8 +205,7 @@ class AppView extends Component<IProps, IStates> {
           {/* View Stack */}
           <ViewStack
             ref={r => (this._viewStack = r)}
-            allowSamePageTransition={["ArticlePage"]}
-            transitionType={ETransitionType.PAGE_CROSSED}
+            transitionType={ETransitionType.CONTROLLED}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}
           />
