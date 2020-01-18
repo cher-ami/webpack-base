@@ -96,6 +96,7 @@ class AppView extends Component<IProps, IStates> {
     pNewPage: TPageRegisterObject
   ): Promise<any> {
     return new Promise(async resolve => {
+      log({ pOldPage, pNewPage });
       // target ref
       const oldPageRef = pOldPage?.rootRef?.current;
       const newPageRef = pNewPage?.rootRef?.current;
@@ -177,7 +178,6 @@ class AppView extends Component<IProps, IStates> {
         <div className={css.wrapper}>
           {/* Menu example */}
           <ul className={css.items}>
-            {/* Map availables routes */}
             {Main.routes.map((el, i) => {
               return (
                 <li key={i} className={css.item}>
