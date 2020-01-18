@@ -19,7 +19,7 @@ const config = require("../config");
  * @description
  */
 const setupPackageJson = ({
-  packageJson = "package.json",
+  packageJson = require(paths.packageJson),
   logDoneDelay = config.logDoneDelay,
   defaultProjectName = "webpack-base",
   fakeMode = config.fakeMode
@@ -82,7 +82,7 @@ const setupPackageJson = ({
     // Set name and version into package.json
     if (!fakeMode) {
       debug("Modify package.json...");
-      Files.getFiles(packageJson).alterJSON(packageObject => {
+      Files.getFiles("package.json").alterJSON(packageObject => {
         packageObject.version = projectVersion;
         packageObject.name = projectName;
         packageObject.author = projectAuthor;

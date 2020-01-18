@@ -29,6 +29,8 @@ module.exports = {
   installConfig: globalPaths.installConfig,
   // .gitigore
   gitignore: globalPaths.gitignore,
+  // package.json
+  packageJson: globalPaths.packageJson,
   // .git
   gitFolder: globalPaths.gitFolder,
   // install script
