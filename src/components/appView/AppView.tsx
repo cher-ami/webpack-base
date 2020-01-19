@@ -8,7 +8,6 @@ import { merge } from "../../common/lib/helpers/classNameHelper";
 import { atoms } from "../../common/atoms/atoms";
 import Metas from "../../common/lib/react-components/metas";
 import { GridLayout } from "@wbe/libraries";
-import Main from "../../Main";
 import { ETransitionType, ViewStack } from "../../common/lib/router/ViewStack";
 import { TPageRegisterObject } from "../../common/lib/router/usePageRegister";
 

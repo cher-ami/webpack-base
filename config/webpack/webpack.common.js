@@ -25,8 +25,8 @@ commonConfig = {
    */
   output: {
     path: config.outputPath,
-    filename: "[name].bundle.js"
-    // publicPath: "/"
+    filename: "[name].bundle.js",
+    publicPath: "/"
   },
 
   /**

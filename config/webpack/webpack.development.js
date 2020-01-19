@@ -131,6 +131,9 @@ const developmentConfig = {
     // Write file to dist on each compile
     writeToDisk: true,
 
+    // specify to enable root proxying
+    index: "",
+
     // if use proxy option is enable
     ...(config.useProxy
       ? {
