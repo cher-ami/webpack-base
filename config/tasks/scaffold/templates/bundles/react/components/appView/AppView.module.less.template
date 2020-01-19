@@ -21,8 +21,6 @@
  */
 .wrapper {
   position: relative;
-  .gridFactor(margin-left, 1, true);
-
   /**
    * BEM modifier (&_camelCase)
    * sep with "_" allow to target it like this: "css.wrapper_myModifier"
@@ -32,21 +30,22 @@
   }
 }
 
-.items {
-  margin-top: 1rem;
+.nav {
   font-size: 2rem;
+}
+
+.link {
+  display: block;
 }
 
 // ----------------------------------------------------------------------------- MODIFIER
 
 // ----------------------------------------------------------------------------- CHILDREN
 
+/**
+ * Define style for global .class
+ */
 :global (.ViewStack) {
-  margin-top: 1rem;
-}
-
-:global (.GridLayout) {
-  z-index: 0;
 }
 
 // ----------------------------------------------------------------------------- PATCHES

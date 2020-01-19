@@ -9,7 +9,7 @@ import AppView from "./components/appView";
 import { EnvUtils } from "./common/lib/utils/EnvUtils";
 import { App } from "./common/lib/core/App";
 import { ENodeEnv } from "./common/types";
-const log = require('debug')(require("../package.json").name + ":Main");
+const log = require("debug")(require("../package.json").name + ":Main");
 
 export default class Main extends App {
   // --------------------------------------------------------------------------- SINGLETON
@@ -96,20 +96,20 @@ export default class Main extends App {
       // if we use dynamic page importer
       useAddDynamicPageImporters
         ? // return an empty array
-        []
+          []
         : // else, return a static list of routes
-        [
-          {
-            url: "/",
-            page: "HomePage",
-            importer: () => require("./pages/homePage")
-          },
-          {
-            url: "/work/{slug}",
-            page: "WorkPage",
-            importer: () => require("./pages/workPage")
-          }
-        ];
+          [
+            {
+              url: "/",
+              page: "HomePage",
+              importer: () => require("./pages/homePage")
+            },
+            {
+              url: "/work/{slug}",
+              page: "WorkPage",
+              importer: () => require("./pages/workPage")
+            }
+          ];
 
     /**
      * Router init
@@ -125,7 +125,7 @@ export default class Main extends App {
      * Import cockpit routes to router
      */
     if (useCockpitCMS) {
-      const CockpitPages = require("./common/lib/helpers/CockpitPages");
+      const { CockpitPages } = require("./common/lib/helpers/CockpitPages");
       CockpitPages.addCockpitRoutesToRouter();
     }
 
