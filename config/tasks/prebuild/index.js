@@ -3,7 +3,7 @@ const prebuildHtaccess = require("./modules/prebuild-htaccess");
 /**
  * Execute all prebuild modules
  */
-const index = () =>
+const prebuild = () =>
   new Promise(async resolve => {
     // prebuild modules
     // await prebuildHtaccess();
@@ -11,4 +11,4 @@ const index = () =>
     resolve();
   });
 
-module.exports = { prebuild: index };
+module.exports = { prebuild };

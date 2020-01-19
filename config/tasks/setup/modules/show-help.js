@@ -16,8 +16,8 @@ const config = require("../config");
  */
 const showHelp = () => {
   return new Promise(async resolve => {
-    logs.start("Show help...", true);
-    logs.note("> npm run help");
+    logs.start("Show help...");
+    logs.note("npm run help");
     help();
     resolve();
   });

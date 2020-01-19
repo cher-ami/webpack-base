@@ -28,7 +28,7 @@ const setupGitignore = ({
   });
 
   return new Promise(resolve => {
-    logs.start(`Setup .gitignore file...`, true);
+    logs.start(`Setup .gitignore file...`);
     if (!fakeMode) {
       Files.getFiles(gitignorePath).alter(fileContent => {
         return (

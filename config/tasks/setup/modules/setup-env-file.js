@@ -29,7 +29,7 @@ const setupEnvFile = ({
   });
 
   return new Promise(async resolve => {
-    logs.start("Setup .env file...", true);
+    logs.start("Setup .env file...");
 
     // check
     if (Files.getFiles(envPath).files.length > 0) {

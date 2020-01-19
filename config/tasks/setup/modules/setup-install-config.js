@@ -29,7 +29,7 @@ const setupInstallConfig = ({
   });
 
   return new Promise(async resolve => {
-    logs.start(`Create config file in ${installConfigPath}...`, true);
+    logs.start(`Create config file in ${installConfigPath}...`);
 
     // init install config template
     const template = (pFileTabRegex = new RegExp(`\n(${"\t\t\t"})`, "gmi")) => {

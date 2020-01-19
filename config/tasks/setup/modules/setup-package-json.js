@@ -25,7 +25,7 @@ const setupPackageJson = ({
   fakeMode = config.fakeMode
 }) => {
   return new Promise(async resolve => {
-    logs.start("Setup package.json...", true);
+    logs.start("Setup package.json...");
 
     // Read package.json
     let projectName = packageJson.name;
@@ -70,7 +70,7 @@ const setupPackageJson = ({
     // Ask user for desc
     await Inquirer.prompt({
       type: "input",
-      message: "Descripton?",
+      message: "What's the descripton?",
       name: "projectDescription"
     }).then(answer => (projectDescription = answer.projectDescription));
     debug("> new project description:", projectDescription);

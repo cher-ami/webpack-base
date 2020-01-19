@@ -33,7 +33,7 @@ const cleanFrameworkFiles = ({
     debug(
       "We don't need git folder because this is .git of webpack-base, so we remove it."
     );
-    logs.start("Remove .git folder... ", true);
+    logs.start("Remove .git folder... ");
     if (!fakeMode) {
       await execSync(`rm -rf ${gitFolder}`, 3);
     } else {
@@ -42,7 +42,7 @@ const cleanFrameworkFiles = ({
     logs.done();
     setTimeout(resolve, logDoneDelay);
 
-    logs.start("Remove install.sh file... ", true);
+    logs.start("Remove install.sh file... ");
     if (!fakeMode) {
       await execSync(`rm -rf ${installScriptFile}`, 3);
     } else {

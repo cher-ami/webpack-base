@@ -20,7 +20,7 @@ const setupBundle = async ({
   scaffoldBundleFunction = scaffoldBundle
 }) => {
   return new Promise(async resolve => {
-    logs.start("Setup bundle project type...", true);
+    logs.start("Setup bundle project type...");
     const bundleType = await scaffoldBundleFunction(true);
     logs.done();
     setTimeout(() => resolve(bundleType), logDoneDelay);

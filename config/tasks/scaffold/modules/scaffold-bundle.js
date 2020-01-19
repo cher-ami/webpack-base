@@ -6,6 +6,11 @@ const { Files } = require("@zouloux/files");
 const log = require("debug")("lib:scaffold-component");
 const { logs } = require("../../../helpers/logs-helper");
 
+// ----------------------------------------------------------------------------- CONFIG
+
+// remove Files lib logs
+Files.setVerbose(false);
+
 // ----------------------------------------------------------------------------- PRIVATE
 
 const _askBundleType = () => {

@@ -1,15 +1,12 @@
 require("colors");
-const { execSync } = require("@solid-js/cli");
 
 const logs = {
   /**
    * Start
    * @param pMessage
-   * @param pClear
    */
-  start: (pMessage = "", pClear = false) => {
-    if (pClear) execSync("clear", 3);
-    console.log(`> ${pMessage}`.brightBlue);
+  start: (pMessage = "") => {
+    console.log(`${pMessage}`.brightBlue, "\n");
   },
 
   /**
@@ -17,7 +14,7 @@ const logs = {
    * @param pMessage
    */
   note: (pMessage = "") => {
-    console.log(`✔ ${pMessage}`.grey);
+    console.log(`> ${pMessage}`.grey);
   },
 
   /**
@@ -25,7 +22,7 @@ const logs = {
    * @param pMessage
    */
   done: (pMessage = "Done.") => {
-    console.log(`✔ ${pMessage}`.green, "\n");
+    console.log(`✔`.green, `${pMessage}`, "\n");
   },
 
   /**
