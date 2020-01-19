@@ -176,33 +176,33 @@ class AppView extends Component<IProps, IStates> {
 
         {/* AppView Wrapper */}
         <div className={css.wrapper}>
-          {/* Menu example */}
-          <ul className={css.items}>
-            {Main.routes.map((el, i) => {
-              return (
-                <li key={i} className={css.item}>
-                  <a
-                    className={css.link}
-                    href={Router.generateURL({
-                      page: el.page,
-                      parameters: el.parameters
-                        ? {
-                            slug: el.parameters.slug
-                          }
-                        : null
-                    })}
-                    children={el.metas.name}
-                    data-internal-link
-                  />
-                </li>
-              );
-            })}
-          </ul>
+          {/*
+            Menu example
+          */}
+          <nav className={css.nav}>
+            <a
+              className={css.link}
+              href={Router.generateURL({ page: "HomePage" })}
+              children={"Home"}
+              data-internal-link
+            />
+            <a
+              className={css.link}
+              href={Router.generateURL({
+                page: "WorkPage",
+                parameters: {
+                  slug: "custom-slug"
+                }
+              })}
+              children={"Work"}
+              data-internal-link
+            />
+          </nav>
 
           {/* View Stack */}
           <ViewStack
             ref={r => (this._viewStack = r)}
-            allowSamePageTransition={["ArticlePage"]}
+            allowSamePageTransition={["WorkPage"]}
             transitionType={ETransitionType.PAGE_CROSSED}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}

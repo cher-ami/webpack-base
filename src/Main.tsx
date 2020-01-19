@@ -56,39 +56,35 @@ export default class Main extends App {
   // --------------------------------------------------------------------------- ROUTES
 
   /**
-   * Routes List
-   */
-  public static routes: IRoute[] = [
-    {
-      url: "/",
-      page: "HomePage",
-      // Use require to load synchronously
-      importer: () => require("./pages/homePage"),
-      // Use import to load asynchronously -> importer: () => import("./pages/homePage")
-      metas: {
-        name: "Home",
-        showInMenu: true
-      }
-    },
-    {
-      url: "/work-{slug}",
-      page: "WorkPage",
-      importer: () => import("./pages/workPage"),
-      parameters: {
-        slug: "custom-slug-work"
-      },
-      metas: {
-        name: "Work 1",
-        showInMenu: true
-      }
-    }
-  ];
-
-  /**
    * Init routes
    */
   protected initRoutes(): void {
-    Router.init(GlobalConfig.routerBaseURL, Main.routes);
+    /**
+     * Routes list
+     *  NOTE: Use import to load asynchronously
+     *  importer: () => import("./pages/homePage")
+     */
+    const routes: IRoute[] = [
+      {
+        url: "/",
+        page: "HomePage",
+        importer: () => require("./pages/homePage")
+      },
+      {
+        url: "/work-{slug}",
+        page: "WorkPage",
+        importer: () => require("./pages/workPage")
+      }
+    ];
+
+    // add routes jsute by page name and importer
+    // Router.addDynamicPageImporters(routes);
+
+    // Init router (avec un tableau vide)
+    Router.init(process.env.ROUTER_BASE, routes);
+
+    // Add grav routes to router
+    // CockpitPages.addCockpitRoutesToRouter();
   }
 
   // --------------------------------------------------------------------------- READY
