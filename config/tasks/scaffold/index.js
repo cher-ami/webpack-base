@@ -1,6 +1,6 @@
 require("colors");
 const Inquirer = require("inquirer");
-const log = require("debug")("lib:scaffold");
+const debug = require("debug")("config:scaffold");
 
 // ----------------------------------------------------------------------------- COMMON TASKS
 

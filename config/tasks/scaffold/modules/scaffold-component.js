@@ -1,19 +1,27 @@
 require("colors");
 const Inquirer = require("inquirer");
 const changeCase = require("change-case");
-const log = require("debug")("lib:scaffold-component");
 const createFile = require("../helpers/create-file");
-const paths = require("../paths");
 const { logs } = require("../../../helpers/logs-helper");
+const debug = require("debug")("config:scaffold-component");
+
+// ----------------------–----------------------–----------------------–-------- CONF
+
+// get local task path
+const paths = require("../paths");
+// get local task config
+const config = require("../config");
 
 // ----------------------–----------------------–----------------------–-------- PRIVATE
 
-const _askWhichComponentFolder = () => {
+const _askWhichComponentFolder = (
+  componentCompatibleFolders = config.componentCompatibleFolders
+) => {
   return Inquirer.prompt({
     type: "list",
     name: "subFolder",
     message: "Which component folder?",
-    choices: paths.componentCompatibleFolders
+    choices: componentCompatibleFolders
   });
 };
 

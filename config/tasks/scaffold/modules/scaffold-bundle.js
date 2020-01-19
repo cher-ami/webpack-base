@@ -1,24 +1,28 @@
 require("colors");
 const path = require("path");
 const Inquirer = require("inquirer");
-const paths = require("../paths");
 const { Files } = require("@zouloux/files");
-const log = require("debug")("lib:scaffold-component");
 const { logs } = require("../../../helpers/logs-helper");
+const debug = require("debug")("config:scaffold-bundle");
 
 // ----------------------------------------------------------------------------- CONFIG
 
 // remove Files lib logs
 Files.setVerbose(false);
 
+// get local task path
+const paths = require("../paths");
+// get local task config
+const config = require("../config");
+
 // ----------------------------------------------------------------------------- PRIVATE
 
-const _askBundleType = () => {
+const _askBundleType = (bundleType = config.bundleType) => {
   return Inquirer.prompt({
     type: "list",
     name: "bundleType",
     message: "Witch Bundle project type do you want to create?",
-    choices: paths.bundleType
+    choices: bundleType
   });
 };
 
