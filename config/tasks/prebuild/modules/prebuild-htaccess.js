@@ -27,4 +27,4 @@ const prebuildHtaccess = () => {
   logs.done();
 };
 
-module.exports = prebuildHtaccess;
+module.exports = { prebuildHtaccess };

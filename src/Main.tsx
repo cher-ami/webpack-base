@@ -125,7 +125,7 @@ export default class Main extends App {
      * Import cockpit routes to router
      */
     if (useCockpitCMS) {
-      const CockpitPages = require("./common/lib/helpers/CockpitPages");
+      const { CockpitPages } = require("./common/lib/helpers/CockpitPages");
       CockpitPages.addCockpitRoutesToRouter();
     }
 

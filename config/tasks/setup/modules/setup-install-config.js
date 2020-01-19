@@ -38,7 +38,7 @@ const setupInstallConfig = ({
 			 * WARNING
 			 * Auto-generated file, do not edit!
 			 */
-			exports.module = {
+			module.exports = {
 		  date: "${new Date()}",
       bundleType: "${bundleType}",
 			};`.replace(pFileTabRegex, "\n");
