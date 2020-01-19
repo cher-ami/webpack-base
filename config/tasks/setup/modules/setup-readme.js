@@ -7,9 +7,9 @@ const debug = require("debug")("config:manage-readme");
 // ----------------------------------------------------------------------------- PATHS / CONFIG
 
 // target local path files
-const paths = require("../paths");
+const paths = require("../../../global.paths");
 // get local task config
-const config = require("../config");
+const config = require("../../../global.config");
 
 // ----------------------------------------------------------------------------- PUBLIC
 
@@ -18,15 +18,14 @@ const config = require("../config");
  * @description allow to copy README as README-framework
  * and create new project README with setup information
  * @returns {Promise<unknown>}
- * @private
  */
 const setupReadme = ({
-  templatesPath = paths.templatesFolder,
+  templatesPath = `${paths.taskSetupFolder}/templates`,
   readmeFilePath = paths.readme,
-  readmeFileName = "README.md",
-  readmeTemplateFileName = "README.md.template",
   fakeMode = config.fakeMode,
   logDoneDelay = config.logDoneDelay,
+  readmeFileName = "README.md",
+  readmeTemplateFileName = "README.md.template",
   readmeFrameworkFileName = "README-framework.md",
   projectName = "[ PROJECT NAME ]",
   projectAuthor = "[ PROJECT AUTHOR ]",

@@ -6,9 +6,9 @@ const debug = require("debug")("config:setup-install-config");
 // ----------------------------------------------------------------------------- PATHS / CONFIG
 
 // target local path files
-const paths = require("../paths");
+const paths = require("../../../global.paths");
 // get local task config
-const config = require("../config");
+const config = require("../../../global.config");
 
 // ----------------------------------------------------------------------------- MODULE
 
