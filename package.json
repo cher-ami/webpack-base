@@ -4,7 +4,7 @@
   "description": "Webpack boilerplate for solid javascript projects",
   "author": "Willy Brauner",
   "license": "MIT",
-  "main": "src/Main.tsx",
+  "main": "src/index.ts",
   "keywords": [
     "webpack",
     "boilerplate",
