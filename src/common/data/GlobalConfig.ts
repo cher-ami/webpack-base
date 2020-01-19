@@ -9,8 +9,6 @@ export class GlobalConfigProperties {
   version: string;
   // env (staging, qa, production...)
   env: string;
-  // App URL
-  appURL: string;
   // Base URL
   baseURL: string;
   // Router base url

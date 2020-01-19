@@ -41,7 +41,7 @@
 
 // ----------------------------------------------------------------------------- CHILDREN
 
-:global (.ReactViewStack) {
+:global (.ViewStack) {
   margin-top: 1rem;
 }
 

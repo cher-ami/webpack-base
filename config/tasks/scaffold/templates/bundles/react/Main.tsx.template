@@ -32,7 +32,6 @@ export default class Main extends App {
     // Inject params into config
     GlobalConfig.inject({
       version: require("../package.json").version,
-      appURL: process.env.APP_URL,
       baseURL: process.env.BASE_URL,
       routerBaseURL:
         // because we use proxy by default
