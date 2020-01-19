@@ -1,11 +1,16 @@
+require("colors");
 const { Files } = require("@zouloux/files");
 const path = require("path");
 const nsg = require("@zouloux/node-sprite-generator");
 const Handlebars = require("handlebars");
 const { optimizeFiles } = require("./imagemin");
 const { logs } = require("../../helpers/logs-helper");
-const paths = require("./paths");
-require("colors");
+const debug = require("debug")("config:sprites");
+
+// ----------------------------------------------------------------------------- PATH / CONFIG
+
+// get paths
+const globalPaths = require("../../global.paths");
 
 // ----------------------------------------------------------------------------- CONFIG
 
@@ -59,13 +64,19 @@ const optimizeImages = () => {
   );
 };
 
+// ----------------------------------------------------------------------------- PUBLIC
+
 /**
  * Sprites Task
  */
-const index = () =>
+const sprites = (
+  spritesTemplatesPath = globalPaths.spritesTemplatesPath,
+  spritesOutputPath = globalPaths.spritesOutputPath
+) =>
   new Promise(resolve => {
-    // ------------------------------------------------------------------------- PREPARE
-
+    /**
+     * Prepare
+     */
     logs.start("Build sprites...");
 
     // Get skeletons
@@ -74,14 +85,14 @@ const index = () =>
       {
         extension: "less",
         template: Handlebars.compile(
-          Files.getFiles(`${paths.templatesPath}/sprite.less.template`).read()
+          Files.getFiles(`${spritesTemplatesPath}/sprite.less.template`).read()
         )
       },
       // JSON Template
       {
         extension: "ts",
         template: Handlebars.compile(
-          Files.getFiles(`${paths.templatesPath}/sprite.ts.template`).read()
+          Files.getFiles(`${spritesTemplatesPath}/sprite.ts.template`).read()
         )
       }
     ];
@@ -91,7 +102,9 @@ const index = () =>
       (Math.random() * Math.pow(10, 16)).toString(16) +
       new Date().getTime().toString(16);
 
-    // ------------------------------------------------------------------------- GENERATE STYLE SHEET
+    /**
+     *  Generate stylesheet
+     */
 
     // Function called to generate a stylesheet
     const generateStylesheets = (
@@ -112,6 +125,8 @@ const index = () =>
         spritePath: pStylesheetOptions.spritePath,
         textures: []
       };
+
+      debug(cleanStylesheetData);
 
       // Browse images
       for (let i in pSpriteData.images) {
@@ -149,12 +164,14 @@ const index = () =>
       Files.new(`${pSpriteOutputPath}.png`).write(pSpriteBuffer);
     };
 
-    // ------------------------------------------------------------------------- GENERATE SPRITE
+    /**
+     * Generite sprite
+     */
 
     let totalSprites = 0;
 
     // Browse bundles
-    Files.getFolders(`${paths.spritesPath}/*/`).all(folder => {
+    Files.getFolders(`${spritesOutputPath}/*/`).all(folder => {
       // Browser sprites folders
 
       ++totalSprites;
@@ -181,12 +198,11 @@ const index = () =>
         path.join(folder, "*.+(jpg|jpeg|png|gif)")
       );
 
-      // Bundle sprite folder path
-      const spritesPath = `${paths.spritesPath}`;
-
       // Output path for styles / typescript and PNG file
-      const outputPath = `${spritesPath}/${spritePrefix}${separator}${spriteName}`;
-      const PNGOutputPath = `${paths.outputSpritesFolder}${spritePrefix}${separator}${spriteName}`;
+      const outputPath = `${spritesOutputPath}/${spritePrefix}${separator}${spriteName}`;
+      const PNGOutputPath = `${spritesOutputPath}/${spritePrefix}${separator}${spriteName}`;
+
+      debug({ outputPath, PNGOutputPath });
 
       // Styles sheet path options
       const stylesheetOptions = {
@@ -199,6 +215,8 @@ const index = () =>
         // Pixel ratio from sprite config
         pixelRatio: spriteConfig.pixelRatio
       };
+
+      debug(stylesheetOptions);
 
       // Compute nsg options
       const nsgOptions = {
@@ -242,7 +260,7 @@ const index = () =>
           pngToOptimize.push({
             spriteName,
             outputPath,
-            bundleSpritePath: `${spritesPath}/`,
+            bundleSpritePath: `${spritesOutputPath}/`,
             spriteConfig
           });
         }
@@ -271,7 +289,7 @@ const index = () =>
 
       // Compute hash for config file
       const currentSpriteConfigHash = Files.getFiles(
-        `${spritesPath}/${spritePrefix}${separator}${spriteName}${configExt}`
+        `${spritesOutputPath}/${spritePrefix}${separator}${spriteName}${configExt}`
       ).generateFileListHash(true, false);
 
       // Concat hashes
@@ -309,4 +327,4 @@ const index = () =>
     );
   });
 
-module.exports = { sprites: index };
+module.exports = { sprites };

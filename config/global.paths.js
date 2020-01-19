@@ -29,7 +29,14 @@ module.exports = {
   // common folder
   common: appRoot.resolve("src/common"),
   // Path to fonts folder from src
-  fontsPath: appRoot.resolve("src/common/fonts/"),
+  fontsPath: appRoot.resolve("src/common/fonts"),
+
+  // --------------------------------------------------------------------------- SPRITES
+
+  // Templates path
+  spritesTemplatesPath: appRoot.resolve("config/tasks/sprites/templates"),
+  // Sprite path
+  spritesOutputPath: appRoot.resolve("src/common/sprites"),
 
   // --------------------------------------------------------------------------- ATOMS
 

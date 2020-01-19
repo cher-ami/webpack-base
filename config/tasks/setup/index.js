@@ -17,7 +17,7 @@ const paths = require("./paths");
 // get local task config
 const config = require("./config");
 
-// ----------------------------------------------------------------------------- FINAL
+// ----------------------------------------------------------------------------- TASK
 
 const taskProgress = (task, taskNumber) => {
   execSync("clear", 3);
@@ -31,7 +31,6 @@ const taskProgress = (task, taskNumber) => {
 
 /**
  * Setup
- * TODO Add init back cockpit
  */
 const setup = () => {
   return new Promise(async resolve => {
