@@ -19,14 +19,14 @@ const _scaffolders = [
   {
     name: "DOM component",
     exec: () => scaffoldComponent("dom")
-  },
-  {
-    name: new Inquirer.Separator()
-  },
-  {
-    name: "Bundle",
-    exec: () => scaffoldBundle()
   }
+  // {
+  //   name: new Inquirer.Separator()
+  // },
+  // {
+  //   name: "Bundle",
+  //   exec: () => scaffoldBundle()
+  // }
 ];
 
 // ----------------------------------------------------------------------------- PUBLIC API
