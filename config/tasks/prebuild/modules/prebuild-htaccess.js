@@ -1,7 +1,13 @@
 const { Files } = require("@zouloux/files");
 const paths = require("../../../global.paths");
 const { logs } = require("../../../helpers/logs-helper");
-const webPackConfig = require("../../../global.config");
+
+// ----------------------------------------------------------------------------- PATHS / CONFIG
+
+// config
+const globalConfig = require("../../../global.config");
+
+// ----------------------------------------------------------------------------- MODULE
 
 /**
  * Prebuild .htaccess file
@@ -10,7 +16,7 @@ const webPackConfig = require("../../../global.config");
 const prebuildHtaccess = () => {
   logs.start("Prebuild htaccess...");
   //
-  const newFilePath = `${webPackConfig.outputPath}/.htaccess`;
+  const newFilePath = `${globalConfig.outputPath}/.htaccess`;
   // target file
   const templateFilePath =
     paths.config + "/tasks/prebuild/templates/.htaccess.template";
