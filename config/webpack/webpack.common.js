@@ -20,16 +20,6 @@ commonConfig = {
   },
 
   /**
-   * Output
-   * Where Webpack outputs the assets and bundles.
-   */
-  output: {
-    path: config.outputPath,
-    filename: "[name].bundle.js",
-    publicPath: "/"
-  },
-
-  /**
    * Resolve
    */
   resolve: {
