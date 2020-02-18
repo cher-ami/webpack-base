@@ -23,7 +23,7 @@ const prebuild = () =>
     }
 
     // prebuild htaccess
-    // await prebuildHtaccess();
+    await prebuildHtaccess();
 
     resolve();
   });
