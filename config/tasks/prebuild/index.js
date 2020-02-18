@@ -1,4 +1,4 @@
-const { prebuildPages } = require("./modules/prepbuild-pages");
+const { prebuildPages } = require("./modules/prebuild-pages");
 const { prebuildHtaccess } = require("./modules/prebuild-htaccess");
 const { installConfigHelper } = require("../../helpers/install-config-helper");
 const debug = require("debug")("config:prebuild");
