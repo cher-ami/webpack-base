@@ -18,9 +18,11 @@ const productionConfig = {
    * Set the mode to development or production.
    */
   mode: "production",
+
   output: {
     path: config.outputPath,
-    filename: "[name].[contenthash].bundle.js"
+    filename: "[name].[contenthash].bundle.js",
+    publicPath: process.env.BASE_URL + "/"
   },
 
   /**

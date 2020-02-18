@@ -16,7 +16,7 @@ const _startDevServer = async () => {
   logs.start("Start dev server...");
   // start webpack
   await execSync(
-    "cross-env env-cmd -f .env webpack-dev-server --config config/webpack/webpack.development.js",
+    "env-cmd -f .env webpack-dev-server --config config/webpack/webpack.development.js",
     3
   );
 };

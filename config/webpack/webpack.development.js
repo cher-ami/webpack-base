@@ -19,6 +19,12 @@ const developmentConfig = {
    */
   mode: "development",
 
+  output: {
+    path: config.outputPath,
+    filename: "[name].bundle.js",
+    publicPath: process.env.BASE_URL + "/"
+  },
+
   /**
    * Devtool
    * Control how source maps are generated.
