@@ -25,7 +25,7 @@ export default class Main extends App {
     // Inject params into config
     GlobalConfig.inject({
       version: require("../package.json").version,
-      baseURL: process.env.BASE_URL,
+      baseURL: process.env.APP_BASE,
       env: process.env.ENV
     });
 

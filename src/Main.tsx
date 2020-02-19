@@ -40,16 +40,16 @@ export default class Main extends App {
      * Because we will be redirected on localhost:3000, without base URL
      *
      * on production
-     * Router base should be process.env.BASE_URL
+     * Router base should be process.env.APP_BASE
      *
      */
     const routerBaseURL =
-      process.env.NODE_ENV === ENodeEnv.DEV ? "/" : process.env.BASE_URL;
+      process.env.NODE_ENV === ENodeEnv.DEV ? "/" : process.env.APP_BASE;
 
     // Inject params into config
     GlobalConfig.inject({
       version: require("../package.json").version,
-      baseURL: process.env.BASE_URL,
+      baseURL: process.env.APP_BASE,
       routerBaseURL: routerBaseURL,
       env: process.env.ENV
     });

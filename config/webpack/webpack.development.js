@@ -22,7 +22,7 @@ const developmentConfig = {
   output: {
     path: config.outputPath,
     filename: "[name].bundle.js",
-    publicPath: process.env.BASE_URL + "/"
+    publicPath: process.env.APP_BASE + "/"
   },
 
   /**
@@ -144,7 +144,7 @@ const developmentConfig = {
           proxy: {
             "/": {
               // target something like http://localhost/project/dist/path/to/index/file
-              target: `${process.env.APP_URL}${process.env.BASE_URL}`,
+              target: `${process.env.APP_URL}${process.env.APP_BASE}`,
               changeOrigin: true,
               secure: false
             }

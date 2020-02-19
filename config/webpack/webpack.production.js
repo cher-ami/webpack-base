@@ -22,7 +22,7 @@ const productionConfig = {
   output: {
     path: config.outputPath,
     filename: "[name].[contenthash].bundle.js",
-    publicPath: process.env.BASE_URL + "/"
+    publicPath: process.env.APP_BASE + "/"
   },
 
   /**
