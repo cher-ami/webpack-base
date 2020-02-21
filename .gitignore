@@ -15,6 +15,9 @@ src/common/sprites/*.png
 src/common/sprites/*.ts
 src/common/sprites/*.cache
 
+# Auto generate pages list for js router
+src/pages.ts
+
 # ------------------------------------------------------------------------------ DEP
 
 node_modules
