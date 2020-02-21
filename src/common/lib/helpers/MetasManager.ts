@@ -1,5 +1,5 @@
 import debug from "debug";
-const { log } = debug("lib:MetasManager");
+const log = debug("lib:MetasManager");
 
 /**
  * IMetas properties type
@@ -81,7 +81,7 @@ class MetasManager {
   // --------------------------------------------------------------------------- LOCAL
 
   /**
-   * Default meta object
+   * Default meta properties object
    */
   private readonly _metaProperties: TMetas;
 
@@ -92,6 +92,7 @@ class MetasManager {
   constructor(pMetaProperties: TMetas = METAS_PROPERTIES) {
     // Set metas properties
     this._metaProperties = pMetaProperties;
+    log("pMetaProperties", pMetaProperties);
   }
 
   // --------------------------------------------------------------------------- DEFAULT META
@@ -109,19 +110,32 @@ class MetasManager {
   // --------------------------------------------------------------------------- PRIVATE
 
   /**
+   * Cleans a string by remplacing the " with the '
+   * @param source The original string
+   * @return cleanedString The cleaned string
+   * @private
+   */
+  private _cleanMetaString(source: string) {
+    return source.replace(/"/g, "'");
+  }
+
+  /**
    * Format Meta string
    * @param pMetaValue
    * @param pType
    * @private
    */
   private _formatMeta(pMetaValue: string, pType: string): string {
-    // TODO check if is necessary
-    // check if there is specific caracters who can break HTML structure
-    // if should be URL, check if this is a real one
-    return pMetaValue;
+    return this._cleanMetaString(pMetaValue);
   }
 
   /**
+   * _selectMetaValue
+   *
+   * Meta priority order:
+   * - custom meta
+   * - default meta
+   * - empty string
    *
    * @param pCustomMetas
    * @param pDefaultMetas
@@ -134,9 +148,13 @@ class MetasManager {
     pType: string
   ): string {
     // if a custom metatype is define, keep this custom value
-    if (pCustomMetas?.[pType]) return pCustomMetas[pType];
+    if (pCustomMetas?.[pType]) {
+      return pCustomMetas[pType];
+    }
     // else if default value is set, keep this default value
-    else if (pDefaultMetas?.[pType]) return pDefaultMetas[pType];
+    else if (pDefaultMetas?.[pType]) {
+      return pDefaultMetas[pType];
+    }
     // else, there is any custom or default value, return an empty string
     else return "";
   }
@@ -146,11 +164,6 @@ class MetasManager {
   /**
    * @name inject
    * @description Inject metas in document <head>
-   *
-   * Meta priority order:
-   * - custom meta
-   * - default meta
-   * - empty string
    *
    * @param pCustomMetas
    * @param pDefaultMetas
@@ -162,15 +175,18 @@ class MetasManager {
     pProperties: TMetas = this._metaProperties
   ): void {
     // specific case: update main document title
-    document.title = this._selectMetaValue(
+    const selectDocumentTitle = this._selectMetaValue(
       pCustomMetas,
       pDefaultMetas,
       "title"
     );
 
-    // loop on pMetas (ex: title, description...)
-    for (let metaType of Object.keys(pProperties)) {
-      // set a default value;
+    // set in DOM
+    document.title = this._cleanMetaString(selectDocumentTitle);
+
+    // loop on pMetas (ex: title, description, imageURL, siteName...)
+    Object.keys(pProperties).map(metaType => {
+      // select meta value
       let metaValue = this._selectMetaValue(
         pCustomMetas,
         pDefaultMetas,
@@ -198,7 +214,7 @@ class MetasManager {
         // else, return do nothing
         else return;
       }
-    }
+    });
   }
 }
 
