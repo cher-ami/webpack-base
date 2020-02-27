@@ -4,8 +4,8 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const ManifestPlugin = require("webpack-manifest-plugin");
 const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin");
+const ManifestPlugin = require("webpack-manifest-plugin");
 
 /**
  * Common Webpack Configuration
@@ -15,9 +15,7 @@ commonConfig = {
    * Entry
    * The first place Webpack looks to start building the bundle.
    */
-  entry: {
-    main: `${globalPaths.src}/index.ts`
-  },
+  entry: `${globalPaths.src}/bundles.ts`,
 
   /**
    * Resolve
@@ -33,7 +31,9 @@ commonConfig = {
       ".less",
       ".css"
     ],
-    alias: {},
+    alias: {
+      "@common": `${globalPaths.src}/common`
+    },
     modules: [globalPaths.nodeModules, globalPaths.src]
   },
 
@@ -83,7 +83,7 @@ commonConfig = {
      * Manifest plugin
      * @doc https://github.com/danethurber/webpack-manifest-plugin
      */
-    new ManifestPlugin(),
+    // new ManifestPlugin(),
 
     /**
      * Define Plugin

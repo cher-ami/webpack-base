@@ -1,20 +1,19 @@
 import css from "./%%upperComponentName%%.module.less";
 import React, { useRef } from "react";
-import { usePageRegister } from "../../common/lib/router/usePageRegister";
-import Metas from "../../common/lib/react-components/metas";
-import { prepare } from "../../common/helpers/prepare";
-import { merge } from "../../common/lib/helpers/classNameHelper";
+import { usePageRegister } from "@common/lib/router/usePageRegister";
 
-interface IProps {}
+interface IProps {
+  classNames?: string[];
+}
 
-// prepare
-const { componentName, log } = prepare("%%upperComponentName%%");
+const componentName = "%%upperComponentName%%";
+const debug = require("debug")(`front:${componentName}`);
 
 /**
  * @name %%upperComponentName%%
  */
 const %%upperComponentName%% = (props: IProps) => {
-  // get current route
+  // get root ref
   const rootRef = useRef<HTMLDivElement>(null);
 
   // -------------------–-------------------–-------------------–--------------- REGISTER PAGE
@@ -46,11 +45,7 @@ const %%upperComponentName%% = (props: IProps) => {
   // -------------------–-------------------–-------------------–--------------- RENDER
 
   return (
-    <div className={merge([css.Root, componentName])} ref={rootRef}>
-      <Metas
-        title={`${componentName} title`}
-        description={`${componentName} description`}
-      />
+    <div className={css.Root} ref={rootRef}>
       {componentName}
     </div>
   );

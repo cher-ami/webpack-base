@@ -8,8 +8,7 @@ import {
   slugify,
   trailingSlash
 } from "../utils/stringUtils";
-import debug from "debug";
-const log = debug("lib:Router");
+const debug = require("debug")("lib:Router");
 
 // ------------------------------------------------------------------------------- STRUCT
 

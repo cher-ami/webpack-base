@@ -1,9 +1,8 @@
 import "./AppView.less";
-import { DOMView } from "../../common/lib/core/DOMView";
-import { prepare } from "../../common/helpers/prepare";
+import { DOMView } from "@common/lib/core/DOMView";
 
-// prepare
-const { log } = prepare("AppView");
+const componentName = "AppView";
+const debug = require("debug")(`front:${componentName}`);
 
 /**
  * @name DOMView

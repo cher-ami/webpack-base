@@ -1,6 +1,6 @@
 require("colors");
 const { logs } = require("../../../helpers/logs-helper");
-const { QuickTemplate } = require("../../../helpers/template-helper");
+const { quickTemplate } = require("../../../helpers/template-helper");
 const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:manage-readme");
 
@@ -81,7 +81,7 @@ const setupReadme = ({
     debug("create new template README.md from template...");
     if (!fakeMode) {
       await Files.new(readmeFileName).write(
-        QuickTemplate(
+        quickTemplate(
           Files.getFiles(`${templatesPath}/${readmeTemplateFileName}`).read(),
           // replace these variables
           {

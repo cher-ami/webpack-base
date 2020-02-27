@@ -16,7 +16,7 @@ const _build = async () => {
   logs.start("Start build...");
   // start webpack
   await execSync(
-    "webpack -p --config config/webpack/webpack.production.js",
+    "NODE_ENV=production webpack -p --config config/webpack/webpack.production.js",
     3
   );
   logs.done();

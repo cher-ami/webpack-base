@@ -104,7 +104,7 @@ export class CockpitPages {
     if (Router.currentRouteMatch == null) return null;
 
     return leadingSlash(
-      extractPathFromBase(Router.currentPath, GlobalConfig.baseURL),
+      extractPathFromBase(Router.currentPath, GlobalConfig.baseUrl),
       pAddLeadingSlash
     );
   }

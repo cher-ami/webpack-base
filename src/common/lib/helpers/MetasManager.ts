@@ -1,5 +1,4 @@
-import debug from "debug";
-const log = debug("lib:MetasManager");
+const debug = require("debug")("lib:MetasManager");
 
 /**
  * IMetas properties type
@@ -92,7 +91,7 @@ class MetasManager {
   constructor(pMetaProperties: TMetas = METAS_PROPERTIES) {
     // Set metas properties
     this._metaProperties = pMetaProperties;
-    log("pMetaProperties", pMetaProperties);
+    debug("pMetaProperties", pMetaProperties);
   }
 
   // --------------------------------------------------------------------------- DEFAULT META

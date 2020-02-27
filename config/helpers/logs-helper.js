@@ -6,7 +6,7 @@ const logs = {
    * @param pMessage
    */
   start: (pMessage = "") => {
-    console.log(`${pMessage}`.brightBlue, "\n");
+    console.log(`${pMessage}`.brightBlue);
   },
 
   /**

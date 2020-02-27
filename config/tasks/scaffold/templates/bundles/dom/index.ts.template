@@ -1,4 +1,4 @@
-import Main from "./Main";
+import %%BundleName%% from "./%%BundleName%%";
 
-// Start Main App
-new Main();
+// instance %%BundleName%%
+new %%BundleName%%();

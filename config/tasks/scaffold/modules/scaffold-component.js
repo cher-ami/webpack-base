@@ -1,18 +1,34 @@
 require("colors");
+const path = require("path");
 const Inquirer = require("inquirer");
 const changeCase = require("change-case");
 const createFile = require("../helpers/create-file");
 const { logs } = require("../../../helpers/logs-helper");
+const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:scaffold-component");
 
 // ----------------------–----------------------–----------------------–-------- CONF
 
+// remove Files lib logs
+Files.setVerbose(false);
+
+// get global paths
+const globalPaths = require("../../../global.paths");
 // get local task path
 const paths = require("../paths");
 // get local task config
 const config = require("../config");
 
 // ----------------------–----------------------–----------------------–-------- PRIVATE
+
+const _askWhichBundleFolder = bundleFolderList => {
+  return Inquirer.prompt({
+    type: "list",
+    name: "bundleFolder",
+    message: "Which bundle folder?",
+    choices: bundleFolderList
+  });
+};
 
 const _askWhichComponentFolder = (
   componentCompatibleFolders = config.componentCompatibleFolders
@@ -112,20 +128,49 @@ const _domComponentBuilder = ({ componentPath, upperComponentName }) => {
  */
 const scaffoldComponent = pComponentType => {
   return new Promise(async resolve => {
+    // prepare
+
+    const bundleFolderList = Files.getFolders(`${globalPaths.src}/*`).files;
+    debug("bundleFolderList", bundleFolderList);
+
+    // remove common from bundle list
+    const filterBundleFolderList =
+      // in bundle list folder
+      bundleFolderList
+        // do not keep common folder
+        .filter(el => el !== `${globalPaths.src}/common`)
+        // keep only end of path
+        .map(el => path.basename(el));
+
+    debug("filterBundleFolderList", filterBundleFolderList);
+
     /**
      * Ask questions
      */
+    let bundleFolder = "";
+    // Get bundle folder
+    await _askWhichBundleFolder(filterBundleFolderList).then(answer => {
+      bundleFolder = answer.bundleFolder;
+    });
+    debug("bundleFolder", bundleFolder);
+
     let subFolder = "";
-    // Get sub-folder for components
+    // Get sub-folder
     await _askWhichComponentFolder().then(answer => {
       subFolder = answer.subFolder;
     });
+    debug("subFolder", subFolder);
 
     // Get component name
     let componentName = "";
     await _askComponentName().then(answer => {
       componentName = answer.componentName;
     });
+    // formated name "lowerCase"
+    let lowerComponentName = changeCase.camelCase(componentName);
+    // formated name "UpperCase"
+    let upperComponentName = changeCase.pascalCase(componentName);
+    debug("upperComponentName", upperComponentName);
 
     // Get connect to store response
     let connectToStore = false;
@@ -133,21 +178,16 @@ const scaffoldComponent = pComponentType => {
       await _askConnectToStore().then(answer => {
         connectToStore = answer.connectToStore;
       });
+      debug("connectToStore", connectToStore);
     }
 
-    // formated name "lowerCase"
-    let lowerComponentName = changeCase.camelCase(componentName);
-    // formated name "UpperCase"
-    let upperComponentName = changeCase.pascalCase(componentName);
-
-    // Base path of the component (no extension here)
-    // TODO "src" need to get externalize
-    let componentPath = `src/${subFolder}/${lowerComponentName}`;
+    // Base path of the component (no extension at the end here)
+    let componentPath = `${globalPaths.src}/${bundleFolder}/${subFolder}/${lowerComponentName}`;
+    debug("component will be created here: componentPath", componentPath);
 
     /**
      * Build component
      */
-
     // build REACT component
     if (pComponentType === "react") {
       _reactComponentBuilder({
@@ -175,4 +215,4 @@ const scaffoldComponent = pComponentType => {
 /**
  * return scaffold component function
  */
-module.exports = scaffoldComponent;
+module.exports = { scaffoldComponent };

@@ -1,5 +1,4 @@
-import { prepare } from "../helpers/prepare";
-const { log } = prepare("GlobalConfig");
+const debug = require("debug")("front:GlobalConfig");
 
 /**
  * Add your custom properties here
@@ -10,15 +9,17 @@ export class GlobalConfigProperties {
   // env (staging, qa, production...)
   env: string;
   // Base URL
-  baseURL: string;
-  // Router base url
-  routerBaseURL: string;
+  baseUrl: string;
+  // Router base URL
+  routerBaseUrl: string;
   // Root node where the app DOM will be append
   root: HTMLElement;
   // Locale translation code
   locale: string;
   // site data
   appData: any;
+  // bundleName
+  bundleName: string;
 }
 
 /**
@@ -30,7 +31,7 @@ class GlobalConfig extends GlobalConfigProperties {
   /**
    * Log Global config
    */
-  public log = () => log(this);
+  public log = () => debug(this);
 
   // ------------------------------------------------------------------------- INJECT
 

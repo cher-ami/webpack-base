@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { IPageStack } from "./IPageStack";
 import { IActionParameters, Router } from "./Router";
 import { TPageRegisterObject, pagesRegister } from "./usePageRegister";
-import debug from "debug";
-const log = debug("lib:ViewStack");
+const debug = require("debug")("lib:ViewStack");
 
 // ----------------------------------------------------------------------------- STRUCT
 
