@@ -1,5 +1,7 @@
 # Webpack base
 
+![GitHub contributors](https://img.shields.io/github/contributors/willybrauner/webpack-base)
+
 ## About
 
 Webpack boiler plate for javascript front-end projects. This repos use out of the box:
