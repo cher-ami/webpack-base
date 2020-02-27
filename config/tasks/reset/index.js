@@ -4,7 +4,7 @@ const { execSync } = require("@solid-js/cli");
 const { logs } = require("../../helpers/logs-helper");
 
 // folder to clean
-const folderToClean = require("../../global.config").outputPath;
+const config = require("../../global.config");
 
 // ----------------------------------------------------------------------------- PUBLIC
 
@@ -17,7 +17,7 @@ const reset = () =>
     logs.start("Clean...");
 
     logs.start("Remove output compile folder...");
-    Files.any(folderToClean).remove();
+    Files.any(config.outputPath).remove();
     logs.done();
 
     logs.start("Remove node modules...");

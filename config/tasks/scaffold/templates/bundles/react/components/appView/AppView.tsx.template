@@ -6,7 +6,6 @@ import { isEnv, showGridByDefault } from "@common/helpers/nodeHelper";
 import { prepare } from "@common/helpers/prepare";
 import { merge } from "@common/lib/helpers/classNameHelper";
 import { atoms } from "@common/atoms/atoms";
-import Metas from "@common/lib/react-components/metas";
 import { GridLayout } from "@wbe/libraries";
 import { ETransitionType, ViewStack } from "@common/lib/router/ViewStack";
 import { TPageRegisterObject } from "@common/lib/router/usePageRegister";
@@ -164,20 +163,9 @@ class AppView extends Component<IProps, IStates> {
           />
         )}
 
-        {/* Default Metas */}
-        <Metas
-          defaultMetas={true}
-          title={""}
-          description={""}
-          pageURL={window.location.href}
-          siteName={require("../../../package.json").name}
-        />
-
         {/* AppView Wrapper */}
         <div className={css.wrapper}>
-          {/*
-            Menu example
-          */}
+          {/* Menu example */}
           <nav className={css.nav}>
             <a
               className={css.link}

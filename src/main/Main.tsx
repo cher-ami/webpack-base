@@ -1,15 +1,15 @@
 import "./Main.less";
 import ReactDOM from "react-dom";
 import * as React from "react";
-import GlobalConfig from "./common/data/GlobalConfig";
-import { IRoute, Router } from "./common/lib/router/Router";
+import GlobalConfig from "@common/data/GlobalConfig";
+import { IRoute, Router } from "@common/lib/router/Router";
 import { Provider } from "react-redux";
 import configureStore from "./stores/index";
 import AppView from "./components/appView";
-import { EnvUtils } from "./common/lib/utils/EnvUtils";
-import { App } from "./common/lib/core/App";
-import { ENodeEnv } from "./common/types";
-const log = require("debug")(require("../package.json").name + ":Main");
+import { EnvUtils } from "@common/lib/utils/EnvUtils";
+import { App } from "@common/lib/core/App";
+import { ENodeEnv } from "@common/types";
+const log = require("debug")("front:Main");
 
 export default class Main extends App {
   // --------------------------------------------------------------------------- SINGLETON
@@ -48,7 +48,7 @@ export default class Main extends App {
 
     // Inject params into config
     GlobalConfig.inject({
-      version: require("../package.json").version,
+      version: require("../../package.json").version,
       baseURL: process.env.APP_BASE,
       routerBaseURL: routerBaseURL,
       env: process.env.ENV
@@ -75,9 +75,7 @@ export default class Main extends App {
    */
   protected initRoutes(): void {
     // check if we use back end
-    // TODO Externalize these configs
     const useAddDynamicPageImporters = false;
-    const useCockpitCMS = false;
 
     /**
      * Add dynamic page Importers
@@ -86,7 +84,7 @@ export default class Main extends App {
      * NOTE: Only use if you don't specify importers in Router.init
      */
     if (useAddDynamicPageImporters) {
-      Router.addDynamicPageImporters(require("./pages.ts"));
+      // Router.addDynamicPageImporters(require("./pages.ts"));
     }
 
     /**
@@ -124,9 +122,9 @@ export default class Main extends App {
      * If we use cockpit CMS
      * Import cockpit routes to router
      */
-    if (useCockpitCMS) {
-      const { CockpitPages } = require("./common/lib/helpers/CockpitPages");
-      CockpitPages.addCockpitRoutesToRouter();
+    if (useAddDynamicPageImporters) {
+      // const { CockpitPages } = require("./common/lib/helpers/CockpitPages");
+      // CockpitPages.addCockpitRoutesToRouter();
     }
 
     log("Router.routes", Router.routes);

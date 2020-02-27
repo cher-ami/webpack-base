@@ -1,5 +1,5 @@
 const { Files } = require("@zouloux/files");
-const { QuickTemplate } = require("./template-helper");
+const { QuickTemplate } = require("../../../helpers/template-helper");
 const log = require("debug")("lib:create-file");
 const { logs } = require("../../../helpers/logs-helper");
 require("colors");

@@ -1,4 +1,4 @@
 import Main from "./Main";
 
-// Start Main app
+// instance Main
 new Main();

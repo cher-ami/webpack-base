@@ -12,13 +12,13 @@ const paths = require("../global.paths");
 // ----------------------------------------------------------------------------- MODULE
 
 /**
- * Check install.config.js file
+ * Get install.config.js file
  * @description Check if the file exist, if not, the promise resolve null.
  * If file exist, return the full object write in the file.
  * @param installConfigFilePath Path to install.config.js file
  * @return {Promise<Object|null>}
  */
-installConfigHelper = (
+getInstallConfigHelper = (
   installConfigFilePath = `${paths.config}/install.config.js`
 ) => {
   return new Promise(resolve => {
@@ -43,4 +43,4 @@ installConfigHelper = (
   });
 };
 
-module.exports = { installConfigHelper };
+module.exports = { getInstallConfigHelper };
