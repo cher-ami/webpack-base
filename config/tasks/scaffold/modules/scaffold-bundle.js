@@ -97,32 +97,29 @@ const _bundleBuilder = async ({
 
   // loop on each files in new directory
   Files.any(`${destinationFolder}/${bundleName}/**/**/**/*`).files.map(el => {
-    // We need to rename all files without ".template" ext
+    // get fileName
+    const fileName = path.parse(el).name;
+    // get BundleName pascal-case format
+    const pascalCaseBundleName = changeCase.pascalCase(bundleName);
+
     // if file name contains ".template" extension
     if (path.extname(el) === ".template") {
       // get new file path witout extension
-      let filePathWithoutExt = `${path.parse(el).dir}/${path.parse(el).name}`;
-      // write this new file witout .template extension
-      // Files.new(filePathWithoutExt).write(Files.getFiles(el).read());
+      let filePathWithoutExt = `${path.parse(el).dir}/${fileName}`;
       // write this new file (witout .template extension)
       Files.new(filePathWithoutExt).write(
         quickTemplate(Files.getFiles(el).read(), {
-          BundleName: changeCase.pascalCase(bundleName)
+          BundleName: pascalCaseBundleName
         })
       );
     }
 
-    // now, all .template were deleted
-    // we need to rename "BundleName" files with real name
-
     // check if filename contains "BundleName"
     if (el.includes("BundleName")) {
-      // get fileName
-      const fileName = path.parse(el).name;
       // replace dynamic bundle name by real bundle name
       const formatedfileName = fileName.replace(
         "BundleName",
-        changeCase.pascalCase(bundleName)
+        pascalCaseBundleName
       );
       // target BundleName.ext without .template
       let orignalFilePathWithoutTemplateExt = `${path.parse(el).dir}/${
@@ -134,7 +131,7 @@ const _bundleBuilder = async ({
       // write this new file (witout .template extension)
       Files.new(filePathWithoutExt).write(
         quickTemplate(Files.getFiles(el).read(), {
-          BundleName: changeCase.pascalCase(bundleName)
+          BundleName: pascalCaseBundleName
         })
       );
 
@@ -142,7 +139,7 @@ const _bundleBuilder = async ({
       Files.getFiles(orignalFilePathWithoutTemplateExt).delete();
     }
 
-    // delete old file with .template extension
+    // Finaly, delete old file with .template extension
     Files.getFiles(el).delete();
   });
 

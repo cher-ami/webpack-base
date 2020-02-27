@@ -1,20 +1,20 @@
-import "./Main.less";
+import "./%%BundleName%%.less";
 import GlobalConfig from "./common/data/GlobalConfig";
 import { EnvUtils } from "./common/lib/utils/EnvUtils";
 import { App } from "./common/lib/core/App";
 import AppView from "./components/appView/AppView"
 
-export default class Main extends App {
+export default class %%BundleName%% extends App {
   // --------------------------------------------------------------------------- SINGLETON
 
   // singleton
-  protected static __instance: Main;
+  protected static __instance: %%BundleName%%;
 
   /**
-   * Get Main class singleton instance.
+   * Get %%BundleName%% class singleton instance.
    */
-  public static get instance(): Main {
-    return Main.__instance;
+  public static get instance(): %%BundleName%% {
+    return %%BundleName%%.__instance;
   }
 
   // --------------------------------------------------------------------------- CONFIG
