@@ -15,8 +15,15 @@ src/common/sprites/*.png
 src/common/sprites/*.ts
 src/common/sprites/*.cache
 
+# Auto generate bundles list
+src/bundles.ts
+
 # Auto generate pages list for js router
-src/pages.ts
+src/**/pages.ts
+
+# ------------------------------------------------------------------------------ ENV
+
+.env
 
 # ------------------------------------------------------------------------------ DEP
 
@@ -27,8 +34,5 @@ node_modules
 .DS_Store
 .idea
 
-# ------------------------------------------------------------------------------ ENV
-
-.env
 
 

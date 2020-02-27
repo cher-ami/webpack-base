@@ -22,7 +22,8 @@ const developmentConfig = {
   output: {
     path: config.outputPath,
     filename: "[name].bundle.js",
-    publicPath: process.env.APP_BASE + "/"
+    publicPath: "/"
+    //publicPath: process.env.APP_BASE + "/"
   },
 
   /**
@@ -126,18 +127,30 @@ const developmentConfig = {
   devServer: {
     contentBase: globalPaths.dist,
     port: 3000,
-    open: true,
     hot: true,
     inline: true,
     compress: true,
     historyApiFallback: true,
 
+    // open new browser tab when webpack dev-server is started
+    open: process.env.DEV_SERVER_OPEN,
     // Write file to dist on each compile
     writeToDisk: true,
+    // display error overlay on screen
+    overlay: true,
+    // stats to print in console
+    stats: {
+      all: false,
+      errors: !CONSOLE_PRINT_FRIENDLY,
+      warnings: !CONSOLE_PRINT_FRIENDLY,
+      colors: !CONSOLE_PRINT_FRIENDLY
+    },
+    // friendly webpack error
+    // pass to true if you don't want to print compile file in the console
+    quiet: CONSOLE_PRINT_FRIENDLY,
 
     // specify to enable root proxying
-    // index: "",
-
+    index: "",
     // if use proxy option is enable
     ...(config.useProxy
       ? {
@@ -150,21 +163,7 @@ const developmentConfig = {
             }
           }
         }
-      : {}),
-
-    // display error overlay on screen
-    overlay: true,
-
-    stats: {
-      all: false,
-      errors: !CONSOLE_PRINT_FRIENDLY,
-      warnings: !CONSOLE_PRINT_FRIENDLY,
-      colors: !CONSOLE_PRINT_FRIENDLY
-    },
-
-    // friendly webpack error
-    // pass to true if you don't want to print compile file in the console
-    quiet: CONSOLE_PRINT_FRIENDLY
+      : {})
   }
 };
 
