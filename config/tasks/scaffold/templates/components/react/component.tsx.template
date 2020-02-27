@@ -1,14 +1,13 @@
 import css from './%%upperComponentName%%.module.less';
 import React from 'react';
 import { merge } from "@common/lib/helpers/classNameHelper";
-import { prepare } from "@common/helpers/prepare";
 
 interface IProps {
   classNames?: string[]
 }
 
-// prepare
-const { componentName, log } = prepare("%%upperComponentName%%");
+const componentName = "%%upperComponentName%%";
+const debug = require("debug")(`front:${componentName}`);
 
 /**
  * @name %%upperComponentName%%

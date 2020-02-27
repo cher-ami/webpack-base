@@ -6,7 +6,6 @@ interface IProps {
   classNames?: string[];
 }
 
-// prepare
 const componentName = "%%upperComponentName%%";
 const debug = require("debug")(`front:${componentName}`);
 

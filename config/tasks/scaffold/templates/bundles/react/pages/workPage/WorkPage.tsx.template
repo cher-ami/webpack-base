@@ -3,7 +3,6 @@ import React, { useRef } from "react";
 import { usePageRegister } from "@common/lib/router/usePageRegister";
 
 interface IProps {
-  classNames?: string[];
   parameters: any;
 }
 

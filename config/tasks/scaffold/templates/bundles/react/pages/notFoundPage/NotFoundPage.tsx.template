@@ -2,9 +2,7 @@ import css from "./NotFoundPage.module.less";
 import React, { useRef } from "react";
 import { usePageRegister } from "@common/lib/router/usePageRegister";
 
-interface IProps {
-  classNames?: string[];
-}
+interface IProps {}
 
 // prepare
 const componentName = "NotFoundPage";
