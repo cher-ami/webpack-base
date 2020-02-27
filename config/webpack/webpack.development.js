@@ -8,6 +8,7 @@ const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"
 
 // test env to get console print option
 const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
+const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
 
 /**
  * Development Webpack Configuration
@@ -133,7 +134,7 @@ const developmentConfig = {
     historyApiFallback: true,
 
     // open new browser tab when webpack dev-server is started
-    open: process.env.DEV_SERVER_OPEN,
+    open: DEV_SERVER_OPEN,
     // Write file to dist on each compile
     writeToDisk: true,
     // display error overlay on screen

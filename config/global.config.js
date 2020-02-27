@@ -23,6 +23,11 @@ module.exports = {
    */
   useProxy: false,
 
+  /**
+   * Add ash in output file name
+   */
+  outputHashName: false,
+
   // --------------------------------------------------------------------------- CLI TASK CONFIG
 
   /**
