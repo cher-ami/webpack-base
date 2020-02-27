@@ -1,37 +1,47 @@
 import css from "./NotFoundPage.module.less";
 import React, { useRef } from "react";
 import { usePageRegister } from "@common/lib/router/usePageRegister";
-import Metas from "@common/lib/react-components/metas";
-import { prepare } from "@common/helpers/prepare";
-import { merge } from "@common/lib/helpers/classNameHelper";
 
 interface IProps {
   classNames?: string[];
 }
 
 // prepare
-const { componentName, log } = prepare("NotFoundPage");
+const componentName = "NotFoundPage";
+const debug = require("debug")(`front:${componentName}`);
 
 /**
  * @name NotFoundPage
  */
 const NotFoundPage = (props: IProps) => {
-  // get current route
+  // get root ref
   const rootRef = useRef<HTMLDivElement>(null);
 
   // -------------------–-------------------–-------------------–--------------- REGISTER PAGE
 
+  /**
+   * playIn page transition
+   * (remove this exemple if not use)
+   */
+  const playIn = (): Promise<any> => {
+    return new Promise(resolve => resolve());
+  };
+
+  /**
+   * playOut page transition
+   * (remove this exemple if not use)
+   */
+  const playOut = (): Promise<any> => {
+    return new Promise(resolve => resolve());
+  };
+
   // register page
-  usePageRegister({ componentName, rootRef });
+  usePageRegister({ componentName, rootRef, playIn, playOut });
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 
   return (
-    <div className={merge([css.Root, componentName])} ref={rootRef}>
-      <Metas
-        title={`${componentName} title`}
-        description={`${componentName} description`}
-      />
+    <div className={css.Root} ref={rootRef}>
       {componentName}
     </div>
   );

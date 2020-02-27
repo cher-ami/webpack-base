@@ -1,10 +1,6 @@
 import css from "./WorkPage.module.less";
 import React, { useRef } from "react";
 import { usePageRegister } from "@common/lib/router/usePageRegister";
-import Metas from "@common/lib/react-components/metas";
-import { prepare } from "@common/helpers/prepare";
-import { merge } from "@common/lib/helpers/classNameHelper";
-import PageTransitionHelper from "@common/helpers/PageTransitionHelper";
 
 interface IProps {
   classNames?: string[];
@@ -12,13 +8,14 @@ interface IProps {
 }
 
 // prepare
-const { componentName, log } = prepare("WorkPage");
+const componentName = "WorkPage";
+const debug = require("debug")(`front:${componentName}`);
 
 /**
  * @name WorkPage
  */
 const WorkPage = (props: IProps) => {
-  // get current route
+  // get root ref
   const rootRef = useRef<HTMLDivElement>(null);
 
   // -------------------–-------------------–-------------------–--------------- REGISTER PAGE
@@ -28,7 +25,7 @@ const WorkPage = (props: IProps) => {
    * (remove this exemple if not use)
    */
   const playIn = (): Promise<any> => {
-    return PageTransitionHelper.promisePlayIn(rootRef);
+    return new Promise(resolve => resolve());
   };
 
   /**
@@ -36,7 +33,7 @@ const WorkPage = (props: IProps) => {
    * (remove this exemple if not use)
    */
   const playOut = (): Promise<any> => {
-    return PageTransitionHelper.promisePlayOut(rootRef);
+    return new Promise(resolve => resolve());
   };
 
   /**
@@ -50,11 +47,7 @@ const WorkPage = (props: IProps) => {
   // -------------------–-------------------–-------------------–--------------- RENDER
 
   return (
-    <div className={merge([css.Root, componentName])} ref={rootRef}>
-      <Metas
-        title={`${componentName} title`}
-        description={`${componentName} description`}
-      />
+    <div className={css.Root} ref={rootRef}>
       {componentName}
       <div>{props.parameters?.slug}</div>
     </div>

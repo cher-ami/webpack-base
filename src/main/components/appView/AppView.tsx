@@ -3,23 +3,22 @@ import React, { Component } from "react";
 import { IRouteMatch, Router } from "@common/lib/router/Router";
 import { EEnv } from "@common/types";
 import { isEnv, showGridByDefault } from "@common/helpers/nodeHelper";
-import { prepare } from "@common/helpers/prepare";
 import { merge } from "@common/lib/helpers/classNameHelper";
 import { atoms } from "@common/atoms/atoms";
 import { GridLayout } from "@wbe/libraries";
 import { ETransitionType, ViewStack } from "@common/lib/router/ViewStack";
 import { TPageRegisterObject } from "@common/lib/router/usePageRegister";
 
-// ------------------------------------------------------------------------------- STRUCT
+const componentName = "AppView";
+const debug = require("debug")(`front:${componentName}`);
+
+// ----------------------------------------------------------------------------- STRUCT
 
 export interface IProps {}
 
 export interface IStates {
   showGrid?: boolean;
 }
-
-// prepare
-const { componentName, log } = prepare("AppView");
 
 /**
  * @name AppView
@@ -94,7 +93,7 @@ class AppView extends Component<IProps, IStates> {
     pNewPage: TPageRegisterObject
   ): Promise<any> {
     return new Promise(async resolve => {
-      log({ pOldPage, pNewPage });
+      debug({ pOldPage, pNewPage });
       // target ref
       const oldPageRef = pOldPage?.rootRef?.current;
       const newPageRef = pNewPage?.rootRef?.current;
@@ -114,7 +113,7 @@ class AppView extends Component<IProps, IStates> {
    * When route has changed
    */
   protected routeChangedHandler(pRouteMatch: IRouteMatch) {
-    // log("Route changed", pRouteMatch);
+    // debug("Route changed", pRouteMatch);
   }
 
   /**
@@ -153,7 +152,7 @@ class AppView extends Component<IProps, IStates> {
 
   render() {
     return (
-      <div className={merge([css.Root, componentName])}>
+      <div className={merge([css.Root])}>
         {/* Grid */}
         {isEnv(EEnv.DEV) && this.state.showGrid && (
           <GridLayout

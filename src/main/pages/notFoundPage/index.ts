@@ -1,4 +1,4 @@
 import NotFoundPage from "./NotFoundPage";
 
-// Export without redux connection
+// Export without redux
 export default NotFoundPage;
