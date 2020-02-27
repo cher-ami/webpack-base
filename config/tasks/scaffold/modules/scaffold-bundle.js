@@ -3,14 +3,15 @@ const path = require("path");
 const Inquirer = require("inquirer");
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../../helpers/logs-helper");
-const debug = require("debug")("config:scaffold-bundle");
 const changeCase = require("change-case");
+const debug = require("debug")("config:scaffold-bundle");
 
 // ----------------------------------------------------------------------------- CONFIG
 
 // remove Files lib logs
 Files.setVerbose(false);
 
+const globalPaths = require("../../../global.paths");
 // get local task path
 const paths = require("../paths");
 // get local task config
@@ -35,10 +36,10 @@ const _askBundleName = () => {
   });
 };
 
-const _askCreateNewBundle = () => {
+const _askCreateNewBundle = bundleName => {
   return Inquirer.prompt({
     type: "confirm",
-    message: `Are you sure you want to continue? This action will erase all "src/" folder content, exept "common/" folder.`,
+    message: `Are you sure you want to create ${bundleName} bundle? `,
     name: "createNewBundle",
     default: false
   });
@@ -56,14 +57,14 @@ const _askCreateNewBundle = () => {
 const _bundleBuilder = async ({
   firstScaffold = false,
   templateBundleDirPath,
-  destinationFolder = paths.bundlePath,
+  destinationFolder = globalPaths.src,
   bundleName
 }) => {
   // if is not the first bundle scaffold
   if (!firstScaffold) {
     // ask if we are sure to want to create new bundle
     let createNewBundle = false;
-    await _askCreateNewBundle().then(
+    await _askCreateNewBundle(bundleName).then(
       resolve => (createNewBundle = resolve.createNewBundle)
     );
     // if response is false
@@ -140,4 +141,4 @@ const scaffoldBundle = async (firstScaffold = false) => {
   });
 };
 
-module.exports = scaffoldBundle;
+module.exports = { scaffoldBundle };
