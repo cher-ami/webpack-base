@@ -126,7 +126,7 @@ const developmentConfig = {
   devServer: {
     contentBase: globalPaths.dist,
     port: 3000,
-    open: false,
+    open: true,
     hot: true,
     inline: true,
     compress: true,
@@ -136,7 +136,7 @@ const developmentConfig = {
     writeToDisk: true,
 
     // specify to enable root proxying
-    index: "",
+    // index: "",
 
     // if use proxy option is enable
     ...(config.useProxy

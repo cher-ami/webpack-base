@@ -59,21 +59,19 @@ const _bundleBuilder = async ({
   destinationFolder = paths.bundlePath,
   bundleName
 }) => {
-  // if is not the first scaffold
+  // if is not the first bundle scaffold
   if (!firstScaffold) {
     // ask if we are sure to want to create new bundle
     let createNewBundle = false;
     await _askCreateNewBundle().then(
       resolve => (createNewBundle = resolve.createNewBundle)
     );
-
     // if response is false
     if (!createNewBundle) {
       logs.error(`No bundle created. Aborting`);
       return;
     }
   }
-
   // target new bundle folder to test if he already exist
   const targetNewBundleFolder = Files.any(`${destinationFolder}/${bundleName}`)
     .files;
@@ -87,12 +85,12 @@ const _bundleBuilder = async ({
     return;
   }
 
-  // copy template bundle directory content files in new bundle directory
+  debug(
+    `copy template bundle directory content files in new bundle directory ${destinationFolder}/${bundleName}`
+  );
   Files.any(`${templateBundleDirPath}`).copyTo(
     `${destinationFolder}/${bundleName}`
   );
-
-  //return ;
 
   // loop on each files in new directory
   Files.any(`${destinationFolder}/${bundleName}/**/**/**/*`).files.map(el => {
@@ -100,14 +98,13 @@ const _bundleBuilder = async ({
     if (el.endsWith(".template")) {
       // get new file path witout extention
       const filePathWithoutExt = `${path.parse(el).dir}/${path.parse(el).name}`;
-
       // write this new file witout extension
       Files.new(filePathWithoutExt).write(Files.getFiles(el).read());
-
       // delete old file with .template extension
       Files.getFiles(el).delete();
     }
   });
+
   logs.done("Bundle created.");
 };
 

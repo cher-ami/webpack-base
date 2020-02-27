@@ -16,7 +16,7 @@ commonConfig = {
    * The first place Webpack looks to start building the bundle.
    */
   entry: {
-    main: `${globalPaths.src}/index.ts`
+    main: `${globalPaths.src}/main/index.ts`
   },
 
   /**
@@ -33,7 +33,9 @@ commonConfig = {
       ".less",
       ".css"
     ],
-    alias: {},
+    alias: {
+      "@common": `${globalPaths.src}/common`
+    },
     modules: [globalPaths.nodeModules, globalPaths.src]
   },
 
