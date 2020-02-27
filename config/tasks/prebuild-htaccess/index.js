@@ -1,12 +1,12 @@
 const { Files } = require("@zouloux/files");
-const { logs } = require("../../../helpers/logs-helper");
+const { logs } = require("../../helpers/logs-helper");
 
 // ----------------------------------------------------------------------------- PATHS / CONFIG
 
 // config
-const globalConfig = require("../../../global.config");
+const globalConfig = require("../../global.config");
 // paths
-const paths = require("../../../global.paths");
+const paths = require("../../global.paths");
 
 // ----------------------------------------------------------------------------- MODULE
 

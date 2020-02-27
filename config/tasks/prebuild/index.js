@@ -1,5 +1,5 @@
-const { prebuildPages } = require("./modules/prebuild-pages");
-const { prebuildHtaccess } = require("./modules/prebuild-htaccess");
+const { prebuildReactPagesList } = require("../prebuild-react-pages-list");
+const { prebuildHtaccess } = require("../prebuild-htaccess");
 const {
   getInstallConfigHelper
 } = require("../../helpers/get-install-config-helper");
@@ -21,8 +21,8 @@ const prebuild = () =>
     debug("getInstallConfig file", getInstallConfig);
     if (getInstallConfig !== null && getInstallConfig.bundleType === "react") {
       debug("this is a react bundleType, continue...");
-      // prebuild pages
-      await prebuildPages();
+      // prebuild react pages list
+      await prebuildReactPagesList();
     } else {
       debug("install.config.js file doesn't exist, continue.");
     }
