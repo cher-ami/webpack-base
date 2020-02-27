@@ -1,6 +1,6 @@
 const { Files } = require("@zouloux/files");
 const { quickTemplate } = require("../../../helpers/template-helper");
-const log = require("debug")("lib:create-file");
+const debug = require("debug")("lib:create-file");
 const { logs } = require("../../../helpers/logs-helper");
 require("colors");
 
@@ -21,7 +21,7 @@ const createFile = ({
     return;
   }
 
-  log("create file with template and replace expression");
+  debug("create file with template and replace expression");
   Files.new(destinationFilePath).write(
     quickTemplate(Files.getFiles(templateFilePath).read(), replaceExpressions)
   );

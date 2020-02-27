@@ -3,7 +3,7 @@ const { Files } = require("@zouloux/files");
 
 // params
 const PLUGIN_NAME = "less-to-js-webpack-plugin";
-const log = require("debug")(`config:${PLUGIN_NAME}`);
+const debug = require("debug")(`config:${PLUGIN_NAME}`);
 
 /**
  * Less to JS Plugin
@@ -106,7 +106,7 @@ module.exports = class LessToJsPlugin {
      * (only for production build, not dev server)
      */
     compiler.hooks.beforeRun.tapPromise(PLUGIN_NAME, async compilation => {
-      log(`Prebuild less to js file...`);
+      debug(`Prebuild less to js file...`);
       return await this._buildLessToJsFile();
     });
 
@@ -115,7 +115,7 @@ module.exports = class LessToJsPlugin {
      * triggering every time that webpack recompiles on a change triggered by the watcher
      */
     compiler.hooks.watchRun.tapPromise(PLUGIN_NAME, async compilation => {
-      log({
+      debug({
         _outputFileExist: this._outputFileExist(),
         _fileAsChanged: this._fileAsChanged(compilation)
       });
@@ -123,10 +123,10 @@ module.exports = class LessToJsPlugin {
       // if output file don't exist
       // or files to watch were changed
       if (!this._outputFileExist() || this._fileAsChanged(compilation)) {
-        log(`Prebuild less to js file...`);
+        debug(`Prebuild less to js file...`);
         return await this._buildLessToJsFile();
       } else {
-        log("Prebluild nothing, matches files doesn't changed");
+        debug("Prebluild nothing, matches files doesn't changed");
       }
     });
   }

@@ -1,7 +1,6 @@
 import { MutableRefObject, useLayoutEffect } from "react";
-import debug from "debug";
 import { IActionParameters, Router } from "./Router";
-const log = debug("lib:usePageRegister");
+const debug = require("debug")("lib:usePageRegister");
 
 // ----------------------------------------------------------------------------- STRUCT
 
@@ -89,7 +88,7 @@ export function usePageRegister({
       ...newPageRegister
     };
 
-    // log the page register list
-    log(`pages register list`, pagesRegister.list);
+    // debug the page register list
+    debug(`pages register list`, pagesRegister.list);
   }, []);
 }

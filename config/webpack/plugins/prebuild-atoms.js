@@ -1,7 +1,7 @@
 const { Files } = require("@zouloux/files");
 const path = require("path");
 const paths = require("../../global.paths");
-const log = require("debug")("config:prebuild-atoms");
+const debug = require("debug")("config:prebuild-atoms");
 const changeCase = require("change-case");
 
 // ----------------------------------------------------------------------------- PRIVATE
@@ -114,10 +114,10 @@ module.exports = {
       // get template
       const template = _atomsTemplate(atomList, pOutputFilename);
 
-      log("Write new atoms file...");
+      debug("Write new atoms file...");
       Files.new(generatedFilePath).write(template);
 
-      log("Done.");
+      debug("Done.");
       resolve();
     })
 };
