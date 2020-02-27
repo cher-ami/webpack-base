@@ -4,6 +4,7 @@ const Inquirer = require("inquirer");
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../../helpers/logs-helper");
 const debug = require("debug")("config:scaffold-bundle");
+const changeCase = require("change-case");
 
 // ----------------------------------------------------------------------------- CONFIG
 
@@ -26,6 +27,14 @@ const _askBundleType = (bundleType = config.bundleType) => {
   });
 };
 
+const _askBundleName = () => {
+  return Inquirer.prompt({
+    type: "input",
+    name: "bundleName",
+    message: "What's the new bundle name?"
+  });
+};
+
 const _askCreateNewBundle = () => {
   return Inquirer.prompt({
     type: "confirm",
@@ -36,43 +45,19 @@ const _askCreateNewBundle = () => {
 };
 
 /**
- * @name _removeCurrentBundle
- * @description Remove the current bundle before create new one
- */
-const _removeCurrentBundle = async ({ destinationFolder }) => {
-  // get all fles from destinationFolder
-  const currentBundleFiles = Files.any(`${destinationFolder}/**/**/**/**/**/**`)
-    .files;
-
-  // filter each files who are not in common folder
-  currentBundleFiles.map(el => {
-    if (
-      // if el is destination folder
-      el === destinationFolder ||
-      // or if el contains "src/common folder inside path
-      // TODO common should be a variable
-      el.includes(`${destinationFolder}/common`)
-    )
-      // do nothing
-      return;
-
-    // delete the file
-    Files.any(el).delete();
-  });
-};
-
-/**
  * @name _bundleBuilder
  * @description Build bundle
  * @param firstScaffold
  * @param templateBundleDirPath
  * @param destinationFolder
+ * @param bundleName
  * @private
  */
 const _bundleBuilder = async ({
   firstScaffold = false,
   templateBundleDirPath,
-  destinationFolder = paths.bundlePath
+  destinationFolder = paths.bundlePath,
+  bundleName
 }) => {
   // if is not the first scaffold
   if (!firstScaffold) {
@@ -89,14 +74,28 @@ const _bundleBuilder = async ({
     }
   }
 
-  // remove current bundle selected files
-  await _removeCurrentBundle({ destinationFolder });
+  // target new bundle folder to test if he already exist
+  const targetNewBundleFolder = Files.any(`${destinationFolder}/${bundleName}`)
+    .files;
+
+  debug("targetNewBundleFolder.length > 0", targetNewBundleFolder.length > 0);
+  debug('bundleName === "common"', bundleName === "common");
+
+  // check if bundle exist
+  if (targetNewBundleFolder.length > 0 || bundleName === "common") {
+    logs.error(`Bundle named "${bundleName}" already exist. Aborting.`);
+    return;
+  }
 
   // copy template bundle directory content files in new bundle directory
-  Files.any(`${templateBundleDirPath}/*`).copyTo(`${destinationFolder}/`);
+  Files.any(`${templateBundleDirPath}`).copyTo(
+    `${destinationFolder}/${bundleName}`
+  );
+
+  //return ;
 
   // loop on each files in new directory
-  Files.any(`${destinationFolder}/**/**/*`).files.map(el => {
+  Files.any(`${destinationFolder}/${bundleName}/**/**/**/*`).files.map(el => {
     // if file name contains ".template" extension
     if (el.endsWith(".template")) {
       // get new file path witout extention
@@ -105,10 +104,8 @@ const _bundleBuilder = async ({
       // write this new file witout extension
       Files.new(filePathWithoutExt).write(Files.getFiles(el).read());
 
-      // delete old file
+      // delete old file with .template extension
       Files.getFiles(el).delete();
-
-      // final log
     }
   });
   logs.done("Bundle created.");
@@ -124,14 +121,24 @@ const scaffoldBundle = async (firstScaffold = false) => {
   return new Promise(async resolve => {
     // create bundle type var
     let bundleType = "";
-    // get bundle type with prompt
+    // get bundle type from prompt
     await _askBundleType().then(resolve => (bundleType = resolve.bundleType));
+    debug("bundleType", bundleType);
+
+    // create bundle name var
+    let bundleName = "";
+    // get bundle type from promt
+    await _askBundleName().then(
+      resolve => (bundleName = changeCase.paramCase(resolve.bundleName))
+    );
+    debug("bundleName", bundleName);
 
     // get template dir path
     const templateBundleDirPath = `${paths.templatesPath}/bundles/${bundleType}`;
+    debug("templateBundleDirPath", templateBundleDirPath);
 
     // scaffold bundle folder as src with the response
-    await _bundleBuilder({ firstScaffold, templateBundleDirPath });
+    await _bundleBuilder({ firstScaffold, templateBundleDirPath, bundleName });
     resolve(bundleType);
   });
 };
