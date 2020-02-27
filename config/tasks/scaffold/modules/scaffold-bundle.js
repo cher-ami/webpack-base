@@ -28,11 +28,12 @@ const _askBundleType = (bundleType = config.bundleType) => {
   });
 };
 
-const _askBundleName = () => {
+const _askBundleName = (defaultBundleName = "main") => {
   return Inquirer.prompt({
     type: "input",
     name: "bundleName",
-    message: "What's the new bundle name?"
+    message: "What's the new bundle name?",
+    default: defaultBundleName
   });
 };
 

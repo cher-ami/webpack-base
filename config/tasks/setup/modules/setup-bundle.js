@@ -1,5 +1,5 @@
 const { logs } = require("../../../helpers/logs-helper");
-const scaffoldBundle = require("../../scaffold/modules/scaffold-bundle");
+const { scaffoldBundle } = require("../../scaffold/modules/scaffold-bundle");
 const debug = require("debug")("config:setup-bundle");
 
 // ----------------------------------------------------------------------------- PATHS / CONFIG

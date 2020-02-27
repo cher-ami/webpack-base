@@ -1,6 +1,6 @@
 const { Files } = require("@zouloux/files");
-const debug = require("debug")("config:bundle-type-helper");
 const { logs } = require("./logs-helper");
+const debug = require("debug")("config:bundle-type-helper");
 
 // ----------------------------------------------------------------------------- PATHS / CONFIG
 
@@ -13,22 +13,22 @@ const paths = require("../global.paths");
 
 /**
  * Check install.config.js file
- * Check if the file exist, if not, the promise resolve null.
- * If file exist, return the full object.
- *
+ * @description Check if the file exist, if not, the promise resolve null.
+ * If file exist, return the full object write in the file.
  * @param installConfigFilePath Path to install.config.js file
+ * @return {Promise<Object|null>}
  */
 installConfigHelper = (
   installConfigFilePath = `${paths.config}/install.config.js`
 ) => {
   return new Promise(resolve => {
-    debug("Check if install.config.js exist...");
-    const installConfigFile = Files.getFiles(installConfigFilePath).files;
+    debug("Check if install.config.js file exist...");
 
+    const installConfigFile = Files.getFiles(installConfigFilePath).files;
     debug("install.config.js", installConfigFile);
 
     if (installConfigFile.length === 0) {
-      logs.error("install.config.js doesn't exist, aborting.");
+      debug("install.config.js doesn't exist, aborting.");
       resolve(null);
     }
 

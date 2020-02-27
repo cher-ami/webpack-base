@@ -13,7 +13,8 @@ const config = require("../../../global.config");
 // ----------------------------------------------------------------------------- MODULE
 
 /**
- * Init Install config
+ * Init Install config file
+ * This file contains installation informations
  * @returns {Promise<unknown>}
  */
 const setupInstallConfig = ({
