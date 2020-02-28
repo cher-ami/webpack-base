@@ -1,5 +1,6 @@
 const { prebuildReactPagesList } = require("../prebuild-react-pages-list");
 const { prebuildHtaccess } = require("../prebuild-htaccess");
+const { prebuildDotenv } = require("../prebuild-dotenv");
 const {
   getInstallConfigHelper
 } = require("../../helpers/get-install-config-helper");
@@ -16,13 +17,11 @@ const prebuild = (pEnv = null) => {
   debug("pEnv", pEnv);
 
   return new Promise(async resolve => {
-
     /**
      * Do not touch.
      */
     // prebuld bundle list for webpack
     await prebuildBundleList();
-
 
     /**
      * Optional
@@ -30,6 +29,9 @@ const prebuild = (pEnv = null) => {
      */
     // prebuild htaccess file
     await prebuildHtaccess();
+
+    // prebuild .env file
+    await prebuildDotenv();
 
     // get install config content file
     const getInstallConfig = await getInstallConfigHelper();
