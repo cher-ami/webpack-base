@@ -21,9 +21,9 @@ const productionConfig = {
 
   output: {
     path: config.outputPath,
-    filename: `[name].${
-      config.outputHashName ? "[contenthash]." : ""
-    }bundle.js`,
+    filename: config.outputHashName
+      ? `[name].[contenthash].bundle.js`
+      : `[name].bundle.js`,
     // need production APP_BASE, for that, set a ".env.production" with APP_BASE value.
     // if .env.production doesn't exist, APP_BASE from ".env" will be used
     publicPath: `${process.env.APP_BASE}/`
@@ -40,7 +40,9 @@ const productionConfig = {
      * They cannot be used together in the same config.
      */
     new MiniCssExtractPlugin({
-      filename: `[name].${config.outputHashName ? "[contenthash]." : ""}css`
+      filename: config.outputHashName
+        ? `[name].[contenthash].css`
+        : `[name].css`
     }),
 
     /**
