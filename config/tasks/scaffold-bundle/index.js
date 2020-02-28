@@ -2,21 +2,20 @@ require("colors");
 const path = require("path");
 const Inquirer = require("inquirer");
 const { Files } = require("@zouloux/files");
-const { logs } = require("../../../helpers/logs-helper");
+const { logs } = require("../../helpers/logs-helper");
 const changeCase = require("change-case");
 const debug = require("debug")("config:scaffold-bundle");
-const { quickTemplate } = require("../../../helpers/template-helper");
+const { quickTemplate } = require("../../helpers/template-helper");
 
 // ----------------------------------------------------------------------------- CONFIG
 
 // remove Files lib logs
 Files.setVerbose(false);
 
-const globalPaths = require("../../../global.paths");
 // get local task path
-const paths = require("../paths");
+const paths = require("../../global.paths");
 // get local task config
-const config = require("../config");
+const config = require("../../global.config");
 
 // ----------------------------------------------------------------------------- PRIVATE
 
@@ -59,7 +58,7 @@ const _askCreateNewBundle = bundleName => {
 const _bundleBuilder = async ({
   firstScaffold = false,
   templateBundleDirPath,
-  destinationFolder = globalPaths.src,
+  destinationFolder = paths.src,
   bundleName
 }) => {
   // if is not the first bundle scaffold
@@ -169,7 +168,7 @@ const scaffoldBundle = async (firstScaffold = false) => {
     debug("bundleName", bundleName);
 
     // get template dir path
-    const templateBundleDirPath = `${paths.templatesPath}/bundles/${bundleType}`;
+    const templateBundleDirPath = `${paths.bundlesTemplatesPath}/${bundleType}`;
     debug("templateBundleDirPath", templateBundleDirPath);
 
     // scaffold bundle folder as src with the response

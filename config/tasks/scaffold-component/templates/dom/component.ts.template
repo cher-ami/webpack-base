@@ -1,12 +1,11 @@
 import {DOMView} from "@common/lib/core/DOMView";
 import './%%upperComponentName%%.less';
-import { prepare } from "@common/helpers/prepare";
 
-// prepare
-const { componentName, log } = prepare("%%upperComponentName%%");
+const componentName = "%%upperComponentName%%";
+const debug = require("debug")(`front:${componentName}`);
 
 /**
- * @name DOMView
+ * @name %%upperComponentName%%
  */
 class %%upperComponentName%% extends DOMView {
 

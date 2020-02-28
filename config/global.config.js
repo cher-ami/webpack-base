@@ -37,6 +37,14 @@ module.exports = {
   // --------------------------------------------------------------------------- CLI TASK CONFIG
 
   /**
+   * Scaffolder
+   */
+  // Scaffold compatible folder
+  componentCompatibleFolders: ["components", "pages"],
+  // Scaffold bundle type
+  bundleType: ["react", "dom"],
+
+  /**
    * SECURITY
    * If you need to work on tasks like setup,
    * fakeMode allow to not really write/erase files.

@@ -2,8 +2,8 @@ require("colors");
 const path = require("path");
 const Inquirer = require("inquirer");
 const changeCase = require("change-case");
-const createFile = require("../helpers/create-file");
-const { logs } = require("../../../helpers/logs-helper");
+const createFile = require("./helpers/create-file");
+const { logs } = require("../../helpers/logs-helper");
 const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:scaffold-component");
 
@@ -12,12 +12,10 @@ const debug = require("debug")("config:scaffold-component");
 // remove Files lib logs
 Files.setVerbose(false);
 
-// get global paths
-const globalPaths = require("../../../global.paths");
 // get local task path
-const paths = require("../paths");
+const paths = require("../../global.paths");
 // get local task config
-const config = require("../config");
+const config = require("../../global.config");
 
 // ----------------------–----------------------–----------------------–-------- PRIVATE
 
@@ -76,7 +74,7 @@ const _reactComponentBuilder = ({
   const componentType = subFolder === "pages" ? "page" : "component";
   // scaffold component file
   createFile({
-    templateFilePath: `${paths.templatesPath}/components/react/${componentType}.tsx.template`,
+    templateFilePath: `${paths.componentsTemplatesPath}/react/${componentType}.tsx.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.tsx`,
     replaceExpressions: { upperComponentName }
   });
@@ -85,14 +83,14 @@ const _reactComponentBuilder = ({
   const indexType = `index${connectToStore ? "-redux" : ""}`;
   // scaffold index
   createFile({
-    templateFilePath: `${paths.templatesPath}/components/react/${indexType}.ts.template`,
+    templateFilePath: `${paths.componentsTemplatesPath}/react/${indexType}.ts.template`,
     destinationFilePath: `${componentPath}/index.ts`,
     replaceExpressions: { upperComponentName }
   });
 
   // scaffold less module
   createFile({
-    templateFilePath: `${paths.templatesPath}/components/react/component.less.template`,
+    templateFilePath: `${paths.componentsTemplatesPath}/react/component.less.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.module.less`,
     replaceExpressions: { upperComponentName }
   });
@@ -107,13 +105,13 @@ const _reactComponentBuilder = ({
 const _domComponentBuilder = ({ componentPath, upperComponentName }) => {
   // scaffold component file
   createFile({
-    templateFilePath: `${paths.templatesPath}/components/dom/component.ts.template`,
+    templateFilePath: `${paths.componentsTemplatesPath}/dom/component.ts.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.ts`,
     replaceExpressions: { upperComponentName }
   });
   // scaffold less module
   createFile({
-    templateFilePath: `${paths.templatesPath}/components/dom/component.less.template`,
+    templateFilePath: `${paths.componentsTemplatesPath}/dom/component.less.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.less`,
     replaceExpressions: { upperComponentName }
   });
@@ -122,7 +120,7 @@ const _domComponentBuilder = ({ componentPath, upperComponentName }) => {
 // ----------------------–----------------------–----------------------–-------- PUBLIC
 
 /**
- * @name scaffoldComponent
+ * @name index
  * @description Ask question and scaffold a component with a specific script template
  * @returns {Promise<any>}
  */
@@ -130,7 +128,7 @@ const scaffoldComponent = pComponentType => {
   return new Promise(async resolve => {
     // prepare
 
-    const bundleFolderList = Files.getFolders(`${globalPaths.src}/*`).files;
+    const bundleFolderList = Files.getFolders(`${paths.src}/*`).files;
     debug("bundleFolderList", bundleFolderList);
 
     // remove common from bundle list
@@ -138,7 +136,7 @@ const scaffoldComponent = pComponentType => {
       // in bundle list folder
       bundleFolderList
         // do not keep common folder
-        .filter(el => el !== `${globalPaths.src}/common`)
+        .filter(el => el !== `${paths.src}/common`)
         // keep only end of path
         .map(el => path.basename(el));
 
@@ -182,7 +180,7 @@ const scaffoldComponent = pComponentType => {
     }
 
     // Base path of the component (no extension at the end here)
-    let componentPath = `${globalPaths.src}/${bundleFolder}/${subFolder}/${lowerComponentName}`;
+    let componentPath = `${paths.src}/${bundleFolder}/${subFolder}/${lowerComponentName}`;
     debug("component will be created here: componentPath", componentPath);
 
     /**

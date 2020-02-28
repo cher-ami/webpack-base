@@ -4,8 +4,8 @@ const debug = require("debug")("config:scaffold");
 
 // ----------------------------------------------------------------------------- COMMON TASKS
 
-const { scaffoldComponent } = require("./modules/scaffold-component");
-const { scaffoldBundle } = require("./modules/scaffold-bundle");
+const { scaffoldComponent } = require("../scaffold-component");
+const { scaffoldBundle } = require("../scaffold-bundle");
 
 /**
  * Ask bundle Type to
