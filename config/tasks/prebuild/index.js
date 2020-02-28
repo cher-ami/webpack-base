@@ -10,28 +10,23 @@ const debug = require("debug")("config:prebuild");
 
 /**
  * Execute all prebuild modules
+ * @param {string|null} pEnv: current envName (staging, qa, ...), can be null
  */
-const prebuild = () =>
+const prebuild = pEnv =>
   new Promise(async resolve => {
-    debug("read install.config.js content file...");
-
+    // prebuld bundle list for webpack
+    await prebuildBundleList();
+    // prebuild htaccess
+    await prebuildHtaccess();
     // get install config content file
     const getInstallConfig = await getInstallConfigHelper();
-
     debug("getInstallConfig file", getInstallConfig);
+
     if (getInstallConfig !== null && getInstallConfig.bundleType === "react") {
       debug("this is a react bundleType, continue...");
       // prebuild react pages list
       await prebuildReactPagesList();
-    } else {
-      debug("install.config.js file doesn't exist, continue.");
     }
-
-    // prebuld bundle list for webpack
-    await prebuildBundleList();
-
-    // prebuild htaccess
-    await prebuildHtaccess();
 
     resolve();
   });

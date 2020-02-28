@@ -19,14 +19,25 @@ const tasks = [
   "setup"
 ];
 
-// add commands
+// map all tasks and add commands
 tasks.map(el => {
-  commands.add(el, async () => eval(el)());
+  /**
+   * options param is an object who contains string option
+   * we set when we call script.
+   * ex:
+   * node script.js --env hello
+   * options will be { env: hello }
+   */
+  commands.add(el, options => eval(el)(options));
 });
 
-// start
+// start command
 commands.start(command => {
+  // ma each command
   tasks.map(el => {
+    /**
+     * commands.run second arg {} is default options we have previously passed
+     */
     if (command === el) commands.run(el, {});
   });
 });

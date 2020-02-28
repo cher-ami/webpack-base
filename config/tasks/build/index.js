@@ -4,6 +4,7 @@ const { execSync } = require("@solid-js/cli");
 const { clean } = require("../clean");
 const { prebuild } = require("../prebuild");
 const { sprites } = require("../sprites");
+const debug = require("debug")("config:build");
 
 // ----------------------------------------------------------------------------- PRIVATE
 
@@ -30,19 +31,23 @@ const _build = async () => {
  * Init Start
  * @returns {Promise<unknown>}
  */
-const build = () =>
-  new Promise(async resolve => {
+const build = pVar => {
+  // target env variable
+  const env = pVar.env ? pVar.env : null;
+  debug("env passed as param via 'commands' ", env);
+
+  return new Promise(async resolve => {
     // clean folder
     await clean();
     // start prebuid
-    await prebuild();
+    await prebuild(env);
     // compile sprites
     await sprites();
-
     // start dev server
     await _build();
     // end
     resolve();
   });
+};
 
 module.exports = { build };
