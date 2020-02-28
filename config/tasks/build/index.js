@@ -14,9 +14,11 @@ const { sprites } = require("../sprites");
  */
 const _build = async () => {
   logs.start("Start build...");
-  // start webpack
+
+  // NOTE: env-cmd -f .env.production --fallback: target ".env.production" file first
+  // and fallback on ".env" if first one doesn't exist.
   await execSync(
-    "NODE_ENV=production webpack -p --config config/webpack/webpack.production.js",
+    "NODE_ENV=production env-cmd -f .env.production --fallback webpack -p --config config/webpack/webpack.production.js",
     3
   );
   logs.done();

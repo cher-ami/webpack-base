@@ -24,7 +24,9 @@ const productionConfig = {
     filename: `[name].${
       config.outputHashName ? "[contenthash]." : ""
     }bundle.js`,
-    publicPath: process.env.APP_BASE + "/"
+    // need production APP_BASE, for that, set a ".env.production" with APP_BASE value.
+    // if .env.production doesn't exist, APP_BASE from ".env" will be used
+    publicPath: `${process.env.APP_BASE}/`
   },
 
   /**
@@ -42,6 +44,17 @@ const productionConfig = {
     }),
 
     /**
+     * webpack-bundle-analyzer
+     * @doc https://github.com/webpack-contrib/webpack-bundle-analyzer
+     *
+     */
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      analyzerMode: "static",
+      defaultSizes: "gzip"
+    })
+
+    /**
      * CopyWebpackPlugin
      * Copies files from target to destination folder.
      */
@@ -54,17 +67,6 @@ const productionConfig = {
         }
       ]),
      */
-
-    /**
-     * webpack-bundle-analyzer
-     * @doc https://github.com/webpack-contrib/webpack-bundle-analyzer
-     *
-     */
-    new BundleAnalyzerPlugin({
-      openAnalyzer: false,
-      analyzerMode: "static",
-      defaultSizes: "gzip"
-    })
   ],
 
   /**

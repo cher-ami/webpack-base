@@ -90,7 +90,9 @@ commonConfig = {
      */
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-      "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
+      "process.env.DEBUG": JSON.stringify(process.env.DEBUG),
+      "process.env.APP_BASE": JSON.stringify(process.env.APP_BASE),
+      "process.env.APP_URL": JSON.stringify(process.env.APP_URL)
     }),
 
     /**
@@ -126,13 +128,16 @@ commonConfig = {
        * Copy image files to build folder.
        */
       {
-        test: /\.(?:ico|gif|png|jpg|jpeg|webp|svg)$/i,
+        test: /\.(?:ico|gif|png|jpg|jpeg|webp|mp4)$/i,
         loader: "file-loader",
         options: {
           name: "[path][name].[ext]",
-          // prevent display of src/ in filename
-          // TODO pause problème avec le sprite
-          context: "src/common"
+          // prevent display of "src/common/" in filename
+          context: "src/common",
+          publicPath:
+            process.env.NODE_ENV === "development"
+              ? "/"
+              : `${process.env.APP_BASE}/`
         }
       },
 
@@ -146,9 +151,23 @@ commonConfig = {
         options: {
           limit: 8192,
           name: "[path][name].[ext]",
-          // prevent display of src/ in filename
-          context: "src/common"
+          // prevent display of "src/common/" in filename
+          context: "src/common",
+          publicPath:
+            process.env.NODE_ENV === "development"
+              ? "/"
+              : `${process.env.APP_BASE}/`
         }
+      },
+
+      /**
+       * Raw file
+       * Load inline files in bundle
+       * doc: https://www.npmjs.com/package/raw-loader
+       */
+      {
+        test: /\.svg$/,
+        use: "raw-loader"
       }
     ]
   }
