@@ -16,7 +16,14 @@ const _startDevServer = async () => {
   logs.start("Start dev server...");
   // start webpack
   await execSync(
-    "NODE_ENV=development env-cmd -f .env webpack-dev-server --config config/webpack/webpack.development.js",
+    [
+      // this value will never change
+      `NODE_ENV=development`,
+      // target .env, this value will never change
+      `env-cmd -f .env webpack-dev-server`,
+      // start webpack devServer
+      `--config config/webpack/webpack.development.js`
+    ].join(" "),
     3
   );
 };
@@ -35,7 +42,6 @@ const dev = () =>
     await prebuild();
     // compile sprites
     await sprites();
-
     // start dev server
     await _startDevServer();
     // end

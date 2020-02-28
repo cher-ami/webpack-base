@@ -16,10 +16,16 @@ const debug = require("debug")("config:build");
 const _build = async () => {
   logs.start("Start build...");
 
-  // NOTE: env-cmd -f .env.production --fallback: target ".env.production" file first
-  // and fallback on ".env" if first one doesn't exist.
   await execSync(
-    "NODE_ENV=production env-cmd -f .env.production --fallback webpack -p --config config/webpack/webpack.production.js",
+    [
+      // this value will never change
+      `NODE_ENV=production`,
+      // target ".env.production" file first and fallback on ".env" if first one doesn't exist.
+      // NOTE: you can comment this line if you set env-cmd in parent script call.
+      `env-cmd -f .env.production --fallback`,
+      // webpack build
+      `webpack -p --config config/webpack/webpack.production.js`
+    ].join(" "),
     3
   );
   logs.done();
