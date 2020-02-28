@@ -83,7 +83,7 @@ commonConfig = {
      * Manifest plugin
      * @doc https://github.com/danethurber/webpack-manifest-plugin
      */
-    // new ManifestPlugin(),
+    ...(config.buildManifestFile ? [new ManifestPlugin()] : []),
 
     /**
      * Define Plugin
