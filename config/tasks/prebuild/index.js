@@ -12,23 +12,36 @@ const debug = require("debug")("config:prebuild");
  * Execute all prebuild modules
  * @param {string|null} pEnv: current envName (staging, qa, ...), can be null
  */
-const prebuild = pEnv =>
-  new Promise(async resolve => {
+const prebuild = (pEnv = null) => {
+  debug("pEnv", pEnv);
+
+  return new Promise(async resolve => {
+
+    /**
+     * Do not touch.
+     */
     // prebuld bundle list for webpack
     await prebuildBundleList();
-    // prebuild htaccess
+
+
+    /**
+     * Optional
+     * These brebuild tasks can be removed and you can add your own.
+     */
+    // prebuild htaccess file
     await prebuildHtaccess();
+
     // get install config content file
     const getInstallConfig = await getInstallConfigHelper();
-    debug("getInstallConfig file", getInstallConfig);
-
+    // if extist and we are on react bundle type
     if (getInstallConfig !== null && getInstallConfig.bundleType === "react") {
-      debug("this is a react bundleType, continue...");
-      // prebuild react pages list
+      debug("this is a react bundleType, prebuild react pages list...");
       await prebuildReactPagesList();
     }
 
+    // end
     resolve();
   });
+};
 
 module.exports = { prebuild };
