@@ -25,6 +25,7 @@ module.exports = {
 
   /**
    * Add hash in output file name
+   * Effective in production mode only
    */
   outputHashName: true,
 
@@ -34,7 +35,7 @@ module.exports = {
    */
   buildManifestFile: false,
 
-  // --------------------------------------------------------------------------- CLI TASK CONFIG
+  // --------------------------------------------------------------------------- CLI / TASK CONFIG
 
   /**
    * Prebuild
