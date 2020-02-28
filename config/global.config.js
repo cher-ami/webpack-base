@@ -37,10 +37,20 @@ module.exports = {
   // --------------------------------------------------------------------------- CLI TASK CONFIG
 
   /**
+   * Prebuild
+   */
+  // prebuild .htaccess file
+  prebuildHtaccess: false,
+
+  // prebuild .env file
+  prebuildDotEnv: false,
+
+  /**
    * Scaffolder
    */
   // Scaffold compatible folder
   componentCompatibleFolders: ["components", "pages"],
+
   // Scaffold bundle type
   bundleType: ["react", "dom"],
 

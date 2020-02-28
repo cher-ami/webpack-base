@@ -7,6 +7,13 @@ const {
 const { prebuildBundleList } = require("../prebuild-bundle-list/index");
 const debug = require("debug")("config:prebuild");
 
+// ----------------------------------------------------------------------------- PATHS / CONFIG
+
+// config
+const config = require("../../global.config");
+// paths
+const paths = require("../../global.paths");
+
 // ----------------------------------------------------------------------------- PUBLIC
 
 /**
@@ -23,16 +30,16 @@ const prebuild = (pEnv = null) => {
     // prebuld bundle list for webpack
     await prebuildBundleList();
 
-    /**
-     * Optional
-     * These brebuild tasks can be removed and you can add your own.
-     */
     // prebuild htaccess file
-    await prebuildHtaccess();
+    if (config.prebuildHtaccess) await prebuildHtaccess();
 
     // prebuild .env file
-    await prebuildDotenv();
+    if (config.prebuildDotEnv) await prebuildDotenv(pEnv);
 
+    /**
+     * Optional
+     * These brebuild-tasks can be removed and you can add your own.
+     */
     // get install config content file
     const getInstallConfig = await getInstallConfigHelper();
     // if extist and we are on react bundle type
