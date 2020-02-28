@@ -49,7 +49,7 @@ module.exports = {
    * If you need to work on tasks like setup,
    * fakeMode allow to not really write/erase files.
    */
-  fakeMode: true,
+  fakeMode: false,
 
   /**
    * Show log done for x ms.
