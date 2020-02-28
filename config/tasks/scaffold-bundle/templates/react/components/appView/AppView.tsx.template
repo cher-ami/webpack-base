@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { IRouteMatch, Router } from "@common/lib/router/Router";
 import { EEnv } from "@common/types";
 import { isEnv, showGridByDefault } from "@common/helpers/nodeHelper";
-import { merge } from "@common/lib/helpers/classNameHelper";
 import { atoms } from "@common/atoms/atoms";
 import { GridLayout } from "@wbe/libraries";
 import { ETransitionType, ViewStack } from "@common/lib/router/ViewStack";
@@ -23,7 +22,6 @@ export interface IStates {
 /**
  * @name AppView
  * @description First App Component entry point
- * This component instanciate router stack
  */
 class AppView extends Component<IProps, IStates> {
   // React view stack, showing pages when route changes
@@ -81,11 +79,9 @@ class AppView extends Component<IProps, IStates> {
   // --------------------------------------------------------------------------- HANDLERS
 
   /**
-   * Transition manager between all React pages.
+   * Transition manager between all pages.
    * Useful if you want a custom transition behavior other than PAGE_SEQUENTIAL or PAGE_CROSSED.
-   * You can setup a generic transition between all pages and do special cases here.
-   * If you want to act on pages beyond just playIn and playOut methods, it's recommended to create an interface or an abstract.
-   * To enable this feature, set prop transitionType to ETransitionType.CONTROLLED onto ReactViewStack component.
+   * To enable this feature, set prop transitionType to ETransitionType.CONTROLLED onto ViewStack component.
    * @return {Promise<any>}
    */
   protected transitionControl(
@@ -152,7 +148,7 @@ class AppView extends Component<IProps, IStates> {
 
   render() {
     return (
-      <div className={merge([css.Root])}>
+      <div className={css.Root}>
         {/* Grid */}
         {isEnv(EEnv.DEV) && this.state.showGrid && (
           <GridLayout
@@ -188,8 +184,7 @@ class AppView extends Component<IProps, IStates> {
           {/* View Stack */}
           <ViewStack
             ref={r => (this._viewStack = r)}
-            allowSamePageTransition={["WorkPage"]}
-            transitionType={ETransitionType.PAGE_CROSSED}
+            transitionType={ETransitionType.PAGE_SEQUENTIAL}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}
           />
