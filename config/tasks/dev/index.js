@@ -20,9 +20,9 @@ const _startDevServer = async () => {
       // this value will never change
       `NODE_ENV=development`,
       // target .env, this value will never change
-      `env-cmd -f .env webpack-dev-server`,
+      `env-cmd -f .env`,
       // start webpack devServer
-      `--config config/webpack/webpack.development.js`
+      ` webpack-dev-server --config config/webpack/webpack.development.js`
     ].join(" "),
     3
   );
