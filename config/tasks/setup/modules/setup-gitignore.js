@@ -17,15 +17,11 @@ const config = require("../../../global.config");
  * @returns {Promise<unknown>}
  */
 const setupGitignore = ({
-  configFileName = "install.config.js",
   gitignorePath = paths.gitignore,
   logDoneDelay = config.logDoneDelay,
   fakeMode = config.fakeMode
 }) => {
-  debug("setupGitignore params:", {
-    configFileName,
-    gitignorePath
-  });
+  debug("setupGitignore params:", { gitignorePath });
 
   return new Promise(resolve => {
     logs.start(`Setup .gitignore file...`);
@@ -34,7 +30,8 @@ const setupGitignore = ({
         return (
           fileContent
             // remove install.cache, we need to add it into git
-            .replace(/config\/install.config.js/, `# config/${configFileName}`)
+            .replace(/config\/install.config.js/, `# config/install.config.js`)
+            .replace(/src\/main/, `# src/main`)
         );
       });
     } else {
