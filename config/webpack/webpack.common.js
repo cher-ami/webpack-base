@@ -10,10 +10,6 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 const paths = require("../global.paths");
 const config = require("../global.config");
 
-// test env
-const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
-const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
-
 // ----------------------------------------------------------------------------- CONFIG
 
 /**
