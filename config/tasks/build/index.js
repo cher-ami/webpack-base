@@ -16,18 +16,24 @@ const debug = require("debug")("config:build");
 const _build = async () => {
   logs.start("Start build...");
 
-  await execSync(
-    [
-      // this value will never change
-      `NODE_ENV=production`,
-      // target ".env.production" file first and fallback on ".env" if first one doesn't exist.
-      // NOTE: you can comment this line if you set env-cmd in parent script call.
-      `env-cmd -f .env.production --fallback`,
-      // webpack build
-      `webpack -p --config config/webpack/webpack.production.js`
-    ].join(" "),
-    3
-  );
+  try {
+    await execSync(
+      [
+        // this value will never change
+        `NODE_ENV=production`,
+        // target ".env.production" file first and fallback on ".env" if first one doesn't exist.
+        // NOTE: you can comment this line if you set env-cmd in parent script call.
+        `env-cmd -f .env.production --fallback`,
+        // webpack build
+        `webpack -p --config config/webpack/webpack.production.js`
+      ].join(" "),
+      3
+    );
+  } catch (e) {
+    logs.error("Webpack build failed. Exit.", e);
+    process.exit(1);
+  }
+
   logs.done();
 };
 
@@ -39,16 +45,23 @@ const _build = async () => {
  */
 const build = pVar => {
   // target env variable
-  const env = pVar.env ? pVar.env : null;
-  debug("env passed as param via 'commands' ", env);
+  const envName = pVar.env ? pVar.env : null;
+  debug("env passed as param via 'commands' ", envName);
 
   return new Promise(async resolve => {
+    /**
+     * Before build
+     */
     // clean folder
     await clean();
     // start prebuid
-    await prebuild(env);
+    await prebuild(envName);
     // compile sprites
     await sprites();
+
+    /**
+     * Build
+     */
     // start dev server
     await _build();
     // end
