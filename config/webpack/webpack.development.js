@@ -2,13 +2,19 @@ const globalPaths = require("../global.paths");
 const webpack = require("webpack");
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
-const config = require("../global.config");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+
+// ----------------------------------------------------------------------------- GLOBAL
+
+const paths = require("../global.paths");
+const config = require("../global.config");
 
 // test env
 const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
 const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
+
+// ----------------------------------------------------------------------------- CONFIG
 
 /**
  * Development Webpack Configuration

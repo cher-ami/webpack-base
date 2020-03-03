@@ -1,5 +1,3 @@
-const paths = require("../global.paths");
-const config = require("../global.config");
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -8,6 +6,13 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+
+// ----------------------------------------------------------------------------- GLOBAL
+
+const paths = require("../global.paths");
+const config = require("../global.config");
+
+// ----------------------------------------------------------------------------- CONFIG
 
 /**
  * Production Webpack Configuration
@@ -54,21 +59,20 @@ const productionConfig = {
       openAnalyzer: false,
       analyzerMode: "static",
       defaultSizes: "gzip"
-    })
+    }),
 
     /**
      * CopyWebpackPlugin
      * Copies files from target to destination folder.
      */
-    /*
-      new CopyWebpackPlugin([
-        {
-          from: config.outputPath,
-          to: "/",
-          ignore: ["*.DS_Store"]
-        }
-      ]),
-     */
+
+    new CopyWebpackPlugin([
+      {
+        from: config.outputPath,
+        to: "/",
+        ignore: ["*.DS_Store", ".gitkeep", ".*"]
+      }
+    ])
   ],
 
   /**
@@ -119,12 +123,12 @@ const productionConfig = {
    * Production minimizing of JavaSvript and CSS assets.
    */
   optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
-  },
-
-  stats: {
-    all: false,
-    assets: true
+    minimizer: [
+      new TerserJSPlugin(),
+      new OptimizeCSSAssetsPlugin({
+        assetNameRegExp: /\.main\.css$/g
+      })
+    ]
   }
 };
 

@@ -1,11 +1,20 @@
-const globalPaths = require("../global.paths");
-const config = require("../global.config");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
+
+// ----------------------------------------------------------------------------- GLOBAL
+
+const paths = require("../global.paths");
+const config = require("../global.config");
+
+// test env
+const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
+const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
+
+// ----------------------------------------------------------------------------- CONFIG
 
 /**
  * Common Webpack Configuration
@@ -15,7 +24,7 @@ commonConfig = {
    * Entry
    * The first place Webpack looks to start building the bundle.
    */
-  entry: `${globalPaths.src}/bundles.ts`,
+  entry: `${paths.src}/bundles.ts`,
 
   /**
    * Resolve
@@ -32,9 +41,9 @@ commonConfig = {
       ".css"
     ],
     alias: {
-      "@common": `${globalPaths.src}/common`
+      "@common": `${paths.src}/common`
     },
-    modules: [globalPaths.nodeModules, globalPaths.src]
+    modules: [paths.nodeModules, paths.src]
   },
 
   /**
@@ -64,7 +73,7 @@ commonConfig = {
       ? [
           new HtmlWebpackPlugin({
             title: require("../../package").name,
-            template: globalPaths.webpackTemplatePath + "/index.html.template",
+            template: paths.webpackTemplatePath + "/index.html.template",
             filename: "index.html"
           })
         ]
@@ -75,7 +84,7 @@ commonConfig = {
      * @doc https://github.com/mrsteele/dotenv-webpack
      */
     new Dotenv({
-      path: globalPaths.env,
+      path: paths.env,
       systemvars: true
     }),
 
@@ -101,9 +110,9 @@ commonConfig = {
      * and expose it in generated javascript file.
      */
     new lessToJsPlugin({
-      watcher: globalPaths.atomsFilesToWatch,
-      outputPath: globalPaths.atomsPath,
-      outputFilename: globalPaths.atomsGeneratedFilename
+      watcher: paths.atomsFilesToWatch,
+      outputPath: paths.atomsPath,
+      outputFilename: paths.atomsGeneratedFilename
     })
   ],
 
