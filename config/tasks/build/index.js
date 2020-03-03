@@ -9,7 +9,7 @@ const debug = require("debug")("config:build");
 // ----------------------------------------------------------------------------- PRIVATE
 
 /**
- * Start webpack dev server
+ * Start webpack build
  * @returns {Promise<void>}
  * @private
  */
