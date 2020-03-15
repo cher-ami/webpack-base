@@ -150,3 +150,39 @@ export function countWith(
   // Return results
   return results;
 }
+
+/**
+ * Split Array Of equal Chunks
+ * ex:
+ * arr = [1,2,3,4,5,6,7,8,9] can be split on 2 arrays
+ * splitArrayToEqualChunks(arr, 2)
+ * Will return [[1,2,3,4,5], [6,7,8,9]]
+ * @param pArray
+ * @param pNumber
+ * @returns {Array}
+ */
+export const splitArrayToEqualChunks = (pArray: any[], pNumber: number) => {
+  let rest = pArray.length % pNumber,
+    restUsed = rest,
+    partLength = Math.floor(pArray.length / pNumber),
+    result = [];
+
+  for (let i = 0; i < pArray.length; i += partLength) {
+    let end = partLength + i,
+      add = false;
+
+    if (rest !== 0 && restUsed) {
+      end++;
+      restUsed--;
+      add = true;
+    }
+
+    result.push(pArray.slice(i, end));
+
+    if (add) {
+      i++;
+    }
+  }
+  return result;
+};
+
