@@ -23,7 +23,7 @@ const _build = async () => {
         `NODE_ENV=production`,
         // target ".env.production" file first and fallback on ".env" if first one doesn't exist.
         // NOTE: you can comment this line if you set env-cmd in parent script call.
-        `env-cmd -f .env.production --fallback`,
+        `env-cmd --no-override -f .env.production --fallback`,
         // webpack build
         `webpack -p --config config/webpack/webpack.production.js`
       ].join(" "),
