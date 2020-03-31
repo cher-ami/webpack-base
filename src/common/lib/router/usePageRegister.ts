@@ -1,6 +1,7 @@
-import { MutableRefObject, useLayoutEffect } from "react";
+import { MutableRefObject, useEffect, useLayoutEffect, useMemo } from "react";
+import debug from "debug";
 import { IActionParameters, Router } from "./Router";
-const debug = require("debug")("lib:usePageRegister");
+const log = debug("lib:usePageRegister");
 
 // ----------------------------------------------------------------------------- STRUCT
 
@@ -33,6 +34,10 @@ export type TPageRegisterObject = {
   actionName?: string;
   // action parameters
   actionParameters?: IActionParameters;
+  // page is ready state allow to now if page is ready (data fetched or whatever...)
+  isReady?: boolean;
+  // wait bool isReady pass to true via promise
+  waitIsReadyPromise?: () => Promise<any>;
 };
 
 // ----------------------------------------------------------------------------- ACCESSOR
@@ -63,14 +68,35 @@ export function usePageRegister({
   rootRef,
   actionName = Router.DEFAULT_ACTION_NAME,
   stackName = Router.DEFAULT_STACK_NAME,
-  actionParameters
+  actionParameters,
+  isReady = true
 }: TPageRegisterObject) {
+  /**
+   * Page is ready deffered promise
+   * Create a promise and get resolve anywhere
+   */
+  const readyDeferred = useMemo(() => {
+    log("creating deffered");
+    const deffered: any = {};
+    deffered.promise = new Promise(resolve => {
+      deffered.resolve = resolve;
+    });
+    return deffered;
+  }, []);
+
+  // resolve deferred if isReady param is true
+  useEffect(() => {
+    if (isReady) {
+      readyDeferred?.resolve("readyDeferred Promise is resolved!");
+    }
+  }, [isReady]);
+
   /**
    * Register pages before render
    */
   useLayoutEffect(() => {
     // Build a new page register object
-    const newPageRegister: TPagesRegister = {
+    const newPageRegister = {
       [currentPath]: {
         componentName,
         playIn,
@@ -78,7 +104,9 @@ export function usePageRegister({
         rootRef,
         stackName,
         actionName,
-        actionParameters
+        actionParameters,
+        isReady,
+        waitIsReadyPromise: () => readyDeferred.promise
       }
     };
 
@@ -88,7 +116,7 @@ export function usePageRegister({
       ...newPageRegister
     };
 
-    // debug the page register list
-    debug(`pages register list`, pagesRegister.list);
+    // log the page register list
+    log(`pages register list`, pagesRegister.list);
   }, []);
 }
