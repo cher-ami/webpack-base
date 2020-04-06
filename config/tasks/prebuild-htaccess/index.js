@@ -20,7 +20,7 @@ const prebuildHtaccess = () => {
   const newFilePath = `${globalConfig.outputPath}/.htaccess`;
   // target file
   const templateFilePath =
-    paths.config + "/tasks/prebuild/templates/.htaccess.template";
+    paths.config + "/tasks/prebuild-htaccess/templates/.htaccess.template";
   // create file
   Files.new(newFilePath).write(Files.getFiles(templateFilePath).read());
 
