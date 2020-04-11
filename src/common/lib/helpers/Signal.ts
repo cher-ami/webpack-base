@@ -2,6 +2,7 @@ import { Disposable } from "../core/Disposable";
 
 /**
  * Interface describing a listener.
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
  */
 export interface IListener {
   scope: any;
@@ -70,7 +71,7 @@ export class Signal extends Disposable {
       scope: pScope,
       handler: pHandler,
       once: pOnce,
-      id: ++this._id
+      id: ++this._id,
     });
 
     return this._id;
@@ -89,7 +90,7 @@ export class Signal extends Disposable {
     let listenersToRemove: IListener[] = [];
     let listenerIndex = 0;
 
-    results = this._listeners.filter(currentListener => {
+    results = this._listeners.filter((currentListener) => {
       // Call the listener
       currentResult = currentListener.handler.apply(
         currentListener.scope,

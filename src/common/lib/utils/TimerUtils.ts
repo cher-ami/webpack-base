@@ -1,6 +1,10 @@
 import TweenLite from "gsap/all";
 import { limitRange } from "./mathUtils";
 
+/**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
+
 export interface IFrameHandler {
   externalHandler: (pEvent: Event) => void;
   proxyHandler: (pEvent: Event) => void;
@@ -19,7 +23,7 @@ export class TimerUtils {
         window!["mozRequestAnimationFrame"] ||
         window!["oRequestAnimationFrame"] ||
         window!["msRequestAnimationFrame"] ||
-        function(pCallback) {
+        function (pCallback) {
           window.setTimeout(pCallback, 1000 / TimerUtils.__fps);
         };
     }
@@ -60,7 +64,7 @@ export class TimerUtils {
     pHandler: (pEvent: Event) => void
   ): void {
     // Wrap the handler in a proxy function to keep the scope target
-    let proxyHandler = function(pEvent: Event): void {
+    let proxyHandler = function (pEvent: Event): void {
       pHandler.call(pTarget, pEvent);
     };
 
@@ -70,7 +74,7 @@ export class TimerUtils {
     // Store the proxy and external handler association for future deletion
     this.__framesHandlers.push({
       externalHandler: pHandler,
-      proxyHandler: proxyHandler
+      proxyHandler: proxyHandler,
     });
   }
 

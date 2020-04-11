@@ -1,3 +1,7 @@
+/**
+ * @copyright Original by Alexis Bouhet - https://zouloux.com
+ */
+
 const { Files } = require("@zouloux/files");
 const imagemin = require("imagemin");
 const imageminJpegtran = require("imagemin-jpegtran");
@@ -36,7 +40,7 @@ module.exports = {
     pAddDotMinAndDoNotOverride,
     pVerbose = true
   ) =>
-    new Promise(resolve => {
+    new Promise((resolve) => {
       // Clone default config and override with custom config
       const pngConfig = { ...imageminConfig.defaultPNGSettings, ...pPngConfig };
 
@@ -58,16 +62,16 @@ module.exports = {
             imageminJpegtran(),
 
             // @see : https://github.com/imagemin/imagemin-pngquant
-            imageminPngquant(pngConfig)
-          ]
+            imageminPngquant(pngConfig),
+          ],
         }
       )
         // Finished
-        .then(files => {
+        .then((files) => {
           // If we need to add min extension
           if (pAddDotMinAndDoNotOverride) {
             // Browse images inside temp folder
-            pInputFiles.map(file => {
+            pInputFiles.map((file) => {
               // Read file extension
               const ext = path.extname(file);
 
@@ -99,7 +103,7 @@ module.exports = {
 
           // Show files
           pVerbose &&
-            files.map(file => {
+            files.map((file) => {
               const customConfigText =
                 pPngConfig == null || Object.keys(pPngConfig).length === 0
                   ? "default config."
@@ -127,7 +131,7 @@ module.exports = {
       `${paths.srcPath}*/!(${path.basename(
         paths.spritesFolder
       )})/**/${imagesMiniMatch}`
-    ).all(imageFile => {
+    ).all((imageFile) => {
       // Skip already minified images
       const imageBaseName = path.basename(imageFile, path.extname(imageFile));
       if (imageBaseName.lastIndexOf(".min") === imageBaseName.length - 4) {
@@ -140,7 +144,7 @@ module.exports = {
 
       // Get override settings for this file
       let customConfig = {};
-      Object.keys(imageminConfig.settingOverride).map(configPath => {
+      Object.keys(imageminConfig.settingOverride).map((configPath) => {
         if (imageFile.indexOf(configPath) > 0) {
           customConfig = imageminConfig.settingOverride[configPath];
         }
@@ -157,7 +161,7 @@ module.exports = {
     });
 
     // Start log
-    const totalImages = promises.filter(p => p != null).length;
+    const totalImages = promises.filter((p) => p != null).length;
     console.log(
       `  → Optimizing ${totalImages} image${totalImages > 1 ? "s" : ""} ...`
         .cyan
@@ -170,5 +174,5 @@ module.exports = {
 
     // Return all promises
     return Promise.all(promises);
-  }
+  },
 };

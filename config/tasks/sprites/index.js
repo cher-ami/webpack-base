@@ -1,3 +1,8 @@
+/**
+ * @copyright Original by Alexis Bouhet - https://zouloux.com
+ * @copyright Adapted by Willy Brauner - https://willybrauner.com
+ */
+
 require("colors");
 const { Files } = require("@zouloux/files");
 const path = require("path");
@@ -25,12 +30,12 @@ const defaultSpriteConfig = {
   pixelRatio: 1,
   layoutOptions: {
     padding: 2,
-    scaling: 1
+    scaling: 1,
   },
   compositorOptions: {
     compressionLevel: 6,
-    filter: "none"
-  }
+    filter: "none",
+  },
 };
 
 // List of generated PNG files, before optimizing
@@ -44,7 +49,7 @@ const optimizeImages = () => {
   // Return promises
   return pngToOptimize.map(
     // Optimize each generated png
-    png =>
+    (png) =>
       optimizeFiles(
         // Target generated png file
         [`${png.outputPath}.png`],
@@ -73,7 +78,7 @@ const sprites = (
   spritesTemplatesPath = globalPaths.spritesTemplatesPath,
   spritesOutputPath = globalPaths.spritesOutputPath
 ) =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     /**
      * Prepare
      */
@@ -86,15 +91,15 @@ const sprites = (
         extension: "less",
         template: Handlebars.compile(
           Files.getFiles(`${spritesTemplatesPath}/sprite.less.template`).read()
-        )
+        ),
       },
       // JSON Template
       {
         extension: "ts",
         template: Handlebars.compile(
           Files.getFiles(`${spritesTemplatesPath}/sprite.ts.template`).read()
-        )
-      }
+        ),
+      },
     ];
 
     // Generate sprite seed for cache busting
@@ -123,7 +128,7 @@ const sprites = (
         spriteWidth: pSpriteData.width,
         spriteHeight: pSpriteData.height,
         spritePath: pStylesheetOptions.spritePath,
-        textures: []
+        textures: [],
       };
 
       debug(cleanStylesheetData);
@@ -142,7 +147,7 @@ const sprites = (
           name: path.basename(
             currentImage.path,
             path.extname(currentImage.path)
-          )
+          ),
         });
       }
 
@@ -171,7 +176,7 @@ const sprites = (
     let totalSprites = 0;
 
     // Browse bundles
-    Files.getFolders(`${spritesOutputPath}/*/`).all(folder => {
+    Files.getFolders(`${spritesOutputPath}/*/`).all((folder) => {
       // Browser sprites folders
 
       ++totalSprites;
@@ -213,7 +218,7 @@ const sprites = (
         spritePath: `${spritePrefix}${separator}${spriteName}.png`,
 
         // Pixel ratio from sprite config
-        pixelRatio: spriteConfig.pixelRatio
+        pixelRatio: spriteConfig.pixelRatio,
       };
 
       debug(stylesheetOptions);
@@ -245,7 +250,7 @@ const sprites = (
             stylesheetOptions,
             outputPath
           );
-        }
+        },
       };
 
       // When a sprite is generated
@@ -261,7 +266,7 @@ const sprites = (
             spriteName,
             outputPath,
             bundleSpritePath: `${spritesOutputPath}/`,
-            spriteConfig
+            spriteConfig,
           });
         }
 

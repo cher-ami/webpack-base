@@ -1,4 +1,8 @@
 /**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
+
+/**
  * WARNING, HAZARDOUS NUCLEAR NOT SO TESTED WEAPON.
  * USE WITH CAUTION.
  * Dirty hack from http://stackoverflow.com/questions/5680013/how-to-be-notified-once-a-web-font-has-loaded
@@ -19,7 +23,7 @@ export const preloadFont = (fonts: string[], callback: () => void): void => {
   }
 
   for (let i = 0, l = fonts.length; i < l; ++i) {
-    (function(font) {
+    (function (font) {
       let node = document.createElement("span");
       // Characters that vary significantly among different fonts
       node.innerHTML = "giItT1WQy@!-/#";

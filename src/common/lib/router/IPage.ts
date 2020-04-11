@@ -1,12 +1,16 @@
 import { IActionParameters } from "./Router";
 
 /**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
+
+/**
  * Allowed playIn / playOut states for IPage
  */
 export enum EPagePlayState {
   VISIBLE,
   PLAYING_IN,
-  PLAYING_OUT
+  PLAYING_OUT,
 }
 
 /**

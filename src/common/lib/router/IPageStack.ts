@@ -1,3 +1,7 @@
+/**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
+
 export interface IPageStack {
   /**
    * Old loaded page name. Can be null.

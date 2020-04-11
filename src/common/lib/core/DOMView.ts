@@ -2,6 +2,7 @@ import { Disposable } from "./Disposable";
 
 /**
  * This is a simple DOM based view.
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
  */
 export class DOMView extends Disposable {
   // ------------------------------------------------------------------------- DOM

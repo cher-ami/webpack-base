@@ -1,3 +1,7 @@
+/**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
+
 // ----------------------------------------------------------------------------- STRUCT
 
 /**
