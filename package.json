@@ -25,7 +25,7 @@
     "sprites": "node config/tasks/commands.js sprites",
     "setup": "node config/tasks/commands.js setup",
     "help": "node config/tasks/commands.js help",
-    "prettier": "prettier --write './src/**/**/*.{tsx,ts,jsx,js,less,css,json,md}'",
+    "prettier": "prettier --write './src/**/**/**/*.{tsx,ts,jsx,js,less,css,json,md}'",
     "postinstall": "cp -n .env.example .env || true"
   },
   "dependencies": {

@@ -184,7 +184,7 @@ class MetasManager {
     document.title = this._cleanMetaString(selectDocumentTitle);
 
     // loop on pMetas (ex: title, description, imageURL, siteName...)
-    Object.keys(pProperties).map(metaType => {
+    Object.keys(pProperties).map((metaType) => {
       // select meta value
       let metaValue = this._selectMetaValue(
         pCustomMetas,

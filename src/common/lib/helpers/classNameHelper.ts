@@ -11,7 +11,7 @@ export const merge = (pClasses: any[]) => {
         // concate sub array item if exist
         .reduce((a, b) => a.concat(b), [])
         // fitler empty values
-        .filter(v => v)
+        .filter((v) => v)
         // join array entries as string
         .join(" ")
     );

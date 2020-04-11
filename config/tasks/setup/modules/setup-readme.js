@@ -29,7 +29,7 @@ const setupReadme = ({
   readmeFrameworkFileName = "README-framework.md",
   projectName = "[ PROJECT NAME ]",
   projectAuthor = "[ PROJECT AUTHOR ]",
-  projectDescription = "[ PROJECT DESCRIPTION ]"
+  projectDescription = "[ PROJECT DESCRIPTION ]",
 }) => {
   debug("setupReadme params", {
     templatesPath,
@@ -38,10 +38,10 @@ const setupReadme = ({
     readmeFrameworkFileName,
     projectName,
     projectAuthor,
-    projectDescription
+    projectDescription,
   });
 
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     logs.start(
       `Change current ${readmeFileName} file as ${readmeFrameworkFileName}...`,
       true
@@ -87,7 +87,7 @@ const setupReadme = ({
           {
             projectName,
             projectDescription,
-            projectAuthor
+            projectAuthor,
           }
         )
       );

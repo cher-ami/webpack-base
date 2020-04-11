@@ -17,9 +17,9 @@ const config = require("../../../global.config");
  */
 const setupBundle = async ({
   logDoneDelay = config.logDoneDelay,
-  scaffoldBundleFunction = scaffoldBundle
+  scaffoldBundleFunction = scaffoldBundle,
 }) => {
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     logs.start("Setup bundle project type...");
     const bundleType = await scaffoldBundleFunction(true);
     logs.done();

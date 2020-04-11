@@ -78,5 +78,5 @@ module.exports = {
   // components templates path
   componentsTemplatesPath: appRoot.resolve(
     "config/tasks/scaffold-component/templates"
-  )
+  ),
 };

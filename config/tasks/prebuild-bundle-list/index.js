@@ -28,7 +28,7 @@ const prebuildBundleList = async (pBundleSourceFolder = paths.src) => {
   debug("bundleList", bundleList);
 
   // prepare template
-  const template = pBundleList => {
+  const template = (pBundleList) => {
     return `/**
      * WARNING
      * Auto-generated file, do not edit!

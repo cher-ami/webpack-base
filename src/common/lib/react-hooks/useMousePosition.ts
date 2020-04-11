@@ -18,7 +18,7 @@ export function useMousePosition(pElement): IMouseCoordinated {
   // seter la position de la souris
   const [mousePosition, setMousePosition] = useState<IMouseCoordinated>({
     top: 0,
-    left: 0
+    left: 0,
   });
 
   // ------------------------------------------------------------------------- HANDLER
@@ -31,7 +31,7 @@ export function useMousePosition(pElement): IMouseCoordinated {
     // la poistion relative du cursor
     setMousePosition({
       top: pEvent.pageY - pElement.current.offsetTop,
-      left: pEvent.pageX - pElement.current.offsetLeft
+      left: pEvent.pageX - pElement.current.offsetLeft,
     });
   }
 

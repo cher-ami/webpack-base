@@ -35,7 +35,7 @@ const _pagesTemplate = ({ pages = [] }) => {
  * Usefull is this file
  */
 const prebuildReactPagesList = () => {
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     logs.start("Prebuild pages list...");
 
     const bundleList = await getBundleListHelper(true);
@@ -43,7 +43,7 @@ const prebuildReactPagesList = () => {
 
     if (bundleList.length === 0) resolve();
 
-    bundleList.map(bundle => {
+    bundleList.map((bundle) => {
       // get newFilePath
       const newFilePath = `${paths.src}/${bundle}/pages.ts`;
       // get all pages
@@ -67,7 +67,7 @@ const prebuildReactPagesList = () => {
           `${i === 0 ? "" : "\r"} {`,
           `\r    page: "${page}",`,
           `\r    importer: () => ${importer}`,
-          `\r  },`
+          `\r  },`,
         ].join("");
       });
 

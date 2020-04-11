@@ -6,7 +6,7 @@ type IProps = TMetas & {
 };
 
 Metas.defaultProps = {
-  defaultMetas: false
+  defaultMetas: false,
 } as IProps;
 
 /**

@@ -22,7 +22,7 @@ const _startDevServer = async () => {
       // target .env, this value will never change
       `env-cmd -f .env`,
       // start webpack devServer
-      ` webpack-dev-server --config config/webpack/webpack.development.js`
+      ` webpack-dev-server --config config/webpack/webpack.development.js`,
     ].join(" "),
     3
   );
@@ -35,7 +35,7 @@ const _startDevServer = async () => {
  * @returns {Promise<unknown>}
  */
 const dev = () =>
-  new Promise(async resolve => {
+  new Promise(async (resolve) => {
     // clean folder
     await clean();
     // start prebuid

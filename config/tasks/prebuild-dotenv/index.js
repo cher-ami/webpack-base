@@ -16,8 +16,8 @@ const paths = require("../../global.paths");
  * Prebuild .env file
  * Create and inject .env file in specific folder (dist/ by default)
  */
-const prebuildDotenv = pEnv => {
-  return new Promise(resolve => {
+const prebuildDotenv = (pEnv) => {
+  return new Promise((resolve) => {
     // env file we want to inject in dist folder
     const newFilePath = `${paths.dist}/.env`;
 
@@ -43,7 +43,7 @@ const prebuildDotenv = pEnv => {
     Files.new(newFilePath).write(Files.getFiles(templateFilePath).read());
 
     logs.start(`write "VERSION=..." in dist/.env file...`);
-    Files.getFiles(newFilePath).alter(fileContent => {
+    Files.getFiles(newFilePath).alter((fileContent) => {
       return fileContent.replace(
         /VERSION=/,
         `VERSION=${require("../../../package").version}`
@@ -55,7 +55,7 @@ const prebuildDotenv = pEnv => {
      */
     if (selectedEnv === "lamp") {
       // write APP_URL
-      Files.getFiles(newFilePath).alter(fileContent => {
+      Files.getFiles(newFilePath).alter((fileContent) => {
         return fileContent.replace(
           /APP_URL=/,
           `APP_URL=${process.env.APP_URL}`
@@ -63,7 +63,7 @@ const prebuildDotenv = pEnv => {
       });
 
       // write APP_BASE set by gitlab-ci.yaml
-      Files.getFiles(newFilePath).alter(fileContent => {
+      Files.getFiles(newFilePath).alter((fileContent) => {
         return fileContent.replace(
           /APP_BASE=/,
           `APP_BASE=${process.env.APP_BASE}`

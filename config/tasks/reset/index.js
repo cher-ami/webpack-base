@@ -18,7 +18,7 @@ const config = require("../../global.config");
  * @returns {Promise<unknown>}
  */
 const reset = () =>
-  new Promise(async resolve => {
+  new Promise(async (resolve) => {
     logs.start("Clean...");
 
     logs.start("Remove output compile folder...");

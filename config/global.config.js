@@ -65,5 +65,5 @@ module.exports = {
   /**
    * Show log done for x ms.
    */
-  logDoneDelay: 1100
+  logDoneDelay: 1100,
 };

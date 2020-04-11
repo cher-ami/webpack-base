@@ -31,7 +31,7 @@ const logs = {
    */
   error: (pMessage = "") => {
     console.log(`${pMessage}`.red, "\n");
-  }
+  },
 };
 
 module.exports = { logs };

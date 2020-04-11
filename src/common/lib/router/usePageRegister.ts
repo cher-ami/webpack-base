@@ -50,7 +50,7 @@ export const pagesRegister = {
   set register(pPage: TPageRegisterObject | Object) {
     this.list = pPage;
   },
-  list: {} as TPagesRegister
+  list: {} as TPagesRegister,
 };
 
 // ----------------------------------------------------------------------------- HOOK
@@ -63,13 +63,13 @@ export const pagesRegister = {
 export function usePageRegister({
   currentPath = Router.currentPath,
   componentName,
-  playIn = () => new Promise(resolve => resolve()),
-  playOut = () => new Promise(resolve => resolve()),
+  playIn = () => new Promise((resolve) => resolve()),
+  playOut = () => new Promise((resolve) => resolve()),
   rootRef,
   actionName = Router.DEFAULT_ACTION_NAME,
   stackName = Router.DEFAULT_STACK_NAME,
   actionParameters,
-  isReady = true
+  isReady = true,
 }: TPageRegisterObject) {
   /**
    * Page is ready deffered promise
@@ -78,7 +78,7 @@ export function usePageRegister({
   const readyDeferred = useMemo(() => {
     log("creating deffered");
     const deffered: any = {};
-    deffered.promise = new Promise(resolve => {
+    deffered.promise = new Promise((resolve) => {
       deffered.resolve = resolve;
     });
     return deffered;
@@ -106,14 +106,14 @@ export function usePageRegister({
         actionName,
         actionParameters,
         isReady,
-        waitIsReadyPromise: () => readyDeferred.promise
-      }
+        waitIsReadyPromise: () => readyDeferred.promise,
+      },
     };
 
     // merge new object on page register object
     pagesRegister.register = {
       ...pagesRegister.list,
-      ...newPageRegister
+      ...newPageRegister,
     };
 
     // log the page register list

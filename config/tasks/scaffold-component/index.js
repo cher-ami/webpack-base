@@ -19,12 +19,12 @@ const config = require("../../global.config");
 
 // ----------------------–----------------------–----------------------–-------- PRIVATE
 
-const _askWhichBundleFolder = bundleFolderList => {
+const _askWhichBundleFolder = (bundleFolderList) => {
   return Inquirer.prompt({
     type: "list",
     name: "bundleFolder",
     message: "Which bundle folder?",
-    choices: bundleFolderList
+    choices: bundleFolderList,
   });
 };
 
@@ -35,7 +35,7 @@ const _askWhichComponentFolder = (
     type: "list",
     name: "subFolder",
     message: "Which component folder?",
-    choices: componentCompatibleFolders
+    choices: componentCompatibleFolders,
   });
 };
 
@@ -43,7 +43,7 @@ const _askComponentName = () => {
   return Inquirer.prompt({
     type: "input",
     message: "Component name?",
-    name: "componentName"
+    name: "componentName",
   });
 };
 
@@ -52,7 +52,7 @@ const _askConnectToStore = () => {
     type: "confirm",
     message: "Connect component to store?",
     name: "connectToStore",
-    default: false
+    default: false,
   });
 };
 
@@ -68,7 +68,7 @@ const _reactComponentBuilder = ({
   subFolder,
   connectToStore,
   componentPath,
-  upperComponentName
+  upperComponentName,
 }) => {
   // choose between page and component type
   const componentType = subFolder === "pages" ? "page" : "component";
@@ -76,7 +76,7 @@ const _reactComponentBuilder = ({
   createFile({
     templateFilePath: `${paths.componentsTemplatesPath}/react/${componentType}.tsx.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.tsx`,
-    replaceExpressions: { upperComponentName }
+    replaceExpressions: { upperComponentName },
   });
 
   // index type depend of conect to store answer
@@ -85,14 +85,14 @@ const _reactComponentBuilder = ({
   createFile({
     templateFilePath: `${paths.componentsTemplatesPath}/react/${indexType}.ts.template`,
     destinationFilePath: `${componentPath}/index.ts`,
-    replaceExpressions: { upperComponentName }
+    replaceExpressions: { upperComponentName },
   });
 
   // scaffold less module
   createFile({
     templateFilePath: `${paths.componentsTemplatesPath}/react/component.less.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.module.less`,
-    replaceExpressions: { upperComponentName }
+    replaceExpressions: { upperComponentName },
   });
 };
 
@@ -107,13 +107,13 @@ const _domComponentBuilder = ({ componentPath, upperComponentName }) => {
   createFile({
     templateFilePath: `${paths.componentsTemplatesPath}/dom/component.ts.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.ts`,
-    replaceExpressions: { upperComponentName }
+    replaceExpressions: { upperComponentName },
   });
   // scaffold less module
   createFile({
     templateFilePath: `${paths.componentsTemplatesPath}/dom/component.less.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.less`,
-    replaceExpressions: { upperComponentName }
+    replaceExpressions: { upperComponentName },
   });
 };
 
@@ -124,8 +124,8 @@ const _domComponentBuilder = ({ componentPath, upperComponentName }) => {
  * @description Ask question and scaffold a component with a specific script template
  * @returns {Promise<any>}
  */
-const scaffoldComponent = pComponentType => {
-  return new Promise(async resolve => {
+const scaffoldComponent = (pComponentType) => {
+  return new Promise(async (resolve) => {
     // prepare
 
     const bundleFolderList = Files.getFolders(`${paths.src}/*`).files;
@@ -136,9 +136,9 @@ const scaffoldComponent = pComponentType => {
       // in bundle list folder
       bundleFolderList
         // do not keep common folder
-        .filter(el => el !== `${paths.src}/common`)
+        .filter((el) => el !== `${paths.src}/common`)
         // keep only end of path
-        .map(el => path.basename(el));
+        .map((el) => path.basename(el));
 
     debug("filterBundleFolderList", filterBundleFolderList);
 
@@ -147,21 +147,21 @@ const scaffoldComponent = pComponentType => {
      */
     let bundleFolder = "";
     // Get bundle folder
-    await _askWhichBundleFolder(filterBundleFolderList).then(answer => {
+    await _askWhichBundleFolder(filterBundleFolderList).then((answer) => {
       bundleFolder = answer.bundleFolder;
     });
     debug("bundleFolder", bundleFolder);
 
     let subFolder = "";
     // Get sub-folder
-    await _askWhichComponentFolder().then(answer => {
+    await _askWhichComponentFolder().then((answer) => {
       subFolder = answer.subFolder;
     });
     debug("subFolder", subFolder);
 
     // Get component name
     let componentName = "";
-    await _askComponentName().then(answer => {
+    await _askComponentName().then((answer) => {
       componentName = answer.componentName;
     });
     // formated name "lowerCase"
@@ -173,7 +173,7 @@ const scaffoldComponent = pComponentType => {
     // Get connect to store response
     let connectToStore = false;
     if (pComponentType === "react") {
-      await _askConnectToStore().then(answer => {
+      await _askConnectToStore().then((answer) => {
         connectToStore = answer.connectToStore;
       });
       debug("connectToStore", connectToStore);
@@ -192,7 +192,7 @@ const scaffoldComponent = pComponentType => {
         subFolder,
         connectToStore,
         upperComponentName,
-        componentPath
+        componentPath,
       });
     }
 
@@ -200,7 +200,7 @@ const scaffoldComponent = pComponentType => {
     if (pComponentType === "dom") {
       _domComponentBuilder({
         upperComponentName,
-        componentPath
+        componentPath,
       });
     }
 

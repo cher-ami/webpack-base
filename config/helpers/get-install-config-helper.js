@@ -21,7 +21,7 @@ const paths = require("../global.paths");
 getInstallConfigHelper = (
   installConfigFilePath = `${paths.config}/install.config.js`
 ) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     debug("Check if install.config.js file exist...");
 
     const installConfigFile = Files.getFiles(installConfigFilePath).files;

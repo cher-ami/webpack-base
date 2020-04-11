@@ -36,7 +36,7 @@ module.exports = class LessToJsPlugin {
       pCompilation.watchFileSystem.watcher &&
       pCompilation.watchFileSystem.watcher.mtimes;
     // get changes files
-    return Object.keys(changedTimes).map(file => file);
+    return Object.keys(changedTimes).map((file) => file);
   }
 
   /**
@@ -52,10 +52,10 @@ module.exports = class LessToJsPlugin {
     // check if is glob (glob.files.length > 0)
     if (glob.files && glob.files.length > 0) {
       // register file as change boolean
-      return glob.files.some(globEl =>
+      return glob.files.some((globEl) =>
         // check if a file of change file list match with one of glob files
         this._getChangedFiles(pCompilation).some(
-          changeEl => changeEl === globEl
+          (changeEl) => changeEl === globEl
         )
       );
     } else return false;
@@ -90,7 +90,7 @@ module.exports = class LessToJsPlugin {
     return prebuildAtoms({
       pWatcher: pWatcher,
       pOutputPath: pOutputPath,
-      pOutputFilename: pOutputFilename
+      pOutputFilename: pOutputFilename,
     });
   }
 
@@ -105,7 +105,7 @@ module.exports = class LessToJsPlugin {
      * The "beforeRun" hook runs only on single webpack build, triggering only once
      * (only for production build, not dev server)
      */
-    compiler.hooks.beforeRun.tapPromise(PLUGIN_NAME, async compilation => {
+    compiler.hooks.beforeRun.tapPromise(PLUGIN_NAME, async (compilation) => {
       debug(`Prebuild less to js file...`);
       return await this._buildLessToJsFile();
     });
@@ -114,10 +114,10 @@ module.exports = class LessToJsPlugin {
      * The "watchRun" hook runs only when using 'watch mode' with webpack
      * triggering every time that webpack recompiles on a change triggered by the watcher
      */
-    compiler.hooks.watchRun.tapPromise(PLUGIN_NAME, async compilation => {
+    compiler.hooks.watchRun.tapPromise(PLUGIN_NAME, async (compilation) => {
       debug({
         _outputFileExist: this._outputFileExist(),
-        _fileAsChanged: this._fileAsChanged(compilation)
+        _fileAsChanged: this._fileAsChanged(compilation),
       });
 
       // if output file don't exist

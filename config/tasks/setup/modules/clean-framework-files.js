@@ -21,15 +21,15 @@ const cleanFrameworkFiles = ({
   gitFolder = paths.gitFolder,
   installScriptFile = paths.installScript,
   logDoneDelay = config.logDoneDelay,
-  fakeMode = config.fakeMode
+  fakeMode = config.fakeMode,
 }) => {
   debug("cleanFrameworkFiles params:", {
     gitFolder,
     installScriptFile,
-    logDoneDelay
+    logDoneDelay,
   });
 
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     debug(
       "We don't need git folder because this is .git of webpack-base, so we remove it."
     );

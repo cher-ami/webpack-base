@@ -32,7 +32,7 @@ const taskProgress = (task, taskNumber) => {
  * Setup
  */
 const setup = () => {
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     // check if cache file exist, if exist, do not contiue
     if (!checkConfigFile({})) return;
 
@@ -51,7 +51,7 @@ const setup = () => {
     await setupReadme({
       projectName: packageJsonValues.projectName,
       projectDescription: packageJsonValues.projectDescription,
-      projectAuthor: packageJsonValues.projectAuthor
+      projectAuthor: packageJsonValues.projectAuthor,
     });
 
     // remove unused files and directories

@@ -13,7 +13,7 @@ require("colors");
 const createFile = ({
   templateFilePath = "",
   destinationFilePath = "",
-  replaceExpressions = {}
+  replaceExpressions = {},
 }) => {
   // Check if component already exists
   if (Files.getFiles(destinationFilePath).files.length > 0) {

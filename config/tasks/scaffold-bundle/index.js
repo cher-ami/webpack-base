@@ -24,7 +24,7 @@ const _askBundleType = (bundleType = config.bundleType) => {
     type: "list",
     name: "bundleType",
     message: "Witch Bundle project type do you want to create?",
-    choices: bundleType
+    choices: bundleType,
   });
 };
 
@@ -33,16 +33,16 @@ const _askBundleName = (defaultBundleName = "main") => {
     type: "input",
     name: "bundleName",
     message: "What's the new bundle name?",
-    default: defaultBundleName
+    default: defaultBundleName,
   });
 };
 
-const _askCreateNewBundle = bundleName => {
+const _askCreateNewBundle = (bundleName) => {
   return Inquirer.prompt({
     type: "confirm",
     message: `Are you sure you want to create ${bundleName} bundle? `,
     name: "createNewBundle",
-    default: false
+    default: false,
   });
 };
 
@@ -59,14 +59,14 @@ const _bundleBuilder = async ({
   firstScaffold = false,
   templateBundleDirPath,
   destinationFolder = paths.src,
-  bundleName
+  bundleName,
 }) => {
   // if is not the first bundle scaffold
   if (!firstScaffold) {
     // ask if we are sure to want to create new bundle
     let createNewBundle = false;
     await _askCreateNewBundle(bundleName).then(
-      resolve => (createNewBundle = resolve.createNewBundle)
+      (resolve) => (createNewBundle = resolve.createNewBundle)
     );
     // if response is false
     if (!createNewBundle) {
@@ -95,7 +95,7 @@ const _bundleBuilder = async ({
   );
 
   // loop on each files in new directory
-  Files.any(`${destinationFolder}/${bundleName}/**/**/**/*`).files.map(el => {
+  Files.any(`${destinationFolder}/${bundleName}/**/**/**/*`).files.map((el) => {
     // get fileName
     const fileName = path.parse(el).name;
     // get BundleName pascal-case format
@@ -108,7 +108,7 @@ const _bundleBuilder = async ({
       // write this new file (witout .template extension)
       Files.new(filePathWithoutExt).write(
         quickTemplate(Files.getFiles(el).read(), {
-          BundleName: pascalCaseBundleName
+          BundleName: pascalCaseBundleName,
         })
       );
     }
@@ -130,7 +130,7 @@ const _bundleBuilder = async ({
       // write this new file (witout .template extension)
       Files.new(filePathWithoutExt).write(
         quickTemplate(Files.getFiles(el).read(), {
-          BundleName: pascalCaseBundleName
+          BundleName: pascalCaseBundleName,
         })
       );
 
@@ -152,18 +152,18 @@ const _bundleBuilder = async ({
  * @returns {Promise<unknown>}
  */
 const scaffoldBundle = async (firstScaffold = false) => {
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     // create bundle type var
     let bundleType = "";
     // get bundle type from prompt
-    await _askBundleType().then(resolve => (bundleType = resolve.bundleType));
+    await _askBundleType().then((resolve) => (bundleType = resolve.bundleType));
     debug("bundleType", bundleType);
 
     // create bundle name var
     let bundleName = "";
     // get bundle type from promt
     await _askBundleName().then(
-      resolve => (bundleName = changeCase.paramCase(resolve.bundleName))
+      (resolve) => (bundleName = changeCase.paramCase(resolve.bundleName))
     );
     debug("bundleName", bundleName);
 

@@ -20,7 +20,7 @@ getBundleListHelper = (
   pExcludeCommonFolder = true,
   pBundleSourceFolder = paths.src
 ) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     // get all bundles
     let getBundleFolderList = Files.getFolders(`${pBundleSourceFolder}/*`)
       .files;
@@ -33,9 +33,9 @@ getBundleListHelper = (
         // in bundle list folder
         getBundleFolderList
           // do not keep common folder
-          .filter(el => el !== `${paths.src}/common`)
+          .filter((el) => el !== `${paths.src}/common`)
           // keep only path end
-          .map(el => path.basename(el));
+          .map((el) => path.basename(el));
     }
 
     // resolve promise

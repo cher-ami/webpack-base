@@ -31,7 +31,7 @@ const productionConfig = {
       : `[name].bundle.js`,
     // need production APP_BASE, for that, set a ".env.production" with APP_BASE value.
     // if .env.production doesn't exist, APP_BASE from ".env" will be used
-    publicPath: `${process.env.APP_BASE}/`
+    publicPath: `${process.env.APP_BASE}/`,
   },
 
   /**
@@ -47,7 +47,7 @@ const productionConfig = {
     new MiniCssExtractPlugin({
       filename: config.outputHashName
         ? `[name].[contenthash].css`
-        : `[name].css`
+        : `[name].css`,
     }),
 
     /**
@@ -58,7 +58,7 @@ const productionConfig = {
     new BundleAnalyzerPlugin({
       openAnalyzer: false,
       analyzerMode: "static",
-      defaultSizes: "gzip"
+      defaultSizes: "gzip",
     }),
 
     /**
@@ -70,9 +70,9 @@ const productionConfig = {
       {
         from: config.outputPath,
         to: "/",
-        ignore: ["*.DS_Store", ".gitkeep", ".*"]
-      }
-    ])
+        ignore: ["*.DS_Store", ".gitkeep", ".*"],
+      },
+    ]),
   ],
 
   /**
@@ -97,25 +97,25 @@ const productionConfig = {
                   sourceMap: false,
                   importLoaders: 1,
                   modules: {
-                    localIdentName: "[name]__[local]--[hash:base64:5]"
-                  }
-                }
+                    localIdentName: "[name]__[local]--[hash:base64:5]",
+                  },
+                },
               },
               "postcss-loader",
-              "less-loader"
-            ]
+              "less-loader",
+            ],
           },
           {
             use: [
               MiniCssExtractPlugin.loader,
               "css-loader",
               "postcss-loader",
-              "less-loader"
-            ]
-          }
-        ]
-      }
-    ]
+              "less-loader",
+            ],
+          },
+        ],
+      },
+    ],
   },
 
   /**
@@ -126,10 +126,10 @@ const productionConfig = {
     minimizer: [
       new TerserJSPlugin(),
       new OptimizeCSSAssetsPlugin({
-        assetNameRegExp: /\.main\.css$/g
-      })
-    ]
-  }
+        assetNameRegExp: /\.main\.css$/g,
+      }),
+    ],
+  },
 };
 
 // Export merge config

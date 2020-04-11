@@ -20,7 +20,7 @@ const paths = require("../../global.paths");
 const prebuild = (pEnv = null) => {
   debug("pEnv", pEnv);
 
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     /**
      * Do not touch.
      */

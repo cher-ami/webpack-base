@@ -16,11 +16,11 @@ const tasks = [
   "reset",
   "scaffold",
   "help",
-  "setup"
+  "setup",
 ];
 
 // map all tasks and add commands
-tasks.map(el => {
+tasks.map((el) => {
   /**
    * options param is an object who contains string option
    * we set when we call script.
@@ -28,13 +28,13 @@ tasks.map(el => {
    * node script.js --env hello
    * options will be { env: hello }
    */
-  commands.add(el, options => eval(el)(options));
+  commands.add(el, (options) => eval(el)(options));
 });
 
 // start command
-commands.start(command => {
+commands.start((command) => {
   // ma each command
-  tasks.map(el => {
+  tasks.map((el) => {
     /**
      * commands.run second arg {} is default options we have previously passed
      */

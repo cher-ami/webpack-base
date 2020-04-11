@@ -11,8 +11,8 @@ module.exports = {
     if (templateRegex == null) {
       module.exports.setDelimiters("%%", "%%");
     }
-    return pTemplate.replace(templateRegex, function(i, pMatch) {
+    return pTemplate.replace(templateRegex, function (i, pMatch) {
       return pValues && pValues[pMatch];
     });
-  }
+  },
 };

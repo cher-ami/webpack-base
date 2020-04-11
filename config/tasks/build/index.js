@@ -25,7 +25,7 @@ const _build = async () => {
         // NOTE: you can comment this line if you set env-cmd in parent script call.
         `env-cmd --no-override -f .env.production --fallback`,
         // webpack build
-        `webpack -p --config config/webpack/webpack.production.js`
+        `webpack -p --config config/webpack/webpack.production.js`,
       ].join(" "),
       3
     );
@@ -43,12 +43,12 @@ const _build = async () => {
  * Init Start
  * @returns {Promise<unknown>}
  */
-const build = pVar => {
+const build = (pVar) => {
   // target env variable
   const envName = pVar.env ? pVar.env : null;
   debug("env passed as param via 'commands' ", envName);
 
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     /**
      * Before build
      */

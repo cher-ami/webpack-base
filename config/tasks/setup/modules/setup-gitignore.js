@@ -19,14 +19,14 @@ const config = require("../../../global.config");
 const setupGitignore = ({
   gitignorePath = paths.gitignore,
   logDoneDelay = config.logDoneDelay,
-  fakeMode = config.fakeMode
+  fakeMode = config.fakeMode,
 }) => {
   debug("setupGitignore params:", { gitignorePath });
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     logs.start(`Setup .gitignore file...`);
     if (!fakeMode) {
-      Files.getFiles(gitignorePath).alter(fileContent => {
+      Files.getFiles(gitignorePath).alter((fileContent) => {
         return (
           fileContent
             // remove install.cache, we need to add it into git

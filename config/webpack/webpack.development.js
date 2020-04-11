@@ -31,7 +31,7 @@ const developmentConfig = {
     filename: "[name].bundle.js",
     // Not need process.env.APP_BASE here because devServer serve on
     // localhost:3000 without base
-    publicPath: "/"
+    publicPath: "/",
   },
 
   /**
@@ -56,9 +56,9 @@ const developmentConfig = {
         use: [
           {
             loader: "babel-loader",
-            options: { plugins: ["react-refresh/babel"] }
-          }
-        ]
+            options: { plugins: ["react-refresh/babel"] },
+          },
+        ],
       },
 
       /**
@@ -79,21 +79,26 @@ const developmentConfig = {
                   sourceMap: true,
                   importLoaders: 1,
                   modules: {
-                    localIdentName: "[name]__[local]--[hash:base64:5]"
-                  }
-                }
+                    localIdentName: "[name]__[local]--[hash:base64:5]",
+                  },
+                },
               },
               "postcss-loader",
-              "less-loader"
-            ]
+              "less-loader",
+            ],
           },
           // else if it's a simple less or css file
           {
-            use: ["style-loader", "css-loader", "postcss-loader", "less-loader"]
-          }
-        ]
-      }
-    ]
+            use: [
+              "style-loader",
+              "css-loader",
+              "postcss-loader",
+              "less-loader",
+            ],
+          },
+        ],
+      },
+    ],
   },
 
   /**
@@ -107,8 +112,8 @@ const developmentConfig = {
     ...(CONSOLE_PRINT_FRIENDLY
       ? [
           new FriendlyErrorsPlugin({
-            clearConsole: true
-          })
+            clearConsole: true,
+          }),
         ]
       : []),
     /**
@@ -118,14 +123,14 @@ const developmentConfig = {
      */
     new ReactRefreshWebpackPlugin({
       disableRefreshCheck: true,
-      forceEnable: false
+      forceEnable: false,
     }),
 
     /**
      * Enables Hot Module Replacement, otherwise known as HMR
      * @doc https://webpack.js.org/plugins/hot-module-replacement-plugin/
      */
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
 
   /**
@@ -151,7 +156,7 @@ const developmentConfig = {
       all: false,
       errors: !CONSOLE_PRINT_FRIENDLY,
       warnings: !CONSOLE_PRINT_FRIENDLY,
-      colors: !CONSOLE_PRINT_FRIENDLY
+      colors: !CONSOLE_PRINT_FRIENDLY,
     },
     // friendly webpack error
     // pass to true if you don't want to print compile file in the console
@@ -167,12 +172,12 @@ const developmentConfig = {
               // target something like http://localhost/project/dist/path/to/index/file
               target: `${process.env.APP_URL}${process.env.APP_BASE}`,
               changeOrigin: true,
-              secure: false
-            }
-          }
+              secure: false,
+            },
+          },
         }
-      : {})
-  }
+      : {}),
+  },
 };
 
 // Export merge config

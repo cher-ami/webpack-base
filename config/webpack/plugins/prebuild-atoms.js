@@ -26,7 +26,7 @@ const _atomsTemplate = (
 			 */
 			export const ${outputFilenameWitoutExtension} = {
 			${pAtomList
-        .map(atom => {
+        .map((atom) => {
           return `	"${atom.name}": ${atom.value},`;
         })
         .join("\n")}
@@ -39,7 +39,7 @@ const _atomsTemplate = (
  * @returns {[]}
  * @private
  */
-const _atomsParser = pWatcher => {
+const _atomsParser = (pWatcher) => {
   // Get less files
   const atomsLessFiles = Files.getFiles(pWatcher);
 
@@ -47,12 +47,12 @@ const _atomsParser = pWatcher => {
   let atomList = [];
 
   // Browse less files
-  atomsLessFiles.all(lessFile => {
+  atomsLessFiles.all((lessFile) => {
     // Read less file
     const lessContent = Files.getFiles(lessFile).read();
 
     // Browse lines
-    lessContent.split("\n").map(el => {
+    lessContent.split("\n").map((el) => {
       // Trim line
       el = el.trim();
       // Get @ index (starting of a new less var)
@@ -104,9 +104,9 @@ module.exports = {
   prebuildAtoms: ({
     pWatcher = paths.atomsFilesToWatch,
     pOutputPath = paths.atomsPath,
-    pOutputFilename = paths.atomsGeneratedFilename
+    pOutputFilename = paths.atomsGeneratedFilename,
   }) =>
-    new Promise(resolve => {
+    new Promise((resolve) => {
       // Generate File path
       const generatedFilePath = `${pOutputPath}/${pOutputFilename}`;
       // get atoms list
@@ -119,5 +119,5 @@ module.exports = {
 
       debug("Done.");
       resolve();
-    })
+    }),
 };
