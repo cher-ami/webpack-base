@@ -154,7 +154,7 @@ class AppView extends Component<IProps, IStates> {
           <GridLayout
             columnsNumber={atoms.columnNumber}
             gutterSize={atoms.gutterSize}
-            maxWidth={atoms.maxWidthGrid}
+            maxSize={atoms.maxWidthGrid}
           />
         )}
 
