@@ -4,6 +4,11 @@ import { IActionParameters, Router } from "./Router";
 import { TPageRegisterObject, pagesRegister } from "./usePageRegister";
 const debug = require("debug")("lib:ViewStack");
 
+/**
+ * @copyright Original ViewStack by Alexis Bouhet - https://zouloux.com
+ * @copyright Adapted for functional views by Willy Brauner - https://willybrauner.com
+ */
+
 // ----------------------------------------------------------------------------- STRUCT
 
 /**
@@ -25,7 +30,7 @@ export enum ETransitionType {
   /**
    * Transition control is delegated to props.transitionController handler.
    */
-  CONTROLLED
+  CONTROLLED,
 }
 
 /**
@@ -160,7 +165,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
    * Default props
    */
   static defaultProps = {
-    transitionType: ETransitionType.PAGE_SEQUENTIAL
+    transitionType: ETransitionType.PAGE_SEQUENTIAL,
   };
 
   /**
@@ -176,7 +181,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
     this.state = {
       currentPageIndex: 0,
       oldPage: null,
-      currentPage: null
+      currentPage: null,
     };
 
     // Set allowSamePageTransition from props if defined
@@ -315,8 +320,8 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
             currentPage: {
               pageComponent: this.state?.currentPage?.pageComponent,
               action: pActionName,
-              parameters: pParameters
-            }
+              parameters: pParameters,
+            },
           },
           this.updateActionOnCurrentPage.bind(this)
         );
@@ -389,7 +394,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
      * When page is imported
      * @param moduleExports
      */
-    const pageImortedHandler = moduleExports => {
+    const pageImortedHandler = (moduleExports) => {
       // Loading state changed, we are not loading anymore
       this.props?.onLoadStateChanged?.(false);
       // If this is a string, we certainly loaded a 404 ...
@@ -423,8 +428,8 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
           currentPage: {
             pageComponent: NewPageComponent,
             action: pActionName,
-            parameters: pParameters
-          }
+            parameters: pParameters,
+          },
         },
         this.updateActionOnCurrentPage.bind(this)
       );
@@ -465,7 +470,7 @@ export class ViewStack extends Component<Props, States> implements IPageStack {
       // Catch and throw errors
       importResult.catch(() => resetError(true));
       // Import succeed
-      importResult.then(moduleExports => {
+      importResult.then((moduleExports) => {
         resetError();
         pageImortedHandler(moduleExports);
       });

@@ -1,4 +1,9 @@
 /**
+ * @copyright Original by Alexis Bouhet - https://zouloux.com
+ * @copyright Adapted by Willy Brauner - https://willybrauner.com
+ */
+
+/**
  * Sprite name : {{spriteName}}
  * Sprite prefix : {{spritePrefix}}
  * Sprite seed : {{spriteSeed}}

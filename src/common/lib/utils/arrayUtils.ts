@@ -1,4 +1,8 @@
 /**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
+
+/**
  * Check it an element is in an array.
  * Will only search at first level
  * @param pArray The array to search in
@@ -185,4 +189,3 @@ export const splitArrayToEqualChunks = (pArray: any[], pNumber: number) => {
   }
   return result;
 };
-

@@ -1,3 +1,7 @@
+/**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
+
 // ------------------------------------------------------------------------- FORMATTING
 
 /**
@@ -179,10 +183,7 @@ export function enumToString(
   let enumStringValue = pEnumClass[pEnumValue] as string;
 
   // On converti en dashCase
-  let enumDashValue = enumStringValue
-    .toLowerCase()
-    .split("_")
-    .join("-");
+  let enumDashValue = enumStringValue.toLowerCase().split("_").join("-");
 
   // On retourne en camel ou en dash
   return pCamelCase ? dashToCamelCase(enumDashValue) : enumDashValue;
@@ -199,10 +200,7 @@ export function enumToString(
  */
 export function stringToEnum(pString: string, pEnumClass: Object): number {
   // Patcher notre dash-case
-  let patchedString = pString
-    .toUpperCase()
-    .split("-")
-    .join("_");
+  let patchedString = pString.toUpperCase().split("-").join("_");
 
   // Parcourir tous les indexs
   let index = 0;
@@ -280,7 +278,7 @@ export function extractPathFromBase(pPath: string, pBase: string): string {
  * @returns the computed template with values (ex : "Hey You !")
  */
 export function quickMustache(pTemplate: string, pValues: {}): string {
-  return pTemplate.replace(/\{\{(.*?)\}\}/g, function(i, pMatch) {
+  return pTemplate.replace(/\{\{(.*?)\}\}/g, function (i, pMatch) {
     return pValues[pMatch];
   });
 }
@@ -292,56 +290,56 @@ export function quickMustache(pTemplate: string, pValues: {}): string {
 export const SLUG_REGEX = [
   {
     regex: /[\xC0-\xC6]/g,
-    char: "A"
+    char: "A",
   },
   {
     regex: /[\xE0-\xE6]/g,
-    char: "a"
+    char: "a",
   },
   {
     regex: /[\xC8-\xCB]/g,
-    char: "E"
+    char: "E",
   },
   {
     regex: /[\xE8-\xEB]/g,
-    char: "e"
+    char: "e",
   },
   {
     regex: /[\xCC-\xCF]/g,
-    char: "I"
+    char: "I",
   },
   {
     regex: /[\xEC-\xEF]/g,
-    char: "i"
+    char: "i",
   },
   {
     regex: /[\xD2-\xD6]/g,
-    char: "O"
+    char: "O",
   },
   {
     regex: /[\xF2-\xF6]/g,
-    char: "o"
+    char: "o",
   },
   {
     regex: /[\xD9-\xDC]/g,
-    char: "U"
+    char: "U",
   },
   {
     regex: /[\xF9-\xFC]/g,
-    char: "u"
+    char: "u",
   },
   {
     regex: /[\xC7-\xE7]/g,
-    char: "c"
+    char: "c",
   },
   {
     regex: /[\xD1]/g,
-    char: "N"
+    char: "N",
   },
   {
     regex: /[\xF1]/g,
-    char: "n"
-  }
+    char: "n",
+  },
 ];
 
 /**
@@ -378,7 +376,7 @@ export function parseQueryString(
   pQueryString: string
 ): { [key: string]: string | number | boolean } {
   // Start parsing after first ? or first # if detected
-  ["?", "#"].map(q => {
+  ["?", "#"].map((q) => {
     // Detect position of starter and split from it if detected
     const pos = pQueryString.indexOf(q);
     if (pos !== -1)
@@ -386,14 +384,14 @@ export function parseQueryString(
   });
 
   // Convert number in strings to number
-  const parseNumberValue = pValue =>
+  const parseNumberValue = (pValue) =>
     isNumber(pValue) ? parseFloat(pValue) : pValue;
 
   // TODO : Ajouter le parsing de "true" / "false" ... et étendre ça a des helpers sur stringUtils
 
   // Split every & and browse
   const outputVarBag = {};
-  pQueryString.split("&").map(couples => {
+  pQueryString.split("&").map((couples) => {
     // Split on all =
     const splitted = couples.split("=", 2);
 

@@ -1,3 +1,7 @@
+/**
+ * @copyright Original by Alexis Bouhet - https://zouloux.com
+ */
+
 module.exports = {
   /**
    * Default PNG optimizer config.
@@ -5,7 +9,7 @@ module.exports = {
    */
   defaultPNGSettings: {
     // Output quality
-    quality: "40-80"
+    quality: "40-80",
 
     // Dithering level
     //floyd: .5,
@@ -39,5 +43,5 @@ module.exports = {
 			nofs: true,
 		},
 		*/
-  }
+  },
 };
