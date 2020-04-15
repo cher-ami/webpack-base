@@ -776,6 +776,7 @@ export class Router {
         routeExec.shift();
         delete routeExec.input;
         delete routeExec.index;
+        delete routeExec.groups;
 
         // Map params indexed array to named object
         let parameters: IActionParameters = {};
