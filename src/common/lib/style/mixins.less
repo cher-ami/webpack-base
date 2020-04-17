@@ -7,7 +7,7 @@
 /**
  * Debug an element with an outline with custom size and color.
  */
-.debug (@size: 1px, @color: red) {
+ .debug (@size: 1px, @color: red) {
   outline: @size solid @color;
 }
 
@@ -70,6 +70,17 @@
     .topLeft(auto, 50%);
     transform: translateX(-50%);
   }
+}
+
+
+/**
+ * Set element to cover parent on absolute position
+ */
+ .absoluteCover() {
+  position: absolute;
+  top: 0;
+  left: 0;
+  .square(100%);
 }
 
 /**
@@ -346,7 +357,7 @@
 }
 
 /**
- * flexCol
+ * flexCol 
  * (à placer sur les enfants)
  */
 .flexCol (@totalGrid:@totalGrid, @number:@number, @gutter:0, @center:false) {
@@ -391,4 +402,18 @@
   .transition-loop(@propslentgh);
 }
 
+// ----------------------------------------------------------------------------- HIDERS
 
+/**
+ * Hide only visually to preserve seo check
+ */
+.visually-hidden() {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
