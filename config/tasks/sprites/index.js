@@ -82,7 +82,7 @@ const sprites = (
     /**
      * Prepare
      */
-    logs.start("Build sprites...");
+    logs.start("Build sprites");
 
     // Get skeletons
     let skeletons = [

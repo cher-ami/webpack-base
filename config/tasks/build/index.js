@@ -14,7 +14,7 @@ const debug = require("debug")("config:build");
  * @private
  */
 const _build = async () => {
-  logs.start("Start build...");
+  logs.start("Start build.");
 
   try {
     await execSync(

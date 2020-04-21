@@ -36,7 +36,8 @@ const _pagesTemplate = ({ pages = [] }) => {
  */
 const prebuildReactPagesList = () => {
   return new Promise(async (resolve) => {
-    logs.start("Prebuild pages list...");
+    logs.start("Prebuild pages list");
+    logs.note(`Required by JS router if addDynamicPageImporters is used.`);
 
     const bundleList = await getBundleListHelper(true);
     debug("bundleList", bundleList);
@@ -46,6 +47,7 @@ const prebuildReactPagesList = () => {
     bundleList.map((bundle) => {
       // get newFilePath
       const newFilePath = `${paths.src}/${bundle}/pages.ts`;
+      logs.note(`pages.ts path: ${paths.src}/${bundle}/pages.ts`);
       // get all pages
       const pages = Files.getFolders(`${paths.src}/${bundle}/pages/*`).files;
 
@@ -71,7 +73,7 @@ const prebuildReactPagesList = () => {
         ].join("");
       });
 
-      debug(`Create new src/${bundle}/pages.ts `);
+      debug(`Create new src/${bundle}/pages.ts`);
       // create file
       Files.new(newFilePath).write(
         _pagesTemplate({ pages: formatedPagesArray })

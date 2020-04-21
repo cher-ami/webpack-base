@@ -19,17 +19,17 @@ const config = require("../../global.config");
  */
 const reset = () =>
   new Promise(async (resolve) => {
-    logs.start("Clean...");
+    logs.start("Clean.");
 
-    logs.start("Remove output compile folder...");
+    logs.start("Remove output compile folder.");
     Files.any(config.outputPath).remove();
     logs.done();
 
-    logs.start("Remove node modules...");
+    logs.start("Remove node modules.");
     execSync("rm -rf node_modules", 3);
     logs.done();
 
-    logs.start("Re install dependencies...");
+    logs.start("Re install dependencies.");
     execSync("npm i", 3);
 
     logs.done();

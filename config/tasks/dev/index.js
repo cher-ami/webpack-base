@@ -13,7 +13,7 @@ const { sprites } = require("../sprites");
  * @private
  */
 const _startDevServer = async () => {
-  logs.start("Start dev server...");
+  logs.start("Start dev server");
   // start webpack
   await execSync(
     [
