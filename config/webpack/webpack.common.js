@@ -141,7 +141,7 @@ commonConfig = {
           context: "src/common",
           publicPath:
             process.env.ENV === "development"
-              ? "/"
+              ? `${process.env.ASSETS_PATH}`
               : `${process.env.APP_BASE}${process.env.ASSETS_PATH}`,
         },
       },
@@ -160,7 +160,7 @@ commonConfig = {
           context: "src/common",
           publicPath:
             process.env.ENV === "development"
-              ? "/"
+              ? `${process.env.ASSETS_PATH}`
               : `${process.env.APP_BASE}${process.env.ASSETS_PATH}`,
         },
       },
