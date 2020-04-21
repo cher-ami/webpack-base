@@ -362,18 +362,33 @@
   }
 }
 
-// ----------------------------------------------------------------------------- RESET STYLE
+
+// ----------------------------------------------------------------------------- TRANSITIONS
 
 /**
- * Reset <button> style
- */
-.resetButtonStyle () {
-  background: none;
-  border: 0;
-  color: inherit;
-  font: inherit;
-  line-height: normal;
-  overflow: visible;
-  appearance: none;
-  -webkit-appearance: none;
+* @mixin transitions
+* @copyright Stephane Guignet - http://stephaneguigne.com
+*
+* @desc Override transition property to have default speed and ease,
+*       but mainly to prevent using the 'all' keyword and instead list all props that should transition together
+*
+* @args
+*   $props  {list}    - list of properties to transition at the same time !!! BECAREFULL TO ADD ';' AT THE END OF THE LIST !!!
+*   $speed  {s|ms}    - transiton speed (default = @transitionsDefaultSpeed)
+*   $ease   {string}  - transiton ease (default = @transitionsDefaultEase)
+*   $delay  {s|ms}    - transiton delay (default = 0s)
+*
+*/
+
+.transitions (@propsList; @speed: 200; @ease: ease-out; @delay : 0s) {
+  @propslentgh: length(@propsList);
+
+  .transition-loop(@iterator) when (@iterator > 0) {
+    .transition-loop((@iterator - 1));
+    transition+: extract(@propsList, @iterator) @speed @ease @delay;
+  }
+
+  .transition-loop(@propslentgh);
 }
+
+
