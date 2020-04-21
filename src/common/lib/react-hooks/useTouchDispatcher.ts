@@ -361,5 +361,5 @@ export const useTouchDispatcher = ({
       // kill inputs
       _delegate = null;
     };
-  }, []);
+  });
 };
