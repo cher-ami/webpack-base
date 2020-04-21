@@ -13,7 +13,8 @@ const folderToClean = require("../../global.config").outputPath;
 
 const clean = () =>
   new Promise(async (resolve) => {
-    logs.start("Clean output folder...");
+    logs.start("Clean output folder");
+    logs.note(`Folder cleaned is: ${folderToClean}`);
     Files.any(folderToClean).remove();
     logs.done();
     resolve();

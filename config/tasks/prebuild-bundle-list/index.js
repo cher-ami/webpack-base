@@ -17,11 +17,11 @@ const paths = require("../../global.paths");
  * @description prebuild a bundle list entry points for webpack
  */
 const prebuildBundleList = async (pBundleSourceFolder = paths.src) => {
-  logs.start("Prebuild bundle list...");
+  logs.start("Prebuild bundle list");
 
   // new file path
   const newFilePath = `${pBundleSourceFolder}/bundles.ts`;
-  debug("newFilePath", newFilePath);
+  logs.note(`bundles.ts Path: ${newFilePath}`);
 
   // get bundle list
   const bundleList = await getBundleListHelper(true);

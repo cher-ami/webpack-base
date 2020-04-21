@@ -169,7 +169,7 @@ const prebuildHtaccess = (_) => {
   };
   // --------------------------------------------------------------------------- PUBLIC
 
-  logs.start("Prebuild htaccess...");
+  logs.start("Prebuild htaccess.");
 
   // create htaccess file and get newHtaccessFilePath
   const { newHtaccessFilePath } = _createHtacessFile();

@@ -18,16 +18,18 @@ const paths = require("../../global.paths");
  */
 const prebuildDotenv = (pEnv) => {
   return new Promise((resolve) => {
+    logs.start(`Prebuild .env in dist/ folder`);
+    debug("process.env.ENV", process.env.ENV);
+
     // env file we want to inject in dist folder
     const newFilePath = `${paths.dist}/.env`;
-
-    debug(" process.env.ENV", process.env.ENV);
     // select param env or process env or null
     let selectedEnv = pEnv || process.env.ENV || null;
 
-    logs.start(
-      `Prebuild .env in dist/ folder with ${selectedEnv} selected env...`
-    );
+    selectedEnv
+      ? logs.note(`Selected en is ${selectedEnv}`)
+      : logs.note(`There is no selected env, we use content of default .env`);
+
     // env extension depend on currentEnv
     const envNameExtension =
       selectedEnv !== "" && selectedEnv !== undefined && selectedEnv !== null
@@ -36,13 +38,12 @@ const prebuildDotenv = (pEnv) => {
 
     // build template file path
     const templateFilePath = `${paths.root}/.env${envNameExtension}`;
-    logs.note(`envNameExtension: ${envNameExtension}`);
     debug({ pEnv, envNameExtension, newFilePath, templateFilePath });
 
     debug("write env file...");
     Files.new(newFilePath).write(Files.getFiles(templateFilePath).read());
 
-    logs.start(`write "VERSION=..." in dist/.env file...`);
+    logs.note(`write "VERSION=..." in dist/.env file...`);
     Files.getFiles(newFilePath).alter((fileContent) => {
       return fileContent.replace(
         /VERSION=/,
