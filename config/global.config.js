@@ -20,6 +20,7 @@ module.exports = {
    * Use proxy allow to redirect /my/path/to/dist/ to localhost:3000
    * Usefull if we are NOT generated HTML index and we want to target
    * an index.php for example.
+   * Also, you need to define a PROXY_URL in your .env
    */
   useProxy: false,
 
@@ -35,7 +36,7 @@ module.exports = {
    */
   buildManifestFile: false,
 
-  // --------------------------------------------------------------------------- CLI / TASK CONFIG
+  // --------------------------------------------------------------------------- TASKS
 
   /**
    * Prebuild
@@ -54,6 +55,8 @@ module.exports = {
 
   // Scaffold bundle type
   bundleType: ["react", "dom"],
+
+  // --------------------------------------------------------------------------- CLI CONFIG
 
   /**
    * SECURITY

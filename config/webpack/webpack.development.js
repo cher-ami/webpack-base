@@ -169,8 +169,8 @@ const developmentConfig = {
       ? {
           proxy: {
             "/": {
-              // target something like http://localhost/project/dist/path/to/index/file
-              target: `${process.env.APP_URL}${process.env.APP_BASE}`,
+              // target url like http://localhost/project/dist/base-path/
+              target: process.env.PROXY_URL,
               changeOrigin: true,
               secure: false,
             },

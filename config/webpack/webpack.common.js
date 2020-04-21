@@ -139,10 +139,7 @@ commonConfig = {
           name: "[path][name].[ext]",
           // prevent display of "src/common/" in filename
           context: "src/common",
-          publicPath:
-            process.env.ENV === "development"
-              ? `${process.env.ASSETS_PATH}`
-              : `${process.env.APP_BASE}${process.env.ASSETS_PATH}`,
+          publicPath: `${process.env.APP_BASE}${process.env.ASSETS_PATH}`,
         },
       },
 
@@ -158,10 +155,7 @@ commonConfig = {
           name: "[path][name].[ext]",
           // prevent display of "src/common/" in filename
           context: "src/common",
-          publicPath:
-            process.env.ENV === "development"
-              ? `${process.env.ASSETS_PATH}`
-              : `${process.env.APP_BASE}${process.env.ASSETS_PATH}`,
+          publicPath: `${process.env.APP_BASE}${process.env.ASSETS_PATH}`,
         },
       },
 
