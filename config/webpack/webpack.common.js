@@ -4,6 +4,7 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
+const url = require("url");
 
 // ----------------------------------------------------------------------------- GLOBAL
 
@@ -139,7 +140,10 @@ commonConfig = {
           name: "[path][name].[ext]",
           // prevent display of "src/common/" in filename
           context: "src/common",
-          publicPath: `${process.env.APP_BASE}${process.env.ASSETS_PATH}`,
+          publicPath: url.resolve(
+            process.env.APP_BASE,
+            process.env.ASSETS_PATH
+          ),
         },
       },
 
@@ -155,7 +159,10 @@ commonConfig = {
           name: "[path][name].[ext]",
           // prevent display of "src/common/" in filename
           context: "src/common",
-          publicPath: `${process.env.APP_BASE}${process.env.ASSETS_PATH}`,
+          publicPath: url.resolve(
+            process.env.APP_BASE,
+            process.env.ASSETS_PATH
+          ),
         },
       },
 

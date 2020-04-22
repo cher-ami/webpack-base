@@ -32,7 +32,7 @@ export default class %%BundleName%% extends App {
     GlobalConfig.inject({
       version: require("../../package.json").version,
       baseUrl: process.env.APP_BASE,
-      routerBaseUrl: process.env.APP_BASE ?? "/",
+      routerBaseUrl: process.env.APP_BASE,
       env: process.env.ENV,
       bundleName: "%%BundleName%%"
     });

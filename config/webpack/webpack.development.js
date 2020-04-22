@@ -29,9 +29,7 @@ const developmentConfig = {
   output: {
     path: config.outputPath,
     filename: "[name].bundle.js",
-    // Not need process.env.APP_BASE here because devServer serve on
-    // localhost:3000 without base
-    publicPath: "/",
+    publicPath: process.env.APP_BASE,
   },
 
   /**

@@ -31,7 +31,7 @@ const productionConfig = {
       : `[name].bundle.js`,
     // need production APP_BASE, for that, set a ".env.production" with APP_BASE value.
     // if .env.production doesn't exist, APP_BASE from ".env" will be used
-    publicPath: `${process.env.APP_BASE}/`,
+    publicPath: process.env.APP_BASE,
   },
 
   /**
