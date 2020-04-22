@@ -28,27 +28,11 @@ export default class %%BundleName%% extends App {
    * Init app config
    */
   protected initConfig(): void {
-    /**
-     * Manage Router base URL
-     *
-     * with devServer, RouterBaseURL need to be "/" if:
-     * - generateHtmlIndex: true
-     * or
-     * - useProxy: true
-     * Because we will be redirected on localhost:3000, without base URL
-     *
-     * on production
-     * Router base should be process.env.APP_BASE
-     *
-     */
-    const routerBaseURL =
-      process.env.NODE_ENV === ENodeEnv.DEV ? "/" : process.env.APP_BASE;
-
     // Inject params into config
     GlobalConfig.inject({
       version: require("../../package.json").version,
       baseUrl: process.env.APP_BASE,
-      routerBaseUrl: routerBaseURL,
+      routerBaseUrl: process.env.APP_BASE,
       env: process.env.ENV,
       bundleName: "%%BundleName%%"
     });
@@ -73,7 +57,7 @@ export default class %%BundleName%% extends App {
    * Init routes
    */
   protected initRoutes(): void {
-    // check if we use back end
+    // TODO move in config file
     const useAddDynamicPageImporters = false;
 
     /**
