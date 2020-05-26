@@ -9,7 +9,7 @@ const debug = require("debug")(`front:${componentName}`);
  */
 class AppView extends DOMView {
   /**
-   * Prepare dependencies with DependenciyManager
+   * Prepare dependencies with DependencyManager
    */
   protected prepareDependencies() {}
 

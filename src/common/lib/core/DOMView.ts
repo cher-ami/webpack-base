@@ -45,7 +45,7 @@ export class DOMView extends Disposable {
   }
 
   /**
-   * Prepare dependencies with DependenciyManager
+   * Prepare dependencies with DependencyManager
    */
   protected prepareDependencies() {}
 

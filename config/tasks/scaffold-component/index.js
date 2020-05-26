@@ -47,15 +47,6 @@ const _askComponentName = () => {
   });
 };
 
-const _askConnectToStore = () => {
-  return Inquirer.prompt({
-    type: "confirm",
-    message: "Connect component to store?",
-    name: "connectToStore",
-    default: false,
-  });
-};
-
 /**
  * React Component Builder
  * @param subFolder
@@ -66,7 +57,6 @@ const _askConnectToStore = () => {
  */
 const _reactComponentBuilder = ({
   subFolder,
-  connectToStore,
   componentPath,
   upperComponentName,
 }) => {
@@ -79,11 +69,9 @@ const _reactComponentBuilder = ({
     replaceExpressions: { upperComponentName },
   });
 
-  // index type depend of conect to store answer
-  const indexType = `index${connectToStore ? "-redux" : ""}`;
   // scaffold index
   createFile({
-    templateFilePath: `${paths.componentsTemplatesPath}/react/${indexType}.ts.template`,
+    templateFilePath: `${paths.componentsTemplatesPath}/react/index.ts.template`,
     destinationFilePath: `${componentPath}/index.ts`,
     replaceExpressions: { upperComponentName },
   });
@@ -164,20 +152,13 @@ const scaffoldComponent = (pComponentType) => {
     await _askComponentName().then((answer) => {
       componentName = answer.componentName;
     });
+
     // formated name "lowerCase"
     let lowerComponentName = changeCase.camelCase(componentName);
+
     // formated name "UpperCase"
     let upperComponentName = changeCase.pascalCase(componentName);
     debug("upperComponentName", upperComponentName);
-
-    // Get connect to store response
-    let connectToStore = false;
-    if (pComponentType === "react") {
-      await _askConnectToStore().then((answer) => {
-        connectToStore = answer.connectToStore;
-      });
-      debug("connectToStore", connectToStore);
-    }
 
     // Base path of the component (no extension at the end here)
     let componentPath = `${paths.src}/${bundleFolder}/${subFolder}/${lowerComponentName}`;
@@ -190,7 +171,6 @@ const scaffoldComponent = (pComponentType) => {
     if (pComponentType === "react") {
       _reactComponentBuilder({
         subFolder,
-        connectToStore,
         upperComponentName,
         componentPath,
       });
