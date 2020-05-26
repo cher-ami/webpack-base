@@ -9,7 +9,6 @@ Webpack boiler plate for javascript front-end projects. This repos use out of th
 - [Webpack bundler](https://webpack.js.org/)
 - [Typescript](https://www.typescriptlang.org/)
 - [React](https://reactjs.org/)
-- [Redux](https://redux.js.org/)
 - [Less](http://lesscss.org/)
 - [React Fast Refrest](https://github.com/pmmmwh/react-refresh-webpack-plugin)
 - [Prettier](https://prettier.io/)
@@ -42,4 +41,5 @@ MIT
 
 ## Credits
 
-© Willy Brauner
+Project is developed by Willy Brauner inspired by
+[fuse-base](https://github.com/solid-js/fuse-base) project written by [Alexis Bouet](https://zouloux.com).
