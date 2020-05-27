@@ -35,12 +35,12 @@ commonConfig = {
       ".json",
       ".module.less",
       ".less",
-      ".css",
+      ".css"
     ],
     alias: {
-      "@common": `${paths.src}/common`,
+      "@common": `${paths.src}/common`
     },
-    modules: [paths.nodeModules, paths.src],
+    modules: [paths.nodeModules, paths.src]
   },
 
   /**
@@ -71,8 +71,8 @@ commonConfig = {
           new HtmlWebpackPlugin({
             title: require("../../package").name,
             template: paths.webpackTemplatePath + "/index.html.template",
-            filename: "index.html",
-          }),
+            filename: "index.html"
+          })
         ]
       : []),
 
@@ -82,7 +82,7 @@ commonConfig = {
      */
     new Dotenv({
       path: paths.env,
-      systemvars: true,
+      systemvars: true
     }),
 
     /**
@@ -98,7 +98,7 @@ commonConfig = {
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.DEBUG": JSON.stringify(process.env.DEBUG),
       "process.env.APP_BASE": JSON.stringify(process.env.APP_BASE),
-      "process.env.APP_URL": JSON.stringify(process.env.APP_URL),
+      "process.env.APP_URL": JSON.stringify(process.env.APP_URL)
     }),
 
     /**
@@ -109,8 +109,8 @@ commonConfig = {
     new lessToJsPlugin({
       watcher: paths.atomsFilesToWatch,
       outputPath: paths.atomsPath,
-      outputFilename: paths.atomsGeneratedFilename,
-    }),
+      outputFilename: paths.atomsGeneratedFilename
+    })
   ],
 
   /**
@@ -126,7 +126,7 @@ commonConfig = {
       {
         test: /\.(js|jsx|ts|tsx|mjs)$/,
         exclude: /node_modules/,
-        use: [{ loader: "babel-loader" }],
+        use: [{ loader: "babel-loader" }]
       },
 
       /**
@@ -140,11 +140,8 @@ commonConfig = {
           name: "[path][name].[ext]",
           // prevent display of "src/common/" in filename
           context: "src/common",
-          publicPath: url.resolve(
-            process.env.APP_BASE,
-            process.env.ASSETS_PATH
-          ),
-        },
+          publicPath: url.resolve(process.env.APP_BASE, process.env.ASSETS_PATH)
+        }
       },
 
       /**
@@ -159,11 +156,8 @@ commonConfig = {
           name: "[path][name].[ext]",
           // prevent display of "src/common/" in filename
           context: "src/common",
-          publicPath: url.resolve(
-            process.env.APP_BASE,
-            process.env.ASSETS_PATH
-          ),
-        },
+          publicPath: url.resolve(process.env.APP_BASE, process.env.ASSETS_PATH)
+        }
       },
 
       /**
@@ -173,10 +167,10 @@ commonConfig = {
        */
       {
         test: /\.svg$/,
-        use: "raw-loader",
-      },
-    ],
-  },
+        use: "raw-loader"
+      }
+    ]
+  }
 };
 
 // export config

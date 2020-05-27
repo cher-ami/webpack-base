@@ -29,7 +29,7 @@ const developmentConfig = {
   output: {
     path: config.outputPath,
     filename: "[name].bundle.js",
-    publicPath: process.env.APP_BASE,
+    publicPath: process.env.APP_BASE
   },
 
   /**
@@ -54,9 +54,9 @@ const developmentConfig = {
         use: [
           {
             loader: "babel-loader",
-            options: { plugins: ["react-refresh/babel"] },
-          },
-        ],
+            options: { plugins: ["react-refresh/babel"] }
+          }
+        ]
       },
 
       /**
@@ -77,26 +77,21 @@ const developmentConfig = {
                   sourceMap: true,
                   importLoaders: 1,
                   modules: {
-                    localIdentName: "[name]__[local]--[hash:base64:5]",
-                  },
-                },
+                    localIdentName: "[name]__[local]--[hash:base64:5]"
+                  }
+                }
               },
               "postcss-loader",
-              "less-loader",
-            ],
+              "less-loader"
+            ]
           },
           // else if it's a simple less or css file
           {
-            use: [
-              "style-loader",
-              "css-loader",
-              "postcss-loader",
-              "less-loader",
-            ],
-          },
-        ],
-      },
-    ],
+            use: ["style-loader", "css-loader", "postcss-loader", "less-loader"]
+          }
+        ]
+      }
+    ]
   },
 
   /**
@@ -110,8 +105,8 @@ const developmentConfig = {
     ...(CONSOLE_PRINT_FRIENDLY
       ? [
           new FriendlyErrorsPlugin({
-            clearConsole: true,
-          }),
+            clearConsole: true
+          })
         ]
       : []),
     /**
@@ -120,15 +115,14 @@ const developmentConfig = {
      * IMPORTANT: this is a beta version but work fine
      */
     new ReactRefreshWebpackPlugin({
-      disableRefreshCheck: true,
-      forceEnable: false,
+      forceEnable: false
     }),
 
     /**
      * Enables Hot Module Replacement, otherwise known as HMR
      * @doc https://webpack.js.org/plugins/hot-module-replacement-plugin/
      */
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
 
   /**
@@ -154,7 +148,7 @@ const developmentConfig = {
       all: false,
       errors: !CONSOLE_PRINT_FRIENDLY,
       warnings: !CONSOLE_PRINT_FRIENDLY,
-      colors: !CONSOLE_PRINT_FRIENDLY,
+      colors: !CONSOLE_PRINT_FRIENDLY
     },
     // friendly webpack error
     // pass to true if you don't want to print compile file in the console
@@ -170,12 +164,12 @@ const developmentConfig = {
               // target url like http://localhost/project/dist/base-path/
               target: process.env.PROXY_URL,
               changeOrigin: true,
-              secure: false,
-            },
-          },
+              secure: false
+            }
+          }
         }
-      : {}),
-  },
+      : {})
+  }
 };
 
 // Export merge config
