@@ -6,13 +6,13 @@ import {
   getBaseFromPath,
   leadingSlash,
   slugify,
-  trailingSlash,
+  trailingSlash
 } from "../utils/stringUtils";
+import LanguageService, {
+  languageToString,
+  DEFAULT_LANGUAGE
+} from "@common/services/LanguageService";
 const debug = require("debug")("lib:Router");
-
-/**
- * @copyright Original work by Alexis Bouhet - https://zouloux.com
- */
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -359,7 +359,7 @@ export class Router {
    * It will help to know which page to import if there is no importer in declared routes.
    */
   static addDynamicPageImporters(pImporters: IDynamicPageImporter[]) {
-    pImporters.map((importer) => {
+    pImporters.map(importer => {
       Router._dynamicPageImporters.push(importer);
     });
   }
@@ -375,7 +375,7 @@ export class Router {
     // get all elements who have pLinkSignature
     const links = document.querySelectorAll(pLinkSignature);
     // listen click
-    links.forEach((item) =>
+    links.forEach(item =>
       item.addEventListener("click", this.linkClickedHandler)
     );
   }
@@ -441,7 +441,7 @@ export class Router {
       // Track page view
       window!["gtag"]("config", this._gtagId, {
         page_title: document.getElementsByTagName("title")[0].text,
-        page_path: path,
+        page_path: path
       });
     }
   }
@@ -468,7 +468,7 @@ export class Router {
     const eventData = {
       event_category: pCategory,
       event_label: pLabel,
-      value: pValue,
+      value: pValue
     };
 
     // Only add non interaction data if true
@@ -696,7 +696,7 @@ export class Router {
         // If there is no page importer
         if (currentRoutePageImporter == null) {
           // Check if we have one inside dynamic page importers
-          this._dynamicPageImporters.map((pageImporter) => {
+          this._dynamicPageImporters.map(pageImporter => {
             if (pageImporter.page == this._currentRouteMatch.page) {
               currentRoutePageImporter = pageImporter.importer;
             }
@@ -766,7 +766,7 @@ export class Router {
     let foundRoute: IRouteMatch;
 
     // Browse routes
-    this._routes.every((route) => {
+    this._routes.every(route => {
       // Exec route prepared regex with current path
       let routeExec = route._matchingRegex.exec(pathWithoutBase);
 
@@ -790,7 +790,7 @@ export class Router {
           importer: route.importer,
           action: route.action,
           stack: route.stack,
-          parameters: parameters,
+          parameters: parameters
         };
 
         // Hide from route to have access to handler
@@ -826,16 +826,21 @@ export class Router {
       pRouteMatch.stack = Router.DEFAULT_STACK_NAME;
     }
 
-    // Default parameters to empty object
-    if (pRouteMatch.parameters == null) {
-      pRouteMatch.parameters = {};
-    }
+    pRouteMatch.parameters = Object.assign(
+      {},
+      {
+        lang:
+          LanguageService.currentLanguageString ||
+          languageToString(DEFAULT_LANGUAGE)
+      },
+      pRouteMatch.parameters
+    );
 
     // Returned found URL
     let foundURL: string;
 
     // Browse routes
-    this._routes.every((route) => {
+    this._routes.every(route => {
       // Check if this route is ok with this match
       if (
         // Check page
@@ -860,7 +865,7 @@ export class Router {
         }
 
         // Replace parameters and slugify them
-        foundURL = route.url.replace(Router.PARAMETER_REPLACE_RULE, function (
+        foundURL = route.url.replace(Router.PARAMETER_REPLACE_RULE, function(
           i,
           pMatch
         ) {
