@@ -14,25 +14,31 @@ Webpack boiler plate for javascript front-end projects. This repos use out of th
 - [Debug](https://www.npmjs.com/package/debug)  
   ...
 
-## Install
+## Installation
 
-- clone repos:
+- Clone the repo:
 
 ```shell script
 $ git clone git@github.com:willybrauner/webpack-base.git
 ```
 
-- move to folder:
+- Move into it:
 
 ```shell script
 $ cd webpack-base
 ```
 
-- run install script:
+- Run install script:
 
 ```shell script
 $ ./install.sh
 ```
+
+- Choose your project type (React or DOM)
+- Bundle name will be the name of the entry point files. Leave empty to use `Main`
+- Enter the project name formatted as dash-case
+- Author name is optional
+- Description is optional
 
 ## License
 
