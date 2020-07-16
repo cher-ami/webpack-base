@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+    .BundleAnalyzerPlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 // ----------------------------------------------------------------------------- GLOBAL
@@ -27,11 +27,11 @@ const productionConfig = {
   output: {
     path: config.outputPath,
     filename: config.outputHashName
-      ? `[name].[contenthash].bundle.js`
-      : `[name].bundle.js`,
+        ? `[name].[contenthash].bundle.js`
+        : `[name].bundle.js`,
     // need production APP_BASE, for that, set a ".env.production" with APP_BASE value.
     // if .env.production doesn't exist, APP_BASE from ".env" will be used
-    publicPath: process.env.APP_BASE,
+    publicPath: `${process.env.APP_BASE}/`,
   },
 
   /**
@@ -46,8 +46,8 @@ const productionConfig = {
      */
     new MiniCssExtractPlugin({
       filename: config.outputHashName
-        ? `[name].[contenthash].css`
-        : `[name].css`,
+          ? `[name].[contenthash].css`
+          : `[name].css`,
     }),
 
     /**
@@ -120,7 +120,7 @@ const productionConfig = {
 
   /**
    * Optimization
-   * Production minimizing of JavaSvript and CSS assets.
+   * Production minimizing of JavaScript and CSS assets.
    */
   optimization: {
     minimizer: [

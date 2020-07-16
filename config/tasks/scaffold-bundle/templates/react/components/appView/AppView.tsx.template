@@ -7,6 +7,11 @@ import { atoms } from "@common/atoms/atoms";
 import { GridLayout } from "@wbe/libraries";
 import { ETransitionType, ViewStack } from "@common/lib/router/ViewStack";
 import { TPageRegisterObject } from "@common/lib/router/usePageRegister";
+import {
+  DEFAULT_LANGUAGE,
+  languageToString,
+  stringToLanguage
+} from "@common/lib/services/LanguageService";
 
 const componentName = "AppView";
 const debug = require("debug")(`front:${componentName}`);
@@ -85,8 +90,8 @@ class AppView extends Component<IProps, IStates> {
    * @return {Promise<any>}
    */
   protected transitionControl(
-    pOldPage: TPageRegisterObject,
-    pNewPage: TPageRegisterObject
+      pOldPage: TPageRegisterObject,
+      pNewPage: TPageRegisterObject
   ): Promise<any> {
     return new Promise(async resolve => {
       debug({ pOldPage, pNewPage });
@@ -109,20 +114,80 @@ class AppView extends Component<IProps, IStates> {
    * When route has changed
    */
   protected routeChangedHandler(pRouteMatch: IRouteMatch) {
-    // debug("Route changed", pRouteMatch);
+    // Handle no language parameter
+    if (!Router.currentRouteMatch.parameters.lang) {
+      throw new Error("No language parameter passed");
+    }
+
+    // Get locale as string
+    const language = stringToLanguage(
+        Router.currentRouteMatch.parameters.lang as string
+    );
+
+    // Handle unknown locale
+    if (language === undefined) {
+      debug("Incorrect language", Router.currentRouteMatch.parameters.lang);
+
+      // Show 404 page
+      const notFoundPage = () => require("../../pages/notFoundPage");
+      setTimeout(() =>
+              this._viewStack.showPage("NotFoundPage", notFoundPage, "index", {}),
+          1
+      );
+    }
   }
 
   /**
    * When a route is not found
    */
   protected routeNotFoundHandler(...rest) {
-    console.error("ROUTE NOT FOUND", rest);
-    // get not found page name
-    const pageName = "NotFoundPage";
-    // get not found page
+    debug("Route not found", Router.currentPath);
+
+    const cleanedPath = (Router.currentPath.endsWith("/")
+            ? Router.currentPath.slice(0, -1)
+            : Router.currentPath
+    )
+        // Remove multiple slashs
+        .replace(/(https?:\/\/)|(\/)+/g, "$1$2");
+
+    if (cleanedPath !== Router.currentPath) {
+      debug("Trying path without ending slash", cleanedPath);
+
+      const cleanedPathRoute = Router.URLToRoute(cleanedPath);
+
+      if (cleanedPathRoute) {
+        debug("Redirecting to", cleanedPathRoute);
+
+        // Have to delay openPage call because it won't work if called synchronously
+        setTimeout(() => Router.openPage(cleanedPathRoute, false), 10);
+        return;
+      }
+    }
+
+    // TODO: to fix, then replace appBase with process.env.APP_BASE
+    const appBase = "";
+
+    let pathWithLanguage = `/${appBase}/${languageToString(
+        DEFAULT_LANGUAGE
+    )}${cleanedPath.replace(appBase, "")}`
+        // Remove multiple slashs
+        .replace(/(https?:\/\/)|(\/)+/g, "$1$2");
+
+    debug("Trying with default language", pathWithLanguage);
+
+    const pathWithLanguageRoute = Router.URLToRoute(pathWithLanguage);
+
+    if (pathWithLanguageRoute) {
+      debug("Redirecting to", pathWithLanguageRoute);
+
+      // Have to delay openPage call because it won't work if called synchronously
+      setTimeout(() => Router.openPage(pathWithLanguageRoute, false), 10);
+      return;
+    }
+
+    // Show 404 page
     const notFoundPage = () => require("../../pages/notFoundPage");
-    // show not found page
-    this._viewStack.showPage(pageName, notFoundPage, "index", {});
+    this._viewStack.showPage("NotFoundPage", notFoundPage, "index", {});
   }
 
   /**
@@ -148,48 +213,48 @@ class AppView extends Component<IProps, IStates> {
 
   render() {
     return (
-      <div className={css.Root}>
-        {/* Grid */}
-        {isEnv(EEnv.DEV) && this.state.showGrid && (
-          <GridLayout
-            columnsNumber={atoms.columnNumber}
-            gutterSize={atoms.gutterSize}
-            maxSize={atoms.maxWidthGrid}
-          />
-        )}
+        <div className={css.Root}>
+          {/* Grid */}
+          {isEnv(EEnv.DEV) && this.state.showGrid && (
+              <GridLayout
+                  columnsNumber={atoms.columnNumber}
+                  gutterSize={atoms.gutterSize}
+                  maxSize={atoms.maxWidthGrid}
+              />
+          )}
 
-        {/* AppView Wrapper */}
-        <div className={css.wrapper}>
-          {/* Menu example */}
-          <nav className={css.nav}>
-            <a
-              className={css.link}
-              href={Router.generateURL({ page: "HomePage" })}
-              children={"Home"}
-              data-internal-link
-            />
-            <a
-              className={css.link}
-              href={Router.generateURL({
-                page: "WorkPage",
-                parameters: {
-                  slug: "custom-slug"
-                }
-              })}
-              children={"Work"}
-              data-internal-link
-            />
-          </nav>
+          {/* AppView Wrapper */}
+          <div className={css.wrapper}>
+            {/* Menu example */}
+            <nav className={css.nav}>
+              <a
+                  className={css.link}
+                  href={Router.generateURL({ page: "HomePage" })}
+                  children={"Home"}
+                  data-internal-link
+              />
+              <a
+                  className={css.link}
+                  href={Router.generateURL({
+                    page: "WorkPage",
+                    parameters: {
+                      slug: "custom-slug"
+                    }
+                  })}
+                  children={"Work"}
+                  data-internal-link
+              />
+            </nav>
 
-          {/* View Stack */}
-          <ViewStack
-            ref={r => (this._viewStack = r)}
-            transitionType={ETransitionType.PAGE_SEQUENTIAL}
-            transitionControl={this.transitionControl.bind(this)}
-            onNotFound={this.pageNotFoundHandler.bind(this)}
-          />
+            {/* View Stack */}
+            <ViewStack
+                ref={r => (this._viewStack = r)}
+                transitionType={ETransitionType.PAGE_SEQUENTIAL}
+                transitionControl={this.transitionControl.bind(this)}
+                onNotFound={this.pageNotFoundHandler.bind(this)}
+            />
+          </div>
         </div>
-      </div>
     );
   }
 }

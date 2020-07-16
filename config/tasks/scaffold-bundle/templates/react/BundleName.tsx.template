@@ -17,22 +17,25 @@ export default class %%BundleName%% extends App {
   /**
    * Get %%BundleName%% class singleton instance.
    */
-  protected static __instance: %%BundleName%%;
-  public static get instance(): %%BundleName%% {
+protected static __instance: %%BundleName%%;
+public static get instance(): %%BundleName%% {
     return %%BundleName%%.__instance;
-  }
+}
 
   // --------------------------------------------------------------------------- CONFIG
 
   /**
    * Init app config
    */
-  protected initConfig(): void {
+protected initConfig(): void {
+    const routerBaseURL =
+        process.env.NODE_ENV === ENodeEnv.DEV ? "/" : process.env.APP_BASE || "/";
+
     // Inject params into config
     GlobalConfig.inject({
       version: require("../../package.json").version,
       baseUrl: process.env.APP_BASE,
-      routerBaseUrl: process.env.APP_BASE,
+      routerBaseUrl: routerBaseURL,
       env: process.env.ENV,
       bundleName: "%%BundleName%%"
     });
@@ -46,7 +49,7 @@ export default class %%BundleName%% extends App {
   /**
    * Init env
    */
-  protected initEnv(): void {
+protected initEnv(): void {
     // add env class to body
     EnvUtils.addClasses();
   }
@@ -56,7 +59,7 @@ export default class %%BundleName%% extends App {
   /**
    * Init routes
    */
-  protected initRoutes(): void {
+protected initRoutes(): void {
     // TODO move in config file
     const useAddDynamicPageImporters = false;
 
@@ -76,36 +79,36 @@ export default class %%BundleName%% extends App {
     const routes: IRoute[] =
       // if we use dynamic page importer
       useAddDynamicPageImporters
-        ? // return an empty array
+          ? // return an empty array
           []
-        : // else, return a static list of routes
+          : // else, return a static list of routes
           [
             {
-              url: "/",
+              url: `/{lang}`,
               page: "HomePage",
               importer: () => require("./pages/homePage")
             },
             {
-              url: "/work/{slug}",
+              url: `/{lang}/works/{slug}`,
               page: "WorkPage",
               importer: () => require("./pages/workPage")
             }
           ];
 
-    /**
-     * Router init
-     * Manage manualy your routes here in case you project got no backend
-     *
-     *  NOTE: Use import to load asynchronously
-     *  importer: () => import("./pages/homePage")
-     */
-    Router.init(GlobalConfig.routerBaseUrl, routes);
-    debug("Router.routes", Router.routes);
-  }
+  /**
+   * Router init
+   * Manage manualy your routes here in case you project got no backend
+   *
+   *  NOTE: Use import to load asynchronously
+   *  importer: () => import("./pages/homePage")
+   */
+  Router.init(GlobalConfig.routerBaseUrl, routes);
+  debug("Router.routes", Router.routes);
+}
 
   // --------------------------------------------------------------------------- READY
 
-  protected ready(): void {
+protected ready(): void {
     // React render
     ReactDOM.render(<AppView />, document.getElementById("AppContainer"));
   }

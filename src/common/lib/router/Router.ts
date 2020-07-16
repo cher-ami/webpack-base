@@ -8,11 +8,11 @@ import {
   slugify,
   trailingSlash,
 } from "../utils/stringUtils";
+import LanguageService, {
+  languageToString,
+  DEFAULT_LANGUAGE,
+} from "@common/lib/services/LanguageService";
 const debug = require("debug")("lib:Router");
-
-/**
- * @copyright Original work by Alexis Bouhet - https://zouloux.com
- */
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -376,7 +376,7 @@ export class Router {
     const links = document.querySelectorAll(pLinkSignature);
     // listen click
     links.forEach((item) =>
-      item.addEventListener("click", this.linkClickedHandler)
+        item.addEventListener("click", this.linkClickedHandler)
     );
   }
 
@@ -456,11 +456,11 @@ export class Router {
    * @param {number} pNonInteraction @see https://support.google.com/analytics/answer/1033068#NonInteractionEvents
    */
   static trackEvent(
-    pAction: string,
-    pCategory?: string,
-    pLabel?: string,
-    pValue?: number,
-    pNonInteraction: boolean = false
+      pAction: string,
+      pCategory?: string,
+      pLabel?: string,
+      pValue?: number,
+      pNonInteraction: boolean = false
   ) {
     if (typeof window["gtag"] != "function") return;
 
@@ -509,7 +509,7 @@ export class Router {
     // Check route config
     if (pRoute.page == null || pRoute.page == "") {
       throw new Error(
-        `Router.prepareRoute // Invalid route "${pRoute.url}", property "page" have to be not null ans not empty.`
+          `Router.prepareRoute // Invalid route "${pRoute.url}", property "page" have to be not null ans not empty.`
       );
     }
 
@@ -548,7 +548,7 @@ export class Router {
 
       // Get parameter name and store it inside route for matching
       pRoute._matchingParameter.push(
-        url.substring(start + (isNumeric ? 2 : 1), end)
+          url.substring(start + (isNumeric ? 2 : 1), end)
       );
 
       // Add parameter flag to replace with regex down bellow
@@ -566,20 +566,20 @@ export class Router {
     // Replace regex reserved chars on pattern
     // We do it before parameter flag this is important, to avoid doubling escaping
     pattern = pattern
-      .replace(/\./g, "\\.")
-      .replace(/\+/g, "\\+")
-      .replace(/\*/g, "\\*")
-      .replace(/\$/g, "\\$")
-      .replace(/\/$/, "/?"); // Optional last slash
+        .replace(/\./g, "\\.")
+        .replace(/\+/g, "\\+")
+        .replace(/\*/g, "\\*")
+        .replace(/\$/g, "\\$")
+        .replace(/\/$/, "/?"); // Optional last slash
 
     // Remplace all parameter flag to corresponding regex for parameter detection
     pattern = pattern.replace(
-      new RegExp("(%%PARAMETER%%)", "g"),
-      Router.PARAMETER_RULE
+        new RegExp("(%%PARAMETER%%)", "g"),
+        Router.PARAMETER_RULE
     );
     pattern = pattern.replace(
-      new RegExp("(%%NUMBER_PARAMETER%%)", "g"),
-      Router.NUMBER_PARAMETER_RULE
+        new RegExp("(%%NUMBER_PARAMETER%%)", "g"),
+        Router.NUMBER_PARAMETER_RULE
     );
 
     // Convert it to regex and store it inside route
@@ -686,7 +686,7 @@ export class Router {
         // Check if stack exists if this is not the main stack
         if (this._currentRouteMatch.stack != "main" && stack == null) {
           throw new Error(
-            `Router.updateCurrentRoute // Stack ${this._currentRouteMatch.stack} is not registered.`
+              `Router.updateCurrentRoute // Stack ${this._currentRouteMatch.stack} is not registered.`
           );
         }
 
@@ -705,12 +705,12 @@ export class Router {
 
         // Show page on stack
         stack != null &&
-          stack.showPage(
+        stack.showPage(
             this._currentRouteMatch.page,
             currentRoutePageImporter,
             this._currentRouteMatch.action,
             this._currentRouteMatch.parameters
-          );
+        );
       }
     }
   }
@@ -758,8 +758,8 @@ export class Router {
 
     // Remove base and add leading slash
     let pathWithoutBase = leadingSlash(
-      extractPathFromBase(pURL, this._base),
-      true
+        extractPathFromBase(pURL, this._base),
+        true
     );
 
     // The found route to return
@@ -826,10 +826,15 @@ export class Router {
       pRouteMatch.stack = Router.DEFAULT_STACK_NAME;
     }
 
-    // Default parameters to empty object
-    if (pRouteMatch.parameters == null) {
-      pRouteMatch.parameters = {};
-    }
+    pRouteMatch.parameters = Object.assign(
+        {},
+        {
+          lang:
+              LanguageService.currentLanguageString ||
+              languageToString(DEFAULT_LANGUAGE),
+        },
+        pRouteMatch.parameters
+    );
 
     // Returned found URL
     let foundURL: string;
@@ -838,12 +843,12 @@ export class Router {
     this._routes.every((route) => {
       // Check if this route is ok with this match
       if (
-        // Check page
-        route.page == pRouteMatch.page &&
-        // Check action
-        route.action == pRouteMatch.action &&
-        // Check stack
-        route.stack == pRouteMatch.stack
+          // Check page
+          route.page == pRouteMatch.page &&
+          // Check action
+          route.action == pRouteMatch.action &&
+          // Check stack
+          route.stack == pRouteMatch.stack
       ) {
         // Check if given parameters exists in this route
         for (let i in pRouteMatch.parameters) {
@@ -861,8 +866,8 @@ export class Router {
 
         // Replace parameters and slugify them
         foundURL = route.url.replace(Router.PARAMETER_REPLACE_RULE, function (
-          i,
-          pMatch
+            i,
+            pMatch
         ) {
           // Check if this is a numeric parameter
           const numericParameter = pMatch.charAt(0) == "#";
@@ -877,8 +882,8 @@ export class Router {
 
           // Slugify it if this is a string only
           return typeof matchedParam === "number"
-            ? matchedParam.toString(10)
-            : slugify(matchedParam as string);
+              ? matchedParam.toString(10)
+              : slugify(matchedParam as string);
         });
 
         // Search is finished
@@ -921,8 +926,8 @@ export class Router {
     } else {
       // Change URL and add to history or replace
       pAddToHistory
-        ? window.history.pushState(null, null, pURL)
-        : window.history.replaceState(null, null, pURL);
+          ? window.history.pushState(null, null, pURL)
+          : window.history.replaceState(null, null, pURL);
     }
 
     // Update route

@@ -5,20 +5,20 @@ const debug = require("debug")("lib:LanguageService");
 
 export enum ELanguage {
   FR,
-  DE,
+  EN,
 }
 
-export const DEFAULT_LANGUAGE = ELanguage.FR;
+export const DEFAULT_LANGUAGE = ELanguage.EN;
 
 export const languageToString = (language: ELanguage): string =>
-  language === ELanguage.FR
-    ? "fr"
-    : language === ELanguage.DE
-    ? "de"
-    : undefined;
+    language === ELanguage.FR
+        ? "fr"
+        : language === ELanguage.EN
+        ? "en"
+        : undefined;
 
 export const stringToLanguage = (string: string): ELanguage =>
-  string === "fr" ? ELanguage.FR : string === "de" ? ELanguage.DE : undefined;
+    string === "fr" ? ELanguage.FR : string === "en" ? ELanguage.EN : undefined;
 
 /**
  * Langage Service
@@ -32,17 +32,17 @@ class LanguageService {
   get currentLanguage() {
     if (Router.currentRouteMatch) {
       return stringToLanguage(
-        Router.currentRouteMatch.parameters.lang as string
+          Router.currentRouteMatch.parameters.lang as string
       );
     }
 
     // Router may not be init yet, try parsing url
     const route = window.location.pathname.startsWith(
-      GlobalConfig.routerBaseUrl
+        GlobalConfig.routerBaseUrl
     )
-      ? window.location.pathname.replace(GlobalConfig.routerBaseUrl, "")
-      : GlobalConfig.routerBaseUrl;
-    const urlMatch = route.match(/^(de|fr)(\/|$)/i);
+        ? window.location.pathname.replace(GlobalConfig.routerBaseUrl, "")
+        : GlobalConfig.routerBaseUrl;
+    const urlMatch = route.match(/^(en|fr)(\/|$)/i);
     const urlMatchLanguage = urlMatch && stringToLanguage(urlMatch[1]);
 
     if (urlMatchLanguage) {
@@ -94,7 +94,7 @@ class LanguageService {
     }
 
     const language = stringToLanguage(
-      Router.currentRouteMatch.parameters.lang as string
+        Router.currentRouteMatch.parameters.lang as string
     );
 
     if (language === undefined) {
