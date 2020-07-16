@@ -1,4 +1,8 @@
 /**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
+
+/**
  * Preload images from URL's. Will call handler when images are loaded.
  * @param pURLs URL's of images to load
  * @param pHandler Called when all images are loaded. First argument is list of loaded images elements.
@@ -19,7 +23,7 @@ export const preloadImages = (
   let images: HTMLImageElement[] = [];
 
   // Called when an image is loaded
-  let handler = function($pElement: HTMLImageElement) {
+  let handler = function ($pElement: HTMLImageElement) {
     // Add image element to list
     images.push($pElement[0] as HTMLImageElement);
     // Remove element to avoid memory leaks

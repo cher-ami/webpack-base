@@ -1,4 +1,8 @@
 /**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
+
+/**
  * RGB Color object
  */
 export class Color {
@@ -132,7 +136,7 @@ export class ColorUtils {
     let newColor = new Color();
 
     // Parse color components
-    ["r", "g", "b"].map(component => {
+    ["r", "g", "b"].map((component) => {
       // Compute ratio for each color component
       newColor[component] = Math.round(
         pA[component] + (pB[component] - pA[component]) * pRatio

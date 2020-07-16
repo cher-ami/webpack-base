@@ -1,5 +1,7 @@
-# values auto-deleted during first setup
+# ------------------------------------------------------------------------------ AUTO-COMMENTED
+# values auto-commented during first setup
 config/install.config.js
+src/main
 
 # ------------------------------------------------------------------------------ GENERATED
 
@@ -15,6 +17,16 @@ src/common/sprites/*.png
 src/common/sprites/*.ts
 src/common/sprites/*.cache
 
+# Auto generate bundles list
+src/bundles.ts
+
+# Auto generate pages list for js router
+src/**/pages.ts
+
+# ------------------------------------------------------------------------------ ENV
+
+.env
+
 # ------------------------------------------------------------------------------ DEP
 
 node_modules
@@ -24,8 +36,5 @@ node_modules
 .DS_Store
 .idea
 
-# ------------------------------------------------------------------------------ ENV
-
-.env
 
 

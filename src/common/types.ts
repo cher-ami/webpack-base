@@ -5,7 +5,7 @@ export enum EPlayState {
   HIDDEN,
   PLAY_OUT,
   PLAY_IN,
-  VISIBLE
+  VISIBLE,
 }
 
 /**
@@ -14,7 +14,7 @@ export enum EPlayState {
  */
 export enum ENodeEnv {
   DEV = "development",
-  PROD = "production"
+  PROD = "production",
 }
 
 /**
@@ -25,5 +25,5 @@ export enum ENodeEnv {
 export enum EEnv {
   DEV = "development",
   STAGING = "staging",
-  PROD = "production"
+  PROD = "production",
 }

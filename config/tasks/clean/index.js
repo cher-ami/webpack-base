@@ -1,9 +1,10 @@
 require("colors");
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../helpers/logs-helper");
-const folderToClean = require("../../global.config").outputPath;
 
 // ----------------------------------------------------------------------------- PUBLIC
+
+const folderToClean = require("../../global.config").outputPath;
 
 /**
  * Init Start
@@ -11,8 +12,9 @@ const folderToClean = require("../../global.config").outputPath;
  */
 
 const clean = () =>
-  new Promise(async resolve => {
-    logs.start("Clean output folder...");
+  new Promise(async (resolve) => {
+    logs.start("Clean output folder");
+    logs.note(`Folder cleaned is: ${folderToClean}`);
     Files.any(folderToClean).remove();
     logs.done();
     resolve();

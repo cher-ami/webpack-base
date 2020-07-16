@@ -1,13 +1,18 @@
-const globalPaths = require("../global.paths");
-const config = require("../global.config");
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+
+// ----------------------------------------------------------------------------- GLOBAL
+
+const paths = require("../global.paths");
+const config = require("../global.config");
+
+// ----------------------------------------------------------------------------- CONFIG
 
 /**
  * Production Webpack Configuration
@@ -21,8 +26,12 @@ const productionConfig = {
 
   output: {
     path: config.outputPath,
-    filename: "[name].[contenthash].bundle.js",
-    publicPath: process.env.APP_BASE + "/"
+    filename: config.outputHashName
+      ? `[name].[contenthash].bundle.js`
+      : `[name].bundle.js`,
+    // need production APP_BASE, for that, set a ".env.production" with APP_BASE value.
+    // if .env.production doesn't exist, APP_BASE from ".env" will be used
+    publicPath: process.env.APP_BASE,
   },
 
   /**
@@ -36,20 +45,10 @@ const productionConfig = {
      * They cannot be used together in the same config.
      */
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css"
+      filename: config.outputHashName
+        ? `[name].[contenthash].css`
+        : `[name].css`,
     }),
-
-    /**
-     * CopyWebpackPlugin
-     * Copies files from target to destination folder.
-     */
-    new CopyWebpackPlugin([
-      {
-        from: config.outputPath,
-        to: "/",
-        ignore: ["*.DS_Store"]
-      }
-    ]),
 
     /**
      * webpack-bundle-analyzer
@@ -59,8 +58,21 @@ const productionConfig = {
     new BundleAnalyzerPlugin({
       openAnalyzer: false,
       analyzerMode: "static",
-      defaultSizes: "gzip"
-    })
+      defaultSizes: "gzip",
+    }),
+
+    /**
+     * CopyWebpackPlugin
+     * Copies files from target to destination folder.
+     */
+
+    new CopyWebpackPlugin([
+      {
+        from: config.outputPath,
+        to: "/",
+        ignore: ["*.DS_Store", ".gitkeep", ".*"],
+      },
+    ]),
   ],
 
   /**
@@ -85,25 +97,25 @@ const productionConfig = {
                   sourceMap: false,
                   importLoaders: 1,
                   modules: {
-                    localIdentName: "[name]__[local]--[hash:base64:5]"
-                  }
-                }
+                    localIdentName: "[name]__[local]--[hash:base64:5]",
+                  },
+                },
               },
               "postcss-loader",
-              "less-loader"
-            ]
+              "less-loader",
+            ],
           },
           {
             use: [
               MiniCssExtractPlugin.loader,
               "css-loader",
               "postcss-loader",
-              "less-loader"
-            ]
-          }
-        ]
-      }
-    ]
+              "less-loader",
+            ],
+          },
+        ],
+      },
+    ],
   },
 
   /**
@@ -111,13 +123,13 @@ const productionConfig = {
    * Production minimizing of JavaSvript and CSS assets.
    */
   optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
+    minimizer: [
+      new TerserJSPlugin(),
+      new OptimizeCSSAssetsPlugin({
+        assetNameRegExp: /\.main\.css$/g,
+      }),
+    ],
   },
-
-  stats: {
-    all: false,
-    assets: true
-  }
 };
 
 // Export merge config

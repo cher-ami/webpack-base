@@ -1,5 +1,8 @@
 import { Disposable } from "./Disposable";
 
+/**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
 export class App extends Disposable {
   // --------------------------------------------------------------------------- INIT
 

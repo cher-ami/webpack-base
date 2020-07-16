@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export enum EResponsiveCheckType {
   IS_LESS_THAN,
-  IS_MORE_THAN
+  IS_MORE_THAN,
 }
 
 // store breakpointList on this object

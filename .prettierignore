@@ -1,4 +1,3 @@
 dist
 node_modules
-src/lib/solidify/style/mixins.less
-src/template.html
+src/common/lib/style/mixins.less

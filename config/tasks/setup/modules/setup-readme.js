@@ -1,6 +1,6 @@
 require("colors");
 const { logs } = require("../../../helpers/logs-helper");
-const { QuickTemplate } = require("../../../helpers/template-helper");
+const { quickTemplate } = require("../../../helpers/template-helper");
 const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:manage-readme");
 
@@ -29,7 +29,7 @@ const setupReadme = ({
   readmeFrameworkFileName = "README-framework.md",
   projectName = "[ PROJECT NAME ]",
   projectAuthor = "[ PROJECT AUTHOR ]",
-  projectDescription = "[ PROJECT DESCRIPTION ]"
+  projectDescription = "[ PROJECT DESCRIPTION ]",
 }) => {
   debug("setupReadme params", {
     templatesPath,
@@ -38,10 +38,10 @@ const setupReadme = ({
     readmeFrameworkFileName,
     projectName,
     projectAuthor,
-    projectDescription
+    projectDescription,
   });
 
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     logs.start(
       `Change current ${readmeFileName} file as ${readmeFrameworkFileName}...`,
       true
@@ -81,13 +81,13 @@ const setupReadme = ({
     debug("create new template README.md from template...");
     if (!fakeMode) {
       await Files.new(readmeFileName).write(
-        QuickTemplate(
+        quickTemplate(
           Files.getFiles(`${templatesPath}/${readmeTemplateFileName}`).read(),
           // replace these variables
           {
             projectName,
             projectDescription,
-            projectAuthor
+            projectAuthor,
           }
         )
       );

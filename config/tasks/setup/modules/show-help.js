@@ -15,7 +15,7 @@ const config = require("../../../global.config");
  * Show help
  */
 const showHelp = () => {
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     logs.start("Show help...");
     logs.note("npm run help");
     help();

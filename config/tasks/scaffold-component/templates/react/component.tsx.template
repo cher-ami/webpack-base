@@ -1,0 +1,25 @@
+import css from './%%upperComponentName%%.module.less';
+import React from 'react';
+import { merge } from "@common/lib/helpers/classNameHelper";
+
+interface IProps {
+  classNames?: string[]
+}
+
+const componentName = "%%upperComponentName%%";
+const debug = require("debug")(`front:${componentName}`);
+
+/**
+ * @name %%upperComponentName%%
+ */
+function %%upperComponentName%% (props: IProps) {
+  // --------------------------------------------------------------------------- PREPARE
+
+  // --------------------------------------------------------------------------- RENDER
+
+  return <div className={merge([css.Root, props.classNames])}>
+      {componentName}
+  </div>
+}
+
+export default %%upperComponentName%%

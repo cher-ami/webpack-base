@@ -4,8 +4,8 @@ const debug = require("debug")("config:scaffold");
 
 // ----------------------------------------------------------------------------- COMMON TASKS
 
-const scaffoldComponent = require("./modules/scaffold-component");
-const scaffoldBundle = require("./modules/scaffold-bundle");
+const { scaffoldComponent } = require("../scaffold-component");
+const { scaffoldBundle } = require("../scaffold-bundle");
 
 /**
  * Ask bundle Type to
@@ -14,26 +14,26 @@ const scaffoldBundle = require("./modules/scaffold-bundle");
 const _scaffolders = [
   {
     name: "React component",
-    exec: () => scaffoldComponent("react")
+    exec: () => scaffoldComponent("react"),
   },
   {
     name: "DOM component",
-    exec: () => scaffoldComponent("dom")
-  }
-  // {
-  //   name: new Inquirer.Separator()
-  // },
-  // {
-  //   name: "Bundle",
-  //   exec: () => scaffoldBundle()
-  // }
+    exec: () => scaffoldComponent("dom"),
+  },
+  {
+    name: new Inquirer.Separator(),
+  },
+  {
+    name: "Bundle",
+    exec: () => scaffoldBundle(),
+  },
 ];
 
 // ----------------------------------------------------------------------------- PUBLIC API
 const scaffold = () =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     // Get scaffolder to present listing to user
-    let scaffolderTypes = _scaffolders.map(scaffolder => scaffolder.name);
+    let scaffolderTypes = _scaffolders.map((scaffolder) => scaffolder.name);
 
     // List available scaffolders to user
     Inquirer.prompt({
@@ -41,8 +41,8 @@ const scaffold = () =>
       name: "type",
       message: "What kind of component to create?",
       choices: scaffolderTypes,
-      pageSize: 20
-    }).then(answer => {
+      pageSize: 20,
+    }).then((answer) => {
       // Get scaffolder index
       const scaffolderIndex = scaffolderTypes.indexOf(answer.type);
 

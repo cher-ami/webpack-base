@@ -3,6 +3,9 @@
     "module": "esnext",
     "target": "es5",
     "baseUrl": "./src",
+    "paths": {
+      "@common/*": ["common/*"]
+    },
     "lib": ["es2015.promise", "es6", "dom", "esnext"],
     "jsx": "react",
     "moduleResolution": "node",

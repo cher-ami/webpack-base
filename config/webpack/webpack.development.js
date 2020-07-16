@@ -2,12 +2,19 @@ const globalPaths = require("../global.paths");
 const webpack = require("webpack");
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
-const config = require("../global.config");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
-// test env to get console print option
+// ----------------------------------------------------------------------------- GLOBAL
+
+const paths = require("../global.paths");
+const config = require("../global.config");
+
+// test env
 const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
+const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
+
+// ----------------------------------------------------------------------------- CONFIG
 
 /**
  * Development Webpack Configuration
@@ -22,7 +29,7 @@ const developmentConfig = {
   output: {
     path: config.outputPath,
     filename: "[name].bundle.js",
-    publicPath: process.env.APP_BASE + "/"
+    publicPath: process.env.APP_BASE
   },
 
   /**
@@ -108,7 +115,6 @@ const developmentConfig = {
      * IMPORTANT: this is a beta version but work fine
      */
     new ReactRefreshWebpackPlugin({
-      disableRefreshCheck: true,
       forceEnable: false
     }),
 
@@ -126,45 +132,43 @@ const developmentConfig = {
   devServer: {
     contentBase: globalPaths.dist,
     port: 3000,
-    open: false,
     hot: true,
     inline: true,
     compress: true,
     historyApiFallback: true,
 
+    // open new browser tab when webpack dev-server is started
+    open: DEV_SERVER_OPEN,
     // Write file to dist on each compile
     writeToDisk: true,
-
-    // specify to enable root proxying
-    index: "",
-
-    // if use proxy option is enable
-    ...(config.useProxy
-      ? {
-          proxy: {
-            "/": {
-              // target something like http://localhost/project/dist/path/to/index/file
-              target: `${process.env.APP_URL}${process.env.APP_BASE}`,
-              changeOrigin: true,
-              secure: false
-            }
-          }
-        }
-      : {}),
-
     // display error overlay on screen
     overlay: true,
-
+    // stats to print in console
     stats: {
       all: false,
       errors: !CONSOLE_PRINT_FRIENDLY,
       warnings: !CONSOLE_PRINT_FRIENDLY,
       colors: !CONSOLE_PRINT_FRIENDLY
     },
-
     // friendly webpack error
     // pass to true if you don't want to print compile file in the console
-    quiet: CONSOLE_PRINT_FRIENDLY
+    quiet: CONSOLE_PRINT_FRIENDLY,
+
+    // specify to enable root proxying
+    index: "",
+    // if use proxy option is enable
+    ...(config.useProxy
+      ? {
+          proxy: {
+            "/": {
+              // target url like http://localhost/project/dist/base-path/
+              target: process.env.PROXY_URL,
+              changeOrigin: true,
+              secure: false
+            }
+          }
+        }
+      : {})
   }
 };
 

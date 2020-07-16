@@ -114,7 +114,7 @@ export class PreloadVideosByXHR {
       // Send XHR request
       request.send();
       // Check the progress on transfers
-      request.addEventListener("progress", e => _onProgress(e, i));
+      request.addEventListener("progress", (e) => _onProgress(e, i));
       // When the video is loaded (passe resolve callback)
       request.addEventListener("load", () => _onLoaded());
       // If error

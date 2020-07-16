@@ -22,9 +22,9 @@ const setupPackageJson = ({
   packageJson = require(paths.packageJson),
   logDoneDelay = config.logDoneDelay,
   defaultProjectName = "webpack-base",
-  fakeMode = config.fakeMode
+  fakeMode = config.fakeMode,
 }) => {
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     logs.start("Setup package.json...");
 
     // Read package.json
@@ -37,7 +37,7 @@ const setupPackageJson = ({
       projectVersion,
       projectName,
       projectAuthor,
-      projectDescription
+      projectDescription,
     });
 
     // Get package infos if this is the first setup
@@ -55,24 +55,26 @@ const setupPackageJson = ({
     await Inquirer.prompt({
       type: "input",
       message: "What's the project name? (dash-case)",
-      name: "projectName"
-    }).then(answer => (projectName = changeCase.paramCase(answer.projectName)));
+      name: "projectName",
+    }).then(
+      (answer) => (projectName = changeCase.paramCase(answer.projectName))
+    );
     debug("> new project name:", projectName);
 
     // Ask user for author
     await Inquirer.prompt({
       type: "input",
       message: "What's the author name?",
-      name: "projectAuthor"
-    }).then(answer => (projectAuthor = answer.projectAuthor));
+      name: "projectAuthor",
+    }).then((answer) => (projectAuthor = answer.projectAuthor));
     debug("> new project author:", projectAuthor);
 
     // Ask user for desc
     await Inquirer.prompt({
       type: "input",
       message: "What's the descripton?",
-      name: "projectDescription"
-    }).then(answer => (projectDescription = answer.projectDescription));
+      name: "projectDescription",
+    }).then((answer) => (projectDescription = answer.projectDescription));
     debug("> new project description:", projectDescription);
 
     // Reset project version
@@ -82,7 +84,7 @@ const setupPackageJson = ({
     // Set name and version into package.json
     if (!fakeMode) {
       debug("Modify package.json...");
-      Files.getFiles("package.json").alterJSON(packageObject => {
+      Files.getFiles("package.json").alterJSON((packageObject) => {
         packageObject.version = projectVersion;
         packageObject.name = projectName;
         packageObject.author = projectAuthor;
@@ -97,7 +99,7 @@ const setupPackageJson = ({
     debug("Promise is resolve fn pass new package properties:", {
       projectName,
       projectAuthor,
-      projectDescription
+      projectDescription,
     });
     setTimeout(
       () => resolve({ projectName, projectAuthor, projectDescription }),

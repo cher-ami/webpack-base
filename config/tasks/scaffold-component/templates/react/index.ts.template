@@ -1,0 +1,3 @@
+import %%upperComponentName%% from "./%%upperComponentName%%";
+
+export default %%upperComponentName%%;

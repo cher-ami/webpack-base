@@ -13,22 +13,23 @@ const config = require("../../../global.config");
 // ----------------------------------------------------------------------------- MODULE
 
 /**
- * Init Install config
+ * Init Install config file
+ * This file contains installation informations
  * @returns {Promise<unknown>}
  */
 const setupInstallConfig = ({
   bundleType,
   installConfigPath = paths.installConfig,
   logDoneDelay = config.logDoneDelay,
-  fakeMode = config.fakeMode
+  fakeMode = config.fakeMode,
 }) => {
   debug("setupInstallConfig params:", {
     bundleType,
     installConfigPath,
-    logDoneDelay
+    logDoneDelay,
   });
 
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     logs.start(`Create config file in ${installConfigPath}...`);
 
     // init install config template

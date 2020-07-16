@@ -9,7 +9,7 @@ export function useAddTargetBlank(pRef: MutableRefObject<any>) {
     const links = pRef?.current?.querySelectorAll("a[href]");
     // set target="_blank" attribute to each of them
     if (links !== null) {
-      links.forEach(link => link.setAttribute("target", "_blank"));
+      links.forEach((link) => link.setAttribute("target", "_blank"));
     }
   }, []);
 }

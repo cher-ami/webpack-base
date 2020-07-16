@@ -4,6 +4,7 @@ import { deleteWhere } from "../utils/arrayUtils";
 
 /**
  * Delegate interface to handle touch dragging events
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
  */
 export interface ITouchInputDelegate {
   inputTap(pTouchPoint: TouchPoint): void;
@@ -18,7 +19,7 @@ export interface ITouchInputDelegate {
 export enum EInputDirection {
   HORIZONTAL,
   VERTICAL,
-  UNKNOWN
+  UNKNOWN,
 }
 
 /**
@@ -26,7 +27,7 @@ export enum EInputDirection {
  */
 export enum EInputTypes {
   TOUCH = 1,
-  MOUSE = 2
+  MOUSE = 2,
 }
 
 /**
@@ -273,7 +274,7 @@ export class TouchDispatcher extends Disposable {
       identifier: -1,
       inputType: TouchDispatcher.MOUSE_ID,
       clientX: pEvent.clientX,
-      clientY: pEvent.clientY
+      clientY: pEvent.clientY,
     });
 
     // Stop propagation if needed
@@ -330,7 +331,7 @@ export class TouchDispatcher extends Disposable {
         deltaX: 0,
         deltaY: 0,
         velocityX: 0,
-        velocityY: 0
+        velocityY: 0,
       });
 
       // If this is our first point
@@ -404,7 +405,7 @@ export class TouchDispatcher extends Disposable {
 
       // Remove this point
       this._points = deleteWhere(this._points, {
-        id: pOriginalPoint.identifier
+        id: pOriginalPoint.identifier,
       });
     }
   }

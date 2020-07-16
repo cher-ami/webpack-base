@@ -1,5 +1,5 @@
 const { logs } = require("../../../helpers/logs-helper");
-const scaffoldBundle = require("../../scaffold/modules/scaffold-bundle");
+const { scaffoldBundle } = require("../../scaffold-bundle");
 const debug = require("debug")("config:setup-bundle");
 
 // ----------------------------------------------------------------------------- PATHS / CONFIG
@@ -17,9 +17,9 @@ const config = require("../../../global.config");
  */
 const setupBundle = async ({
   logDoneDelay = config.logDoneDelay,
-  scaffoldBundleFunction = scaffoldBundle
+  scaffoldBundleFunction = scaffoldBundle,
 }) => {
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     logs.start("Setup bundle project type...");
     const bundleType = await scaffoldBundleFunction(true);
     logs.done();

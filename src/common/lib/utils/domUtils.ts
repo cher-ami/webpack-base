@@ -1,4 +1,8 @@
 /**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
+
+/**
  * The name of the silly greensock injected var
  */
 const GS_TRANSFORM_KEY = "_gsTransform";
@@ -51,7 +55,7 @@ export function cssToNumber(pValue: string): any[] {
       : // Séparer la valeur de l'unité
         [
           parseFloat(pValue.substr(0, indexToCut)),
-          pValue.substr(indexToCut, pValue.length).toLowerCase()
+          pValue.substr(indexToCut, pValue.length).toLowerCase(),
         ]
   );
 }
@@ -64,6 +68,6 @@ export function cssToNumber(pValue: string): any[] {
 export function getGlobalScale(pElement: HTMLElement): number[] {
   return [
     pElement.getBoundingClientRect().width / pElement["offsetWidth"],
-    pElement.getBoundingClientRect().height / pElement["offsetHeight"]
+    pElement.getBoundingClientRect().height / pElement["offsetHeight"],
   ];
 }

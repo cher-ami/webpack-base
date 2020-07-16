@@ -2,6 +2,10 @@
 import { dashToCamelCase } from "./stringUtils";
 
 /**
+ * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ */
+
+/**
  * Browser Only
  * Execute callback only on browser side.
  * It depend of some conditions
@@ -23,7 +27,7 @@ export const isRealIE11 = !window["ActiveXObject"] && "ActiveXObject" in window;
  */
 export enum EDeviceType {
   HANDHELD,
-  DESKTOP
+  DESKTOP,
 }
 
 /**
@@ -35,7 +39,7 @@ export enum EPlatform {
   ANDROID,
   WINDOWS,
   MAC,
-  UNKNOWN
+  UNKNOWN,
 }
 
 /**
@@ -49,7 +53,7 @@ export enum EBrowser {
   EDGE,
   MOZILLA,
   OPERA,
-  UNKNOWN
+  UNKNOWN,
 }
 /**
  * Available browsers engines
@@ -59,7 +63,7 @@ export enum EBrowserEngine {
   WEBKIT,
   TRIDENT,
   GECKO,
-  UNKNOWN
+  UNKNOWN,
 }
 
 /**
@@ -158,7 +162,7 @@ export class EnvUtils {
       video: "canPlayType" in document.createElement("video"),
       pushState: "history" in window && "pushState" in history,
       geolocation: "geolocation" in navigator,
-      webGL: EnvUtils.isWebglAvailable()
+      webGL: EnvUtils.isWebglAvailable(),
     };
 
     // Don't need detection anymore
@@ -247,7 +251,7 @@ export class EnvUtils {
       return [
         parseInt(v[1], 10),
         parseInt(v[2], 10),
-        parseInt(v[3] || "0", 10)
+        parseInt(v[3] || "0", 10),
       ];
     } else return [Number.POSITIVE_INFINITY];
   }
@@ -324,8 +328,8 @@ export class EnvUtils {
         EBrowser[EnvUtils.__BROWSER],
         EBrowser[EnvUtils.__BROWSER_ENGINE],
         EDeviceType[EnvUtils.__DEVICE_TYPE],
-        EPlatform[EnvUtils.__PLATFORM]
-      ].map(el => {
+        EPlatform[EnvUtils.__PLATFORM],
+      ].map((el) => {
         // add class to dom
         domRoot.classList.add(pPrefix + "is-" + dashToCamelCase(el, "_"));
       });

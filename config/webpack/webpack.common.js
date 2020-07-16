@@ -1,11 +1,17 @@
-const globalPaths = require("../global.paths");
-const config = require("../global.config");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const ManifestPlugin = require("webpack-manifest-plugin");
 const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin");
+const ManifestPlugin = require("webpack-manifest-plugin");
+const url = require("url");
+
+// ----------------------------------------------------------------------------- GLOBAL
+
+const paths = require("../global.paths");
+const config = require("../global.config");
+
+// ----------------------------------------------------------------------------- CONFIG
 
 /**
  * Common Webpack Configuration
@@ -15,9 +21,7 @@ commonConfig = {
    * Entry
    * The first place Webpack looks to start building the bundle.
    */
-  entry: {
-    main: `${globalPaths.src}/index.ts`
-  },
+  entry: `${paths.src}/bundles.ts`,
 
   /**
    * Resolve
@@ -33,8 +37,10 @@ commonConfig = {
       ".less",
       ".css"
     ],
-    alias: {},
-    modules: [globalPaths.nodeModules, globalPaths.src]
+    alias: {
+      "@common": `${paths.src}/common`
+    },
+    modules: [paths.nodeModules, paths.src]
   },
 
   /**
@@ -64,7 +70,7 @@ commonConfig = {
       ? [
           new HtmlWebpackPlugin({
             title: require("../../package").name,
-            template: globalPaths.webpackTemplatePath + "/index.html.template",
+            template: paths.webpackTemplatePath + "/index.html.template",
             filename: "index.html"
           })
         ]
@@ -75,7 +81,7 @@ commonConfig = {
      * @doc https://github.com/mrsteele/dotenv-webpack
      */
     new Dotenv({
-      path: globalPaths.env,
+      path: paths.env,
       systemvars: true
     }),
 
@@ -83,14 +89,16 @@ commonConfig = {
      * Manifest plugin
      * @doc https://github.com/danethurber/webpack-manifest-plugin
      */
-    new ManifestPlugin(),
+    ...(config.buildManifestFile ? [new ManifestPlugin()] : []),
 
     /**
      * Define Plugin
      */
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-      "process.env.DEBUG": JSON.stringify(process.env.DEBUG)
+      "process.env.DEBUG": JSON.stringify(process.env.DEBUG),
+      "process.env.APP_BASE": JSON.stringify(process.env.APP_BASE),
+      "process.env.APP_URL": JSON.stringify(process.env.APP_URL)
     }),
 
     /**
@@ -99,9 +107,9 @@ commonConfig = {
      * and expose it in generated javascript file.
      */
     new lessToJsPlugin({
-      watcher: globalPaths.atomsFilesToWatch,
-      outputPath: globalPaths.atomsPath,
-      outputFilename: globalPaths.atomsGeneratedFilename
+      watcher: paths.atomsFilesToWatch,
+      outputPath: paths.atomsPath,
+      outputFilename: paths.atomsGeneratedFilename
     })
   ],
 
@@ -126,13 +134,13 @@ commonConfig = {
        * Copy image files to build folder.
        */
       {
-        test: /\.(?:ico|gif|png|jpg|jpeg|webp|svg)$/i,
+        test: /\.(?:ico|gif|png|jpg|jpeg|webp|mp4)$/i,
         loader: "file-loader",
         options: {
           name: "[path][name].[ext]",
-          // prevent display of src/ in filename
-          // TODO pause problème avec le sprite
-          context: "src/common"
+          // prevent display of "src/common/" in filename
+          context: "src/common",
+          publicPath: url.resolve(process.env.APP_BASE, process.env.ASSETS_PATH)
         }
       },
 
@@ -146,9 +154,20 @@ commonConfig = {
         options: {
           limit: 8192,
           name: "[path][name].[ext]",
-          // prevent display of src/ in filename
-          context: "src/common"
+          // prevent display of "src/common/" in filename
+          context: "src/common",
+          publicPath: url.resolve(process.env.APP_BASE, process.env.ASSETS_PATH)
         }
+      },
+
+      /**
+       * Raw file
+       * Load inline files in bundle
+       * doc: https://www.npmjs.com/package/raw-loader
+       */
+      {
+        test: /\.svg$/,
+        use: "raw-loader"
       }
     ]
   }

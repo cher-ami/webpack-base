@@ -70,5 +70,13 @@ module.exports = {
   // install config
   installConfig: appRoot.resolve("config/install.config.js"),
   // webpack template - move ?
-  webpackTemplatePath: appRoot.resolve("config/webpack/templates")
+  webpackTemplatePath: appRoot.resolve("config/webpack/templates"),
+  // bundles templates path
+  bundlesTemplatesPath: appRoot.resolve(
+    "config/tasks/scaffold-bundle/templates"
+  ),
+  // components templates path
+  componentsTemplatesPath: appRoot.resolve(
+    "config/tasks/scaffold-component/templates"
+  ),
 };

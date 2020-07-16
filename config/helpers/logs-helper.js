@@ -6,7 +6,7 @@ const logs = {
    * @param pMessage
    */
   start: (pMessage = "") => {
-    console.log(`${pMessage}`.brightBlue, "\n");
+    console.log(`${pMessage}`.brightBlue);
   },
 
   /**
@@ -31,7 +31,7 @@ const logs = {
    */
   error: (pMessage = "") => {
     console.log(`${pMessage}`.red, "\n");
-  }
+  },
 };
 
 module.exports = { logs };

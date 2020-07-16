@@ -1,4 +1,0 @@
-import %%upperComponentName%% from "./%%upperComponentName%%";
-
-// Export without redux connection
-export default %%upperComponentName%%;
