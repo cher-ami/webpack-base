@@ -114,13 +114,7 @@ class AppView extends Component<IProps, IStates> {
    * When route has changed
    */
   protected routeChangedHandler(pRouteMatch: IRouteMatch) {
-    // Hide the loader by default if the first page is not homePage
-    if (this._isFirstPage && pRouteMatch.page !== EPages.HomePage) {
-      this.setState({
-        loaderPlayState: EPlayState.HIDDEN
-      });
-    }
-    
+
     if (!Router.currentRouteMatch.parameters.lang) {
       throw new Error("No language parameter passed");
     }
@@ -135,7 +129,7 @@ class AppView extends Component<IProps, IStates> {
        // Show 404 page
       const notFoundPage = () => require("../../pages/notFoundPage");
       setTimeout(() =>
-        this._viewStack.showPage("NotFoundPage", notFoundPage, "index", {}), 
+        this._viewStack.showPage("NotFoundPage", notFoundPage, "index", {}),
         1
       );
     }
