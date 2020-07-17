@@ -106,7 +106,22 @@ export default class %%BundleName%% extends App {
   // --------------------------------------------------------------------------- READY
 
   protected ready(): void {
-    // React render
-    ReactDOM.render(<AppView />, document.getElementById("AppContainer"));
+    // TODO : make globalData optional when no global.json ?
+    // We request global data before React instance
+    try {
+      // request global data
+      DataFetcher.getApi({ endpoint: "global.json" }).then(res => {
+        // store result in global data
+        GlobalConfig.inject({ globalData: res.content });
+        debug("globalData", GlobalConfig.globalData);
+
+        // TODO: Prepare routes and init router here (cf Numero 10 project) ?
+
+        // React render
+        ReactDOM.render(<AppView />, document.getElementById("AppContainer"));
+      });
+    } catch (e) {
+      console.warn("FETCH GLOBAL DATA ERROR. APP ABORTING");
+    }
   }
 }

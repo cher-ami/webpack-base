@@ -1,5 +1,39 @@
 const debug = require("debug")("front:GlobalConfig");
 
+// ----------------------------------------------------------------------------- STRUCT
+
+/**
+ * IGlobal Meta
+ */
+export interface IGlobalMetas {
+  title: string;
+  description: string;
+  image: string;
+}
+
+/**
+ * IGlobal Data
+ */
+export interface IGlobalData {
+  dictionary: {
+    [key: string]: string;
+  };
+  site: {
+    infos: {
+      analytics: string;
+      legals: string;
+    };
+    meta: IGlobalMetas;
+    networks: {};
+  };
+  menus: any;
+  routes: {
+    [x: string]: string;
+  };
+}
+
+// ----------------------------------------------------------------------------- STRUCT END
+
 /**
  * Add your custom properties here
  */
@@ -20,6 +54,8 @@ export class GlobalConfigProperties {
   appData: any;
   // bundleName
   bundleName: string;
+  // global data
+  globalData: IGlobalData;
 }
 
 /**
