@@ -32,7 +32,6 @@
     "@solid-js/css-flat": "^1.0.1",
     "@wbe/libraries": "^1.1.0-alpha.0",
     "gsap": "^3.2.6",
-    "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
