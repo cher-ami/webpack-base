@@ -42,4 +42,4 @@ MIT
 ## Credits
 
 Project is developed by [Willy Brauner](https://willybrauner.com) inspired by
-[fuse-base](https://github.com/solid-js/fuse-base) project written by [Alexis Bouet](https://zouloux.com).
+[fuse-base](https://github.com/solid-js/fuse-base) project written by [Alexis Bouhet](https://zouloux.com).
