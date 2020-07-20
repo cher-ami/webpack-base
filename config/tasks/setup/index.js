@@ -16,7 +16,7 @@ const config = require("../../global.config");
  */
 const setup = () => {
   return new Promise(async (resolve) => {
-    // check if cache file exist, if exist, do not contiue
+    // check if cache file exist, if exist, do not continue
     if (!checkConfigFile()) return;
 
     // manage package json and get values

@@ -17,7 +17,6 @@ const config = require("../../../global.config");
  * @description
  */
 const cleanFrameworkFiles = ({
-  // TODO pass install.sh in paths files
   gitFolder = paths.gitFolder,
   installScriptFile = paths.installScript,
   logDoneDelay = config.logDoneDelay,
@@ -48,7 +47,6 @@ const cleanFrameworkFiles = ({
     } else {
       debug("FakeMode is activated, do nothing.".red);
     }
-    w;
     logs.done();
     setTimeout(resolve, logDoneDelay);
   });
