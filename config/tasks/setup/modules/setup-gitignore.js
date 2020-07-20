@@ -20,7 +20,7 @@ const setupGitignore = ({
   gitignorePath = paths.gitignore,
   logDoneDelay = config.logDoneDelay,
   fakeMode = config.fakeMode,
-}) => {
+} = {}) => {
   debug("setupGitignore params:", { gitignorePath });
 
   return new Promise((resolve) => {
@@ -31,7 +31,6 @@ const setupGitignore = ({
           fileContent
             // remove install.cache, we need to add it into git
             .replace(/config\/install.config.js/, `# config/install.config.js`)
-            .replace(/src\/main/, `# src/main`)
         );
       });
     } else {

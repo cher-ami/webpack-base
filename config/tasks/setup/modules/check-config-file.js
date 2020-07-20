@@ -18,7 +18,7 @@ const config = require("../../../global.config");
  * Check if install file cache exist
  * @returns boolean
  */
-const checkConfigFile = ({ configFilePath = paths.installConfig }) => {
+const checkConfigFile = ({ configFilePath = paths.installConfig } = {}) => {
   // check if config file exist
   if (Files.getFiles(configFilePath).files.length > 0) {
     execSync("clear", 3);

@@ -22,7 +22,7 @@ const cleanFrameworkFiles = ({
   installScriptFile = paths.installScript,
   logDoneDelay = config.logDoneDelay,
   fakeMode = config.fakeMode,
-}) => {
+} = {}) => {
   debug("cleanFrameworkFiles params:", {
     gitFolder,
     installScriptFile,
@@ -48,6 +48,7 @@ const cleanFrameworkFiles = ({
     } else {
       debug("FakeMode is activated, do nothing.".red);
     }
+    w;
     logs.done();
     setTimeout(resolve, logDoneDelay);
   });
