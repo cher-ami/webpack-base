@@ -5,7 +5,6 @@ const debug = require("debug")("config:scaffold");
 // ----------------------------------------------------------------------------- COMMON TASKS
 
 const { scaffoldComponent } = require("../scaffold-component");
-const { scaffoldBundle } = require("../scaffold-bundle");
 
 /**
  * Ask bundle Type to
@@ -19,13 +18,6 @@ const _scaffolders = [
   {
     name: "DOM component",
     exec: () => scaffoldComponent("dom"),
-  },
-  {
-    name: new Inquirer.Separator(),
-  },
-  {
-    name: "Bundle",
-    exec: () => scaffoldBundle(),
   },
 ];
 
