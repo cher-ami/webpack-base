@@ -1,19 +1,16 @@
-import css from "./WorkPage.module.less";
+import css from "./HomePage.module.less";
 import React, { useRef } from "react";
-import { usePageRegister } from "@common/lib/router/usePageRegister";
+import { usePageRegister } from "../../lib/router/usePageRegister";
 
-interface IProps {
-  parameters: any;
-}
+interface IProps {}
 
-// prepare
-const componentName = "WorkPage";
+const componentName = "HomePage";
 const debug = require("debug")(`front:${componentName}`);
 
 /**
- * @name WorkPage
+ * @name HomePage
  */
-const WorkPage = (props: IProps) => {
+const HomePage = (props: IProps) => {
   // get root ref
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -24,7 +21,7 @@ const WorkPage = (props: IProps) => {
    * (remove this example if not use)
    */
   const playIn = (): Promise<any> => {
-    return new Promise(resolve => resolve());
+    return new Promise((resolve) => resolve());
   };
 
   /**
@@ -32,7 +29,7 @@ const WorkPage = (props: IProps) => {
    * (remove this example if not use)
    */
   const playOut = (): Promise<any> => {
-    return new Promise(resolve => resolve());
+    return new Promise((resolve) => resolve());
   };
 
   /**
@@ -48,9 +45,8 @@ const WorkPage = (props: IProps) => {
   return (
     <div className={css.Root} ref={rootRef}>
       {componentName}
-      <div>{props.parameters?.slug}</div>
     </div>
   );
 };
 
-export default WorkPage;
+export default HomePage;

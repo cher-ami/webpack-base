@@ -14,26 +14,16 @@ export class GlobalConfigProperties {
   routerBaseUrl: string;
   // Root node where the app DOM will be append
   root: HTMLElement;
-  // Locale translation code
-  locale: string;
-  // site data
-  appData: any;
-  // bundleName
-  bundleName: string;
 }
 
 /**
  * @name GlobalConfig
  */
 class GlobalConfig extends GlobalConfigProperties {
-  // --------------------------------------------------------------------------- METHODS
-
-  /**
-   * Log Global config
-   */
-  public log = () => debug(this);
-
-  // ------------------------------------------------------------------------- INJECT
+  constructor() {
+    super();
+    debug("GlobalConfig", this);
+  }
 
   /**
    * Inject arbitrary properties inside this object

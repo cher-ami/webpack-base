@@ -1,6 +1,6 @@
 import css from "./WorkPage.module.less";
 import React, { useRef } from "react";
-import { usePageRegister } from "@common/lib/router/usePageRegister";
+import { usePageRegister } from "../../lib/router/usePageRegister";
 
 interface IProps {
   parameters: any;
@@ -24,7 +24,7 @@ const WorkPage = (props: IProps) => {
    * (remove this example if not use)
    */
   const playIn = (): Promise<any> => {
-    return new Promise(resolve => resolve());
+    return new Promise((resolve) => resolve());
   };
 
   /**
@@ -32,7 +32,7 @@ const WorkPage = (props: IProps) => {
    * (remove this example if not use)
    */
   const playOut = (): Promise<any> => {
-    return new Promise(resolve => resolve());
+    return new Promise((resolve) => resolve());
   };
 
   /**

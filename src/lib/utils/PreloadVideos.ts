@@ -5,16 +5,16 @@ import { Signal } from "../helpers/Signal";
  * @param pURLs
  * @param pCallBack
  */
-export class PreloadVideosByXHR {
+export class PreloadVideos {
   // --------------------------------------------------------------------------- SINGLETON
 
   /**
    * Create an instance if it doesn't already exist when instance method
    */
-  protected static __instance: PreloadVideosByXHR;
+  protected static __instance: PreloadVideos;
 
-  static get instance(): PreloadVideosByXHR {
-    if (this.__instance == null) this.__instance = new PreloadVideosByXHR();
+  static get instance(): PreloadVideos {
+    if (this.__instance == null) this.__instance = new PreloadVideos();
     return this.__instance;
   }
 
@@ -83,9 +83,9 @@ export class PreloadVideosByXHR {
         // Get sum of all array entries
         let sum = percentsArray.reduce((a, b) => a + b, 0);
         // Get total percent of all items
-        PreloadVideosByXHR.__percentLoaded = (sum / pURLs.length) * 100;
+        PreloadVideos.__percentLoaded = (sum / pURLs.length) * 100;
         // Dispach a Signal
-        PreloadVideosByXHR.__progressChange.dispatch();
+        PreloadVideos.__progressChange.dispatch();
       }
     };
 

@@ -1,19 +1,17 @@
-import css from "./WorkPage.module.less";
+import css from "./NotFoundPage.module.less";
 import React, { useRef } from "react";
-import { usePageRegister } from "@common/lib/router/usePageRegister";
+import { usePageRegister } from "../../lib/router/usePageRegister";
 
-interface IProps {
-  parameters: any;
-}
+interface IProps {}
 
 // prepare
-const componentName = "WorkPage";
+const componentName = "NotFoundPage";
 const debug = require("debug")(`front:${componentName}`);
 
 /**
- * @name WorkPage
+ * @name NotFoundPage
  */
-const WorkPage = (props: IProps) => {
+const NotFoundPage = (props: IProps) => {
   // get root ref
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -24,7 +22,7 @@ const WorkPage = (props: IProps) => {
    * (remove this example if not use)
    */
   const playIn = (): Promise<any> => {
-    return new Promise(resolve => resolve());
+    return new Promise((resolve) => resolve());
   };
 
   /**
@@ -32,15 +30,10 @@ const WorkPage = (props: IProps) => {
    * (remove this example if not use)
    */
   const playOut = (): Promise<any> => {
-    return new Promise(resolve => resolve());
+    return new Promise((resolve) => resolve());
   };
 
-  /**
-   * Register page for ViewStack
-   * NOTE: each page of ViewStack need to be register to work.
-   * Minimal register should be: usePageRegister({ componentName, rootRef });
-   * (remove playIn and playOut if not use)
-   */
+  // register page
   usePageRegister({ componentName, rootRef, playIn, playOut });
 
   // -------------------–-------------------–-------------------–--------------- RENDER
@@ -48,9 +41,8 @@ const WorkPage = (props: IProps) => {
   return (
     <div className={css.Root} ref={rootRef}>
       {componentName}
-      <div>{props.parameters?.slug}</div>
     </div>
   );
 };
 
-export default WorkPage;
+export default NotFoundPage;

@@ -19,7 +19,7 @@ const NotFoundPage = (props: IProps) => {
 
   /**
    * playIn page transition
-   * (remove this exemple if not use)
+   * (remove this example if not use)
    */
   const playIn = (): Promise<any> => {
     return new Promise(resolve => resolve());
@@ -27,7 +27,7 @@ const NotFoundPage = (props: IProps) => {
 
   /**
    * playOut page transition
-   * (remove this exemple if not use)
+   * (remove this example if not use)
    */
   const playOut = (): Promise<any> => {
     return new Promise(resolve => resolve());

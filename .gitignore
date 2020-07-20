@@ -1,7 +1,6 @@
 # ------------------------------------------------------------------------------ AUTO-COMMENTED
 # values auto-commented during first setup
 config/install.config.js
-src/main
 
 # ------------------------------------------------------------------------------ GENERATED
 
@@ -9,19 +8,16 @@ src/main
 dist
 
 # Auto generated atoms
-src/common/atoms/atoms.ts
+src/atoms/atoms.ts
 
 # Auto generated sprites
-src/common/sprites/*.less
-src/common/sprites/*.png
-src/common/sprites/*.ts
-src/common/sprites/*.cache
-
-# Auto generate bundles list
-src/bundles.ts
+src/sprites/*.less
+src/sprites/*.png
+src/sprites/*.ts
+src/sprites/*.cache
 
 # Auto generate pages list for js router
-src/**/pages.ts
+src/pages.ts
 
 # ------------------------------------------------------------------------------ ENV
 
