@@ -37,9 +37,7 @@ commonConfig = {
       ".less",
       ".css",
     ],
-    alias: {
-      "@common": `${paths.src}/common`,
-    },
+    alias: {},
     modules: [paths.nodeModules, paths.src],
   },
 

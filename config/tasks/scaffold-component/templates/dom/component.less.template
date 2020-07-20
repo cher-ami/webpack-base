@@ -1,4 +1,4 @@
-@import (reference) "../../../common/references.less";
+@import (reference) "../../references.less";
 
 // ----------------------------------------------------------------------------- CONFIG
 

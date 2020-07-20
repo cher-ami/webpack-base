@@ -1,4 +1,4 @@
-import {DOMView} from "@common/lib/core/DOMView";
+import {DOMView} from "../../lib/core/DOMView";
 import './%%upperComponentName%%.less';
 
 const componentName = "%%upperComponentName%%";

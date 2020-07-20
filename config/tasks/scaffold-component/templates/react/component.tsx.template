@@ -1,9 +1,9 @@
 import css from './%%upperComponentName%%.module.less';
 import React from 'react';
-import { merge } from "@common/lib/helpers/classNameHelper";
+import { mergeStrings as merge } from "../../lib/utils/stringUtils";
 
 interface IProps {
-  classNames?: string[]
+  className?: string
 }
 
 const componentName = "%%upperComponentName%%";
@@ -17,7 +17,7 @@ function %%upperComponentName%% (props: IProps) {
 
   // --------------------------------------------------------------------------- RENDER
 
-  return <div className={merge([css.Root, props.classNames])}>
+  return <div className={merge([css.Root, props.className])}>
       {componentName}
   </div>
 }

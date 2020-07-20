@@ -19,15 +19,6 @@ const config = require("../../global.config");
 
 // ----------------------–----------------------–----------------------–-------- PRIVATE
 
-const _askWhichBundleFolder = (bundleFolderList) => {
-  return Inquirer.prompt({
-    type: "list",
-    name: "bundleFolder",
-    message: "Which bundle folder?",
-    choices: bundleFolderList,
-  });
-};
-
 const _askWhichComponentFolder = (
   componentCompatibleFolders = config.componentCompatibleFolders
 ) => {
@@ -66,13 +57,6 @@ const _reactComponentBuilder = ({
   createFile({
     templateFilePath: `${paths.componentsTemplatesPath}/react/${componentType}.tsx.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.tsx`,
-    replaceExpressions: { upperComponentName },
-  });
-
-  // scaffold index
-  createFile({
-    templateFilePath: `${paths.componentsTemplatesPath}/react/index.ts.template`,
-    destinationFilePath: `${componentPath}/index.ts`,
     replaceExpressions: { upperComponentName },
   });
 
@@ -133,12 +117,6 @@ const scaffoldComponent = (pComponentType) => {
     /**
      * Ask questions
      */
-    let bundleFolder = "";
-    // Get bundle folder
-    await _askWhichBundleFolder(filterBundleFolderList).then((answer) => {
-      bundleFolder = answer.bundleFolder;
-    });
-    debug("bundleFolder", bundleFolder);
 
     let subFolder = "";
     // Get sub-folder
@@ -161,7 +139,7 @@ const scaffoldComponent = (pComponentType) => {
     debug("upperComponentName", upperComponentName);
 
     // Base path of the component (no extension at the end here)
-    let componentPath = `${paths.src}/${bundleFolder}/${subFolder}/${lowerComponentName}`;
+    let componentPath = `${paths.src}/${subFolder}/${lowerComponentName}`;
     debug("component will be created here: componentPath", componentPath);
 
     /**

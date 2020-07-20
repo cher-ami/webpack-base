@@ -109,7 +109,7 @@ class App extends Component<IProps, IStates> {
    * When route has changed
    */
   protected routeChangedHandler(pRouteMatch: IRouteMatch) {
-    // debug("Route changed", pRouteMatch);
+    debug("Route changed", pRouteMatch);
   }
 
   /**
