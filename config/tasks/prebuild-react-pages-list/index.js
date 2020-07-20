@@ -62,8 +62,8 @@ const prebuildReactPagesList = () => {
       const formatedPagesArray = pages.map((el, i) => {
         // page name is PascalCase format
         const page = `${changeCase.pascalCase(path.basename(el))}`;
-        // importer is require page index in folder ex: require('./pages/homePage')
-        const importer = `require("./pages/${path.basename(el)}")`;
+        // importer is require page index in folder ex: require('./pages/homePage/HomePage')
+        const importer = `require("./pages/${path.basename(el)}/${page}")`;
         // template of one page importer array
         return [
           `${i === 0 ? "" : "\r"} {`,
