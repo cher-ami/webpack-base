@@ -5,7 +5,7 @@ const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 // ----------------------------------------------------------------------------- GLOBAL
 
@@ -64,15 +64,11 @@ const productionConfig = {
     /**
      * CopyWebpackPlugin
      * Copies files from target to destination folder.
+     * @doc https://webpack.js.org/plugins/copy-webpack-plugin/
      */
-
-    new CopyWebpackPlugin([
-      {
-        from: config.outputPath,
-        to: "/",
-        ignore: ["*.DS_Store", ".gitkeep", ".*"],
-      },
-    ]),
+    // new CopyPlugin({
+    //   patterns: [{ from: `${paths.src}/images`, to: "images" }],
+    // }),
   ],
 
   /**
