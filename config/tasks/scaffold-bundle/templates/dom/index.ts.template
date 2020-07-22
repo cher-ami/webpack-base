@@ -1,4 +1,0 @@
-import %%BundleName%% from "./%%BundleName%%";
-
-// instance %%BundleName%%
-new %%BundleName%%();

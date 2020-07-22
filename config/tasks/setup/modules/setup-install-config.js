@@ -18,13 +18,11 @@ const config = require("../../../global.config");
  * @returns {Promise<unknown>}
  */
 const setupInstallConfig = ({
-  bundleType,
   installConfigPath = paths.installConfig,
   logDoneDelay = config.logDoneDelay,
   fakeMode = config.fakeMode,
-}) => {
+} = {}) => {
   debug("setupInstallConfig params:", {
-    bundleType,
     installConfigPath,
     logDoneDelay,
   });
@@ -41,7 +39,6 @@ const setupInstallConfig = ({
 			 */
 			module.exports = {
 		  date: "${new Date()}",
-      bundleType: "${bundleType}",
 			};`.replace(pFileTabRegex, "\n");
     };
 

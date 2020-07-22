@@ -1,6 +1,0 @@
-// reset & flat
-@import (inline) "../../node_modules/@solid-js/css-flat/css-flat.css";
-// import fonts
-@import "../common/fonts/Fonts.less";
-// import layouts
-@import "../common/layouts/Body.less";

@@ -23,7 +23,7 @@ const setupPackageJson = ({
   logDoneDelay = config.logDoneDelay,
   defaultProjectName = "webpack-base",
   fakeMode = config.fakeMode,
-}) => {
+} = {}) => {
   return new Promise(async (resolve) => {
     logs.start("Setup package.json...");
 

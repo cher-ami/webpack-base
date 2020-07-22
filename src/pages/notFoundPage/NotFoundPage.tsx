@@ -1,18 +1,17 @@
-import css from "./%%upperComponentName%%.module.less";
+import css from "./NotFoundPage.module.less";
 import React, { useRef } from "react";
 import { usePageRegister } from "../../lib/router/usePageRegister";
 
-interface IProps {
-  classNames?: string[];
-}
+interface IProps {}
 
-const componentName = "%%upperComponentName%%";
+// prepare
+const componentName = "NotFoundPage";
 const debug = require("debug")(`front:${componentName}`);
 
 /**
- * @name %%upperComponentName%%
+ * @name NotFoundPage
  */
-const %%upperComponentName%% = (props: IProps) => {
+const NotFoundPage = (props: IProps) => {
   // get root ref
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -20,26 +19,21 @@ const %%upperComponentName%% = (props: IProps) => {
 
   /**
    * playIn page transition
-   * (remove if not use)
+   * (remove this example if not use)
    */
   const playIn = (): Promise<any> => {
-    return new Promise<any>(resolve => resolve());
+    return Promise.resolve();
   };
 
   /**
    * playOut page transition
-   * (remove if not use)
+   * (remove this example if not use)
    */
   const playOut = (): Promise<any> => {
-    return new Promise<any>(resolve => resolve());
+    return Promise.resolve();
   };
 
-  /**
-   * Register page for ViewStack
-   * NOTE: each page of ViewStack need to be register to work.
-   * Minimal register should be: usePageRegister({ componentName, rootRef });
-   * (remove playIn and playOut if not use)
-   */
+  // register page
   usePageRegister({ componentName, rootRef, playIn, playOut });
 
   // -------------------–-------------------–-------------------–--------------- RENDER
@@ -51,10 +45,4 @@ const %%upperComponentName%% = (props: IProps) => {
   );
 };
 
-export default %%upperComponentName%%;
-
-
-
-
-
-
+export default NotFoundPage;

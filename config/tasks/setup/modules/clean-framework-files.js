@@ -17,12 +17,11 @@ const config = require("../../../global.config");
  * @description
  */
 const cleanFrameworkFiles = ({
-  // TODO pass install.sh in paths files
   gitFolder = paths.gitFolder,
   installScriptFile = paths.installScript,
   logDoneDelay = config.logDoneDelay,
   fakeMode = config.fakeMode,
-}) => {
+} = {}) => {
   debug("cleanFrameworkFiles params:", {
     gitFolder,
     installScriptFile,

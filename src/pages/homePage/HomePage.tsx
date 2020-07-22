@@ -1,18 +1,16 @@
-import css from "./%%upperComponentName%%.module.less";
+import css from "./HomePage.module.less";
 import React, { useRef } from "react";
 import { usePageRegister } from "../../lib/router/usePageRegister";
 
-interface IProps {
-  classNames?: string[];
-}
+interface IProps {}
 
-const componentName = "%%upperComponentName%%";
+const componentName = "HomePage";
 const debug = require("debug")(`front:${componentName}`);
 
 /**
- * @name %%upperComponentName%%
+ * @name HomePage
  */
-const %%upperComponentName%% = (props: IProps) => {
+const HomePage = (props: IProps) => {
   // get root ref
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -20,18 +18,18 @@ const %%upperComponentName%% = (props: IProps) => {
 
   /**
    * playIn page transition
-   * (remove if not use)
+   * (remove this example if not use)
    */
   const playIn = (): Promise<any> => {
-    return new Promise<any>(resolve => resolve());
+    return Promise.resolve();
   };
 
   /**
    * playOut page transition
-   * (remove if not use)
+   * (remove this example if not use)
    */
   const playOut = (): Promise<any> => {
-    return new Promise<any>(resolve => resolve());
+    return Promise.resolve();
   };
 
   /**
@@ -51,10 +49,4 @@ const %%upperComponentName%% = (props: IProps) => {
   );
 };
 
-export default %%upperComponentName%%;
-
-
-
-
-
-
+export default HomePage;

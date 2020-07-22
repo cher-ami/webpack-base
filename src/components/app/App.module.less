@@ -1,0 +1,51 @@
+@import (reference) "../../references.less";
+
+// ----------------------------------------------------------------------------- CONFIG
+
+@COMPONENT: App;
+
+// ----------------------------------------------------------------------------- BLOCK
+
+/**
+ * BEM block (.PascalCase)
+ * is always "Root"
+ */
+.Root {
+  .gridContainer();
+}
+
+// ----------------------------------------------------------------------------- ELEMENT
+
+/**
+ * BEM element (.camelCase)
+ */
+.wrapper {
+  position: relative;
+  /**
+   * BEM modifier (&_camelCase)
+   * sep with "_" allow to target it like this: "css.wrapper_myModifier"
+   */
+  &_myModifier {
+    // ...
+  }
+}
+
+.nav {
+  font-size: 2rem;
+}
+
+.link {
+  display: block;
+}
+
+// ----------------------------------------------------------------------------- MODIFIER
+
+// ----------------------------------------------------------------------------- CHILDREN
+
+/**
+ * Define style for global .class
+ */
+:global (.ViewStack) {
+}
+
+// ----------------------------------------------------------------------------- PATCHES
