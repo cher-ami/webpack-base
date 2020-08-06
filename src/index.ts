@@ -1,9 +1,9 @@
 import "./index.less";
 import ReactDOM from "react-dom";
 import * as React from "react";
-import GlobalConfig from "@common/../data/GlobalConfig";
-import { Router } from "@common/../lib/router/Router";
-import { EnvUtils } from "@common/../lib/utils/EnvUtils";
+import GlobalConfig from "data/GlobalConfig";
+import { Router } from "lib/router/Router";
+import { EnvUtils } from "lib/utils/EnvUtils";
 import App from "./components/app/App";
 import { routes } from "./routes";
 
