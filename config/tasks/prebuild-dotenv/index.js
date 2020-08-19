@@ -55,14 +55,6 @@ const prebuildDotenv = (pEnv) => {
      * Only for .env.lamp
      */
     if (selectedEnv === "lamp") {
-      // write APP_URL
-      Files.getFiles(newFilePath).alter((fileContent) => {
-        return fileContent.replace(
-          /APP_URL=/,
-          `APP_URL=${process.env.APP_URL}`
-        );
-      });
-
       // write APP_BASE set by gitlab-ci.yaml
       Files.getFiles(newFilePath).alter((fileContent) => {
         return fileContent.replace(
