@@ -40,28 +40,19 @@ const _build = async () => {
  * Init Start
  * @returns {Promise<unknown>}
  */
-const build = (pVar) => {
-  // target env variable
-  const envName = pVar.env ? pVar.env : null;
-  debug("env passed as param via 'commands' ", envName);
-
+const build = () => {
   return new Promise(async (resolve) => {
     /**
      * Before build
      */
-    // clean folder
     await clean();
-    // start prebuid
-    await prebuild(envName);
-    // compile sprites
+    await prebuild();
     await sprites();
 
     /**
      * Build
      */
-    // start dev server
     await _build();
-    // end
     resolve();
   });
 };

@@ -37,16 +37,6 @@ module.exports = {
   buildManifestFile: false,
 
   // --------------------------------------------------------------------------- TASKS
-
-  /**
-   * Prebuild
-   */
-  // prebuild .htaccess file
-  prebuildHtaccess: false,
-
-  // prebuild .env file
-  prebuildDotEnv: false,
-
   /**
    * Scaffolder
    */

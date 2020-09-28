@@ -1,50 +1,15 @@
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../helpers/logs-helper");
 const debug = require("debug")("config:prebuild-htaccess");
-
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-// config
-const globalConfig = require("../../global.config");
-// paths
+const config = require("../../global.config");
 const paths = require("../../global.paths");
-
-// ----------------------------------------------------------------------------- MODULE
 
 /**
  * Prebuild .htaccess file
  * Useful is this file
  */
-const prebuildHtaccess = (_) => {
-  //
-  let currentEnv = process.env.ENV || null;
-  debug("process env ENV", currentEnv);
-
+const prebuildHtaccess = () => {
   // --------------------------------------------------------------------------- PRIVATE
-
-  /**
-   * Header
-   * @param pEnvName
-   * @param pNewHtaccessFilePath
-   * @returns {string}
-   */
-  const _headerMessage = (
-    pEnvName = null,
-    pNewHtaccessFilePath = newHtaccessFilePath
-  ) => {
-    const template = [
-      `
-      ## ${pEnvName} additional htaccess configuration
-      `,
-    ]
-      .join("\n")
-      .replace(/  +/g, "");
-
-    if (pEnvName) {
-      // write new htaccess file
-      Files.getFiles(pNewHtaccessFilePath).append(template);
-    }
-  };
 
   /**
    * htaccessHtpasswdLink
@@ -52,8 +17,8 @@ const prebuildHtaccess = (_) => {
    * @param pNewHtaccessFilePath
    * @returns {string|null}
    */
-  const _addHtpasswdLinkInHtaccess = (
-    pServerWebRootPath = process.env.SERVER_WEB_ROOT_PATH,
+  const _htpasswdLinkInHtaccess = (
+    pServerWebRootPath = process.env.HTACCESS_SERVER_WEB_ROOT_PATH,
     pNewHtaccessFilePath = newHtaccessFilePath
   ) => {
     const template = [
@@ -105,17 +70,18 @@ const prebuildHtaccess = (_) => {
   };
 
   /**
-   * rewriteHttpToHttps
+   * rewrite http To https
    * @param pRewriteCondHttpHostUrl
    * @param pNewHtaccessFilePath
    * @returns {string|null}
    */
-  const _addRewriteHttpToHttpsInHttaccess = (
-    pRewriteCondHttpHostUrl = process.env.REWRITE_COND_HTTP_HOST_URL,
+  const _rewriteHttpToHttpsInHtaccess = (
+    pRewriteCondHttpHostUrl = process.env
+      .HTACCESS_FORCE_REDIRECT_HTTP_TO_HTTPS_URL,
     pNewHtaccessFilePath = newHtaccessFilePath
   ) => {
-    debug("_addRewriteHttpToHttpsToHttaccess...");
-    debug("_addRewriteHttpToHttpsToHttaccess params", {
+    debug("_rewriteHttpToHttpsInHtaccess...");
+    debug("_rewriteHttpToHttpsInHtaccess params", {
       pRewriteCondHttpHostUrl,
       pNewHtaccessFilePath,
     });
@@ -128,9 +94,8 @@ const prebuildHtaccess = (_) => {
 
     const template = [
       `# Force from http to https
-     RewriteCond %{HTTPS} off
-     RewriteCond %{HTTP_HOST} =${pRewriteCondHttpHostUrl}
-     RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301]
+      RewriteCond %{HTTPS}  !=on
+      RewriteRule ^/?(.*) https://%{${pRewriteCondHttpHostUrl}}/$1 [R,L]
      `,
     ]
       .join("\n")
@@ -145,7 +110,7 @@ const prebuildHtaccess = (_) => {
    * @param pConfigPath
    * @private
    */
-  const _createHtacessFile = (
+  const _createHtaccessFile = (
     pOutputPath = paths.dist,
     pConfigPath = paths.config
   ) => {
@@ -171,21 +136,15 @@ const prebuildHtaccess = (_) => {
 
   logs.start("Prebuild htaccess.");
 
-  // create htaccess file and get newHtaccessFilePath
-  const { newHtaccessFilePath } = _createHtacessFile();
-  // add header
-  _headerMessage(currentEnv);
+  // create htaccess file and get returned newHtaccessFilePath
+  const { newHtaccessFilePath } = _createHtaccessFile();
 
-  if (currentEnv === "staging") {
-    // create htpasswd file
+  if (process.env.PREBUILD_HTPASSWD === "true") {
     _createHtpasswdFile();
-    // add password to htaccess
-    _addHtpasswdLinkInHtaccess();
+    _htpasswdLinkInHtaccess();
   }
-
-  if (currentEnv === "production") {
-    // add rewrite http to https
-    _addRewriteHttpToHttpsInHttaccess();
+  if (process.env.HTACCESS_FORCE_REDIRECT_HTTP_TO_HTTPS === "true") {
+    _rewriteHttpToHttpsInHtaccess();
   }
 
   logs.done();

@@ -17,7 +17,7 @@
     "url": "git://github.com/willybrauner/webpack-base.git"
   },
   "scripts": {
-    "dev": "node config/tasks/commands.js dev",
+    "dev": "env-cmd --no-override -f .env node config/tasks/commands.js dev",
     "build": "node config/tasks/commands.js build",
     "clean": "node config/tasks/commands.js clean",
     "reset": "node config/tasks/commands.js reset",
