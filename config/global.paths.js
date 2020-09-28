@@ -30,6 +30,9 @@ module.exports = {
   // Path to fonts folder from src
   fontsPath: appRoot.resolve("src/fonts"),
 
+  // Path to public folder used by copy-webpack-plugin
+  publicPath: appRoot.resolve("src/public"),
+
   // --------------------------------------------------------------------------- SPRITES
 
   // Templates path
