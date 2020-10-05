@@ -8,13 +8,13 @@ const paths = require("../../global.paths");
  * Prebuild .env file
  * Create and inject .env file in specific folder (dist/ by default)
  */
-const prebuildDotEnv = () => {
+const prebuildDotEnv = (destinationPath = config.outputPath) => {
   return new Promise((resolve) => {
-    logs.start(`Prebuild .env in dist/ folder`);
+    logs.start(`Prebuild .env in ${destinationPath} folder`);
     debug("process.env.ENV", process.env.ENV);
 
-    // env file we want to inject in dist folder
-    const newFilePath = `${paths.dist}/.env`;
+    // env file we want to inject in output path
+    const newFilePath = `${destinationPath}/.env`;
     // select param env or process env or null
     let selectedEnv = process.env.ENV || null;
 
@@ -32,6 +32,8 @@ const prebuildDotEnv = () => {
     }`;
     debug({ envNameExtension, newFilePath, templateFilePath });
 
+    // TODO copier chaque entrée du .env dans un nouveau fichier à la place d'une simple copie du fichier
+    // TODO pour accéder aux propriétés générées de l'env courante
     debug("write .env file...");
     Files.new(newFilePath).write(Files.getFiles(templateFilePath).read());
 

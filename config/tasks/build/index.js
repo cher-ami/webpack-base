@@ -19,9 +19,7 @@ const _build = async () => {
   try {
     await execSync(
       [
-        // this value will never change
         `NODE_ENV=production`,
-        // webpack build
         `webpack -p --config config/webpack/webpack.production.js`,
       ].join(" "),
       3

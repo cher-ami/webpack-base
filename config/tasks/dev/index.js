@@ -17,7 +17,7 @@ const _startDevServer = async () => {
   await execSync(
     [
       `NODE_ENV=development`,
-      ` webpack-dev-server --config config/webpack/webpack.development.js`,
+      `webpack-dev-server --config config/webpack/webpack.development.js`,
     ].join(" "),
     3
   );

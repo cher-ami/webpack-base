@@ -12,6 +12,7 @@ const config = require("../global.config");
 // test env
 const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
 const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
+const USE_PROXY = process.env.USE_PROXY === "true";
 
 // ----------------------------------------------------------------------------- CONFIG
 
@@ -158,10 +159,16 @@ const developmentConfig = {
     // pass to true if you don't want to print compile file in the console
     quiet: CONSOLE_PRINT_FRIENDLY,
 
+    // Specify a host to use. If you want your server to be accessible externally
+    // https://webpack.js.org/configuration/dev-server/#devserverhost
+    ...(process.env.DEV_SERVER_HOST
+      ? { host: process.env.DEV_SERVER_HOST }
+      : {}),
+
     // specify to enable root proxying
     index: "",
     // if use proxy option is enable
-    ...(config.useProxy
+    ...(USE_PROXY
       ? {
           proxy: {
             "/": {

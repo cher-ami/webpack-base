@@ -143,7 +143,7 @@ const prebuildHtaccess = () => {
     _createHtpasswdFile();
     _htpasswdLinkInHtaccess();
   }
-  if (process.env.HTACCESS_FORCE_REDIRECT_HTTP_TO_HTTPS === "true") {
+  if (process.env.HTACCESS_REDIRECT_HTTP_TO_HTTPS === "true") {
     _rewriteHttpToHttpsInHtaccess();
   }
 
