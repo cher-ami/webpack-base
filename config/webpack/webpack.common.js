@@ -139,7 +139,7 @@ commonConfig = {
           // prevent display of "src/common/" in filename
           context: "src",
           publicPath: url.resolve(
-            process.env.APP_BASE,
+            process.env.APP_BASE || "",
             process.env.ASSETS_PATH
           ),
         },
@@ -158,7 +158,7 @@ commonConfig = {
           // prevent display of "src/common/" in filename
           context: "src",
           publicPath: url.resolve(
-            process.env.APP_BASE,
+            process.env.APP_BASE || "",
             process.env.ASSETS_PATH
           ),
         },
