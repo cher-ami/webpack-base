@@ -18,7 +18,7 @@
   },
   "scripts": {
     "dev": "env-cmd --no-override -f .env node config/tasks/commands.js dev",
-    "build": "node config/tasks/commands.js build",
+    "build": "env-cmd --no-override -f .env.production --fallback node config/tasks/commands.js build",
     "clean": "node config/tasks/commands.js clean",
     "reset": "node config/tasks/commands.js reset",
     "scaffold": "node config/tasks/commands.js scaffold",
