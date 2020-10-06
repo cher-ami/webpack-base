@@ -71,31 +71,21 @@ const prebuildHtaccess = () => {
 
   /**
    * rewrite http To https
-   * @param pRewriteCondHttpHostUrl
    * @param pNewHtaccessFilePath
    * @returns {string|null}
    */
   const _rewriteHttpToHttpsInHtaccess = (
-    pRewriteCondHttpHostUrl = process.env
-      .HTACCESS_FORCE_REDIRECT_HTTP_TO_HTTPS_URL,
     pNewHtaccessFilePath = newHtaccessFilePath
   ) => {
     debug("_rewriteHttpToHttpsInHtaccess...");
     debug("_rewriteHttpToHttpsInHtaccess params", {
-      pRewriteCondHttpHostUrl,
       pNewHtaccessFilePath,
     });
 
-    // check if process env value exist
-    if (!pRewriteCondHttpHostUrl) {
-      debug("Missing param, aborting.");
-      return null;
-    }
-
     const template = [
-      `# Force from http to https
+      `# Force http to https
       RewriteCond %{HTTPS}  !=on
-      RewriteRule ^/?(.*) https://%{${pRewriteCondHttpHostUrl}}/$1 [R,L]
+      RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
      `,
     ]
       .join("\n")
