@@ -149,12 +149,11 @@ class App extends Component<IProps, IStates> {
   render() {
     return (
       <div className={css.Root}>
-        {/* Grid */}
         {isEnv(EEnv.DEV) && this.state.showGrid && (
           <GridLayout
-            columnsNumber={atoms.columnNumber}
-            gutterSize={atoms.gutterSize}
-            maxSize={atoms.maxWidthGrid}
+            columnsNumber={atoms.gridColumnNumber}
+            gutterSize={atoms.gridGutterSize}
+            maxSize={atoms.gridMaxWidth}
           />
         )}
         <div className={css.wrapper}>
