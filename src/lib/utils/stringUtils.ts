@@ -16,7 +16,7 @@ export const mergeStrings = (pClasses: any[], pJoin: string = " "): string => {
 // ------------------------------------------------------------------------- FORMATTING
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Prepend a number by a fixed number of zeros.
  *
  * For ex :
@@ -57,7 +57,7 @@ export function zeroFormat(
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Add or remove the trailing slash at the end of a path.
  *
  * For ex:
@@ -87,7 +87,7 @@ export function trailingSlash(pPath: string, pAdd = true): string {
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Add or remove the leading slash at the start of a path.
  *
  * For ex:
@@ -117,7 +117,7 @@ export function leadingSlash(pPath: string, pAdd = true): string {
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * First letter capital on given string.
  *
  * For ex: "courgette? Oui!" become "Courgette, Oui!"
@@ -127,7 +127,7 @@ export function upperCaseFirstChar(pSource: string): string {
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * First letter in low case on given string.
  *
  * For ex: "Fromage? Oui!" become "fromage? Oui!"
@@ -137,7 +137,7 @@ export function lowerCaseFirstChar(pSource: string): string {
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Convert a dash case formated string to a camel case format.
  *
  * Ex: "my-string" will be converted to "myString"
@@ -165,7 +165,7 @@ export function dashToCamelCase(
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Convert camelCase to dash_case or dash-case or DASH_CASE and event DASH-CASE
  * @param pSource camelCase string
  * @param pSeparator Used separator between words. Default is dash -
@@ -185,7 +185,7 @@ export function camelToDashCase(
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Convertir un enum en string, camelCase ou dash-case.
  * Va convertir un EMonEnum.MA_VALEUR en "maValeur" ou "ma-valeur"
  * @param pEnumValue La valeur de l'enum ( EMonEnum.MA_VALEUR )
@@ -209,7 +209,7 @@ export function enumToString(
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Trouver un index enum depuis son nom en string.
  * Ne prend en charge que le nom exacte de l'enum, par exemple ENum.MY_VALUE sera associé uniquement avec le string "MY_VALUE"
  * Cette méthode va convertir automatiquement le dash-case vers FORMAT_ENUM
@@ -240,7 +240,7 @@ export function stringToEnum(pString: string, pEnumClass: Object): number {
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Get file name from any path.
  * Will return full string if no slash found.
  * ex : 'usr/bin/TestFile' will return 'TestFile'
@@ -256,7 +256,7 @@ export function getFileFromPath(pPath: string): string {
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Get the base folder from any path.
  * Will include trailing slash.
  * Will return full string if no slash found.
@@ -273,7 +273,7 @@ export function getBaseFromPath(pPath: string): string {
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Get the local path from a full path and a base.
  * For ex : will extract /dir/file.html from /my/base/dir/file.html with base /my/base
  * To work, pBase have to be the exact beginning of pPath. This is to avoid issues with bases like '/'
@@ -295,7 +295,7 @@ export function extractPathFromBase(pPath: string, pBase: string): string {
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Micro template engine using regex and mustache like notation
  * @param pTemplate Base mustache like template (ex: "Hey {{userName}} !")
  * @param pValues List of replaces values (ex : {userName: "You"})
@@ -367,7 +367,7 @@ export const SLUG_REGEX = [
 ];
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Converting a string for URL's.
  * For ex : "I'm a robot" will be converted to "im-a-robot"
  */
@@ -388,7 +388,7 @@ export function slugify(pInput: string): string {
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Will parse a query string like this :
  * test=myValue&varName=otherValue
  * to this
@@ -433,7 +433,7 @@ export function parseQueryString(
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Check if a string represent a number, and a number only.
  * NaN and Infinity will be false.
  * @param pNumberAsString The string representing the number
@@ -445,7 +445,7 @@ export function isNumber(pNumberAsString: string): boolean {
 }
 
 /**
- * @copyright Alexis Bouhet - https://zouloux.com
+ * @credits Alexis Bouhet - https://zouloux.com
  * Good old nl2br from PHP...
  * http://stackoverflow.com/questions/7467840/nl2br-equivalent-in-javascript
  * @param str String in which we replace line breaks by <br> tags

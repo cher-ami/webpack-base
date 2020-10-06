@@ -14,7 +14,7 @@ Metas.defaultProps = {
  * @description Metas component is a simple React middleware allowing to set
  * default or custom values in HTML metas page.
  */
-function Metas(props: IProps) {
+export function Metas(props: IProps) {
   /**
    * Update meta after render
    */
@@ -32,5 +32,3 @@ function Metas(props: IProps) {
   // return nothing
   return null;
 }
-
-export default Metas;

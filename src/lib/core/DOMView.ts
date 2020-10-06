@@ -1,10 +1,8 @@
-import { Disposable } from "./Disposable";
-
 /**
  * This is a simple DOM based view.
- * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  */
-export class DOMView extends Disposable {
+export class DOMView {
   // ------------------------------------------------------------------------- DOM
 
   // Starting node of our component
@@ -19,9 +17,6 @@ export class DOMView extends Disposable {
    * @param pAutoInit Will launch init phase if true. Else, child component have to init manually.
    */
   constructor($pRoot: HTMLElement = null, pAutoInit = true) {
-    // Relay
-    super();
-
     // Set root from parameter
     if ($pRoot != null) {
       this.$root = $pRoot;
@@ -37,7 +32,6 @@ export class DOMView extends Disposable {
   protected init() {
     this.prepareDependencies();
     this.beforeInit();
-    this.targetRoot();
     this.prepareNodes();
     this.initComponents();
     this.prepareEvents();
@@ -53,11 +47,6 @@ export class DOMView extends Disposable {
    * Middleware called just before init sequence
    */
   protected beforeInit() {}
-
-  /**
-   * Target our root if not already defined via constructor params
-   */
-  protected targetRoot() {}
 
   /**
    * Prepare node targeting from $root

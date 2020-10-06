@@ -5,8 +5,8 @@ import { TPageRegisterObject, pagesRegister } from "./usePageRegister";
 const debug = require("debug")("lib:ViewStack");
 
 /**
- * @copyright Original ViewStack by Alexis Bouhet - https://zouloux.com
- * @copyright Adapted for functional views by Willy Brauner - https://willybrauner.com
+ * @credits Original ViewStack by Alexis Bouhet - https://zouloux.com
+ * @credits Adapted for functional views by Willy Brauner - https://willybrauner.com
  */
 
 // ----------------------------------------------------------------------------- STRUCT

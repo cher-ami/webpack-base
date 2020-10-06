@@ -2,7 +2,7 @@ import { Disposable } from "../core/Disposable";
 
 /**
  * Interface describing a listener.
- * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  */
 export interface IListener {
   scope: any;

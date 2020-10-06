@@ -1,8 +1,5 @@
 /**
- * @copyright Original work by Alexis Bouhet - https://zouloux.com
- */
-
-/**
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  * Check it an element is in an array.
  * Will only search at first level
  * @param pArray The array to search in
@@ -20,6 +17,7 @@ export function inArray(pArray: any[], pElement: any): boolean {
 }
 
 /**
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  * Delete elements from an array following a condition.
  * Will return a new Array reference to re-affect.
  * @param pArray Array to remove from
@@ -46,6 +44,7 @@ export function deleteWhere(pArray: any[], pWhere: {}): any[] {
 }
 
 /**
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  * Remove an element from an array.
  * Will return a new Array reference to re-affect.
  * @param pArray Array to search from
@@ -67,6 +66,7 @@ export function removeElement(pArray: any[], pElement: any) {
 }
 
 /**
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  * Shuffle an indexed array.
  * Source : https://bost.ocks.org/mike/shuffle/
  * @param pArray The indexed array to shuffle.
@@ -93,6 +93,7 @@ export function shuffle(pArray: any[]): any[] {
 }
 
 /**
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  * Will count from a number to another by adding one at each loop.
  * Makes a 'for' loop with a function call.
  * Usefull with JSX
@@ -111,6 +112,7 @@ export function countFrom(
 }
 
 /**
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  * Will count from 0 to a number.
  * Makes a 'for' loop with a function call.
  * Usefull with JSX
@@ -124,6 +126,7 @@ export function countTo(pTo: number, pHandler: (pIndex: number) => any): any[] {
 }
 
 /**
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  * Makes a 'for' loop with a function call.
  * Usefull with JSX
  *

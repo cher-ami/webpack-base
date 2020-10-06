@@ -2,7 +2,7 @@
 import { dashToCamelCase } from "./stringUtils";
 
 /**
- * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  */
 
 /**

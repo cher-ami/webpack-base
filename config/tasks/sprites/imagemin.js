@@ -1,5 +1,5 @@
 /**
- * @copyright Original by Alexis Bouhet - https://zouloux.com
+ * @credits Original by Alexis Bouhet - https://zouloux.com
  */
 
 const { Files } = require("@zouloux/files");
