@@ -26,12 +26,16 @@ const prebuildDotEnv = (destinationPath = config.outputPath) => {
     const envNameExtension = selectedEnv === "development" ? "" : selectedEnv;
     debug("envNameExtension", envNameExtension);
 
-    // build template file path
-    const templateFilePath = `${paths.root}/.env${
+    const dotEnvFileName = `.env${
       envNameExtension !== "" ? `.${envNameExtension}` : ""
     }`;
 
-    debug({ envNameExtension, newFilePath, templateFilePath });
+    logs.note(`dotEnv file used is: ${dotEnvFileName}`);
+
+    // build template file path
+    const templateFilePath = `${paths.root}/${dotEnvFileName}`;
+
+    debug({ envNameExtension, dotEnvFileName, newFilePath, templateFilePath });
 
     // read .env
     const envFile = Files.getFiles(templateFilePath).read();
