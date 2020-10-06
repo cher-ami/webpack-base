@@ -21,6 +21,8 @@ const prebuildHtaccess = () => {
     pServerWebRootPath = process.env.HTACCESS_SERVER_WEB_ROOT_PATH,
     pNewHtaccessFilePath = newHtaccessFilePath
   ) => {
+    if (!pServerWebRootPath) return null;
+
     const template = [
       `# Add password
       AuthUserFile ${pServerWebRootPath}.htpasswd
@@ -32,7 +34,6 @@ const prebuildHtaccess = () => {
       .join("\n")
       .replace(/  +/g, "");
 
-    if (!pServerWebRootPath) return null;
     Files.getFiles(pNewHtaccessFilePath).append(template);
   };
 
@@ -41,18 +42,18 @@ const prebuildHtaccess = () => {
    * @type {string}
    */
   const _createHtpasswdFile = (
-    outPutPath = paths.dist,
-    pHtpasswdUser = process.env.HTPASSWD_USER,
-    pHtpasswdEncryptPassword = process.env.HTPASSWD_ENCRYPT_PASSWORD
+    outPutPath = config.outputPath,
+    pUser = process.env.HTACCESS_AUTH_USER,
+    pPassword = process.env.HTACCESS_AUTH_PASSWORD_HASH
   ) => {
     debug("_createHtpasswdFile...");
     debug("_createHtpasswdFile params", {
       outPutPath,
-      pHtpasswdUser,
-      pHtpasswdEncryptPassword,
+      pUser,
+      pPassword,
     });
     // check
-    if (!outPutPath || !pHtpasswdUser || !pHtpasswdEncryptPassword) {
+    if (!outPutPath || !pUser || !pPassword) {
       debug("Missing param, aborting.");
       return;
     }
@@ -62,7 +63,7 @@ const prebuildHtaccess = () => {
     debug("htpasswdFilePath", htpasswdFilePath);
 
     // define content
-    const htpasswdContent = `${pHtpasswdUser}:${pHtpasswdEncryptPassword}`;
+    const htpasswdContent = `${pUser}:${pPassword}`;
     debug("htpasswdContent", htpasswdContent);
 
     // write content user:pass in htpasswd file
@@ -101,7 +102,7 @@ const prebuildHtaccess = () => {
    * @private
    */
   const _createHtaccessFile = (
-    pOutputPath = paths.dist,
+    pOutputPath = config.outputPath,
     pConfigPath = paths.config
   ) => {
     // target htaccess new file
@@ -118,9 +119,7 @@ const prebuildHtaccess = () => {
       Files.getFiles(templateFilePath).read()
     );
 
-    return {
-      newHtaccessFilePath,
-    };
+    return { newHtaccessFilePath };
   };
   // --------------------------------------------------------------------------- PUBLIC
 
@@ -129,11 +128,11 @@ const prebuildHtaccess = () => {
   // create htaccess file and get returned newHtaccessFilePath
   const { newHtaccessFilePath } = _createHtaccessFile();
 
-  if (process.env.PREBUILD_HTPASSWD === "true") {
+  if (process.env.HTACCESS_ENABLE_AUTH === "true") {
     _createHtpasswdFile();
     _htpasswdLinkInHtaccess();
   }
-  if (process.env.HTACCESS_REDIRECT_HTTP_TO_HTTPS === "true") {
+  if (process.env.HTACCESS_ENABLE_HTTPS_REDIRECTION === "true") {
     _rewriteHttpToHttpsInHtaccess();
   }
 
