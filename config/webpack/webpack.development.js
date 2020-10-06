@@ -12,7 +12,7 @@ const config = require("../global.config");
 // test env
 const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
 const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
-const USE_PROXY = process.env.USE_PROXY === "true";
+const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === "true";
 
 // ----------------------------------------------------------------------------- CONFIG
 
@@ -168,7 +168,7 @@ const developmentConfig = {
     // specify to enable root proxying
     index: "",
     // if use proxy option is enable
-    ...(USE_PROXY
+    ...(ENABLE_DEV_PROXY
       ? {
           proxy: {
             "/": {
