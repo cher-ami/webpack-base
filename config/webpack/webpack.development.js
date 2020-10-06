@@ -136,7 +136,7 @@ const developmentConfig = {
    */
   devServer: {
     contentBase: paths.dist,
-    port: 3000,
+    port: parseInt(process.env.DEV_SERVER_PORT) || 3000,
     hot: true,
     inline: true,
     compress: true,
