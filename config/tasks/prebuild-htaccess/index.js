@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../helpers/logs-helper");
 const debug = require("debug")("config:prebuild-htaccess");
@@ -44,7 +45,7 @@ const prebuildHtaccess = () => {
   const _createHtpasswdFile = (
     outPutPath = config.outputPath,
     pUser = process.env.HTACCESS_AUTH_USER,
-    pPassword = process.env.HTACCESS_AUTH_PASSWORD_HASH
+    pPassword = process.env.HTACCESS_AUTH_PASSWORD
   ) => {
     debug("_createHtpasswdFile...");
     debug("_createHtpasswdFile params", {
@@ -57,13 +58,16 @@ const prebuildHtaccess = () => {
       debug("Missing param, aborting.");
       return;
     }
-
     // create htpasswd file and add password in it
     const htpasswdFilePath = `${outPutPath}/.htpasswd`;
     debug("htpasswdFilePath", htpasswdFilePath);
 
+    // hash pass with bCrypt
+    let hashPassword = bcrypt.hashSync(pPassword, 10);
+    debug("hash", hashPassword);
+
     // define content
-    const htpasswdContent = `${pUser}:${pPassword}`;
+    const htpasswdContent = `${pUser}:${hashPassword}`;
     debug("htpasswdContent", htpasswdContent);
 
     // write content user:pass in htpasswd file
