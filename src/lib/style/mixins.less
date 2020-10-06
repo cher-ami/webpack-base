@@ -1,5 +1,5 @@
 /**
- * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  */
 
 // ----------------------------------------------------------------------------- TOOLS
@@ -29,7 +29,7 @@
   .absoluteCenter();
 
   // Set size to always get in screen
-  .square();
+  .size(auto);
   .minSize(100%, 100%);
 }
 
@@ -95,6 +95,26 @@
   }
 }
 
+
+/**
+ * flex
+ * (à placer sur le parent)
+ */
+.flex
+(@display:flex, @direction:row, @wrap:wrap, @justifyContent:flex-start, @alignItems:flex-start, @firstChildGutter:0) {
+  display: @display; // flex | inline-flex
+  flex-direction: @direction; // row | row-reverse | column | column-reverse
+  flex-wrap: @wrap; // nowrap | wrap | wrap-reverse
+  justify-content: @justifyContent; // flex-start | flex-end | center | space-between | space-around
+  align-items: @alignItems; // flex-start | flex-end | center | baseline | stretch
+
+  // remove gutter of children first-child
+  & when (@firstChildGutter > 0) {
+    margin-left: -@firstChildGutter;
+  }
+}
+
+
 /**
  * Place an element absolute on top left
  */
@@ -144,22 +164,6 @@
 .size (@width:auto; @height:@width) {
   width: @width;
   height: @height;
-}
-
-/**
- * Set same width and height
- */
-.square (@size: auto) {
-  width: @size;
-  height: @size;
-}
-
-/**
- * Set width and height on an element and apply ratio
- */
-.ratio (@width: 1; @height: 1; @ratio: 1) {
-  width: @width * @ratio;
-  height: @height * @ratio;
 }
 
 /**
@@ -325,48 +329,11 @@
   text-rendering: optimizeLegibility;
 }
 
-// ----------------------------------------------------------------------------- FLEX GRID
-
-/**
- * flex
- * (à placer sur le parent)
- */
-.flex
-  (@display:flex, @direction:row, @wrap:wrap, @justifyContent:flex-start, @alignItems:flex-start, @firstChildGutter:0) {
-  display: @display; // flex | inline-flex
-  flex-direction: @direction; // row | row-reverse | column | column-reverse
-  flex-wrap: @wrap; // nowrap | wrap | wrap-reverse
-  justify-content: @justifyContent; // flex-start | flex-end | center | space-between | space-around
-  align-items: @alignItems; // flex-start | flex-end | center | baseline | stretch
-
-  // remove gutter of children first-child
-  & when (@firstChildGutter > 0) {
-    margin-left: -@firstChildGutter;
-  }
-}
-
-/**
- * flexCol
- * (à placer sur les enfants)
- */
-.flexCol (@totalGrid:@totalGrid, @number:@number, @gutter:0, @center:false) {
-  width: ~"calc(100% / @{totalGrid} * @{number} - @{gutter})";
-  flex: 0 0 auto;
-
-  & when (@center = false) {
-    margin-left: @gutter;
-  }
-  & when (@center = true) {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
 // ----------------------------------------------------------------------------- TRANSITIONS
 
 /**
 * @mixin transitions
-* @copyright Stephane Guignet - http://stephaneguigne.com
+* @credit Stephane Guignet - http://stephaneguigne.com
 *
 * @desc Override transition property to have default speed and ease,
 *       but mainly to prevent using the 'all' keyword and instead list all props that should transition together
