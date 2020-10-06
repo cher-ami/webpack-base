@@ -1,5 +1,5 @@
 /**
- * @copyright Original work by Alexis Bouhet - https://zouloux.com
+ * @credits Original work by Alexis Bouhet - https://zouloux.com
  */
 export interface IDisposable {
   isDisposed: boolean;

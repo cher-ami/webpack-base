@@ -1,6 +1,6 @@
 /**
- * @copyright Original by Alexis Bouhet - https://zouloux.com
- * @copyright Adapted by Willy Brauner - https://willybrauner.com
+ * @credits Original by Alexis Bouhet - https://zouloux.com
+ * @credits Adapted by Willy Brauner - https://willybrauner.com
  */
 
 require("colors");
