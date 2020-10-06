@@ -30,12 +30,39 @@ const prebuildDotEnv = (destinationPath = config.outputPath) => {
     const templateFilePath = `${paths.root}/.env${
       envNameExtension !== "" ? `.${envNameExtension}` : ""
     }`;
+
     debug({ envNameExtension, newFilePath, templateFilePath });
 
-    // TODO copier chaque entrée du .env dans un nouveau fichier à la place d'une simple copie du fichier
-    // TODO pour accéder aux propriétés générées de l'env courante
+    // read .env
+    const envFile = Files.getFiles(templateFilePath).read();
+
+    // prettier-ignore
+    const keepingEnvVarsArray = envFile
+      .split("\n")
+      .map((el) => {
+        const isComment = el.includes("#");
+        const isEmptyLine = el === "";
+        const containsEqual = el.includes("=");
+        if (
+            !isEmptyLine && 
+            !isComment && 
+            containsEqual
+        ) {
+          const varName = el.split("=")[0];
+          return varName ? varName : null;
+        }
+      })
+      .filter((e) => e);
+
+    // create template with varNames and process.env values
+    const template = keepingEnvVarsArray
+      .map((el) => `${el}=${process.env[el]}`)
+      .join("\n");
+
+    debug("template", template);
+
     debug("write .env file...");
-    Files.new(newFilePath).write(Files.getFiles(templateFilePath).read());
+    Files.new(newFilePath).write(template);
 
     logs.note(`write "VERSION=..." in dist/.env file...`);
     Files.getFiles(newFilePath).alter((fileContent) => {
