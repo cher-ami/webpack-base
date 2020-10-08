@@ -94,11 +94,14 @@ class App extends Component<IProps, IStates> {
       const oldPageRef = pOldPage?.rootRef?.current;
       const newPageRef = pNewPage?.rootRef?.current;
 
-      // hide new page by default
-      if (newPageRef !== null) newPageRef.style.visibility = "hidden";
+      // hide new page fist
+      if (newPageRef != null) newPageRef.style.visibility = "hidden";
       // playOut old page
       pOldPage && (await pOldPage?.playOut?.());
-      // playIn old page
+
+      // show new page
+      if (newPageRef != null) newPageRef.style.visibility = "visible";
+      // playIn new page
       pNewPage && (await pNewPage?.playIn?.());
       // All done
       resolve();
@@ -178,7 +181,7 @@ class App extends Component<IProps, IStates> {
           </nav>
           <ViewStack
             ref={(r) => (this._viewStack = r)}
-            transitionType={ETransitionType.PAGE_SEQUENTIAL}
+            transitionType={ETransitionType.CONTROLLED}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}
           />
