@@ -1,50 +1,16 @@
+const bcrypt = require("bcrypt");
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../helpers/logs-helper");
 const debug = require("debug")("config:prebuild-htaccess");
-
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-// config
-const globalConfig = require("../../global.config");
-// paths
+const config = require("../../global.config");
 const paths = require("../../global.paths");
-
-// ----------------------------------------------------------------------------- MODULE
 
 /**
  * Prebuild .htaccess file
  * Useful is this file
  */
-const prebuildHtaccess = (_) => {
-  //
-  let currentEnv = process.env.ENV || null;
-  debug("process env ENV", currentEnv);
-
+const prebuildHtaccess = () => {
   // --------------------------------------------------------------------------- PRIVATE
-
-  /**
-   * Header
-   * @param pEnvName
-   * @param pNewHtaccessFilePath
-   * @returns {string}
-   */
-  const _headerMessage = (
-    pEnvName = null,
-    pNewHtaccessFilePath = newHtaccessFilePath
-  ) => {
-    const template = [
-      `
-      ## ${pEnvName} additional htaccess configuration
-      `,
-    ]
-      .join("\n")
-      .replace(/  +/g, "");
-
-    if (pEnvName) {
-      // write new htaccess file
-      Files.getFiles(pNewHtaccessFilePath).append(template);
-    }
-  };
 
   /**
    * htaccessHtpasswdLink
@@ -52,10 +18,12 @@ const prebuildHtaccess = (_) => {
    * @param pNewHtaccessFilePath
    * @returns {string|null}
    */
-  const _addHtpasswdLinkInHtaccess = (
-    pServerWebRootPath = process.env.SERVER_WEB_ROOT_PATH,
+  const _htpasswdLinkInHtaccess = (
+    pServerWebRootPath = process.env.HTACCESS_SERVER_WEB_ROOT_PATH,
     pNewHtaccessFilePath = newHtaccessFilePath
   ) => {
+    if (!pServerWebRootPath) return null;
+
     const template = [
       `# Add password
       AuthUserFile ${pServerWebRootPath}.htpasswd
@@ -67,7 +35,6 @@ const prebuildHtaccess = (_) => {
       .join("\n")
       .replace(/  +/g, "");
 
-    if (!pServerWebRootPath) return null;
     Files.getFiles(pNewHtaccessFilePath).append(template);
   };
 
@@ -76,28 +43,31 @@ const prebuildHtaccess = (_) => {
    * @type {string}
    */
   const _createHtpasswdFile = (
-    outPutPath = paths.dist,
-    pHtpasswdUser = process.env.HTPASSWD_USER,
-    pHtpasswdEncryptPassword = process.env.HTPASSWD_ENCRYPT_PASSWORD
+    outPutPath = config.outputPath,
+    pUser = process.env.HTACCESS_AUTH_USER,
+    pPassword = process.env.HTACCESS_AUTH_PASSWORD
   ) => {
     debug("_createHtpasswdFile...");
     debug("_createHtpasswdFile params", {
       outPutPath,
-      pHtpasswdUser,
-      pHtpasswdEncryptPassword,
+      pUser,
+      pPassword,
     });
     // check
-    if (!outPutPath || !pHtpasswdUser || !pHtpasswdEncryptPassword) {
+    if (!outPutPath || !pUser || !pPassword) {
       debug("Missing param, aborting.");
       return;
     }
-
     // create htpasswd file and add password in it
     const htpasswdFilePath = `${outPutPath}/.htpasswd`;
     debug("htpasswdFilePath", htpasswdFilePath);
 
+    // hash pass with bCrypt
+    let hashPassword = bcrypt.hashSync(pPassword, 10);
+    debug("hash", hashPassword);
+
     // define content
-    const htpasswdContent = `${pHtpasswdUser}:${pHtpasswdEncryptPassword}`;
+    const htpasswdContent = `${pUser}:${hashPassword}`;
     debug("htpasswdContent", htpasswdContent);
 
     // write content user:pass in htpasswd file
@@ -105,32 +75,22 @@ const prebuildHtaccess = (_) => {
   };
 
   /**
-   * rewriteHttpToHttps
-   * @param pRewriteCondHttpHostUrl
+   * rewrite http To https
    * @param pNewHtaccessFilePath
    * @returns {string|null}
    */
-  const _addRewriteHttpToHttpsInHttaccess = (
-    pRewriteCondHttpHostUrl = process.env.REWRITE_COND_HTTP_HOST_URL,
+  const _rewriteHttpToHttpsInHtaccess = (
     pNewHtaccessFilePath = newHtaccessFilePath
   ) => {
-    debug("_addRewriteHttpToHttpsToHttaccess...");
-    debug("_addRewriteHttpToHttpsToHttaccess params", {
-      pRewriteCondHttpHostUrl,
+    debug("_rewriteHttpToHttpsInHtaccess...");
+    debug("_rewriteHttpToHttpsInHtaccess params", {
       pNewHtaccessFilePath,
     });
 
-    // check if process env value exist
-    if (!pRewriteCondHttpHostUrl) {
-      debug("Missing param, aborting.");
-      return null;
-    }
-
     const template = [
-      `# Force from http to https
-     RewriteCond %{HTTPS} off
-     RewriteCond %{HTTP_HOST} =${pRewriteCondHttpHostUrl}
-     RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301]
+      `# Force http to https
+      RewriteCond %{HTTPS}  !=on
+      RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
      `,
     ]
       .join("\n")
@@ -145,8 +105,8 @@ const prebuildHtaccess = (_) => {
    * @param pConfigPath
    * @private
    */
-  const _createHtacessFile = (
-    pOutputPath = paths.dist,
+  const _createHtaccessFile = (
+    pOutputPath = config.outputPath,
     pConfigPath = paths.config
   ) => {
     // target htaccess new file
@@ -163,29 +123,21 @@ const prebuildHtaccess = (_) => {
       Files.getFiles(templateFilePath).read()
     );
 
-    return {
-      newHtaccessFilePath,
-    };
+    return { newHtaccessFilePath };
   };
   // --------------------------------------------------------------------------- PUBLIC
 
   logs.start("Prebuild htaccess.");
 
-  // create htaccess file and get newHtaccessFilePath
-  const { newHtaccessFilePath } = _createHtacessFile();
-  // add header
-  _headerMessage(currentEnv);
+  // create htaccess file and get returned newHtaccessFilePath
+  const { newHtaccessFilePath } = _createHtaccessFile();
 
-  if (currentEnv === "staging") {
-    // create htpasswd file
+  if (process.env.HTACCESS_ENABLE_AUTH === "true") {
     _createHtpasswdFile();
-    // add password to htaccess
-    _addHtpasswdLinkInHtaccess();
+    _htpasswdLinkInHtaccess();
   }
-
-  if (currentEnv === "production") {
-    // add rewrite http to https
-    _addRewriteHttpToHttpsInHttaccess();
+  if (process.env.HTACCESS_ENABLE_HTTPS_REDIRECTION === "true") {
+    _rewriteHttpToHttpsInHtaccess();
   }
 
   logs.done();

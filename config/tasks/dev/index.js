@@ -14,15 +14,10 @@ const { sprites } = require("../sprites");
  */
 const _startDevServer = async () => {
   logs.start("Start dev server");
-  // start webpack
   await execSync(
     [
-      // this value will never change
       `NODE_ENV=development`,
-      // target .env, this value will never change
-      `env-cmd -f .env`,
-      // start webpack devServer
-      ` webpack-dev-server --config config/webpack/webpack.development.js`,
+      `webpack-dev-server --config config/webpack/webpack.development.js`,
     ].join(" "),
     3
   );
@@ -36,15 +31,10 @@ const _startDevServer = async () => {
  */
 const dev = () =>
   new Promise(async (resolve) => {
-    // clean folder
     await clean();
-    // start prebuid
     await prebuild();
-    // compile sprites
     await sprites();
-    // start dev server
     await _startDevServer();
-    // end
     resolve();
   });
 
