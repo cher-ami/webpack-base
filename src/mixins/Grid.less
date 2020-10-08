@@ -2,8 +2,18 @@
 
 /**
  * Grid Container
+ *
+ * This mixin allow to define div as size reference for children who used .grid() mixin.
+ * ex:
+ * .wrapper {
+ *    .gridContainer();
+ * }
+ * .child {
+ *    .grid(width, 2);
+ * }
+ *
  */
-.gridContainer(@max-width: unit(@max-width-grid, px)) {
+.gridContainer(@max-width: @grid-max-width) {
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -11,55 +21,37 @@
 }
 
 /**
- * Use grid on every selector
- * ex: .gridFactor(padding, 3, true);
+ * Use .grid() mixin on every selector
+ *
+ * @param selector {CSS selector}: Choose any selector who can have number value
+ * @param column-number {number}: Grid column number to apply to this selector
+ * @param reference {number|string}: Select parent reference. Is 100% if you need to be relative to parent element size.
+ * @param include-last-gutter {boolean}: Allow to add one gutter size in calc
+ *
+ * ex:
+ *  .grid(width, 3);
+ *  .grid(margin-left, 2);
  */
-.gridFactor
-  (@selector, @el-column-number, @with-last-gutter:false, @with-margin: 0) {
-  & when (@with-last-gutter = false) {
+.grid(@selector, @column-number, @reference: 100%, @include-last-gutter: false) {
+  & when (@include-last-gutter = false) {
     @{selector}: ~"calc(
     (
-      (100% / @{column-number}) * @{el-column-number})
+      (@{reference} / @{grid-column-number}) * @{column-number})
       +
-      (@{gutter-size}px / @{column-number} * @{el-column-number})
+      (@{grid-gutter-size}px / @{grid-column-number} * @{column-number})
       -
-      @{gutter-size}px
+      @{grid-gutter-size}px
     )
   ";
   }
   // with last gutter
-  & when (@with-last-gutter = true) {
+  & when (@include-last-gutter = true) {
     @{selector}: ~"calc(
     (
-      (100% / @{column-number}) * @{el-column-number})
+      (@{reference} / @{grid-column-number}) * @{column-number})
       +
-      (@{gutter-size}px / @{column-number} * @{el-column-number})
+      (@{grid-gutter-size}px / @{grid-column-number} * @{column-number})
     )
   ";
   }
-}
-/**
- * Center element in grid
- */
-.gridCenter (@el-column-number:10) {
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  width: ~"calc(
-    (
-      (100% / @{column-number}) * @{el-column-number})
-      +
-      (@{gutter-size}px / @{column-number} * @{el-column-number})
-      -
-      @{gutter-size}px
-    )
-  ";
-}
-/**
- * Reset center column grid
- */
-.resetGridCenter() {
-  margin-left: 0;
-  margin-right: 0;
-  width: auto;
 }
