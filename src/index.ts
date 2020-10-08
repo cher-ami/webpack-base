@@ -17,7 +17,7 @@ const debug = require("debug")(`front:${fileName}`);
   GlobalConfig.inject({
     version: require("../package.json").version,
     baseUrl: process.env.APP_BASE,
-    routerBaseUrl: process.env.APP_BASE,
+    routerBaseUrl: process.env.ROUTER_BASE_URL,
     env: process.env.ENV,
   });
 
