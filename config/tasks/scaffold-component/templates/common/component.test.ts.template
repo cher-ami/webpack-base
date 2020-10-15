@@ -1,0 +1,7 @@
+import %%upperComponentName%% from "./%%upperComponentName%%";
+
+describe("%%upperComponentName%%", () => {
+  it("should be defined", () => {
+    expect(%%upperComponentName%%).toBeDefined();
+  });
+});
