@@ -59,11 +59,16 @@ const _reactComponentBuilder = ({
     destinationFilePath: `${componentPath}/${upperComponentName}.tsx`,
     replaceExpressions: { upperComponentName },
   });
-
   // scaffold less module
   createFile({
     templateFilePath: `${paths.componentsTemplatesPath}/react/component.less.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.module.less`,
+    replaceExpressions: { upperComponentName },
+  });
+  // scaffold test
+  createFile({
+    templateFilePath: `${paths.componentsTemplatesPath}/common/component.test.ts.template`,
+    destinationFilePath: `${componentPath}/${upperComponentName}.test.ts`,
     replaceExpressions: { upperComponentName },
   });
 };
@@ -85,6 +90,12 @@ const _domComponentBuilder = ({ componentPath, upperComponentName }) => {
   createFile({
     templateFilePath: `${paths.componentsTemplatesPath}/dom/component.less.template`,
     destinationFilePath: `${componentPath}/${upperComponentName}.less`,
+    replaceExpressions: { upperComponentName },
+  });
+  // scaffold test
+  createFile({
+    templateFilePath: `${paths.componentsTemplatesPath}/common/component.test.ts.template`,
+    destinationFilePath: `${componentPath}/${upperComponentName}.test.ts`,
     replaceExpressions: { upperComponentName },
   });
 };
