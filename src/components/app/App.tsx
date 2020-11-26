@@ -7,6 +7,11 @@ import { isEnv, showGridByDefault } from "../../helpers/nodeHelper";
 import { IRouteMatch, Router } from "../../lib/router/Router";
 import { TPageRegisterObject } from "../../lib/router/usePageRegister";
 import { atoms } from "../../atoms/atoms";
+import {
+  DEFAULT_LANGUAGE,
+  languageToString,
+  stringToLanguage,
+} from "../../lib/services/LanguageService";
 
 const componentName = "App";
 const debug = require("debug")(`front:${componentName}`);
@@ -94,11 +99,14 @@ class App extends Component<IProps, IStates> {
       const oldPageRef = pOldPage?.rootRef?.current;
       const newPageRef = pNewPage?.rootRef?.current;
 
-      // hide new page by default
-      if (newPageRef !== null) newPageRef.style.visibility = "hidden";
+      // hide new page fist
+      if (newPageRef != null) newPageRef.style.visibility = "hidden";
       // playOut old page
       pOldPage && (await pOldPage?.playOut?.());
-      // playIn old page
+
+      // show new page
+      if (newPageRef != null) newPageRef.style.visibility = "visible";
+      // playIn new page
       pNewPage && (await pNewPage?.playIn?.());
       // All done
       resolve();
@@ -109,20 +117,82 @@ class App extends Component<IProps, IStates> {
    * When route has changed
    */
   protected routeChangedHandler(pRouteMatch: IRouteMatch) {
-    debug("Route changed", pRouteMatch);
+    debug("pRouteMatch", pRouteMatch);
+
+    if (!Router.currentRouteMatch.parameters.lang) {
+      throw new Error("No language parameter passed");
+    }
+
+    const language = stringToLanguage(
+      Router.currentRouteMatch.parameters.lang as string
+    );
+
+    if (language === undefined) {
+      debug("Incorrect language", Router.currentRouteMatch.parameters.lang);
+
+      // Show 404 page
+      const notFoundPage = () =>
+        require("../../pages/notFoundPage/NotFoundPage");
+
+      setTimeout(
+        () =>
+          this._viewStack.showPage("NotFoundPage", notFoundPage, "index", {}),
+        1
+      );
+    }
   }
 
   /**
    * When a route is not found
    */
   protected routeNotFoundHandler(...rest) {
-    console.error("ROUTE NOT FOUND", rest);
-    // get not found page name
-    const pageName = "NotFoundPage";
-    // get not found page
+    debug("Route not found", Router.currentPath);
+
+    const cleanedPath = (Router.currentPath.endsWith("/")
+      ? Router.currentPath.slice(0, -1)
+      : Router.currentPath
+    )
+      // Remove multiple slashs
+      .replace(/(https?:\/\/)|(\/)+/g, "$1$2");
+
+    if (cleanedPath !== Router.currentPath) {
+      debug("Trying path without ending slash", cleanedPath);
+
+      const cleanedPathRoute = Router.URLToRoute(cleanedPath);
+
+      if (cleanedPathRoute) {
+        debug("Redirecting to", cleanedPathRoute);
+
+        // Have to delay openPage call because it won't work if called synchronously
+        setTimeout(() => Router.openPage(cleanedPathRoute, false), 10);
+        return;
+      }
+    }
+
+    // TODO: to fix, then replace appBase with process.env.APP_BASE
+    const appBase = "";
+
+    let pathWithLanguage = `/${appBase}/${languageToString(
+      DEFAULT_LANGUAGE
+    )}${cleanedPath.replace(appBase, "")}`
+      // Remove multiple slashs
+      .replace(/(https?:\/\/)|(\/)+/g, "$1$2");
+
+    debug("Trying with default language", pathWithLanguage);
+
+    const pathWithLanguageRoute = Router.URLToRoute(pathWithLanguage);
+
+    if (pathWithLanguageRoute) {
+      debug("Redirecting to", pathWithLanguageRoute);
+
+      // Have to delay openPage call because it won't work if called synchronously
+      setTimeout(() => Router.openPage(pathWithLanguageRoute, false), 10);
+      return;
+    }
+
+    // Show 404 page
     const notFoundPage = () => require("../../pages/notFoundPage/NotFoundPage");
-    // show not found page
-    this._viewStack.showPage(pageName, notFoundPage, "index", {});
+    this._viewStack.showPage("NotFoundPage", notFoundPage, "index", {});
   }
 
   /**
@@ -178,7 +248,7 @@ class App extends Component<IProps, IStates> {
           </nav>
           <ViewStack
             ref={(r) => (this._viewStack = r)}
-            transitionType={ETransitionType.PAGE_SEQUENTIAL}
+            transitionType={ETransitionType.CONTROLLED}
             transitionControl={this.transitionControl.bind(this)}
             onNotFound={this.pageNotFoundHandler.bind(this)}
           />
