@@ -136,6 +136,7 @@ const developmentConfig = {
    * Spin up a server for quick development.
    */
   devServer: {
+    publicPath: "",
     contentBase: paths.dist,
     port: parseInt(process.env.DEV_SERVER_PORT) || 3000,
     hot: DEV_SERVER_HOT_RELOAD,
@@ -151,12 +152,12 @@ const developmentConfig = {
     // display error overlay on screen
     overlay: true,
     // stats to print in console
-    stats: {
-      all: false,
-      errors: !CONSOLE_PRINT_FRIENDLY,
-      warnings: !CONSOLE_PRINT_FRIENDLY,
-      colors: !CONSOLE_PRINT_FRIENDLY,
-    },
+    // stats: {
+    //   all: false,
+    //   errors: !CONSOLE_PRINT_FRIENDLY,
+    //   warnings: !CONSOLE_PRINT_FRIENDLY,
+    //   colors: !CONSOLE_PRINT_FRIENDLY,
+    // },
     // friendly webpack error
     // pass to true if you don't want to print compile file in the console
     quiet: CONSOLE_PRINT_FRIENDLY,

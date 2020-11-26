@@ -21,7 +21,7 @@ commonConfig = {
    * Entry
    * The first place Webpack looks to start building the bundle.
    */
-  entry: `${paths.src}/index.ts`,
+  entry: [`${paths.src}/index.ts`],
 
   /**
    * Resolve
@@ -104,11 +104,11 @@ commonConfig = {
      * @description Custom plugin allow to generate parsed less variables,
      * and expose it in generated javascript file.
      */
-    new lessToJsPlugin({
-      watcher: paths.atomsFilesToWatch,
-      outputPath: paths.atomsPath,
-      outputFilename: paths.atomsGeneratedFilename,
-    }),
+    // new lessToJsPlugin({
+    //   watcher: paths.atomsFilesToWatch,
+    //   outputPath: paths.atomsPath,
+    //   outputFilename: paths.atomsGeneratedFilename,
+    // }),
   ],
 
   /**

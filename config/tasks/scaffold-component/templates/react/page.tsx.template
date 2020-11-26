@@ -22,7 +22,7 @@ const %%upperComponentName%% = (props: IProps) => {
    * playIn page transition
    * (remove if not use)
    */
-  const playIn = (): Promise<any> => {
+  const playIn = (): Promise<void> => {
     return new Promise<any>(resolve => resolve());
   };
 
@@ -30,7 +30,7 @@ const %%upperComponentName%% = (props: IProps) => {
    * playOut page transition
    * (remove if not use)
    */
-  const playOut = (): Promise<any> => {
+  const playOut = (): Promise<void> => {
     return new Promise<any>(resolve => resolve());
   };
 

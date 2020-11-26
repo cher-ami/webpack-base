@@ -23,7 +23,7 @@ const WorkPage = (props: IProps) => {
    * playIn page transition
    * (remove this example if not use)
    */
-  const playIn = (): Promise<any> => {
+  const playIn = (): Promise<void> => {
     return Promise.resolve();
   };
 
@@ -31,7 +31,7 @@ const WorkPage = (props: IProps) => {
    * playOut page transition
    * (remove this example if not use)
    */
-  const playOut = (): Promise<any> => {
+  const playOut = (): Promise<void> => {
     return Promise.resolve();
   };
 
