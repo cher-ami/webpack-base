@@ -8,11 +8,11 @@ import {
   slugify,
   trailingSlash,
 } from "../utils/stringUtils";
+import LanguageService, {
+  languageToString,
+  DEFAULT_LANGUAGE,
+} from "../services/LanguageService";
 const debug = require("debug")("lib:Router");
-
-/**
- * @credits Original work by Alexis Bouhet - https://zouloux.com
- */
 
 // ------------------------------------------------------------------------------- STRUCT
 
@@ -826,10 +826,15 @@ export class Router {
       pRouteMatch.stack = Router.DEFAULT_STACK_NAME;
     }
 
-    // Default parameters to empty object
-    if (pRouteMatch.parameters == null) {
-      pRouteMatch.parameters = {};
-    }
+    pRouteMatch.parameters = Object.assign(
+      {},
+      {
+        lang:
+          LanguageService.currentLanguageString ||
+          languageToString(DEFAULT_LANGUAGE),
+      },
+      pRouteMatch.parameters
+    );
 
     // Returned found URL
     let foundURL: string;

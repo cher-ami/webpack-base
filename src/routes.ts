@@ -5,12 +5,12 @@ import { IRoute } from "./lib/router/Router";
  */
 export const routes: IRoute[] = [
   {
-    url: "/",
+    url: "/{lang}/",
     page: "HomePage",
     importer: () => require("./pages/homePage/HomePage"),
   },
   {
-    url: "/work/{slug}",
+    url: "/{lang}/work/{slug}",
     page: "WorkPage",
     importer: () => require("./pages/workPage/WorkPage"),
   },
