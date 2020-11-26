@@ -12,6 +12,7 @@ const config = require("../global.config");
 // test env
 const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
 const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
+const DEV_SERVER_HOT_RELOAD = process.env.DEV_SERVER_HOT_RELOAD === "true";
 const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === "true";
 
 // ----------------------------------------------------------------------------- CONFIG
@@ -137,11 +138,12 @@ const developmentConfig = {
   devServer: {
     contentBase: paths.dist,
     port: parseInt(process.env.DEV_SERVER_PORT) || 3000,
-    hot: true,
+    hot: DEV_SERVER_HOT_RELOAD,
     inline: true,
     compress: true,
     historyApiFallback: true,
-
+    // reload/refresh the page when file changes are detected
+    liveReload: DEV_SERVER_HOT_RELOAD,
     // open new browser tab when webpack dev-server is started
     open: DEV_SERVER_OPEN,
     // Write file to dist on each compile
