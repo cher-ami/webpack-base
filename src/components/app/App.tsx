@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { ETransitionType, ViewStack } from "../../lib/router/ViewStack";
 import { IRouteMatch, Router } from "../../lib/router/Router";
 import { TPageRegisterObject } from "../../lib/router/usePageRegister";
-
 import {
   DEFAULT_LANGUAGE,
   languageToString,
