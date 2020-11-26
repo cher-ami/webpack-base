@@ -1,4 +1,4 @@
-# Webpack base
+# webpack base
 
 ![GitHub contributors](https://img.shields.io/github/contributors/willybrauner/webpack-base)
 
