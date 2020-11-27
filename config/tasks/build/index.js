@@ -6,21 +6,18 @@ const { prebuild } = require("../prebuild");
 const { sprites } = require("../sprites");
 const debug = require("debug")("config:build");
 
-// ----------------------------------------------------------------------------- PRIVATE
-
 /**
  * Start webpack build
  * @returns {Promise<void>}
  * @private
  */
-const _build = async () => {
+const _startBuild = async () => {
   logs.start("Start build.");
-
   try {
     await execSync(
       [
         `NODE_ENV=production`,
-        `webpack -p --config config/webpack/webpack.production.js`,
+        `webpack --config config/webpack/webpack.production.js`,
       ].join(" "),
       3
     );
@@ -28,31 +25,18 @@ const _build = async () => {
     logs.error("Webpack build failed. Exit.", e);
     process.exit(1);
   }
-
   logs.done();
 };
 
-// ----------------------------------------------------------------------------- PUBLIC
-
 /**
- * Init Start
+ * build task
  * @returns {Promise<unknown>}
  */
-const build = () => {
-  return new Promise(async (resolve) => {
-    /**
-     * Before build
-     */
-    await clean();
-    await prebuild();
-    await sprites();
-
-    /**
-     * Build
-     */
-    await _build();
-    resolve();
-  });
+const build = async () => {
+  await clean();
+  await prebuild();
+  await sprites();
+  await _startBuild();
 };
 
 module.exports = { build };

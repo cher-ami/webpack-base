@@ -3,9 +3,6 @@ const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-
-// ----------------------------------------------------------------------------- GLOBAL
-
 const paths = require("../global.paths");
 const config = require("../global.config");
 
@@ -14,8 +11,6 @@ const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
 const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
 const DEV_SERVER_HOT_RELOAD = process.env.DEV_SERVER_HOT_RELOAD === "true";
 const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === "true";
-
-// ----------------------------------------------------------------------------- CONFIG
 
 /**
  * Development Webpack Configuration
