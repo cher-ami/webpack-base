@@ -99,11 +99,11 @@ commonConfig = {
      * @description Custom plugin allow to generate parsed less variables,
      * and expose it in generated javascript file.
      */
-    // new lessToJsPlugin({
-    //   watcher: paths.atomsFilesToWatch,
-    //   outputPath: paths.atomsPath,
-    //   outputFilename: paths.atomsGeneratedFilename,
-    // }),
+    new lessToJsPlugin({
+      watcher: paths.atomsFilesToWatch,
+      outputPath: paths.atomsPath,
+      outputFilename: paths.atomsGeneratedFilename,
+    }),
   ],
 
   /**
