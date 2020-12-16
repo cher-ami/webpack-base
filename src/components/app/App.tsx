@@ -1,7 +1,6 @@
 import css from "./App.module.less";
 import React, { Component } from "react";
 import { ETransitionType, ViewStack } from "../../lib/router/ViewStack";
-import { showGridByDefault } from "../../helpers/nodeHelper";
 import { IRouteMatch, Router } from "../../lib/router/Router";
 import { TPageRegisterObject } from "../../lib/router/usePageRegister";
 
@@ -18,9 +17,7 @@ const debug = require("debug")(`front:${componentName}`);
 
 export interface IProps {}
 
-export interface IStates {
-  showGrid?: boolean;
-}
+export interface IStates {}
 
 /**
  * @name App
@@ -40,9 +37,8 @@ class App extends Component<IProps, IStates> {
   constructor(props: IProps, context: any) {
     super(props, context);
 
-    // initialize states
     this.state = {
-      showGrid: showGridByDefault,
+      // initialize states...
     } as IStates;
   }
 
@@ -51,8 +47,6 @@ class App extends Component<IProps, IStates> {
   componentDidMount() {
     // initialize router
     this.initRouter();
-    // toggle grid layout visibility
-    this.toggleGridVisibilityHandler();
   }
 
   componentWillUnmount() {
@@ -201,29 +195,11 @@ class App extends Component<IProps, IStates> {
     console.error("PAGE NOT FOUND", pPageName);
   }
 
-  // --------------------------------------------------------------------------- KEY
-
-  protected toggleGridVisibilityHandler() {
-    // listen press onkey up
-    document.body.onkeyup = (pEvent: KeyboardEvent) => {
-      // if code key is G Key // toggle visibility state
-      if (pEvent.code === "KeyG")
-        this.setState({ showGrid: !this.state.showGrid });
-    };
-  }
-
   // --------------------------------------------------------------------------- RENDER
 
   render() {
     return (
       <div className={css.Root}>
-        {isEnv(EEnv.DEV) && this.state.showGrid && (
-          <GridLayout
-            columnsNumber={atoms.gridColumnNumber}
-            gutterSize={atoms.gridGutterSize}
-            maxSize={atoms.gridMaxWidth}
-          />
-        )}
         <div className={css.wrapper}>
           <nav className={css.nav}>
             <a
