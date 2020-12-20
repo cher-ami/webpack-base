@@ -1,13 +1,11 @@
 const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
-const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const paths = require("../global.paths");
 const config = require("../global.config");
 
 // test env
-const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
 const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
 const DEV_SERVER_HOT_RELOAD = process.env.DEV_SERVER_HOT_RELOAD === "true";
 const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === "true";
@@ -84,17 +82,6 @@ const developmentConfig = {
    * Plugins
    */
   plugins: [
-    /**
-     * Friendly error
-     * @doc https://github.com/geowarin/friendly-errors-webpack-plugin
-     */
-    ...(CONSOLE_PRINT_FRIENDLY
-      ? [
-          new FriendlyErrorsPlugin({
-            clearConsole: true,
-          }),
-        ]
-      : []),
 
     /**
      * Enables Hot Module Replacement, otherwise known as HMR
@@ -130,17 +117,16 @@ const developmentConfig = {
     // Write file to dist on each compile
     writeToDisk: true,
     // display error overlay on screen
-    overlay: true,
+    overlay: false,
     // stats to print in console
     stats: {
       all: false,
-      errors: !CONSOLE_PRINT_FRIENDLY,
-      warnings: !CONSOLE_PRINT_FRIENDLY,
-      colors: !CONSOLE_PRINT_FRIENDLY,
+      errors: true,
+      warnings: true,
+      colors: true,
     },
-    // friendly webpack error
     // pass to true if you don't want to print compile file in the console
-    quiet: CONSOLE_PRINT_FRIENDLY,
+    quiet: false,
 
     // Specify a host to use. If you want your server to be accessible externally
     // https://webpack.js.org/configuration/dev-server/#devserverhost
