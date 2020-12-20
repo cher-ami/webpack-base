@@ -31,6 +31,7 @@ const developmentConfig = {
   /**
    * Devtool
    * Control how source maps are generated.
+   * doc: https://webpack.js.org/configuration/devtool
    */
   devtool: "source-map",
 
@@ -39,22 +40,6 @@ const developmentConfig = {
    */
   module: {
     rules: [
-      /**
-       * JavaScript
-       * Use Babel to transpile JavaScript files.
-       * Overwrite common config to add react-refresh/babel only on development
-       */
-      {
-        test: /\.(js|jsx|ts|tsx|mjs)$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: "babel-loader",
-            options: { plugins: ["react-refresh/babel"] },
-          },
-        ],
-      },
-
       /**
        * Styles
        * Inject CSS into the head with source maps.
@@ -110,20 +95,20 @@ const developmentConfig = {
           }),
         ]
       : []),
-    /**
-     * React Fast Refresh
-     * @doc https://github.com/pmmmwh/react-refresh-webpack-plugin
-     * IMPORTANT: this is a beta version but work fine
-     */
-    new ReactRefreshWebpackPlugin({
-      forceEnable: false,
-    }),
 
     /**
      * Enables Hot Module Replacement, otherwise known as HMR
      * @doc https://webpack.js.org/plugins/hot-module-replacement-plugin/
      */
     new webpack.HotModuleReplacementPlugin(),
+
+    /**
+     * React Fast Refresh
+     * @doc https://github.com/pmmmwh/react-refresh-webpack-plugin
+     */
+    new ReactRefreshWebpackPlugin({
+      forceEnable: false,
+    }),
   ],
 
   /**
@@ -147,12 +132,12 @@ const developmentConfig = {
     // display error overlay on screen
     overlay: true,
     // stats to print in console
-    // stats: {
-    //   all: false,
-    //   errors: !CONSOLE_PRINT_FRIENDLY,
-    //   warnings: !CONSOLE_PRINT_FRIENDLY,
-    //   colors: !CONSOLE_PRINT_FRIENDLY,
-    // },
+    stats: {
+      all: false,
+      errors: !CONSOLE_PRINT_FRIENDLY,
+      warnings: !CONSOLE_PRINT_FRIENDLY,
+      colors: !CONSOLE_PRINT_FRIENDLY,
+    },
     // friendly webpack error
     // pass to true if you don't want to print compile file in the console
     quiet: CONSOLE_PRINT_FRIENDLY,

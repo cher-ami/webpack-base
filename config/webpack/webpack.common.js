@@ -7,6 +7,7 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 const url = require("url");
 const paths = require("../global.paths");
 const config = require("../global.config");
+const { ESBuildPlugin } = require("esbuild-loader");
 
 /**
  * Common Webpack Configuration
@@ -42,18 +43,24 @@ commonConfig = {
    */
   plugins: [
     /**
+     * Transpilation
+     * @doc https://github.com/privatenumber/esbuild-loader
+     */
+    new ESBuildPlugin(),
+
+    /**
+     * Compile TS to js process is allowing by esbuild-loader with no type check
+     * This plugin allow only type checking part of the process
+     * TODO remplacer par un pluging custom avec un simple tsc -noEmit ?
+     * @doc https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
+     */
+    new ForkTsCheckerWebpackPlugin({ async: false }),
+
+    /**
      * Progress Plugin
      * @doc https://webpack.js.org/plugins/progress-plugin/
      */
     new webpack.ProgressPlugin(),
-
-    /**
-     * @note Compile TS to js process is allowing by babel-loader with no type check
-     * About react hot loader works, we need to separate type check process
-     * @doc https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
-     * @doc https://github.com/gaearon/react-hot-loader#typescript
-     */
-    new ForkTsCheckerWebpackPlugin({ async: false }),
 
     /**
      * HtmlWebpackPlugin
@@ -114,12 +121,19 @@ commonConfig = {
     rules: [
       /**
        * JavaScript
-       * Use Babel to transpile JavaScript files.
+       * Use esbuild to transpile JavaScript files.
+       * @doc https://github.com/privatenumber/esbuild-loader
        */
+
       {
         test: /\.(js|jsx|ts|tsx|mjs)$/,
-        exclude: /node_modules/,
-        use: [{ loader: "babel-loader" }],
+        loader: "esbuild-loader",
+        options: {
+          loader: "tsx",
+          target: "es2015",
+          // possible values https://esbuild.github.io/api/#target
+          tsconfigRaw: require("../../tsconfig.json"),
+        },
       },
 
       /**

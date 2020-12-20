@@ -70,6 +70,7 @@
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^6.0.0",
     "env-cmd": "^10.1.0",
+    "esbuild-loader": "^2.7.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.0.7",
     "friendly-errors-webpack-plugin": "^1.7.0",

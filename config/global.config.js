@@ -26,6 +26,11 @@ module.exports = {
   buildManifestFile: false,
 
   /**
+   * Build analyser file
+   */
+  bundleAnalyzerPlugin: false,
+
+  /**
    * Scaffolder
    */
   // Scaffold compatible folder

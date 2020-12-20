@@ -9,6 +9,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require("path");
 const paths = require("../global.paths");
 const config = require("../global.config");
+const { ESBuildMinifyPlugin } = require("esbuild-loader");
 
 /**
  * Production Webpack Configuration
@@ -47,17 +48,6 @@ const productionConfig = {
     }),
 
     /**
-     * webpack-bundle-analyzer
-     * @doc https://github.com/webpack-contrib/webpack-bundle-analyzer
-     *
-     */
-    new BundleAnalyzerPlugin({
-      openAnalyzer: false,
-      analyzerMode: "static",
-      defaultSizes: "gzip",
-    }),
-
-    /**
      * CopyWebpackPlugin
      * Copies files from target to destination folder.
      * @doc https://webpack.js.org/plugins/copy-webpack-plugin/
@@ -73,6 +63,18 @@ const productionConfig = {
         },
       ],
     }),
+
+    /**
+     * webpack-bundle-analyzer
+     * @doc https://github.com/webpack-contrib/webpack-bundle-analyzer
+     */
+    ...(config.bundleAnalyzerPlugin
+      ? new BundleAnalyzerPlugin({
+          openAnalyzer: false,
+          analyzerMode: "static",
+          defaultSizes: "gzip",
+        })
+      : []),
   ],
 
   /**
@@ -120,15 +122,24 @@ const productionConfig = {
 
   /**
    * Optimization
-   * Production minimizing of JavaSvript and CSS assets.
    */
   optimization: {
+    minimize: true,
     minimizer: [
-      new TerserJSPlugin(),
-      new OptimizeCSSAssetsPlugin({
-        assetNameRegExp: /\.main\.css$/g,
+      new ESBuildMinifyPlugin({
+        // possible values https://esbuild.github.io/api/#target
+        target: "es2015",
       }),
     ],
+  },
+
+  stats: {
+    all: false,
+    assets: true,
+    errors: true,
+    warnings: true,
+    colors: true,
+    assetsSort: "size",
   },
 };
 

@@ -41,6 +41,8 @@ const HomePage = (props: IProps) => {
 
   // -------------------–-------------------–-------------------–--------------- RENDER
 
+  // const a:boolean = "vouocuddl";
+
   return (
     <div className={css.Root} ref={rootRef}>
       {componentName}
