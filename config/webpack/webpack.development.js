@@ -9,6 +9,7 @@ const config = require("../global.config");
 const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
 const DEV_SERVER_HOT_RELOAD = process.env.DEV_SERVER_HOT_RELOAD === "true";
 const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === "true";
+const ENABLE_SOURCE_MAP = process.env.ENABLE_SOURCE_MAP === "true";
 
 /**
  * Development Webpack Configuration
@@ -31,7 +32,7 @@ const developmentConfig = {
    * Control how source maps are generated.
    * doc: https://webpack.js.org/configuration/devtool
    */
-  devtool: "source-map",
+  devtool: ENABLE_SOURCE_MAP ? "source-map" : false,
 
   /**
    * Modules
@@ -53,7 +54,7 @@ const developmentConfig = {
               {
                 loader: "css-loader",
                 options: {
-                  sourceMap: true,
+                  sourceMap: ENABLE_SOURCE_MAP,
                   importLoaders: 1,
                   modules: {
                     localIdentName: "[name]__[local]--[hash:base64:5]",
@@ -82,7 +83,6 @@ const developmentConfig = {
    * Plugins
    */
   plugins: [
-
     /**
      * Enables Hot Module Replacement, otherwise known as HMR
      * @doc https://webpack.js.org/plugins/hot-module-replacement-plugin/
