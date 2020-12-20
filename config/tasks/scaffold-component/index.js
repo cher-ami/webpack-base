@@ -7,8 +7,6 @@ const { logs } = require("../../helpers/logs-helper");
 const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:scaffold-component");
 
-// ----------------------–----------------------–----------------------–-------- CONF
-
 // remove Files lib logs
 Files.setVerbose(false);
 
@@ -16,8 +14,6 @@ Files.setVerbose(false);
 const paths = require("../../global.paths");
 // get local task config
 const config = require("../../global.config");
-
-// ----------------------–----------------------–----------------------–-------- PRIVATE
 
 const _askWhichComponentFolder = (
   componentCompatibleFolders = config.componentCompatibleFolders

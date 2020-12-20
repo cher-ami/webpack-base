@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { usePageRegister } from "../../lib/router/usePageRegister";
 
 interface IProps {
-  classNames?: string[];
+  className: string;
 }
 
 const componentName = "%%upperComponentName%%";
@@ -13,7 +13,6 @@ const debug = require("debug")(`front:${componentName}`);
  * @name %%upperComponentName%%
  */
 const %%upperComponentName%% = (props: IProps) => {
-  // get root ref
   const rootRef = useRef<HTMLDivElement>(null);
 
   // -------------------–-------------------–-------------------–--------------- REGISTER PAGE

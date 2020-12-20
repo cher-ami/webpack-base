@@ -4,8 +4,6 @@ const paths = require("../../global.paths");
 const debug = require("debug")("config:prebuild-atoms");
 const changeCase = require("change-case");
 
-// ----------------------------------------------------------------------------- PRIVATE
-
 /**
  * Create atoms less to JS template
  */
@@ -93,8 +91,6 @@ const _atomsParser = (pWatcher) => {
 
   return atomList;
 };
-
-// ----------------------------------------------------------------------------- PUBLIC
 
 module.exports = {
   /**

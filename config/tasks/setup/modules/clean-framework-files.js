@@ -2,15 +2,8 @@ require("colors");
 const { logs } = require("../../../helpers/logs-helper");
 const { execSync } = require("@solid-js/cli");
 const debug = require("debug")("config:clean-framework-files");
-
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-// target local path files
 const paths = require("../../../global.paths");
-// get local task config
 const config = require("../../../global.config");
-
-// ----------------------------------------------------------------------------- MODULE
 
 /**
  * cleanFrameworkFiles

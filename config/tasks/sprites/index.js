@@ -11,13 +11,7 @@ const Handlebars = require("handlebars");
 const { optimizeFiles } = require("./imagemin");
 const { logs } = require("../../helpers/logs-helper");
 const debug = require("debug")("config:sprites");
-
-// ----------------------------------------------------------------------------- PATH / CONFIG
-
-// get paths
 const globalPaths = require("../../global.paths");
-
-// ----------------------------------------------------------------------------- CONFIG
 
 // Sprite namming
 const spritePrefix = "sprite";

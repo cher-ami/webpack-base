@@ -1,4 +1,3 @@
-// Create our regex
 let templateRegex;
 
 module.exports = {

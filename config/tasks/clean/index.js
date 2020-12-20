@@ -1,9 +1,6 @@
 require("colors");
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../helpers/logs-helper");
-
-// ----------------------------------------------------------------------------- PUBLIC
-
 const folderToClean = require("../../global.config").outputPath;
 
 /**

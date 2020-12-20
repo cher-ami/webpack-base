@@ -6,7 +6,6 @@ interface IProps {
   parameters: any;
 }
 
-// prepare
 const componentName = "WorkPage";
 const debug = require("debug")(`front:${componentName}`);
 
@@ -14,7 +13,6 @@ const debug = require("debug")(`front:${componentName}`);
  * @name WorkPage
  */
 const WorkPage = (props: IProps) => {
-  // get root ref
   const rootRef = useRef<HTMLDivElement>(null);
 
   // -------------------–-------------------–-------------------–--------------- REGISTER PAGE

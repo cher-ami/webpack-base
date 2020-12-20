@@ -1,15 +1,8 @@
 const { logs } = require("../../../helpers/logs-helper");
 const { scaffoldBundle } = require("../../scaffold-bundle");
-const debug = require("debug")("config:setup-bundle");
-
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-// target local path files
 const paths = require("../../../global.paths");
-// get local task config
 const config = require("../../../global.config");
-
-// ----------------------------------------------------------------------------- MODULE
+const debug = require("debug")("config:setup-bundle");
 
 /**
  * Setup Bundle

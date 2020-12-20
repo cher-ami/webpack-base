@@ -2,13 +2,6 @@ const { prebuildHtaccess } = require("../prebuild-htaccess");
 const { prebuildDotEnv } = require("../prebuild-dotenv");
 const debug = require("debug")("config:prebuild");
 
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-const config = require("../../global.config");
-const paths = require("../../global.paths");
-
-// ----------------------------------------------------------------------------- PUBLIC
-
 /**
  * Execute all prebuild modules
  */

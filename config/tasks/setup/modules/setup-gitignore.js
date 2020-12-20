@@ -2,15 +2,8 @@ require("colors");
 const { Files } = require("@zouloux/files");
 const { logs } = require("../../../helpers/logs-helper");
 const debug = require("debug")("config:setup-gitignore");
-
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-// target local path files
 const paths = require("../../../global.paths");
-// get local task config
 const config = require("../../../global.config");
-
-// ----------------------------------------------------------------------------- MODULE
 
 /**
  * Manage Gitignore

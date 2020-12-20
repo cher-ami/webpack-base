@@ -10,8 +10,6 @@ const paths = require("../../global.paths");
  * Useful is this file
  */
 const prebuildHtaccess = () => {
-  // --------------------------------------------------------------------------- PRIVATE
-
   /**
    * htaccessHtpasswdLink
    * @param pServerWebRootPath
@@ -125,7 +123,6 @@ const prebuildHtaccess = () => {
 
     return { newHtaccessFilePath };
   };
-  // --------------------------------------------------------------------------- PUBLIC
 
   logs.start("Prebuild htaccess.");
 

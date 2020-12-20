@@ -1,5 +1,4 @@
 @import (reference) "../../references.less";
-
 @COMPONENT: %%upperComponentName%%;
 
 .Root {

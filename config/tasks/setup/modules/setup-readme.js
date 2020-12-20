@@ -3,15 +3,8 @@ const { logs } = require("../../../helpers/logs-helper");
 const { quickTemplate } = require("../../../helpers/template-helper");
 const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:manage-readme");
-
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-// target local path files
 const paths = require("../../../global.paths");
-// get local task config
 const config = require("../../../global.config");
-
-// ----------------------------------------------------------------------------- PUBLIC
 
 /**
  * Manage README file

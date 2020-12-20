@@ -4,7 +4,6 @@ import { usePageRegister } from "../../lib/router/usePageRegister";
 
 interface IProps {}
 
-// prepare
 const componentName = "NotFoundPage";
 const debug = require("debug")(`front:${componentName}`);
 
@@ -12,7 +11,6 @@ const debug = require("debug")(`front:${componentName}`);
  * @name NotFoundPage
  */
 const NotFoundPage = (props: IProps) => {
-  // get root ref
   const rootRef = useRef<HTMLDivElement>(null);
 
   // -------------------–-------------------–-------------------–--------------- REGISTER PAGE
