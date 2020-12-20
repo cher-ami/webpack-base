@@ -3,9 +3,6 @@ const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-
-// ----------------------------------------------------------------------------- GLOBAL
-
 const paths = require("../global.paths");
 const config = require("../global.config");
 
@@ -14,8 +11,6 @@ const CONSOLE_PRINT_FRIENDLY = process.env.CONSOLE_PRINT === "friendly";
 const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
 const DEV_SERVER_HOT_RELOAD = process.env.DEV_SERVER_HOT_RELOAD === "true";
 const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === "true";
-
-// ----------------------------------------------------------------------------- CONFIG
 
 /**
  * Development Webpack Configuration
@@ -136,6 +131,7 @@ const developmentConfig = {
    * Spin up a server for quick development.
    */
   devServer: {
+    publicPath: "",
     contentBase: paths.dist,
     port: parseInt(process.env.DEV_SERVER_PORT) || 3000,
     hot: DEV_SERVER_HOT_RELOAD,
@@ -151,12 +147,12 @@ const developmentConfig = {
     // display error overlay on screen
     overlay: true,
     // stats to print in console
-    stats: {
-      all: false,
-      errors: !CONSOLE_PRINT_FRIENDLY,
-      warnings: !CONSOLE_PRINT_FRIENDLY,
-      colors: !CONSOLE_PRINT_FRIENDLY,
-    },
+    // stats: {
+    //   all: false,
+    //   errors: !CONSOLE_PRINT_FRIENDLY,
+    //   warnings: !CONSOLE_PRINT_FRIENDLY,
+    //   colors: !CONSOLE_PRINT_FRIENDLY,
+    // },
     // friendly webpack error
     // pass to true if you don't want to print compile file in the console
     quiet: CONSOLE_PRINT_FRIENDLY,

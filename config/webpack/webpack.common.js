@@ -5,13 +5,8 @@ const Dotenv = require("dotenv-webpack");
 const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const url = require("url");
-
-// ----------------------------------------------------------------------------- GLOBAL
-
 const paths = require("../global.paths");
 const config = require("../global.config");
-
-// ----------------------------------------------------------------------------- CONFIG
 
 /**
  * Common Webpack Configuration
@@ -21,7 +16,7 @@ commonConfig = {
    * Entry
    * The first place Webpack looks to start building the bundle.
    */
-  entry: `${paths.src}/index.ts`,
+  entry: [`${paths.src}/index.ts`],
 
   /**
    * Resolve

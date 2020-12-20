@@ -26,53 +26,50 @@ module.exports = class LessToJsPlugin {
 
   /**
    * Get compilation files changes names
-   * @param pCompilation
+   * @param compilation
    * @returns {[]}
    * @private
    */
-  _getChangedFiles(pCompilation) {
-    // get get changed times
-    const changedTimes =
-      pCompilation.watchFileSystem.watcher &&
-      pCompilation.watchFileSystem.watcher.mtimes;
-    // get changes files
-    return Object.keys(changedTimes).map((file) => file);
+  _getChangedFiles(compilation) {
+    return compilation.modifiedFiles
+      ? Array.from(compilation.modifiedFiles)
+      : [];
   }
 
   /**
    * Check if a file of glob list as changed
-   * @param pCompilation
+   * @param compilation
    * @returns {boolean}
    * @private
    */
-  _fileAsChanged(pCompilation) {
+  _fileAsChanged(compilation) {
     // check files to watch
     const glob = Files.getFiles(this.watcher);
+    debug("glob.files", glob.files);
+
+    const changedFiles = this._getChangedFiles(compilation);
+    debug("changedFiles", changedFiles);
 
     // check if is glob (glob.files.length > 0)
     if (glob.files && glob.files.length > 0) {
       // register file as change boolean
       return glob.files.some((globEl) =>
         // check if a file of change file list match with one of glob files
-        this._getChangedFiles(pCompilation).some(
-          (changeEl) => changeEl === globEl
-        )
+        changedFiles.some((changeEl) => globEl.includes(changeEl))
       );
     } else return false;
   }
 
   /**
    * Check if output file exist
-   * @param pOutputPath
-   * @param pOutputFilename
    * @returns {boolean}
    * @private
    */
-  _outputFileExist(
-    pOutputPath = this.outputPath,
-    pOutputFilename = this.outputFilename
-  ) {
-    return Files.getFiles(`${pOutputPath}/${pOutputFilename}`).files.length > 0;
+  _outputFileExist() {
+    return (
+      Files.getFiles(`${this.outputPath}/${this.outputFilename}`).files.length >
+      0
+    );
   }
 
   /**
@@ -82,15 +79,11 @@ module.exports = class LessToJsPlugin {
    * @returns {*|Promise<unknown>}
    * @private
    */
-  _buildLessToJsFile(
-    pWatcher = this.watcher,
-    pOutputPath = this.outputPath,
-    pOutputFilename = this.outputFilename
-  ) {
+  _buildLessToJsFile() {
     return prebuildAtoms({
-      pWatcher: pWatcher,
-      pOutputPath: pOutputPath,
-      pOutputFilename: pOutputFilename,
+      pWatcher: this.watcher,
+      pOutputPath: this.outputPath,
+      pOutputFilename: this.outputFilename,
     });
   }
 
@@ -115,16 +108,18 @@ module.exports = class LessToJsPlugin {
      * triggering every time that webpack recompiles on a change triggered by the watcher
      */
     compiler.hooks.watchRun.tapPromise(PLUGIN_NAME, async (compilation) => {
-      debug({
-        _outputFileExist: this._outputFileExist(),
-        _fileAsChanged: this._fileAsChanged(compilation),
-      });
+      const outputFileExist = this._outputFileExist();
+      const fileAsChanged = this._fileAsChanged(compilation);
+      debug(
+        { outputFileExist, fileAsChanged },
+        !outputFileExist || fileAsChanged
+      );
 
       // if output file don't exist
       // or files to watch were changed
-      if (!this._outputFileExist() || this._fileAsChanged(compilation)) {
+      if (!outputFileExist || fileAsChanged) {
         debug(`Prebuild less to js file...`);
-        return await this._buildLessToJsFile();
+        await this._buildLessToJsFile();
       } else {
         debug("Prebluild nothing, matches files doesn't changed");
       }

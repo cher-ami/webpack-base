@@ -13,10 +13,6 @@ const debug = require("debug")(`front:${componentName}`);
  * @name %%upperComponentName%%
  */
 function %%upperComponentName%% (props: IProps) {
-  // --------------------------------------------------------------------------- PREPARE
-
-  // --------------------------------------------------------------------------- RENDER
-
   return <div className={merge([css.Root, props.className])}>
       {componentName}
   </div>
