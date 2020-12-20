@@ -4,15 +4,8 @@ const path = require("path");
 const changeCase = require("change-case");
 const { getBundleListHelper } = require("../../helpers/get-bundle-list-helper");
 const debug = require("debug")("config:prebuild-react-pages-list");
-
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-// config
 const config = require("../../global.config");
-// paths
 const paths = require("../../global.paths");
-
-// ----------------------------------------------------------------------------- PRIVATE
 
 /**
  * Page template
@@ -28,11 +21,9 @@ const _pagesTemplate = ({ pages = [] }) => {
 			];`.replace(new RegExp(`(\n${"\t\t\t"})`, "gmi"), "\n");
 };
 
-// ----------------------------------------------------------------------------- PUBLIC
-
 /**
  * Prebuild .htaccess file
- * Usefull is this file
+ * Useful is this file
  */
 const prebuildReactPagesList = () => {
   return new Promise(async (resolve) => {

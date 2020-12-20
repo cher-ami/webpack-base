@@ -7,13 +7,8 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require("path");
-
-// ----------------------------------------------------------------------------- GLOBAL
-
 const paths = require("../global.paths");
 const config = require("../global.config");
-
-// ----------------------------------------------------------------------------- CONFIG
 
 /**
  * Production Webpack Configuration

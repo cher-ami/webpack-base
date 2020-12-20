@@ -1,7 +1,5 @@
 const { prebuildAtoms } = require("./prebuild-atoms");
 const { Files } = require("@zouloux/files");
-
-// params
 const PLUGIN_NAME = "less-to-js-webpack-plugin";
 const debug = require("debug")(`config:${PLUGIN_NAME}`);
 
@@ -21,8 +19,6 @@ module.exports = class LessToJsPlugin {
     this.outputPath = outputPath;
     this.outputFilename = outputFilename;
   }
-
-  // ---------------------------–---------------------------–------------------- PRIVATE
 
   /**
    * Get compilation files changes names
@@ -86,8 +82,6 @@ module.exports = class LessToJsPlugin {
       pOutputFilename: this.outputFilename,
     });
   }
-
-  // ---------------------------–---------------------------–------------------- PUBLIC
 
   /**
    * Apply

@@ -9,8 +9,6 @@ const imageminPngquant = require("imagemin-pngquant");
 const path = require("path");
 const paths = require("../../global.paths");
 
-// ----------------------------------------------------------------------------- DEFAULTS
-
 // Mini match targeting images inside a folder
 const imagesMiniMatch = "*.{jpg,png}";
 

@@ -1,8 +1,5 @@
-# ------------------------------------------------------------------------------ AUTO-COMMENTED
 # values auto-commented during first setup
 config/install.config.js
-
-# ------------------------------------------------------------------------------ GENERATED
 
 # Output application depend of project
 dist
@@ -19,16 +16,8 @@ src/sprites/*.cache
 # Auto generate pages list for js router
 src/pages.ts
 
-# ------------------------------------------------------------------------------ ENV
-
 .env
-
-# ------------------------------------------------------------------------------ DEP
-
 node_modules
-
-# ------------------------------------------------------------------------------ IDE / OTHERS
-
 .DS_Store
 .idea
 .vscode

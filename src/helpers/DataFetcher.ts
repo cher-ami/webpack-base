@@ -1,7 +1,4 @@
-import { isEnv } from "./nodeHelper";
-import { EEnv } from "../types";
 import LanguageService from "../lib/services/LanguageService";
-
 const name = "DataFetcher";
 const debug = require("debug")(`front:${name}`);
 
@@ -14,10 +11,8 @@ class DataFetcher {
    * @param endpoint
    */
   public getApi({ endpoint }: { endpoint: string }): Promise<any> {
-    // const build URL
     const url = this.prepareUrl({ endpoint });
     debug("url to request", url);
-    // return promise
     return fetch(url).then((response) => {
       if (!response.ok) {
         throw new Error(`Unable to fetch "${url}", status: ${response.status}`);
@@ -44,11 +39,11 @@ class DataFetcher {
     locale?: string;
   }): string => {
     return [
-      // ex: /this/branch
-      isEnv(EEnv.DEV) ? "" : `${appBase}`,
+      // ex: /foo/bar
+      process.env.NODE_ENV === "development" ? "" : `${appBase}`,
       // ex: /fr
       locale ? `/${locale}` : "/",
-      // ex: campain.json
+      // ex: home.json
       `/${endpoint}`,
     ]
       .filter((v) => v)

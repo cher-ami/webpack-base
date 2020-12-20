@@ -1,17 +1,19 @@
 import { IRoute } from "./lib/router/Router";
 
-/**
- * Routes list
- */
+export enum ERouterPage {
+  HOME_PAGE = "HomePage",
+  WORK_PAGE = "WorkPage",
+}
+
 export const routes: IRoute[] = [
   {
     url: "/{lang}/",
-    page: "HomePage",
+    page: ERouterPage.HOME_PAGE,
     importer: () => require("./pages/homePage/HomePage"),
   },
   {
     url: "/{lang}/work/{slug}",
-    page: "WorkPage",
+    page: ERouterPage.WORK_PAGE,
     importer: () => require("./pages/workPage/WorkPage"),
   },
 ];

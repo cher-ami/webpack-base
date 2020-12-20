@@ -2,17 +2,9 @@ require("colors");
 const { Files } = require("@zouloux/files");
 const { execSync } = require("@solid-js/cli");
 const debug = require("debug")("config:check-config-file");
-
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-// custom logs
 const { logs } = require("../../../helpers/logs-helper");
-// target local path files
 const paths = require("../../../global.paths");
-// get local task config
 const config = require("../../../global.config");
-
-// ----------------------------------------------------------------------------- MODULE
 
 /**
  * Check if install file cache exist

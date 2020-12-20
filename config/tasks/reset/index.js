@@ -1,17 +1,9 @@
 require("colors");
 const { Files } = require("@zouloux/files");
 const { execSync } = require("@solid-js/cli");
-
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-// custom logs
 const { logs } = require("../../helpers/logs-helper");
-// target local path files
 const paths = require("../../global.paths");
-// get local task config
 const config = require("../../global.config");
-
-// ----------------------------------------------------------------------------- MODULE
 
 /**
  * Reset task

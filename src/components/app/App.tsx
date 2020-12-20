@@ -12,8 +12,6 @@ import {
 const componentName = "App";
 const debug = require("debug")(`front:${componentName}`);
 
-// ----------------------------------------------------------------------------- STRUCT
-
 export interface IProps {}
 
 export interface IStates {}
@@ -25,8 +23,6 @@ export interface IStates {}
 class App extends Component<IProps, IStates> {
   // React view stack, showing pages when route changes
   protected _viewStack: ViewStack;
-
-  // --------------------------------------------------------------------------- INIT
 
   /**
    * Constructor
@@ -40,8 +36,6 @@ class App extends Component<IProps, IStates> {
       // initialize states...
     } as IStates;
   }
-
-  // --------------------------------------------------------------------------- LIFECYCLE
 
   componentDidMount() {
     // initialize router
@@ -160,8 +154,7 @@ class App extends Component<IProps, IStates> {
       }
     }
 
-    // TODO: to fix, then replace appBase with process.env.APP_BASE
-    const appBase = "";
+    const appBase = process.env.APP_BASE;
 
     let pathWithLanguage = `/${appBase}/${languageToString(
       DEFAULT_LANGUAGE

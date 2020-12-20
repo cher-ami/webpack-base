@@ -7,7 +7,6 @@ const { setupInstallConfig } = require("./modules/setup-install-config");
 const { setupGitignore } = require("./modules/setup-gitignore");
 const { logs } = require("../../helpers/logs-helper");
 const debug = require("debug")("config:setup");
-
 const paths = require("../../global.paths");
 const config = require("../../global.config");
 

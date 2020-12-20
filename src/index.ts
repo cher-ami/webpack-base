@@ -18,7 +18,6 @@ const debug = require("debug")(`front:${fileName}`);
     version: require("../package.json").version,
     baseUrl: process.env.APP_BASE,
     routerBaseUrl: process.env.APP_BASE,
-    env: process.env.ENV,
   });
 
   /**

@@ -11,7 +11,6 @@ const debug = require("debug")(`front:${componentName}`);
  * @name HomePage
  */
 const HomePage = (props: IProps) => {
-  // get root ref
   const rootRef = useRef<HTMLDivElement>(null);
 
   // -------------------–-------------------–-------------------–--------------- REGISTER PAGE

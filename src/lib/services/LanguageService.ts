@@ -1,7 +1,6 @@
 import { EventEmitter } from "events";
 import GlobalConfig from "../../data/GlobalConfig";
 import { Router } from "../router/Router";
-
 const debug = require("debug")(`front:LanguageService`);
 
 export enum ELanguage {

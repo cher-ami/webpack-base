@@ -1,15 +1,8 @@
 const { Files } = require("@zouloux/files");
 const { logs } = require("./logs-helper");
 const debug = require("debug")("config:bundle-type-helper");
-
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-// config
 const config = require("../global.config");
-// paths
 const paths = require("../global.paths");
-
-// ----------------------------------------------------------------------------- MODULE
 
 /**
  * Get install.config.js file

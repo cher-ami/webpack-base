@@ -4,15 +4,8 @@ const Inquirer = require("inquirer");
 const changeCase = require("change-case");
 const { logs } = require("../../../helpers/logs-helper");
 const debug = require("debug")("config:manage-package-json");
-
-// ----------------------------------------------------------------------------- PATHS / CONFIG
-
-// target local path files
 const paths = require("../../../global.paths");
-// get local task config
 const config = require("../../../global.config");
-
-// ----------------------------------------------------------------------------- MODULE
 
 /**
  * Setup package.json

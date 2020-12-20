@@ -1,9 +1,6 @@
 require("colors");
 const Inquirer = require("inquirer");
 const debug = require("debug")("config:scaffold");
-
-// ----------------------------------------------------------------------------- COMMON TASKS
-
 const { scaffoldComponent } = require("../scaffold-component");
 
 /**
@@ -21,7 +18,6 @@ const _scaffolders = [
   },
 ];
 
-// ----------------------------------------------------------------------------- PUBLIC API
 const scaffold = () =>
   new Promise((resolve) => {
     // Get scaffolder to present listing to user
