@@ -2,7 +2,6 @@ const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -120,15 +119,21 @@ const productionConfig = {
 
   /**
    * Optimization
-   * Production minimizing of JavaSvript and CSS assets.
    */
   optimization: {
-    minimizer: [
-      new TerserJSPlugin(),
-      new OptimizeCSSAssetsPlugin({
-        assetNameRegExp: /\.main\.css$/g,
-      }),
-    ],
+    minimizer: [new TerserJSPlugin()],
+  },
+
+  /**
+   * Stats print
+   */
+  stats: {
+    all: false,
+    assets: true,
+    errors: true,
+    warnings: true,
+    colors: true,
+    assetsSort: "size",
   },
 };
 
