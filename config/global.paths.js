@@ -14,8 +14,6 @@ module.exports = {
   src: appRoot.resolve("src"),
   fontsPath: appRoot.resolve("src/fonts"),
   publicPath: appRoot.resolve("src/public"),
-  spritesTemplatesPath: appRoot.resolve("config/tasks/sprites/templates"),
-  spritesOutputPath: appRoot.resolve("src/sprites"),
 
   /**
    * These are used by custom less-to-js-webpack-plugin
