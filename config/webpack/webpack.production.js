@@ -1,11 +1,10 @@
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserJSPlugin = require("terser-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const TerserJSPlugin = require("terser-webpack-plugin");
 const path = require("path");
 const paths = require("../global.paths");
 const config = require("../global.config");
@@ -47,17 +46,6 @@ const productionConfig = {
     }),
 
     /**
-     * webpack-bundle-analyzer
-     * @doc https://github.com/webpack-contrib/webpack-bundle-analyzer
-     *
-     */
-    new BundleAnalyzerPlugin({
-      openAnalyzer: false,
-      analyzerMode: "static",
-      defaultSizes: "gzip",
-    }),
-
-    /**
      * CopyWebpackPlugin
      * Copies files from target to destination folder.
      * @doc https://webpack.js.org/plugins/copy-webpack-plugin/
@@ -73,6 +61,18 @@ const productionConfig = {
         },
       ],
     }),
+
+    /**
+     * webpack-bundle-analyzer
+     * @doc https://github.com/webpack-contrib/webpack-bundle-analyzer
+     */
+    ...(config.bundleAnalyzerPlugin
+      ? new BundleAnalyzerPlugin({
+          openAnalyzer: false,
+          analyzerMode: "static",
+          defaultSizes: "gzip",
+        })
+      : []),
   ],
 
   /**
@@ -120,15 +120,18 @@ const productionConfig = {
 
   /**
    * Optimization
-   * Production minimizing of JavaSvript and CSS assets.
    */
   optimization: {
-    minimizer: [
-      new TerserJSPlugin(),
-      new OptimizeCSSAssetsPlugin({
-        assetNameRegExp: /\.main\.css$/g,
-      }),
-    ],
+    minimizer: [new TerserJSPlugin()],
+  },
+
+  stats: {
+    all: false,
+    assets: true,
+    errors: true,
+    warnings: true,
+    colors: true,
+    assetsSort: "size",
   },
 };
 

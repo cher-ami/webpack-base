@@ -42,18 +42,18 @@ commonConfig = {
    */
   plugins: [
     /**
+     * Compile TS to js process is allowing by esbuild-loader with no type check
+     * This plugin allow only type checking part of the process
+     * TODO remplacer par un pluging custom avec un simple tsc -noEmit ?
+     * @doc https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
+     */
+    new ForkTsCheckerWebpackPlugin({ async: false }),
+
+    /**
      * Progress Plugin
      * @doc https://webpack.js.org/plugins/progress-plugin/
      */
     new webpack.ProgressPlugin(),
-
-    /**
-     * @note Compile TS to js process is allowing by babel-loader with no type check
-     * About react hot loader works, we need to separate type check process
-     * @doc https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
-     * @doc https://github.com/gaearon/react-hot-loader#typescript
-     */
-    new ForkTsCheckerWebpackPlugin({ async: false }),
 
     /**
      * HtmlWebpackPlugin
