@@ -9,7 +9,6 @@ const config = require("../global.config");
 const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
 const DEV_SERVER_HOT_RELOAD = process.env.DEV_SERVER_HOT_RELOAD === "true";
 const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === "true";
-const ENABLE_SOURCE_MAP = process.env.ENABLE_SOURCE_MAP === "true";
 
 /**
  * Development Webpack Configuration
@@ -32,7 +31,7 @@ const developmentConfig = {
    * Control how source maps are generated.
    * doc: https://webpack.js.org/configuration/devtool
    */
-  devtool: ENABLE_SOURCE_MAP ? "source-map" : false,
+  devtool: process.env.WEBPACK_DEV_TOOL || false,
 
   /**
    * Modules
@@ -69,7 +68,7 @@ const developmentConfig = {
               {
                 loader: "css-loader",
                 options: {
-                  sourceMap: ENABLE_SOURCE_MAP,
+                  sourceMap: !!process.env.WEBPACK_DEV_TOOL,
                   importLoaders: 1,
                   modules: {
                     localIdentName: "[name]__[local]--[hash:base64:5]",
