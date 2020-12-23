@@ -4,10 +4,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const TerserJSPlugin = require("terser-webpack-plugin");
 const path = require("path");
 const paths = require("../global.paths");
 const config = require("../global.config");
-const { ESBuildMinifyPlugin } = require("esbuild-loader");
 
 /**
  * Production Webpack Configuration
@@ -122,13 +122,7 @@ const productionConfig = {
    * Optimization
    */
   optimization: {
-    minimize: true,
-    minimizer: [
-      new ESBuildMinifyPlugin({
-        // possible values https://esbuild.github.io/api/#target
-        target: "es2015",
-      }),
-    ],
+    minimizer: [new TerserJSPlugin()],
   },
 
   stats: {

@@ -40,6 +40,21 @@ const developmentConfig = {
   module: {
     rules: [
       /**
+       * JavaScript
+       * Use Babel to transpile JavaScript files.
+       * Overwrite common config to add react-refresh/babel only on development
+       */
+      {
+        test: /\.(js|jsx|ts|tsx|mjs)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "babel-loader",
+            options: { plugins: ["react-refresh/babel"] },
+          },
+        ],
+      },
+      /**
        * Styles
        * Inject CSS into the head with source maps.
        */

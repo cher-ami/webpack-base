@@ -7,7 +7,6 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 const url = require("url");
 const paths = require("../global.paths");
 const config = require("../global.config");
-const { ESBuildPlugin } = require("esbuild-loader");
 
 /**
  * Common Webpack Configuration
@@ -42,12 +41,6 @@ commonConfig = {
    * Customize the Webpack build process.
    */
   plugins: [
-    /**
-     * Transpilation
-     * @doc https://github.com/privatenumber/esbuild-loader
-     */
-    new ESBuildPlugin(),
-
     /**
      * Compile TS to js process is allowing by esbuild-loader with no type check
      * This plugin allow only type checking part of the process
@@ -121,19 +114,12 @@ commonConfig = {
     rules: [
       /**
        * JavaScript
-       * Use esbuild to transpile JavaScript files.
-       * @doc https://github.com/privatenumber/esbuild-loader
+       * Use Babel to transpile JavaScript files.
        */
-
       {
         test: /\.(js|jsx|ts|tsx|mjs)$/,
-        loader: "esbuild-loader",
-        options: {
-          loader: "tsx",
-          target: "es2015",
-          // possible values https://esbuild.github.io/api/#target
-          tsconfigRaw: require("../../tsconfig.json"),
-        },
+        exclude: /node_modules/,
+        use: [{ loader: "babel-loader" }],
       },
 
       /**
