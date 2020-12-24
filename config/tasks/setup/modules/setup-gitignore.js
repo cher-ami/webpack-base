@@ -11,7 +11,7 @@ const config = require("../../../global.config");
  */
 const setupGitignore = ({
   gitignorePath = paths.gitignore,
-  logDoneDelay = config.logDoneDelay,
+  logDoneDelay = config.logDelay,
   fakeMode = config.fakeMode,
 } = {}) => {
   debug("setupGitignore params:", { gitignorePath });

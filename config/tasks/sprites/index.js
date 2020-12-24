@@ -33,7 +33,6 @@ const Handlebars = require("handlebars");
 const { optimizeFiles } = require("./imagemin");
 
 require("colors");
-const appRoot = require("app-root-path");
 const { Files } = require("@zouloux/files");
 const path = require("path");
 const { logs } = require("../../helpers/logs-helper");

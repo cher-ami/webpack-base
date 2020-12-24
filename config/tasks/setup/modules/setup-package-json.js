@@ -13,7 +13,7 @@ const config = require("../../../global.config");
  */
 const setupPackageJson = ({
   packageJson = require(paths.packageJson),
-  logDoneDelay = config.logDoneDelay,
+  logDoneDelay = config.logDelay,
   defaultProjectName = "webpack-base",
   fakeMode = config.fakeMode,
 } = {}) => {

@@ -31,12 +31,9 @@ module.exports = {
   bundleAnalyzerPlugin: false,
 
   /**
-   * Scaffolder
+   * Scaffold
    */
-  // Scaffold compatible folder
-  componentCompatibleFolders: ["components", "pages"],
-
-  // Scaffold bundle type
+  componentCompatibleFolders: ["components", "pages", "popin"],
   bundleType: ["react", "dom"],
 
   /**
@@ -49,5 +46,5 @@ module.exports = {
   /**
    * Show log done for x ms.
    */
-  logDoneDelay: 1100,
+  logDelay: 500,
 };
