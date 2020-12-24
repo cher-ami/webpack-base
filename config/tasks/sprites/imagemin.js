@@ -1,13 +1,12 @@
 /**
  * @credits Original by Alexis Bouhet - https://zouloux.com
  */
-
-const { Files } = require("@zouloux/files");
 const imagemin = require("imagemin");
 const imageminJpegtran = require("imagemin-jpegtran");
 const imageminPngquant = require("imagemin-pngquant");
+const { Files } = require("@zouloux/files");
 const path = require("path");
-const paths = require("../../global.paths");
+const globalPaths = require("../../global.paths");
 
 // Mini match targeting images inside a folder
 const imagesMiniMatch = "*.{jpg,png}";
@@ -126,8 +125,8 @@ module.exports = {
   run: () => {
     // Browse every images that are not inside a sprite folder
     const promises = Files.getFiles(
-      `${paths.srcPath}*/!(${path.basename(
-        paths.spritesFolder
+      `${globalPaths.src}*/!(${path.basename(
+        globalPaths.spritesOutputPath
       )})/**/${imagesMiniMatch}`
     ).all((imageFile) => {
       // Skip already minified images

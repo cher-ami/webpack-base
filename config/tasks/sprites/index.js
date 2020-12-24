@@ -1,14 +1,41 @@
 /**
  * @credits Original by Alexis Bouhet - https://zouloux.com
  * @credits Adapted by Willy Brauner - https://willybrauner.com
+ *
+ * Installation guide
+ *
+ * 1.install dependencies
+ * npm i -D @zouloux/node-sprite-generator handlebars imagemin imagemin-jpegtran imagemin-pngquant
+ *
+ * 2. add task script in package.json
+ * "sprites": "node config/tasks/commands.js sprites"
+ *
+ * 3. add task and require task in config/tasks/command.js
+ *
+ * 4. create sprite folder in src
+ * src/sprites/main/(images...)
+ *
+ * 5. add to .gitignore
+ * # Auto generated sprites
+ *  src/sprites/*.less
+ *  src/sprites/*.png
+ *  src/sprites/*.ts
+ *  src/sprites/*.cache
+ *
+ * 6. test sprites
+ * npm run sprites
+ *
+ * 7. @import generated less sprite files to the css bundle
+ *
  */
-
-require("colors");
-const { Files } = require("@zouloux/files");
-const path = require("path");
 const nsg = require("@zouloux/node-sprite-generator");
 const Handlebars = require("handlebars");
 const { optimizeFiles } = require("./imagemin");
+
+require("colors");
+const appRoot = require("app-root-path");
+const { Files } = require("@zouloux/files");
+const path = require("path");
 const { logs } = require("../../helpers/logs-helper");
 const debug = require("debug")("config:sprites");
 const globalPaths = require("../../global.paths");
@@ -68,6 +95,7 @@ const optimizeImages = () => {
 /**
  * Sprites Task
  */
+
 const sprites = (
   spritesTemplatesPath = globalPaths.spritesTemplatesPath,
   spritesOutputPath = globalPaths.spritesOutputPath

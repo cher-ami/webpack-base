@@ -3,7 +3,6 @@ const { logs } = require("../../helpers/logs-helper");
 const { execSync } = require("@solid-js/cli");
 const { clean } = require("../clean");
 const { prebuild } = require("../prebuild");
-const { sprites } = require("../sprites");
 const debug = require("debug")("config:build");
 
 /**
@@ -35,7 +34,6 @@ const _startBuild = async () => {
 const build = async () => {
   await clean();
   await prebuild();
-  await sprites();
   await _startBuild();
 };
 
