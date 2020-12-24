@@ -4,6 +4,7 @@ const { execSync } = require("@solid-js/cli");
 const debug = require("debug")("config:clean-framework-files");
 const paths = require("../../../global.paths");
 const config = require("../../../global.config");
+const Inquirer = require("inquirer");
 
 /**
  * cleanFrameworkFiles
@@ -12,36 +13,33 @@ const config = require("../../../global.config");
 const cleanFrameworkFiles = ({
   gitFolder = paths.gitFolder,
   installScriptFile = paths.installScript,
-  logDoneDelay = config.logDoneDelay,
+  delay = config.logDelay,
   fakeMode = config.fakeMode,
 } = {}) => {
   debug("cleanFrameworkFiles params:", {
     gitFolder,
     installScriptFile,
-    logDoneDelay,
+    delay,
   });
 
   return new Promise(async (resolve) => {
-    debug(
-      "We don't need git folder because this is .git of webpack-base, so we remove it."
-    );
-    logs.start("Remove .git folder... ");
-    if (!fakeMode) {
+    const removeGitAnswer = await Inquirer.prompt({
+      type: "confirm",
+      name: "removeGit",
+      message: "Do you want to remove .git folder?",
+    });
+    debug("removeGitAnswer", removeGitAnswer["removeGit"]);
+
+    if (!fakeMode && removeGitAnswer["removeGit"]) {
+      logs.start("Remove .git folder... ");
       await execSync(`rm -rf ${gitFolder}`, 3);
     } else {
-      debug("FakeMode is activated, do nothing.".red);
+      debug(
+        "FakeMode is activated or removeGitAnswer is false, do nothing.".red
+      );
     }
     logs.done();
-    setTimeout(resolve, logDoneDelay);
-
-    logs.start("Remove install.sh file... ");
-    if (!fakeMode) {
-      await execSync(`rm -rf ${installScriptFile}`, 3);
-    } else {
-      debug("FakeMode is activated, do nothing.".red);
-    }
-    logs.done();
-    setTimeout(resolve, logDoneDelay);
+    setTimeout(resolve, delay);
   });
 };
 

@@ -17,13 +17,13 @@
     "url": "git://github.com/cher-ami/webpack-base.git"
   },
   "scripts": {
-    "dev": "env-cmd --no-override -f .env node config/tasks/commands.js dev",
-    "build": "env-cmd --no-override -f .env.production --fallback node config/tasks/commands.js build",
-    "clean": "node config/tasks/commands.js clean",
-    "reset": "node config/tasks/commands.js reset",
-    "scaffold": "node config/tasks/commands.js scaffold",
-    "setup": "node config/tasks/commands.js setup",
-    "help": "node config/tasks/commands.js help",
+    "dev": "env-cmd --no-override -f .env node config/tasks/index.js dev",
+    "build": "env-cmd --no-override -f .env.production --fallback node config/tasks/index.js build",
+    "clean": "node config/tasks/index.js clean",
+    "reset": "node config/tasks/index.js reset",
+    "scaffold": "node config/tasks/index.js scaffold",
+    "setup": "npm i && node config/tasks/index.js setup",
+    "help": "node config/tasks/index.js help",
     "prettier": "prettier --write './src/**/**/**/*.{tsx,ts,jsx,js,less,css,json,md}'",
     "test": "jest",
     "postinstall": "cp -n .env.example .env || true"

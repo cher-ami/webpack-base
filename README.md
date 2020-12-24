@@ -36,10 +36,10 @@ move to folder:
 $ cd webpack-base
 ```
 
-run install script:
+run setup project:
 
 ```shell script
-$ ./install.sh
+$ npm run setup
 ```
 
 ## Credits

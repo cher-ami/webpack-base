@@ -12,7 +12,7 @@ const config = require("../../../global.config");
  */
 const setupInstallConfig = ({
   installConfigPath = paths.installConfig,
-  logDoneDelay = config.logDoneDelay,
+  logDoneDelay = config.logDelay,
   fakeMode = config.fakeMode,
 } = {}) => {
   debug("setupInstallConfig params:", {

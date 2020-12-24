@@ -2,7 +2,7 @@ const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:prebuild-dotenv");
 const { logs } = require("../../helpers/logs-helper");
 const config = require("../../global.config");
-const appRoot = require("app-root-path");
+const root = require("app-root-path");
 
 /**
  * Prebuild .env file
@@ -11,7 +11,7 @@ const appRoot = require("app-root-path");
 const prebuildDotEnv = (newFilePath = `${config.outputPath}/.env`) => {
   return new Promise((resolve) => {
     // read all .env files and get all var names
-    const envFiles = Files.getFiles(appRoot.resolve(".env*")).files;
+    const envFiles = Files.getFiles(root.resolve(".env*")).files;
     debug("available env files", envFiles);
 
     // get vars from all .env files and add them to the same array
