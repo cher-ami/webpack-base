@@ -2,7 +2,7 @@
     <img src="logo.png" width="400" alt="cher-ami logo">
 </p>
 
-<h2 align="center">webpack-base</h2><br> 
+<h1 align="center">webpack-base</h1><br> 
 <p align="center">cher-ami boilerplate for javascript front-end projects</p>
 
 <p align="center">
