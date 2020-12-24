@@ -22,7 +22,7 @@
     "clean": "node config/tasks/index.js clean",
     "reset": "node config/tasks/index.js reset",
     "scaffold": "node config/tasks/index.js scaffold",
-    "setup": "node config/tasks/index.js setup",
+    "setup": "npm i && node config/tasks/index.js setup",
     "help": "node config/tasks/index.js help",
     "prettier": "prettier --write './src/**/**/**/*.{tsx,ts,jsx,js,less,css,json,md}'",
     "test": "jest",

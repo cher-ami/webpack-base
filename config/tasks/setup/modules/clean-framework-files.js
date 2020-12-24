@@ -23,9 +23,6 @@ const cleanFrameworkFiles = ({
   });
 
   return new Promise(async (resolve) => {
-    /**
-     * .git
-     */
     const removeGitAnswer = await Inquirer.prompt({
       type: "confirm",
       name: "removeGit",
@@ -40,18 +37,6 @@ const cleanFrameworkFiles = ({
       debug(
         "FakeMode is activated or removeGitAnswer is false, do nothing.".red
       );
-    }
-    logs.done();
-    setTimeout(resolve, delay);
-
-    /**
-     * install.sh
-     */
-    logs.start("Remove install.sh file... ");
-    if (!fakeMode) {
-      await execSync(`rm -rf ${installScriptFile}`, 3);
-    } else {
-      debug("FakeMode is activated, do nothing.".red);
     }
     logs.done();
     setTimeout(resolve, delay);
