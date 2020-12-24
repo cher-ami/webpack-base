@@ -16,9 +16,6 @@ const help = () => {
          
   ${"npm run scaffold".brightBlue}
   > create a new component.
-      
-  ${"npm run sprites".brightBlue}
-  > generate sprites from src/sprites/ folder.
   
   ${"npm run setup".brightBlue}
   > setup this project again like the first time you installed webpack-base.
