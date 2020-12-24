@@ -191,7 +191,7 @@ class App extends Component<IProps, IStates> {
 
   render() {
     return (
-      <div className={css.Root}>
+      <div className={css.root}>
         <div className={css.wrapper}>
           <nav className={css.nav}>
             <a
