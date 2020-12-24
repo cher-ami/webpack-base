@@ -1,4 +1,6 @@
-<img align="center" src="logo.png" alt="cher-ami logo">
+<p align="center">
+    <img src="logo.png" width="400" alt="cher-ami logo">
+</p>
 
 <h1 align="center">webpack-base</h1>
 
