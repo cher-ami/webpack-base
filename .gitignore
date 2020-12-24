@@ -7,9 +7,6 @@ dist
 # Auto generated atoms
 src/atoms/atoms.ts
 
-# Auto generate pages list for js router
-src/pages.ts
-
 .env
 node_modules
 .DS_Store
