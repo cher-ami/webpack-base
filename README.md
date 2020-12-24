@@ -1,8 +1,9 @@
+<br>
 <p align="center">
     <img src="logo.png" width="400" alt="cher-ami logo">
 </p>
 
-<p align="center">cher-ami webpack-base boilerplate for javascript front-end projects</p>
+<p align="center">webpack-base boilerplate for javascript front-end projects</p>
 
 <p align="center">
     <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/cher-ami/webpack-base?style=flat-square">
