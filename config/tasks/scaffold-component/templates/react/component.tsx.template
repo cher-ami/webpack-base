@@ -1,6 +1,6 @@
 import css from './%%upperComponentName%%.module.less';
 import React from 'react';
-import { mergeStrings as merge } from "../../lib/utils/stringUtils";
+import { merge } from "../../lib/utils/arrayUtils";
 
 interface IProps {
   className?: string
@@ -13,7 +13,7 @@ const debug = require("debug")(`front:${componentName}`);
  * @name %%upperComponentName%%
  */
 function %%upperComponentName%% (props: IProps) {
-  return <div className={merge([css.Root, props.className])}>
+  return <div className={merge([css.root, props.className])}>
       {componentName}
   </div>
 }

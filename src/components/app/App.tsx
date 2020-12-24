@@ -8,6 +8,7 @@ import {
   languageToString,
   stringToLanguage,
 } from "../../lib/services/LanguageService";
+import { ERouterPage } from "../../routes";
 
 const componentName = "App";
 const debug = require("debug")(`front:${componentName}`);
@@ -21,7 +22,6 @@ export interface IStates {}
  * @description First App entry point
  */
 class App extends Component<IProps, IStates> {
-  // React view stack, showing pages when route changes
   protected _viewStack: ViewStack;
 
   /**
@@ -55,14 +55,10 @@ class App extends Component<IProps, IStates> {
    * Initialize Router
    */
   protected initRouter(): void {
-    // Setup viewStack to show pages from Router automatically
     Router.registerStack("main", this._viewStack as any);
-    // Listen to routes not found
     Router.onNotFound.add(this.routeNotFoundHandler, this);
     Router.onRouteChanged.add(this.routeChangedHandler, this);
-    // Enable auto link listening
     Router.listenLinks();
-    // Start router
     Router.start();
   }
 
@@ -80,7 +76,6 @@ class App extends Component<IProps, IStates> {
   ): Promise<void> {
     return new Promise(async (resolve) => {
       debug({ pOldPage, pNewPage });
-      // target ref
       const oldPageRef = pOldPage?.rootRef?.current;
       const newPageRef = pNewPage?.rootRef?.current;
 
@@ -191,19 +186,19 @@ class App extends Component<IProps, IStates> {
 
   render() {
     return (
-      <div className={css.Root}>
+      <div className={css.root}>
         <div className={css.wrapper}>
           <nav className={css.nav}>
             <a
               className={css.link}
-              href={Router.generateURL({ page: "HomePage" })}
+              href={Router.generateURL({ page: ERouterPage.HOME_PAGE })}
               children={"Home"}
               data-internal-link={true}
             />
             <a
               className={css.link}
               href={Router.generateURL({
-                page: "WorkPage",
+                page: ERouterPage.WORK_PAGE,
                 parameters: {
                   slug: "custom-slug",
                 },

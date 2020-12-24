@@ -22,7 +22,7 @@ const %%upperComponentName%% = (props: IProps) => {
    * (remove if not use)
    */
   const playIn = (): Promise<void> => {
-    return new Promise<any>(resolve => resolve());
+    return Promise.resolve();
   };
 
   /**
@@ -30,7 +30,7 @@ const %%upperComponentName%% = (props: IProps) => {
    * (remove if not use)
    */
   const playOut = (): Promise<void> => {
-    return new Promise<any>(resolve => resolve());
+    return Promise.resolve();
   };
 
   /**
@@ -44,7 +44,7 @@ const %%upperComponentName%% = (props: IProps) => {
   // -------------------–-------------------–-------------------–--------------- RENDER
 
   return (
-    <div className={css.Root} ref={rootRef}>
+    <div className={css.root} ref={rootRef}>
       {componentName}
     </div>
   );

@@ -1,4 +1,19 @@
 /**
+ * merge strings with space
+ * merge classes and return string
+ * @param pClasses
+ * @param pJoin
+ */
+export const merge = (pClasses: any[], pJoin: string = " "): string => {
+  if (pClasses?.length > 0) {
+    return pClasses
+      .reduce((a, b) => a.concat(b), [])
+      .filter((v) => v)
+      .join(pJoin);
+  }
+};
+
+/**
  * @credits Original work by Alexis Bouhet - https://zouloux.com
  * Check it an element is in an array.
  * Will only search at first level

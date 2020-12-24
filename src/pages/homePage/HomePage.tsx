@@ -42,7 +42,7 @@ const HomePage = (props: IProps) => {
   // -------------------–-------------------–-------------------–--------------- RENDER
 
   return (
-    <div className={css.Root} ref={rootRef}>
+    <div className={css.root} ref={rootRef}>
       {componentName}
     </div>
   );
