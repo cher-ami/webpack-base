@@ -1,3 +1,5 @@
+<img align="center" src="logo.png" alt="cher-ami logo">
+
 <h1 align="center">webpack-base</h1>
 
 <p align="center">cher-ami boilerplate for javascript front-end projects</p>
@@ -14,9 +16,9 @@ This repos use out of the box:
 - [typescript](https://www.typescriptlang.org/)
 - [react](https://reactjs.org/)
 - [react fast refrest](https://github.com/pmmmwh/react-refresh-webpack-plugin)
-- [less modules](http://lesscss.org/)
+- [less module](http://lesscss.org/)
 - [prettier](https://prettier.io/)
-- [debug](https://www.npmjs.com/package/debug)  
+- [debug](https://www.npmjs.com/package/debug)
   ...
 
 ## Installation
