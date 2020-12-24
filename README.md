@@ -1,11 +1,14 @@
+<h1 align="center">webpack-base</h1>
+
+<p align="center">cher-ami boilerplate for javascript front-end projects</p>
+
 <p align="center">
-<h1>webpack-base</h1>  
-![GitHub contributors](https://img.shields.io/github/contributors/willybrauner/webpack-base)
+    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/cher-ami/webpack-base?style=flat-square">
 </p>
 
 ## About
 
-Webpack boilerplate for javascript front-end projects. This repos use out of the box:
+This repos use out of the box:
 
 - [webpack 5](https://webpack.js.org/)
 - [typescript](https://www.typescriptlang.org/)

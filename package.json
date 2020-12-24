@@ -1,7 +1,7 @@
 {
   "name": "webpack-base",
   "version": "0.1.0",
-  "description": "Webpack boilerplate for javascript projects",
+  "description": "Cher Ami boilerplate for javascript projects",
   "author": "Willy Brauner & Cher Ami",
   "license": "MIT",
   "main": "src/index.ts",
