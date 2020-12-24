@@ -1,6 +1,6 @@
 import css from './%%upperComponentName%%.module.less';
 import React from 'react';
-import { mergeStrings as merge } from "../../lib/utils/stringUtils";
+import { merge } from "../../lib/utils/arrayUtils";
 
 interface IProps {
   className?: string
