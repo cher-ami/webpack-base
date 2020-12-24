@@ -21,29 +21,29 @@ This repos use out of the box:
 
 ## Installation
 
-- clone repos:
+clone repos:
 
 ```shell script
-$ git clone git@github.com:willybrauner/webpack-base.git
+$ git clone git@github.com:cher-ami/webpack-base.git
 ```
 
-- move to folder:
+move to folder:
 
 ```shell script
 $ cd webpack-base
 ```
 
-- run install script:
+run install script:
 
 ```shell script
 $ ./install.sh
 ```
 
-## License
-
-MIT
-
 ## Credits
 
 This project is developed by [Willy Brauner](https://willybrauner.com) & [cher-ami](https://cher-ami.tv) team, inspired by
 [fuse-base](https://github.com/solid-js/fuse-base) project written by [Alexis Bouhet](https://zouloux.com).
+
+## License
+
+[MIT](./LICENSE)
