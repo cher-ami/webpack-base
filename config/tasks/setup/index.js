@@ -36,7 +36,6 @@ const setup = () => {
 
     // manage gitignore (add and remove values)
     await setupGitignore();
-    $;
 
     logs.done("Webpack-base is ready!");
     resolve();
