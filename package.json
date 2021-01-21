@@ -31,7 +31,7 @@
   "dependencies": {
     "@solid-js/css-flat": "^1.0.1",
     "@wbe/libraries": "^1.5.0-alpha.0",
-    "gsap": "^3.5.1",
+    "gsap": "^3.6.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
