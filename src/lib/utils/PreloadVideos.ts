@@ -1,4 +1,4 @@
-import { Signal } from "../helpers/Signal";
+import { EventEmitter } from "events";
 
 /**
  * Preload videos via XHR
@@ -24,15 +24,8 @@ export class PreloadVideos {
    * Percentage loaded of all XHR
    */
   public static __percentLoaded = 0;
-  /**
-   * When progress number change
-   */
-  // Create a signal
-  protected static __progressChange: Signal = new Signal();
-  // return this signal
-  public static get progressChange(): Signal {
-    return this.__progressChange;
-  }
+
+  public static events = new EventEmitter();
 
   // --------------------------------------------------------------------------- API
   /**
@@ -85,7 +78,10 @@ export class PreloadVideos {
         // Get total percent of all items
         PreloadVideos.__percentLoaded = (sum / pURLs.length) * 100;
         // Dispach a Signal
-        PreloadVideos.__progressChange.dispatch();
+        PreloadVideos.events.emit(
+          "loading-progress",
+          PreloadVideos.__percentLoaded
+        );
       }
     };
 

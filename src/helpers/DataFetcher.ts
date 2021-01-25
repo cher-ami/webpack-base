@@ -1,4 +1,3 @@
-import LanguageService from "../lib/services/LanguageService";
 const name = "DataFetcher";
 const debug = require("debug")(`front:${name}`);
 
@@ -31,7 +30,7 @@ class DataFetcher {
   private prepareUrl = ({
     endpoint,
     appBase = process.env.APP_BASE,
-    locale = LanguageService.currentLanguageString,
+    locale = "en",
   }: {
     endpoint: string;
     appUrl?: string;
