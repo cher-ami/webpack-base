@@ -30,7 +30,7 @@
     "postinstall": "cp -n .env.example .env || true"
   },
   "dependencies": {
-    "@cher-ami/router": "^1.0.0-alpha.0",
+    "@cher-ami/router": "latest",
     "@solid-js/css-flat": "^1.0.1",
     "@wbe/deferred-promise": "^1.0.3",
     "@wbe/libraries": "^1.5.0-alpha.0",
