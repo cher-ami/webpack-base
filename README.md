@@ -6,7 +6,7 @@
 <p align="center">webpack-base boilerplate for javascript front-end projects</p>
 
 <p align="center">
-    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/cher-ami/webpack-base?style=flat-square">
+    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/cher-ami/webpack-base">
 </p>
 
 ## About
@@ -17,6 +17,7 @@ This repos use out of the box:
 - [typescript](https://www.typescriptlang.org/)
 - [react](https://reactjs.org/)
 - [react fast refrest](https://github.com/pmmmwh/react-refresh-webpack-plugin)
+- [cher-ami router](https://github.com/cher-ami/router)
 - [less module](http://lesscss.org/)
 - [prettier](https://prettier.io/)
 - [debug](https://www.npmjs.com/package/debug)  
