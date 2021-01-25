@@ -1,6 +1,6 @@
 import css from "./NotFoundPage.module.less";
-import React, { useRef } from "react";
-import { usePageRegister } from "../../lib/router/usePageRegister";
+import React, { ForwardedRef, forwardRef, useRef } from "react";
+import { useStack } from "@cher-ami/router";
 
 interface IProps {}
 
@@ -10,37 +10,36 @@ const debug = require("debug")(`front:${componentName}`);
 /**
  * @name NotFoundPage
  */
-const NotFoundPage = (props: IProps) => {
-  const rootRef = useRef<HTMLDivElement>(null);
+const NotFoundPage = forwardRef(
+  (props: IProps, handleRef: ForwardedRef<any>) => {
+    const rootRef = useRef<HTMLDivElement>(null);
 
-  // -------------------–-------------------–-------------------–--------------- REGISTER PAGE
+    /**
+     * playIn page transition
+     * (remove this example if not use)
+     */
+    const playIn = (): Promise<void> => Promise.resolve();
 
-  /**
-   * playIn page transition
-   * (remove this example if not use)
-   */
-  const playIn = (): Promise<void> => {
-    return Promise.resolve();
-  };
+    /**
+     * playOut page transition
+     * (remove this example if not use)
+     */
+    const playOut = (): Promise<void> => Promise.resolve();
 
-  /**
-   * playOut page transition
-   * (remove this example if not use)
-   */
-  const playOut = (): Promise<void> => {
-    return Promise.resolve();
-  };
+    /**
+     * Handle page for Stack
+     * Minimal arguments should be: usePageRegister({ componentName, handleRef, rootRef });
+     * (remove playIn and playOut if not use)
+     */
+    useStack({ componentName, handleRef, rootRef, playIn, playOut });
 
-  // register page
-  usePageRegister({ componentName, rootRef, playIn, playOut });
+    return (
+      <div className={css.root} ref={rootRef}>
+        {componentName}
+      </div>
+    );
+  }
+);
 
-  // -------------------–-------------------–-------------------–--------------- RENDER
-
-  return (
-    <div className={css.root} ref={rootRef}>
-      {componentName}
-    </div>
-  );
-};
-
+NotFoundPage.displayName = componentName;
 export default NotFoundPage;

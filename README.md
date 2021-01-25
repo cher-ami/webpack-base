@@ -19,7 +19,7 @@ This repos use out of the box:
 - [react fast refrest](https://github.com/pmmmwh/react-refresh-webpack-plugin)
 - [less module](http://lesscss.org/)
 - [prettier](https://prettier.io/)
-- [debug](https://www.npmjs.com/package/debug)
+- [debug](https://www.npmjs.com/package/debug)  
   ...
 
 ## Installation

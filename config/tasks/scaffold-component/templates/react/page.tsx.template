@@ -1,10 +1,9 @@
 import css from "./%%upperComponentName%%.module.less";
 import React, { useRef } from "react";
+import { useStack } from "@cher-ami/router";
 import { usePageRegister } from "../../lib/router/usePageRegister";
 
-interface IProps {
-  className: string;
-}
+interface IProps {}
 
 const componentName = "%%upperComponentName%%";
 const debug = require("debug")(`front:${componentName}`);
@@ -12,48 +11,34 @@ const debug = require("debug")(`front:${componentName}`);
 /**
  * @name %%upperComponentName%%
  */
-const %%upperComponentName%% = (props: IProps) => {
+const %%upperComponentName%% = forwardRef((props: IProps, handleRef: ForwardedRef<any>) => {
   const rootRef = useRef<HTMLDivElement>(null);
-
-  // -------------------–-------------------–-------------------–--------------- REGISTER PAGE
 
   /**
    * playIn page transition
-   * (remove if not use)
+   * (remove this example if not use)
    */
-  const playIn = (): Promise<void> => {
-    return Promise.resolve();
-  };
+  const playIn = (): Promise<void> => Promise.resolve();
 
   /**
    * playOut page transition
-   * (remove if not use)
+   * (remove this example if not use)
    */
-  const playOut = (): Promise<void> => {
-    return Promise.resolve();
-  };
+  const playOut = (): Promise<void> => Promise.resolve();
 
   /**
-   * Register page for ViewStack
-   * NOTE: each page of ViewStack need to be register to work.
-   * Minimal register should be: usePageRegister({ componentName, rootRef });
+   * Handle page for Stack
+   * Minimal arguments should be: usePageRegister({ componentName, handleRef, rootRef });
    * (remove playIn and playOut if not use)
    */
-  usePageRegister({ componentName, rootRef, playIn, playOut });
-
-  // -------------------–-------------------–-------------------–--------------- RENDER
+  useStack({ componentName, handleRef, rootRef, playIn, playOut });
 
   return (
     <div className={css.root} ref={rootRef}>
       {componentName}
     </div>
   );
-};
+});
 
+%%upperComponentName%%.displayName = componentName;
 export default %%upperComponentName%%;
-
-
-
-
-
-

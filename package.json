@@ -4,7 +4,7 @@
   "description": "Cher Ami boilerplate for javascript projects",
   "author": "Willy Brauner & Cher Ami",
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "src/index.tsx",
   "keywords": [
     "webpack",
     "boilerplate",
@@ -30,6 +30,7 @@
     "postinstall": "cp -n .env.example .env || true"
   },
   "dependencies": {
+    "@cher-ami/router": "^1.0.0-alpha.0",
     "@solid-js/css-flat": "^1.0.1",
     "@wbe/deferred-promise": "^1.0.3",
     "@wbe/libraries": "^1.5.0-alpha.0",

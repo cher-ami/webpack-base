@@ -17,7 +17,7 @@ const commonConfig = {
    * Entry
    * The first place Webpack looks to start building the bundle.
    */
-  entry: [`${paths.src}/index.ts`],
+  entry: [`${paths.src}/index.tsx`],
 
   /**
    * Resolve
