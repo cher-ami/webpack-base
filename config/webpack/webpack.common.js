@@ -127,7 +127,7 @@ commonConfig = {
        * Copy image files to build folder.
        */
       {
-        test: /\.(?:ico|gif|png|jpg|jpeg|webp|mp4)$/i,
+        test: /\.(?:ico|gif|png|jpg|jpeg|webp|mp4|mp3|wav|pdf)$/i,
         loader: "file-loader",
         options: {
           name: "[path][name].[ext]",
