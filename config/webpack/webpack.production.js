@@ -3,9 +3,7 @@ const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
-const path = require("path");
 const paths = require("../global.paths");
 const config = require("../global.config");
 
@@ -43,23 +41,6 @@ const productionConfig = {
       filename: config.outputHashName
         ? `[name].[contenthash].css`
         : `[name].css`,
-    }),
-
-    /**
-     * CopyWebpackPlugin
-     * Copies files from target to destination folder.
-     * @doc https://webpack.js.org/plugins/copy-webpack-plugin/
-     */
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: paths.publicPath,
-          to: path.join(config.outputPath, "public"),
-          globOptions: {
-            ignore: ["*.DS_Store", ".gitkeep", ".*"],
-          },
-        },
-      ],
     }),
 
     /**

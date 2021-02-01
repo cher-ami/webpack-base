@@ -7,6 +7,8 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 const url = require("url");
 const paths = require("../global.paths");
 const config = require("../global.config");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const path = require("path");
 
 /**
  * Common Webpack Configuration
@@ -104,6 +106,23 @@ commonConfig = {
       outputPath: paths.atomsPath,
       outputFilename: paths.atomsGeneratedFilename,
     }),
+
+    /**
+     * CopyWebpackPlugin
+     * Copies files from target to destination folder.
+     * @doc https://webpack.js.org/plugins/copy-webpack-plugin/
+     */
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: paths.publicPath,
+          to: path.join(config.outputPath, "public"),
+          globOptions: {
+            ignore: ["*.DS_Store", ".gitkeep", ".*"],
+          },
+        },
+      ],
+    }),
   ],
 
   /**
@@ -127,7 +146,7 @@ commonConfig = {
        * Copy image files to build folder.
        */
       {
-        test: /\.(?:ico|gif|png|jpg|jpeg|webp|mp4)$/i,
+        test: /\.(?:ico|gif|png|jpg|jpeg|webp|mp4|mp3|wav|pdf)$/i,
         loader: "file-loader",
         options: {
           name: "[path][name].[ext]",
