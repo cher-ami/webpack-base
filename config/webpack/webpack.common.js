@@ -4,7 +4,6 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
-const url = require("url");
 const paths = require("../global.paths");
 const config = require("../global.config");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -146,32 +145,13 @@ commonConfig = {
        * Copy image files to build folder.
        */
       {
-        test: /\.(?:ico|gif|png|jpg|jpeg|webp|mp4|mp3|wav|pdf)$/i,
+        test: /\.(?:ico|gif|png|jpg|jpeg|webp|mp4|mp3|wav|pdf|woff(2)?|eot|ttf|otf)$/i,
         loader: "file-loader",
         options: {
           name: "[path][name].[ext]",
           // prevent display of "src/" in filename
           context: "src",
-          publicPath: url.resolve(
-            process.env.APP_BASE || "",
-            process.env.ASSETS_PATH
-          ),
-        },
-      },
-
-      /**
-       * Fonts
-       * Inline font files.
-       */
-      {
-        test: /\.(woff(2)?|eot|ttf|otf|)$/,
-        loader: "url-loader",
-        options: {
-          limit: 8192,
-          name: "[path][name].[ext]",
-          // prevent display of "src/" in filename
-          context: "src",
-          publicPath: url.resolve(
+          publicPath: path.join(
             process.env.APP_BASE || "",
             process.env.ASSETS_PATH
           ),
