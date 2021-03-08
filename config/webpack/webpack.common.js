@@ -51,12 +51,6 @@ commonConfig = {
     new ForkTsCheckerWebpackPlugin({ async: false }),
 
     /**
-     * Progress Plugin
-     * @doc https://webpack.js.org/plugins/progress-plugin/
-     */
-    new webpack.ProgressPlugin(),
-
-    /**
      * HtmlWebpackPlugin
      * Generates an HTML file from a template.
      */

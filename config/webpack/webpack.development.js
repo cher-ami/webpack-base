@@ -4,6 +4,9 @@ const common = require("./webpack.common.js");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const paths = require("../global.paths");
 const config = require("../global.config");
+const ip = require("internal-ip");
+const portFinderSync = require("portfinder-sync");
+require("colors");
 
 // test env
 const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
@@ -118,36 +121,30 @@ const developmentConfig = {
    */
   devServer: {
     publicPath: "",
+    watchContentBase: true,
     contentBase: paths.dist,
-    port: parseInt(process.env.DEV_SERVER_PORT) || 3000,
-    hot: DEV_SERVER_HOT_RELOAD,
+    port: process.env.DEV_SERVER_PORT || portFinderSync.getPort(3000),
     inline: true,
     compress: true,
+    https: false,
+    useLocalIp: true,
     historyApiFallback: true,
+    host: "0.0.0.0",
+    disableHostCheck: true,
     // reload/refresh the page when file changes are detected
+    hot: DEV_SERVER_HOT_RELOAD,
     liveReload: DEV_SERVER_HOT_RELOAD,
     // open new browser tab when webpack dev-server is started
     open: DEV_SERVER_OPEN,
     // Write file to dist on each compile
     writeToDisk: true,
     // display error overlay on screen
-    overlay: false,
+    overlay: true,
     // stats to print in console
-    stats: {
-      all: false,
-      errors: true,
-      warnings: true,
-      colors: true,
-    },
+    noInfo: false,
+    stats: "minimal",
     // pass to true if you don't want to print compile file in the console
     quiet: false,
-
-    // Specify a host to use. If you want your server to be accessible externally
-    // https://webpack.js.org/configuration/dev-server/#devserverhost
-    ...(process.env.DEV_SERVER_HOST
-      ? { host: process.env.DEV_SERVER_HOST }
-      : {}),
-
     // specify to enable root proxying
     index: "",
     // if use proxy option is enable
@@ -163,6 +160,27 @@ const developmentConfig = {
           },
         }
       : {}),
+
+    after: (app, server) => {
+      const port = server.options.port;
+      const https = server.options.https ? "s" : "";
+      const localIp = ip.v4.sync();
+      const localDomain = `http${https}://localhost:${port}`;
+      const networkDomain = `http${https}://${localIp}:${port}`;
+
+      console.clear();
+
+      const template = [
+        `\n`,
+        `${`Serving! `.bold.cyan}`,
+        ``,
+        `- ${`Local:`.bold}         ${localDomain.cyan}`,
+        `- ${`Network:`.bold}       ${networkDomain.cyan}`,
+        ``,
+      ].join(`\n`);
+
+      console.log(template);
+    },
   },
 };
 
