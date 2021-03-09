@@ -6,6 +6,7 @@ const paths = require("../global.paths");
 const config = require("../global.config");
 const ip = require("internal-ip");
 const portFinderSync = require("portfinder-sync");
+const BuildCallbackPlugin = require("./plugins/build-callback-plugin");
 require("colors");
 
 // test env
@@ -113,6 +114,36 @@ const developmentConfig = {
     new ReactRefreshWebpackPlugin({
       forceEnable: false,
     }),
+
+    /**
+     * Custom message print between builds
+     */
+    new BuildCallbackPlugin({
+      callback: (server) => {
+        const port = server.options.devServer.port;
+        const https = server.options.https ? "s" : "";
+        const localIp = ip.v4.sync();
+        const localDomain = `http${https}://localhost:${port}`;
+        const networkDomain = `http${https}://${localIp}:${port}`;
+        const projectName = require("../../package.json").name;
+        const template = [
+          ``,
+          `${`✔ Serving!`.bold}`,
+          ``,
+          `- ${`Project:`.grey}   ${projectName}`,
+          `- ${`Local:`.grey}     ${localDomain.brightBlue}`,
+          `- ${`Network:`.grey}   ${networkDomain.brightBlue}`,
+          ``,
+        ].join(`\n`);
+
+        const clearConsole = (logs = template) => {
+          const clear = "\x1B[2J\x1B[3J\x1B[H";
+          const output = logs ? `${clear + logs}\n\n` : clear;
+          process.stdout.write(output);
+        };
+        clearConsole();
+      },
+    }),
   ],
 
   /**
@@ -156,27 +187,6 @@ const developmentConfig = {
           },
         }
       : {}),
-
-    after: (app, server) => {
-      const port = server.options.port;
-      const https = server.options.https ? "s" : "";
-      const localIp = ip.v4.sync();
-      const localDomain = `http${https}://localhost:${port}`;
-      const networkDomain = `http${https}://${localIp}:${port}`;
-
-      console.clear();
-
-      const template = [
-        `\n`,
-        `${`Serving! `.bold.cyan}`,
-        ``,
-        `- ${`Local:`.bold}         ${localDomain.cyan}`,
-        `- ${`Network:`.bold}       ${networkDomain.cyan}`,
-        ``,
-      ].join(`\n`);
-
-      console.log(template);
-    },
   },
 };
 
