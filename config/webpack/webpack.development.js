@@ -121,7 +121,6 @@ const developmentConfig = {
    */
   devServer: {
     publicPath: "",
-    watchContentBase: true,
     contentBase: paths.dist,
     port: process.env.DEV_SERVER_PORT || portFinderSync.getPort(3000),
     inline: true,
@@ -133,13 +132,10 @@ const developmentConfig = {
     disableHostCheck: true,
     // reload/refresh the page when file changes are detected
     hot: DEV_SERVER_HOT_RELOAD,
-    liveReload: DEV_SERVER_HOT_RELOAD,
     // open new browser tab when webpack dev-server is started
     open: DEV_SERVER_OPEN,
     // Write file to dist on each compile
     writeToDisk: true,
-    // display error overlay on screen
-    overlay: true,
     // stats to print in console
     noInfo: false,
     stats: "minimal",
