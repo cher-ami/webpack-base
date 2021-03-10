@@ -1,9 +1,8 @@
 require("colors");
 const { logs } = require("../../helpers/logs-helper");
-const { execSync } = require("@solid-js/cli");
+const CLI = require("@solid-js/cli");
 const { clean } = require("../clean");
 const { prebuild } = require("../prebuild");
-const debug = require("debug")("config:build");
 
 /**
  * Start webpack build
@@ -11,9 +10,9 @@ const debug = require("debug")("config:build");
  * @private
  */
 const _startBuild = async () => {
-  logs.start("Start build.");
+  logs.start("Start build");
   try {
-    await execSync(
+    await CLI.execAsync(
       [
         `NODE_ENV=production`,
         `webpack --config config/webpack/webpack.production.js`,

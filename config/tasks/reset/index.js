@@ -1,6 +1,6 @@
 require("colors");
 const { Files } = require("@zouloux/files");
-const { execSync } = require("@solid-js/cli");
+const CLI = require("@solid-js/cli");
 const { logs } = require("../../helpers/logs-helper");
 const config = require("../../global.config");
 const paths = require("../../global.paths");
@@ -18,15 +18,15 @@ const reset = () =>
     logs.done();
 
     logs.start("Remove node modules.");
-    execSync("rm -rf node_modules", 3);
+    CLI.execSync("rm -rf node_modules", 3);
     logs.done();
 
     logs.start("Remove package-lock.json.");
-    execSync("rm -rf package-lock.json", 3);
+    CLI.execSync("rm -rf package-lock.json", 3);
     logs.done();
 
     logs.start("Re install dependencies.");
-    execSync("npm i", 3);
+    CLI.execSync("npm i", 3);
 
     logs.done();
     resolve();

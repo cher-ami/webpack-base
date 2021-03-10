@@ -1,6 +1,6 @@
 require("colors");
 const { logs } = require("../../helpers/logs-helper");
-const { execSync } = require("@solid-js/cli");
+const CLI = require("@solid-js/cli");
 const { clean } = require("../clean");
 const { prebuild } = require("../prebuild");
 
@@ -11,7 +11,7 @@ const { prebuild } = require("../prebuild");
  */
 const _startDevServer = async () => {
   logs.start("Start dev server");
-  await execSync(
+  await CLI.execAsync(
     [
       `NODE_ENV=development`,
       `webpack serve --config config/webpack/webpack.development.js`,

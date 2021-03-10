@@ -1,4 +1,4 @@
-const { commands } = require("@solid-js/cli");
+const CLI = require("@solid-js/cli");
 const { clean } = require("./clean");
 const { dev } = require("./dev");
 const { build } = require("./build");
@@ -26,11 +26,11 @@ tasksList.map((el) => {
    * node script.js --env hello
    * options will be { env: hello }
    */
-  commands.add(el, (options) => eval(el)(options));
+  CLI.CLICommands.add(el, (options) => eval(el)(options));
 });
 
 // start command
-commands.start((command) => {
+CLI.CLICommands.start((command) => {
   // ma each command
   tasksList.map((el) => {
     // commands.run second arg {} is default options we have previously passed
