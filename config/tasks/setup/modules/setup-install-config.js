@@ -1,6 +1,6 @@
 require("colors");
 const { Files } = require("@zouloux/files");
-const { logs } = require("../../../helpers/logs-helper");
+const logs = require("../../../helpers/logs-helper");
 const debug = require("debug")("config:setup-install-config");
 const paths = require("../../../global.paths");
 const config = require("../../../global.config");
@@ -21,7 +21,7 @@ const setupInstallConfig = ({
   });
 
   return new Promise(async (resolve) => {
-    logs.start(`Create config file in ${installConfigPath}...`);
+    logs.start(`Create config file in ${installConfigPath}`);
 
     // init install config template
     const template = (pFileTabRegex = new RegExp(`\n(${"\t\t\t"})`, "gmi")) => {
@@ -48,4 +48,4 @@ const setupInstallConfig = ({
   });
 };
 
-module.exports = { setupInstallConfig };
+module.exports = setupInstallConfig;

@@ -1,7 +1,7 @@
 require("colors");
 const Inquirer = require("inquirer");
 const debug = require("debug")("config:scaffold");
-const { scaffoldComponent } = require("../scaffold-component");
+const scaffoldComponent = require("../scaffold-component");
 
 /**
  * Ask bundle Type to
@@ -41,4 +41,4 @@ const scaffold = () =>
     resolve();
   });
 
-module.exports = { scaffold };
+module.exports = scaffold;

@@ -1,6 +1,6 @@
 require("colors");
 
-const logs = {
+module.exports = {
   /**
    * Start
    * @param pMessage
@@ -33,5 +33,3 @@ const logs = {
     console.log(`${pMessage}`.red, "\n");
   },
 };
-
-module.exports = { logs };

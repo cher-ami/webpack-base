@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const { Files } = require("@zouloux/files");
-const { logs } = require("../../helpers/logs-helper");
+const logs = require("../../helpers/logs-helper");
 const debug = require("debug")("config:prebuild-htaccess");
 const config = require("../../global.config");
 const paths = require("../../global.paths");
@@ -140,4 +140,4 @@ const prebuildHtaccess = () => {
   logs.done();
 };
 
-module.exports = { prebuildHtaccess };
+module.exports = prebuildHtaccess;

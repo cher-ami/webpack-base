@@ -1,9 +1,8 @@
 require("colors");
 const { Files } = require("@zouloux/files");
 const CLI = require("@solid-js/cli");
-const { logs } = require("../../helpers/logs-helper");
+const logs = require("../../helpers/logs-helper");
 const config = require("../../global.config");
-const paths = require("../../global.paths");
 
 /**
  * Reset task
@@ -11,25 +10,25 @@ const paths = require("../../global.paths");
  */
 const reset = () =>
   new Promise(async (resolve) => {
-    logs.start("Clean.");
+    logs.start("Clean");
 
-    logs.start("Remove output compile folder.");
+    logs.start("Remove output compile folder");
     Files.any(config.outputPath).remove();
     logs.done();
 
-    logs.start("Remove node modules.");
+    logs.start("Remove node modules");
     CLI.execSync("rm -rf node_modules", 3);
     logs.done();
 
-    logs.start("Remove package-lock.json.");
+    logs.start("Remove package-lock.json");
     CLI.execSync("rm -rf package-lock.json", 3);
     logs.done();
 
-    logs.start("Re install dependencies.");
+    logs.start("Re install dependencies");
     CLI.execSync("npm i", 3);
 
     logs.done();
     resolve();
   });
 
-module.exports = { reset };
+module.exports = reset;

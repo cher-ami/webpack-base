@@ -1,8 +1,8 @@
 require("colors");
-const { logs } = require("../../helpers/logs-helper");
+const logs = require("../../helpers/logs-helper");
 const CLI = require("@solid-js/cli");
-const { clean } = require("../clean");
-const { prebuild } = require("../prebuild");
+const clean = require("../clean");
+const prebuild = require("../prebuild");
 
 /**
  * Start webpack dev server
@@ -30,4 +30,4 @@ const dev = async () => {
   await _startDevServer();
 };
 
-module.exports = { dev };
+module.exports = dev;

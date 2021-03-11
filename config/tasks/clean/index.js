@@ -1,6 +1,6 @@
 require("colors");
 const { Files } = require("@zouloux/files");
-const { logs } = require("../../helpers/logs-helper");
+const logs = require("../../helpers/logs-helper");
 
 /**
  * Clean task
@@ -15,4 +15,4 @@ const clean = () => {
   logs.done();
 };
 
-module.exports = { clean };
+module.exports = clean;

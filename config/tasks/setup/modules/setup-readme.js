@@ -1,5 +1,5 @@
 require("colors");
-const { logs } = require("../../../helpers/logs-helper");
+const logs = require("../../../helpers/logs-helper");
 const { quickTemplate } = require("../../../helpers/template-helper");
 const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:manage-readme");
@@ -71,7 +71,7 @@ const setupReadme = ({
       logs.error(`${readmeFilePath} doesn't exist.`);
     }
 
-    debug("create new template README.md from template...");
+    debug("create new template README.md from template");
     if (!fakeMode) {
       await Files.new(readmeFileName).write(
         quickTemplate(
@@ -94,4 +94,4 @@ const setupReadme = ({
   });
 };
 
-module.exports = { setupReadme };
+module.exports = setupReadme;

@@ -1,5 +1,5 @@
 const { Files } = require("@zouloux/files");
-const { logs } = require("./logs-helper");
+const logs = require("./logs-helper");
 const debug = require("debug")("config:bundle-type-helper");
 const config = require("../global.config");
 const paths = require("../global.paths");
