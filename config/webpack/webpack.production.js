@@ -57,7 +57,6 @@ const productionConfig = {
         ]
       : []),
 
-
     /**
      * Add progress percent on compilation logs
      */

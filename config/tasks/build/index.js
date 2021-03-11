@@ -1,26 +1,23 @@
-require('colors');
-const logs = require('../../helpers/logs-helper');
-const { clean } = require('../clean');
-const {prebuild} = require('../prebuild');
-const webpack = require('webpack');
-const prodConfig = require('../../webpack/webpack.production');
+require("colors");
+const logs = require("../../helpers/logs-helper");
+const { clean } = require("../clean");
+const { prebuild } = require("../prebuild");
+const webpack = require("webpack");
+const prodConfig = require("../../webpack/webpack.production");
 const compiler = webpack(prodConfig);
 
 const _build = async () => {
-
-  logs.start('Start build');
+  logs.start("Start build");
   return new Promise((resolve, reject) => {
-
     // start webpack compiler
     compiler.run((err, stats) => {
-
       // if compiler error (err), or build error
       if (err || stats.hasErrors()) {
-        logs.error('webpack build with error');
+        logs.error("webpack build with error");
         reject(err);
       }
 
-      stats.toJson('minimal');
+      stats.toJson("minimal");
       const log = stats.toString({
         chunks: false,
         all: false,
@@ -28,12 +25,11 @@ const _build = async () => {
         errors: true,
         warnings: true,
         colors: true,
-        assetsSort: 'size',
+        assetsSort: "size",
       });
 
       console.log(log);
       resolve(true);
-
     });
   });
 };
@@ -48,7 +44,7 @@ const build = async () => {
     await prebuild();
     return await _build();
   } catch (e) {
-    throw new Error('build task failed');
+    throw new Error("build task failed");
   }
 };
 

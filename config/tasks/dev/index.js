@@ -1,8 +1,8 @@
-require('colors');
-const logs = require('../../helpers/logs-helper');
-const {execAsync} = require('@solid-js/cli');
-const { clean } = require('../clean');
-const {prebuild} = require('../prebuild');
+require("colors");
+const logs = require("../../helpers/logs-helper");
+const { execAsync } = require("@solid-js/cli");
+const { clean } = require("../clean");
+const { prebuild } = require("../prebuild");
 
 /**
  * Start webpack dev server
@@ -12,13 +12,12 @@ const {prebuild} = require('../prebuild');
 
 let watching;
 const _startDevServer = async (exitAfterFirstCompile = false) => {
-
   await execAsync(
-      [
-        `NODE_ENV=development`,
-        `webpack serve --config config/webpack/webpack.development.js`,
-      ].join(' '),
-      3,
+    [
+      `NODE_ENV=development`,
+      `webpack serve --config config/webpack/webpack.development.js`,
+    ].join(" "),
+    3
   );
 
   // const webpack = require('webpack');
@@ -59,7 +58,6 @@ const _startDevServer = async (exitAfterFirstCompile = false) => {
   //   }
   //
   // });
-
 };
 
 /**
@@ -72,10 +70,8 @@ const dev = async (exitAfterFirstCompile = false) => {
     await prebuild();
     return await _startDevServer(exitAfterFirstCompile);
   } catch (e) {
-    throw new Error('dev task failed');
+    throw new Error("dev task failed");
   }
 };
 
-module.exports = { dev }
-
-
+module.exports = { dev };
