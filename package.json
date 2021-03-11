@@ -26,7 +26,7 @@
     "help": "node config/tasks/runner.js help",
     "prettier": "prettier --write './src/**/**/**/*.{tsx,ts,jsx,js,less,css,json,md}'",
     "test": "jest src/*",
-    "test-framework": "NODE_ENV=production jest config/*",
+    "test-framework": "jest config/*",
     "postinstall": "cp -n .env.example .env || true"
   },
   "dependencies": {

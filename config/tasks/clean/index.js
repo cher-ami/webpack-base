@@ -15,4 +15,4 @@ const clean = () => {
   logs.done();
 };
 
-module.exports = clean;
+module.exports = { clean };

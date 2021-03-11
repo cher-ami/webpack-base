@@ -1,7 +1,7 @@
 require('colors');
 const logs = require('../../helpers/logs-helper');
-const clean = require('../clean');
-const prebuild = require('../prebuild');
+const { clean } = require('../clean');
+const {prebuild} = require('../prebuild');
 const webpack = require('webpack');
 const prodConfig = require('../../webpack/webpack.production');
 const compiler = webpack(prodConfig);
@@ -52,4 +52,4 @@ const build = async () => {
   }
 };
 
-module.exports = build;
+module.exports = { build };

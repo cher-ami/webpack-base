@@ -1,18 +1,19 @@
-const webpack = require("webpack");
-const { merge } = require("webpack-merge");
-const common = require("./webpack.common.js");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const paths = require("../global.paths");
-const config = require("../global.config");
-const ip = require("internal-ip");
-const portFinderSync = require("portfinder-sync");
-const BuildCallbackPlugin = require("./plugins/build-callback-plugin");
-require("colors");
+const webpack = require('webpack');
+const {merge} = require('webpack-merge');
+const common = require('./webpack.common.js');
+const ReactRefreshWebpackPlugin = require(
+    '@pmmmwh/react-refresh-webpack-plugin');
+const paths = require('../global.paths');
+const config = require('../global.config');
+const ip = require('internal-ip');
+const portFinderSync = require('portfinder-sync');
+const BuildCallbackPlugin = require('./plugins/build-callback-plugin');
+require('colors');
 
 // test env
-const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
-const DEV_SERVER_HOT_RELOAD = process.env.DEV_SERVER_HOT_RELOAD === "true";
-const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === "true";
+const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === 'true';
+const DEV_SERVER_HOT_RELOAD = process.env.DEV_SERVER_HOT_RELOAD === 'true';
+const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === 'true';
 
 /**
  * Development Webpack Configuration
@@ -22,11 +23,11 @@ const developmentConfig = {
    * Mode
    * Set the mode to development or production.
    */
-  mode: "development",
+  mode: 'development',
 
   output: {
     path: config.outputPath,
-    filename: "[name].bundle.js",
+    filename: '[name].bundle.js',
     publicPath: process.env.APP_BASE,
   },
 
@@ -52,8 +53,8 @@ const developmentConfig = {
         exclude: /node_modules/,
         use: [
           {
-            loader: "babel-loader",
-            options: { plugins: ["react-refresh/babel"] },
+            loader: 'babel-loader',
+            options: {plugins: ['react-refresh/babel']},
           },
         ],
       },
@@ -68,28 +69,28 @@ const developmentConfig = {
           {
             test: /\.module\.(less|css)$/,
             use: [
-              "style-loader",
+              'style-loader',
               {
-                loader: "css-loader",
+                loader: 'css-loader',
                 options: {
                   sourceMap: !!process.env.WEBPACK_DEV_TOOL,
                   importLoaders: 1,
                   modules: {
-                    localIdentName: "[name]__[local]--[hash:base64:5]",
+                    localIdentName: '[name]__[local]--[hash:base64:5]',
                   },
                 },
               },
-              "postcss-loader",
-              "less-loader",
+              'postcss-loader',
+              'less-loader',
             ],
           },
           // else if it's a simple less or css file
           {
             use: [
-              "style-loader",
-              "css-loader",
-              "postcss-loader",
-              "less-loader",
+              'style-loader',
+              'css-loader',
+              'postcss-loader',
+              'less-loader',
             ],
           },
         ],
@@ -121,11 +122,11 @@ const developmentConfig = {
     new BuildCallbackPlugin({
       callback: (server) => {
         const port = server.options.devServer.port;
-        const https = server.options.https ? "s" : "";
+        const https = server.options.https ? 's' : '';
         const localIp = ip.v4.sync();
         const localDomain = `http${https}://localhost:${port}`;
         const networkDomain = `http${https}://${localIp}:${port}`;
-        const projectName = require("../../package.json").name;
+        const projectName = require('../../package.json').name;
         const template = [
           ``,
           `${`✔ Serving!`.bold}`,
@@ -137,7 +138,7 @@ const developmentConfig = {
         ].join(`\n`);
 
         const clearConsole = (logs = template) => {
-          const clear = "\x1B[2J\x1B[3J\x1B[H";
+          const clear = '\x1B[2J\x1B[3J\x1B[H';
           const output = logs ? `${clear + logs}\n\n` : clear;
           process.stdout.write(output);
         };
@@ -151,34 +152,35 @@ const developmentConfig = {
    * Spin up a server for quick development.
    */
   devServer: {
-    publicPath: "",
+    publicPath: '',
     contentBase: paths.dist,
+    host: '0.0.0.0',
+    disableHostCheck: true,
     port: process.env.DEV_SERVER_PORT || portFinderSync.getPort(3000),
+    useLocalIp: true,
     inline: true,
     compress: true,
     https: false,
-    useLocalIp: true,
     historyApiFallback: true,
-    host: "0.0.0.0",
-    disableHostCheck: true,
-    // reload/refresh the page when file changes are detected
+
     hot: DEV_SERVER_HOT_RELOAD,
-    // open new browser tab when webpack dev-server is started
     open: DEV_SERVER_OPEN,
-    // Write file to dist on each compile
     writeToDisk: true,
-    // stats to print in console
+
     noInfo: false,
-    stats: "minimal",
-    // pass to true if you don't want to print compile file in the console
+    stats: {
+      preset: 'minimal',
+      colors: true
+    },
     quiet: false,
+
     // specify to enable root proxying
-    index: "",
     // if use proxy option is enable
+    index: '',
     ...(ENABLE_DEV_PROXY
-      ? {
+        ? {
           proxy: {
-            "/": {
+            '/': {
               // target url like http://localhost/project/dist/base-path/
               target: process.env.PROXY_URL,
               changeOrigin: true,
@@ -186,7 +188,7 @@ const developmentConfig = {
             },
           },
         }
-      : {}),
+        : {}),
   },
 };
 

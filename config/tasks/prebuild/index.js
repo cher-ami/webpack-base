@@ -13,4 +13,4 @@ const prebuild = () => {
   });
 };
 
-module.exports = prebuild;
+module.exports = { prebuild };

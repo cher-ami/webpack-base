@@ -1,29 +1,34 @@
-const CLI = require("@solid-js/cli");
-const logs = require("../helpers/logs-helper");
+const {CLICommands} = require('@solid-js/cli');
+const {Files} = require("@zouloux/files");
+Files.setVerbose(false);
 
-// prettier-ignore
+/**
+ * Run tasks
+ */
 (async function tasks() {
-  // list require tasks
-  const tasksList = {
-    dev: require('./dev'),
-    build: require('./build'),
-    clean: require('./clean'),
-    reset: require('./reset'),
-    scaffold: require('./scaffold'),
-    help: require('./help'),
-    setup: require('./setup'),
-  };
 
-  Object.keys(tasksList).forEach((task) => {
-    CLI.CLICommands.add(task, (options) => {
-      tasksList[task](options);
-    });
+  CLICommands.add("dev", (options) => {
+    require('./dev').dev(options);
+  });
+  CLICommands.add("build", (options) => {
+    require('./build').build(options);
+  });
+  CLICommands.add("clean", (options) => {
+    require('./clean').clean(options);
+  });
+  CLICommands.add("reset", (options) => {
+    require('./reset').reset(options);
+  });
+  CLICommands.add("scaffold", (options) => {
+    require('./scaffold').scaffold(options);
+  });
+  CLICommands.add("help", (options) => {
+    require('./help').help(options);
+  });
+  CLICommands.add("setup", (options) => {
+    require('./setup').setup(options);
   });
 
-  try {
-    await CLI.CLICommands.start();
-  } catch (e) {
-    logs.error('CLICommands error', e);
-  }
+  await CLICommands.start();
 
 })();
