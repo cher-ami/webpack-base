@@ -12,7 +12,7 @@ const path = require("path");
 /**
  * Common Webpack Configuration
  */
-commonConfig = {
+const commonConfig = {
   /**
    * Entry
    * The first place Webpack looks to start building the bundle.
@@ -147,7 +147,7 @@ commonConfig = {
           context: "src",
           publicPath: path.join(
             process.env.APP_BASE || "",
-            process.env.ASSETS_PATH
+            process.env.ASSETS_PATH || ""
           ),
         },
       },
@@ -165,5 +165,4 @@ commonConfig = {
   },
 };
 
-// export config
 module.exports = commonConfig;

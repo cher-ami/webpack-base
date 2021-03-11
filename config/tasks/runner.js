@@ -1,4 +1,5 @@
 const CLI = require("@solid-js/cli");
+const logs = require("../helpers/logs-helper");
 
 // prettier-ignore
 (async function tasks() {
@@ -22,7 +23,7 @@ const CLI = require("@solid-js/cli");
   try {
     await CLI.CLICommands.start();
   } catch (e) {
-    console.log('CLICommands error', e);
+    logs.error('CLICommands error', e);
   }
 
 })();

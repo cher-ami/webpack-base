@@ -1,3 +1,4 @@
 dist
 node_modules
 src/lib/style/mixins.less
+config

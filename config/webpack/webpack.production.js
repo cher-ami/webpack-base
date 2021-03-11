@@ -1,10 +1,10 @@
+const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserJSPlugin = require("terser-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
-const TerserJSPlugin = require("terser-webpack-plugin");
-const paths = require("../global.paths");
 const config = require("../global.config");
 
 /**
@@ -48,12 +48,20 @@ const productionConfig = {
      * @doc https://github.com/webpack-contrib/webpack-bundle-analyzer
      */
     ...(config.bundleAnalyzerPlugin
-      ? new BundleAnalyzerPlugin({
-          openAnalyzer: false,
-          analyzerMode: "static",
-          defaultSizes: "gzip",
-        })
+      ? [
+          new BundleAnalyzerPlugin({
+            openAnalyzer: false,
+            analyzerMode: "static",
+            defaultSizes: "gzip",
+          }),
+        ]
       : []),
+
+
+    /**
+     * Add progress percent on compilation logs
+     */
+    new webpack.ProgressPlugin(),
   ],
 
   /**
