@@ -153,28 +153,29 @@ const developmentConfig = {
   devServer: {
     publicPath: "",
     contentBase: paths.dist,
+    host: "0.0.0.0",
+    disableHostCheck: true,
     port: process.env.DEV_SERVER_PORT || portFinderSync.getPort(3000),
+    useLocalIp: true,
     inline: true,
     compress: true,
     https: false,
-    useLocalIp: true,
     historyApiFallback: true,
-    host: "0.0.0.0",
-    disableHostCheck: true,
-    // reload/refresh the page when file changes are detected
+
     hot: DEV_SERVER_HOT_RELOAD,
-    // open new browser tab when webpack dev-server is started
     open: DEV_SERVER_OPEN,
-    // Write file to dist on each compile
     writeToDisk: true,
-    // stats to print in console
+
     noInfo: false,
-    stats: "minimal",
-    // pass to true if you don't want to print compile file in the console
+    stats: {
+      preset: "minimal",
+      colors: true,
+    },
     quiet: false,
+
     // specify to enable root proxying
-    index: "",
     // if use proxy option is enable
+    index: "",
     ...(ENABLE_DEV_PROXY
       ? {
           proxy: {

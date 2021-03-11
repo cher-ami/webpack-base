@@ -1,12 +1,11 @@
 require("colors");
 const Inquirer = require("inquirer");
+const scaffoldComponent = require("../scaffold-component");
 const debug = require("debug")("config:scaffold");
-const { scaffoldComponent } = require("../scaffold-component");
 
 /**
  * Ask bundle Type to
  */
-
 const _scaffolders = [
   {
     name: "React component",
@@ -36,9 +35,8 @@ const scaffold = () =>
 
       // Start this scaffolder
       _scaffolders[scaffolderIndex].exec();
+      resolve();
     });
-
-    resolve();
   });
 
 module.exports = { scaffold };

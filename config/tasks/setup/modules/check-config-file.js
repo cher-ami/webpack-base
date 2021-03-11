@@ -2,7 +2,7 @@ require("colors");
 const { Files } = require("@zouloux/files");
 const { execSync } = require("@solid-js/cli");
 const debug = require("debug")("config:check-config-file");
-const { logs } = require("../../../helpers/logs-helper");
+const logs = require("../../../helpers/logs-helper");
 const paths = require("../../../global.paths");
 const config = require("../../../global.config");
 
@@ -32,4 +32,4 @@ const checkConfigFile = ({ configFilePath = paths.installConfig } = {}) => {
   }
 };
 
-module.exports = { checkConfigFile };
+module.exports = checkConfigFile;

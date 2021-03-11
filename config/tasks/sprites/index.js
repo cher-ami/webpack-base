@@ -10,7 +10,7 @@
  * 2. add task script in package.json
  * "sprites": "node config/tasks/commands.js sprites"
  *
- * 3. add task and require task in config/tasks/command.js
+ * 3. add task and require task in config/tasks/index.js
  *
  * 4. create sprite folder in src
  * src/sprites/main/(images...)
@@ -35,7 +35,7 @@ const { optimizeFiles } = require("./imagemin");
 require("colors");
 const { Files } = require("@zouloux/files");
 const path = require("path");
-const { logs } = require("../../helpers/logs-helper");
+const logs = require("../../helpers/logs-helper");
 const debug = require("debug")("config:sprites");
 const globalPaths = require("../../global.paths");
 
@@ -353,4 +353,4 @@ const sprites = (
     );
   });
 
-module.exports = { sprites };
+module.exports = sprites;

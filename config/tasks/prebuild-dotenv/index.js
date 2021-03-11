@@ -1,6 +1,6 @@
 const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:prebuild-dotenv");
-const { logs } = require("../../helpers/logs-helper");
+const logs = require("../../helpers/logs-helper");
 const config = require("../../global.config");
 const root = require("app-root-path");
 
@@ -61,4 +61,4 @@ const prebuildDotEnv = (newFilePath = `${config.outputPath}/.env`) => {
   });
 };
 
-module.exports = { prebuildDotEnv };
+module.exports = prebuildDotEnv;

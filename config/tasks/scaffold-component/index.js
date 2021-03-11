@@ -3,7 +3,7 @@ const path = require("path");
 const Inquirer = require("inquirer");
 const changeCase = require("change-case");
 const createFile = require("./helpers/create-file");
-const { logs } = require("../../helpers/logs-helper");
+const logs = require("../../helpers/logs-helper");
 const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:scaffold-component");
 
@@ -178,4 +178,4 @@ const scaffoldComponent = (pComponentType) => {
 /**
  * return scaffold component function
  */
-module.exports = { scaffoldComponent };
+module.exports = scaffoldComponent;

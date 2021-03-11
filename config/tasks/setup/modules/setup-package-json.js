@@ -2,7 +2,7 @@ require("colors");
 const { Files } = require("@zouloux/files");
 const Inquirer = require("inquirer");
 const changeCase = require("change-case");
-const { logs } = require("../../../helpers/logs-helper");
+const logs = require("../../../helpers/logs-helper");
 const debug = require("debug")("config:manage-package-json");
 const paths = require("../../../global.paths");
 const config = require("../../../global.config");
@@ -76,7 +76,7 @@ const setupPackageJson = ({
 
     // Set name and version into package.json
     if (!fakeMode) {
-      debug("Modify package.json...");
+      debug("Modify package.json");
       Files.getFiles("package.json").alterJSON((packageObject) => {
         packageObject.version = projectVersion;
         packageObject.name = projectName;
@@ -101,4 +101,4 @@ const setupPackageJson = ({
   });
 };
 
-module.exports = { setupPackageJson };
+module.exports = setupPackageJson;

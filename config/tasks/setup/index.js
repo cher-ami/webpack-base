@@ -1,14 +1,11 @@
-const { setupReadme } = require("./modules/setup-readme");
-const { checkConfigFile } = require("./modules/check-config-file");
-const { setupPackageJson } = require("./modules/setup-package-json");
-const { cleanFrameworkFiles } = require("./modules/clean-framework-files");
-const { showHelp } = require("./modules/show-help");
-const { setupInstallConfig } = require("./modules/setup-install-config");
-const { setupGitignore } = require("./modules/setup-gitignore");
-const { logs } = require("../../helpers/logs-helper");
+const setupReadme = require("./modules/setup-readme");
+const checkConfigFile = require("./modules/check-config-file");
+const setupPackageJson = require("./modules/setup-package-json");
+const cleanFrameworkFiles = require("./modules/clean-framework-files");
+const setupInstallConfig = require("./modules/setup-install-config");
+const setupGitignore = require("./modules/setup-gitignore");
+const logs = require("../../helpers/logs-helper");
 const debug = require("debug")("config:setup");
-const paths = require("../../global.paths");
-const config = require("../../global.config");
 
 /**
  * Setup
@@ -42,5 +39,4 @@ const setup = () => {
   });
 };
 
-// return
 module.exports = { setup };

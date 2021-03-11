@@ -1,6 +1,6 @@
 require("colors");
 const { Files } = require("@zouloux/files");
-const { logs } = require("../../../helpers/logs-helper");
+const logs = require("../../../helpers/logs-helper");
 const debug = require("debug")("config:setup-gitignore");
 const paths = require("../../../global.paths");
 const config = require("../../../global.config");
@@ -17,7 +17,7 @@ const setupGitignore = ({
   debug("setupGitignore params:", { gitignorePath });
 
   return new Promise((resolve) => {
-    logs.start(`Setup .gitignore file...`);
+    logs.start(`Setup .gitignore file`);
     if (!fakeMode) {
       Files.getFiles(gitignorePath).alter((fileContent) => {
         return (
@@ -35,4 +35,4 @@ const setupGitignore = ({
   });
 };
 
-module.exports = { setupGitignore };
+module.exports = setupGitignore;
