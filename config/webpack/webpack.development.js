@@ -4,6 +4,10 @@ const common = require("./webpack.common.js");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const paths = require("../global.paths");
 const config = require("../global.config");
+const ip = require("internal-ip");
+const portFinderSync = require("portfinder-sync");
+const BuildCallbackPlugin = require("./plugins/build-callback-plugin");
+require("colors");
 
 // test env
 const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
@@ -110,6 +114,36 @@ const developmentConfig = {
     new ReactRefreshWebpackPlugin({
       forceEnable: false,
     }),
+
+    /**
+     * Custom message print between builds
+     */
+    new BuildCallbackPlugin({
+      callback: (server) => {
+        const port = server.options.devServer.port;
+        const https = server.options.https ? "s" : "";
+        const localIp = ip.v4.sync();
+        const localDomain = `http${https}://localhost:${port}`;
+        const networkDomain = `http${https}://${localIp}:${port}`;
+        const projectName = require("../../package.json").name;
+        const template = [
+          ``,
+          `${`✔ Serving!`.bold}`,
+          ``,
+          `- ${`Project:`.grey}   ${projectName}`,
+          `- ${`Local:`.grey}     ${localDomain.brightBlue}`,
+          `- ${`Network:`.grey}   ${networkDomain.brightBlue}`,
+          ``,
+        ].join(`\n`);
+
+        const clearConsole = (logs = template) => {
+          const clear = "\x1B[2J\x1B[3J\x1B[H";
+          const output = logs ? `${clear + logs}\n\n` : clear;
+          process.stdout.write(output);
+        };
+        clearConsole();
+      },
+    }),
   ],
 
   /**
@@ -119,35 +153,25 @@ const developmentConfig = {
   devServer: {
     publicPath: "",
     contentBase: paths.dist,
-    port: parseInt(process.env.DEV_SERVER_PORT) || 3000,
-    hot: DEV_SERVER_HOT_RELOAD,
+    port: process.env.DEV_SERVER_PORT || portFinderSync.getPort(3000),
     inline: true,
     compress: true,
+    https: false,
+    useLocalIp: true,
     historyApiFallback: true,
+    host: "0.0.0.0",
+    disableHostCheck: true,
     // reload/refresh the page when file changes are detected
-    liveReload: DEV_SERVER_HOT_RELOAD,
+    hot: DEV_SERVER_HOT_RELOAD,
     // open new browser tab when webpack dev-server is started
     open: DEV_SERVER_OPEN,
     // Write file to dist on each compile
     writeToDisk: true,
-    // display error overlay on screen
-    overlay: false,
     // stats to print in console
-    stats: {
-      all: false,
-      errors: true,
-      warnings: true,
-      colors: true,
-    },
+    noInfo: false,
+    stats: "minimal",
     // pass to true if you don't want to print compile file in the console
     quiet: false,
-
-    // Specify a host to use. If you want your server to be accessible externally
-    // https://webpack.js.org/configuration/dev-server/#devserverhost
-    ...(process.env.DEV_SERVER_HOST
-      ? { host: process.env.DEV_SERVER_HOST }
-      : {}),
-
     // specify to enable root proxying
     index: "",
     // if use proxy option is enable
