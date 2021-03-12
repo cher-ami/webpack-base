@@ -17,7 +17,7 @@ describe("task dev", () => {
   console.log("process.env.NODE_ENV", process.env.NODE_ENV);
 
   it("should dev without error", async () => {
-    const devTask = await dev();
+    const devTask = await dev(true);
     await expect(devTask).toBe(true);
   });
 });

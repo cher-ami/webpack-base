@@ -2,14 +2,16 @@ require("colors");
 const { clean } = require("../clean");
 const { prebuild } = require("../prebuild");
 const paths = require("../../global.paths");
-require("colors");
+
+const TASK_DEV = "task-dev";
+const debug = require("debug")(`config:${TASK_DEV}`);
 
 /**
  * Start webpack dev server
  * @returns {Promise<void>}
  * @private
  */
-const _startDevServer = async () => {
+const _startDevServer = async (closeServerAfterFirstBuild = false) => {
   const webpack = require("webpack");
   const webpackDevServer = require("webpack-dev-server");
   const webpackConfig = require("../../webpack/webpack.development.js");
@@ -61,7 +63,6 @@ const _startDevServer = async () => {
       : {}),
   };
 
-
   // create new dev server
   const server = new webpackDevServer(compiler, devServerOptions);
 
@@ -86,41 +87,46 @@ const _startDevServer = async () => {
       ``,
     ].join(`\n`);
 
-    const clearConsole = (logs = template) => {
+    const clearConsoleAndLog = (logs = template) => {
       const clear = "\x1B[2J\x1B[3J\x1B[H";
       const output = logs ? `${clear + logs}\n\n` : clear;
       process.stdout.write(output);
     };
-    clearConsole();
-    // console.log(template);
+    clearConsoleAndLog();
   };
 
-  
   return new Promise((resolve, reject) => {
     // start to listen
     server.listen(port, localIp);
 
-    // On each watch
-    compiler.hooks.watchRun.tap("coucou", (compilation) => {
-      console.log(">>>>> hooks.watchRun".green);
-      resolve(true);
-      templatingLogs();
-    });
+    compiler.hooks.done.tap(TASK_DEV, (stats) => {
+      const hasErrors = stats && stats.hasErrors();
+      const hasWarnings = stats && stats.hasWarnings();
 
-    //  On failed /// Doesn't work
-    compiler.hooks.failed.tap("coucou", (compilation) => {
-      console.log(">>>>> hooks.failed".green);
-      reject();
+      debug({ hasErrors, hasWarnings });
+
+      if (hasErrors) {
+        debug("error !".bgRed);
+        if (closeServerAfterFirstBuild) server.close();
+        reject();
+        return;
+      }
+
+      templatingLogs();
+      debug("success !".bgGreen.black);
+      if (closeServerAfterFirstBuild) server.close();
+      resolve(true);
+
     });
   });
 };
 
 module.exports = {
-  dev: async (_) => {
+  dev: async (closeServerAfterFirstBuild = false) => {
     clean();
     await prebuild();
     try {
-      return await _startDevServer();
+      return await _startDevServer(closeServerAfterFirstBuild);
     } catch (e) {
       throw new Error("dev task failed");
     }
