@@ -2,11 +2,12 @@ require("colors");
 const logs = require("../../helpers/logs-helper");
 const { clean } = require("../clean");
 const { prebuild } = require("../prebuild");
-const webpack = require("webpack");
-const prodConfig = require("../../webpack/webpack.production");
-const compiler = webpack(prodConfig);
 
 const _build = async () => {
+  const webpack = require("webpack");
+  const prodConfig = require("../../webpack/webpack.production");
+  const compiler = webpack(prodConfig);
+
   logs.start("Start build");
   return new Promise((resolve, reject) => {
     // start webpack compiler

@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@solid-js/css-flat": "^1.0.1",
+    "@wbe/deferred-promise": "^1.0.3",
     "@wbe/libraries": "^1.5.0-alpha.0",
     "gsap": "^3.6.0",
     "react": "^17.0.1",

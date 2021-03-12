@@ -1,77 +1,128 @@
 require("colors");
-const logs = require("../../helpers/logs-helper");
-const { execAsync } = require("@solid-js/cli");
 const { clean } = require("../clean");
 const { prebuild } = require("../prebuild");
+const paths = require("../../global.paths");
+require("colors");
 
 /**
  * Start webpack dev server
  * @returns {Promise<void>}
  * @private
  */
+const _startDevServer = async () => {
+  const webpack = require("webpack");
+  const webpackDevServer = require("webpack-dev-server");
+  const webpackConfig = require("../../webpack/webpack.development.js");
+  const compiler = webpack(webpackConfig);
 
-let watching;
-const _startDevServer = async (exitAfterFirstCompile = false) => {
-  await execAsync(
-    [
-      `NODE_ENV=development`,
-      `webpack serve --config config/webpack/webpack.development.js`,
-    ].join(" "),
-    3
-  );
+  const ip = require("internal-ip");
+  const portFinderSync = require("portfinder-sync");
 
-  // const webpack = require('webpack');
-  // const devConfig = require('../../webpack/webpack.development');
-  // const compiler = webpack(devConfig);
+  const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true";
+  const DEV_SERVER_HOT_RELOAD = process.env.DEV_SERVER_HOT_RELOAD === "true";
+  const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === "true";
 
-  // return new Promise((resolve, reject) => {
-  //
-  //   logs.start('Start dev server');
-  //   watching = compiler.watch({
-  //     aggregateTimeout: 300,
-  //     poll: undefined,
-  //     open: true,
-  //   }, (err, stats) => {
-  //
-  //     // if compiler error (err), or build error
-  //     if (err || stats.hasErrors()) {
-  //       logs.error('webpack build with error');
-  //       reject(err);
-  //     }
-  //
-  //     const log = stats.toString({
-  //       preset: 'minimal',
-  //       errors: true,
-  //       warnings: true,
-  //       colors: true,
-  //     });
-  //
-  //     console.log(log);
-  //     resolve(true);
-  //
-  //   });
-  //
-  //   if (exitAfterFirstCompile) {
-  //     watching.close(() => {
-  //       console.log('Watching Ended.');
-  //     });
-  //   }
-  //
-  // });
+  const devServerOptions = {
+    publicPath: "",
+    contentBase: paths.dist,
+    host: "0.0.0.0",
+    disableHostCheck: true,
+    useLocalIp: true,
+    inline: true,
+    compress: true,
+    https: false,
+    historyApiFallback: true,
+
+    hot: DEV_SERVER_HOT_RELOAD,
+    open: DEV_SERVER_OPEN,
+    writeToDisk: true,
+
+    noInfo: false,
+    stats: {
+      preset: "minimal",
+      colors: true,
+    },
+    quiet: false,
+
+    // specify to enable root proxying
+    // if use proxy option is enable
+    index: "",
+    ...(ENABLE_DEV_PROXY
+      ? {
+          proxy: {
+            "/": {
+              // target url like http://localhost/project/dist/base-path/
+              target: process.env.PROXY_URL,
+              changeOrigin: true,
+              secure: false,
+            },
+          },
+        }
+      : {}),
+  };
+
+
+  // create new dev server
+  const server = new webpackDevServer(compiler, devServerOptions);
+
+  // prepare dev server specs
+  const port = process.env.DEV_SERVER_PORT || portFinderSync.getPort(3000);
+  const localIp = ip.v4.sync();
+
+  // template logs to print on each build
+  const templatingLogs = () => {
+    const https = server.options.https ? "s" : "";
+    const localIp = ip.v4.sync();
+    const localDomain = `http${https}://localhost:${port}`;
+    const networkDomain = `http${https}://${localIp}:${port}`;
+    const projectName = require("../../../package.json").name;
+    const template = [
+      ``,
+      `${`✔ Serving!`.bold}`,
+      ``,
+      `- ${`Project:`.grey}   ${projectName}`,
+      `- ${`Local:`.grey}     ${localDomain.brightBlue}`,
+      `- ${`Network:`.grey}   ${networkDomain.brightBlue}`,
+      ``,
+    ].join(`\n`);
+
+    const clearConsole = (logs = template) => {
+      const clear = "\x1B[2J\x1B[3J\x1B[H";
+      const output = logs ? `${clear + logs}\n\n` : clear;
+      process.stdout.write(output);
+    };
+    clearConsole();
+    // console.log(template);
+  };
+
+  
+  return new Promise((resolve, reject) => {
+    // start to listen
+    server.listen(port, localIp);
+
+    // On each watch
+    compiler.hooks.watchRun.tap("coucou", (compilation) => {
+      console.log(">>>>> hooks.watchRun".green);
+      resolve(true);
+      templatingLogs();
+    });
+
+    //  On failed /// Doesn't work
+    compiler.hooks.failed.tap("coucou", (compilation) => {
+      console.log(">>>>> hooks.failed".green);
+      reject();
+    });
+  });
 };
 
-/**
- * Init Start
- * @returns {Promise<void>}
- */
-const dev = async (exitAfterFirstCompile = false) => {
-  clean();
-  try {
+module.exports = {
+  dev: async (_) => {
+    clean();
     await prebuild();
-    return await _startDevServer(exitAfterFirstCompile);
-  } catch (e) {
-    throw new Error("dev task failed");
-  }
+    try {
+      return await _startDevServer();
+    } catch (e) {
+      throw new Error("dev task failed");
+    }
+  },
 };
-
-module.exports = { dev };

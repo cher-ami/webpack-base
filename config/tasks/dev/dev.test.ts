@@ -1,14 +1,13 @@
-const paths = require("../../global.paths.js");
-const { build } = require("./index");
+const { dev } = require("./index");
 
 jest.setTimeout(50000);
 
 const env = Object.assign({}, process.env);
 
-describe("task build", () => {
+describe("task dev", () => {
   // force current NODE_ENV, others env properties are getting from .env.test
   beforeEach(() => {
-    process.env.NODE_ENV = "production";
+    process.env.NODE_ENV = "development";
   });
 
   afterEach(() => {
@@ -17,8 +16,8 @@ describe("task build", () => {
 
   console.log("process.env.NODE_ENV", process.env.NODE_ENV);
 
-  it("should build without error", async () => {
-    const buildTask = await build();
-    await expect(buildTask).toBe(true);
+  it("should dev without error", async () => {
+    const devTask = await dev();
+    await expect(devTask).toBe(true);
   });
 });
