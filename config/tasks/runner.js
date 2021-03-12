@@ -6,26 +6,26 @@ Files.setVerbose(false);
  * Run tasks
  */
 (async function tasks() {
-  CLICommands.add("dev", (options) => {
-    require("./dev").dev(options);
+  CLICommands.add("dev", (options, args) => {
+    require("./dev").dev();
   });
-  CLICommands.add("build", (options) => {
-    require("./build").build(options);
+  CLICommands.add("build", (options, args) => {
+    require("./build").build();
   });
-  CLICommands.add("clean", (options) => {
-    require("./clean").clean(options);
+  CLICommands.add("clean", (options, args) => {
+    require("./clean").clean();
   });
-  CLICommands.add("reset", (options) => {
-    require("./reset").reset(options);
+  CLICommands.add("reset", (options, args) => {
+    require("./reset").reset();
   });
-  CLICommands.add("scaffold", (options) => {
-    require("./scaffold").scaffold(options);
+  CLICommands.add("scaffold", (options, args) => {
+    require("./scaffold").scaffold();
   });
-  CLICommands.add("help", (options) => {
-    require("./help").help(options);
+  CLICommands.add("help", (options, args) => {
+    require("./help").help();
   });
-  CLICommands.add("setup", (options) => {
-    require("./setup").setup(options);
+  CLICommands.add("setup", (options, args) => {
+    require("./setup").setup();
   });
 
   await CLICommands.start();
