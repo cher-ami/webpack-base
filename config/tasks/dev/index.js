@@ -28,6 +28,7 @@ const _startDevServer = async (closeServerAfterFirstBuild = false) => {
     publicPath: "",
     contentBase: paths.dist,
     host: "0.0.0.0",
+    port: process.env.DEV_SERVER_PORT || portFinderSync.getPort(3000),
     disableHostCheck: true,
     useLocalIp: true,
     inline: true,
@@ -50,7 +51,7 @@ const _startDevServer = async (closeServerAfterFirstBuild = false) => {
     // if use proxy option is enable
     index: "",
     ...(ENABLE_DEV_PROXY
-      ? {
+        ? {
           proxy: {
             "/": {
               // target url like http://localhost/project/dist/base-path/
@@ -60,18 +61,14 @@ const _startDevServer = async (closeServerAfterFirstBuild = false) => {
             },
           },
         }
-      : {}),
+        : {}),
   };
 
   // create new dev server
   const server = new webpackDevServer(compiler, devServerOptions);
 
-  // prepare dev server specs
-  const port = process.env.DEV_SERVER_PORT || portFinderSync.getPort(3000);
-  const localIp = ip.v4.sync();
-
   // template logs to print on each build
-  const templatingLogs = () => {
+  const templatingLogs = (port = devServerOptions.port) => {
     const https = server.options.https ? "s" : "";
     const localIp = ip.v4.sync();
     const localDomain = `http${https}://localhost:${port}`;
@@ -97,7 +94,7 @@ const _startDevServer = async (closeServerAfterFirstBuild = false) => {
 
   return new Promise((resolve, reject) => {
     // start to listen
-    server.listen(port, localIp);
+    server.listen(devServerOptions.port);
 
     compiler.hooks.done.tap(TASK_DEV, (stats) => {
       const hasErrors = stats && stats.hasErrors();
@@ -116,7 +113,6 @@ const _startDevServer = async (closeServerAfterFirstBuild = false) => {
       debug("success !".bgGreen.black);
       if (closeServerAfterFirstBuild) server.close();
       resolve(true);
-
     });
   });
 };
