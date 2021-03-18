@@ -5,7 +5,8 @@ import GlobalConfig from "data/GlobalConfig";
 import { EnvUtils } from "lib/utils/EnvUtils";
 import App from "./components/app/App";
 import { routes } from "./routes";
-import { Router } from "@cher-ami/router";
+import {langMiddleware, Router, TLanguage} from "@cher-ami/router"
+import LangService from "@cher-ami/router";
 
 const fileName = "index";
 const debug = require("debug")(`front:${fileName}`);
@@ -27,8 +28,12 @@ const debug = require("debug")(`front:${fileName}`);
   /**
    * Init React App
    */
+  const base = "/";
+  const langs: TLanguage[] = [{ key: "en" }, { key: "fr" }];
+  LangService.init(langs, true, base);
+
   ReactDOM.render(
-    <Router routes={routes} base={"/"}>
+    <Router routes={routes} base={base} middlewares={[langMiddleware]}>
       <App />
     </Router>,
     document.getElementById("root")
