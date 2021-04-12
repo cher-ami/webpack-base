@@ -5,8 +5,8 @@ import GlobalConfig from "data/GlobalConfig";
 import { EnvUtils } from "lib/utils/EnvUtils";
 import App from "./components/app/App";
 import { routes } from "./routes";
-import {langMiddleware, Router, TLanguage} from "@cher-ami/router"
-import LangService from "@cher-ami/router";
+import { langMiddleware, Router, TLanguage } from "@cher-ami/router";
+import { LangService } from "@cher-ami/router";
 
 const fileName = "index";
 const debug = require("debug")(`front:${fileName}`);

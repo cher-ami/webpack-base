@@ -1,6 +1,6 @@
 import css from "./App.module.less";
 import React, { useEffect } from "react";
-import LangService, { Link, Stack } from "@cher-ami/router";
+import { LangService, Link, Stack } from "@cher-ami/router";
 
 const componentName = "App";
 const debug = require("debug")(`front:${componentName}`);
