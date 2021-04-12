@@ -1,25 +1,15 @@
 import "./index.less";
 import ReactDOM from "react-dom";
 import * as React from "react";
-import GlobalConfig from "data/GlobalConfig";
 import { EnvUtils } from "lib/utils/EnvUtils";
 import App from "./components/app/App";
 import { routes } from "./routes";
-import { langMiddleware, Router, TLanguage } from "@cher-ami/router";
-import { LangService } from "@cher-ami/router";
+import { Router } from "@cher-ami/router";
 
-const fileName = "index";
-const debug = require("debug")(`front:${fileName}`);
+const debug = require("debug")(`front:index`);
+debug("version:", require("../package.json").version);
 
 (function initApp() {
-  /**
-   * Init global config
-   */
-  GlobalConfig.inject({
-    version: require("../package.json").version,
-    baseUrl: process.env.APP_BASE,
-  });
-
   /**
    * Add env classes
    */
@@ -28,12 +18,8 @@ const debug = require("debug")(`front:${fileName}`);
   /**
    * Init React App
    */
-  const base = "/";
-  const langs: TLanguage[] = [{ key: "en" }, { key: "fr" }];
-  LangService.init(langs, true, base);
-
   ReactDOM.render(
-    <Router routes={routes} base={base} middlewares={[langMiddleware]}>
+    <Router routes={routes} base={process.env.APP_BASE}>
       <App />
     </Router>,
     document.getElementById("root")
