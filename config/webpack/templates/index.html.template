@@ -41,6 +41,6 @@
 
   </head>
   <body>
-    <div id="AppContainer"></div>
+    <div id="root"></div>
   </body>
 </html>

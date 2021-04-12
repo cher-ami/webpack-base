@@ -1,19 +1,28 @@
-import { IRoute } from "./lib/router/Router";
+import { TRoute } from "@cher-ami/router";
+import HomePage from "./pages/homePage/HomePage";
+import WorkPage from "./pages/workPage/WorkPage";
+import NotFoundPage from "./pages/notFoundPage/NotFoundPage";
 
-export enum ERouterPage {
+export enum EPage {
   HOME_PAGE = "HomePage",
   WORK_PAGE = "WorkPage",
+  NOT_FOUND_PAGE = "NotFoundPage",
 }
 
-export const routes: IRoute[] = [
+export const routes: TRoute[] = [
   {
-    url: "/{lang}/",
-    page: ERouterPage.HOME_PAGE,
-    importer: () => require("./pages/homePage/HomePage"),
+    path: "/",
+    component: HomePage,
+    name: EPage.HOME_PAGE,
   },
   {
-    url: "/{lang}/work/{slug}",
-    page: ERouterPage.WORK_PAGE,
-    importer: () => require("./pages/workPage/WorkPage"),
+    path: "/work/:id",
+    component: WorkPage,
+    name: EPage.WORK_PAGE,
+  },
+  {
+    path: "/:rest",
+    component: NotFoundPage,
+    name: EPage.NOT_FOUND_PAGE,
   },
 ];

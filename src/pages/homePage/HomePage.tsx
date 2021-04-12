@@ -1,6 +1,6 @@
 import css from "./HomePage.module.less";
-import React, { useRef } from "react";
-import { usePageRegister } from "../../lib/router/usePageRegister";
+import React, { ForwardedRef, forwardRef, useRef } from "react";
+import { useStack } from "@cher-ami/router";
 
 interface IProps {}
 
@@ -10,42 +10,34 @@ const debug = require("debug")(`front:${componentName}`);
 /**
  * @name HomePage
  */
-const HomePage = (props: IProps) => {
+const HomePage = forwardRef((props: IProps, handleRef: ForwardedRef<any>) => {
   const rootRef = useRef<HTMLDivElement>(null);
-
-  // -------------------–-------------------–-------------------–--------------- REGISTER PAGE
 
   /**
    * playIn page transition
    * (remove this example if not use)
    */
-  const playIn = (): Promise<void> => {
-    return Promise.resolve();
-  };
+  const playIn = (): Promise<void> => Promise.resolve();
 
   /**
    * playOut page transition
    * (remove this example if not use)
    */
-  const playOut = (): Promise<void> => {
-    return Promise.resolve();
-  };
+  const playOut = (): Promise<void> => Promise.resolve();
 
   /**
-   * Register page for ViewStack
-   * NOTE: each page of ViewStack need to be register to work.
-   * Minimal register should be: usePageRegister({ componentName, rootRef });
+   * Handle page for Stack
+   * Minimal arguments should be: usePageRegister({ componentName, handleRef, rootRef });
    * (remove playIn and playOut if not use)
    */
-  usePageRegister({ componentName, rootRef, playIn, playOut });
-
-  // -------------------–-------------------–-------------------–--------------- RENDER
+  useStack({ componentName, handleRef, rootRef, playIn, playOut });
 
   return (
     <div className={css.root} ref={rootRef}>
       {componentName}
     </div>
   );
-};
+});
 
+HomePage.displayName = componentName;
 export default HomePage;
