@@ -143,7 +143,7 @@ const commonConfig = {
        * Copy image files to build folder.
        */
       {
-        test: /\.(?:ico|gif|png|jpg|jpeg|webp|mp4|mp3|wav|pdf|woff(2)?|eot|ttf|otf)$/i,
+        test: /\.(?:ico|gif|svg|png|jpg|jpeg|webp|mp4|mp3|wav|pdf|woff(2)?|eot|ttf|otf)$/i,
         loader: "file-loader",
         options: {
           name: "[path][name].[ext]",
@@ -154,16 +154,6 @@ const commonConfig = {
             process.env.ASSETS_PATH || ""
           ),
         },
-      },
-
-      /**
-       * Raw file
-       * Load inline files in bundle
-       * doc: https://www.npmjs.com/package/raw-loader
-       */
-      {
-        test: /\.svg$/,
-        use: "raw-loader",
       },
     ],
   },
