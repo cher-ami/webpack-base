@@ -13,9 +13,19 @@ function App(props: IProps) {
       <nav>
         <ul>
           <li>
-            <Link to={"/"}>Home</Link>{" "}
+            <Link to={"/"}>Home</Link>
+
+
+
+
+
+
           </li>
           <li>
+
+
+
+            
             <Link to={"/work/first-work"}>Work - id: "first-work"</Link>
           </li>
         </ul>
