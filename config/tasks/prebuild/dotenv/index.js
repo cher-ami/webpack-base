@@ -58,6 +58,9 @@ const prebuildDotEnv = (newFilePath = NEW_DOTENV_FILE_PATH) => {
     template = template.filter((e) => e).join("\n");
     debug("template to write in file", template);
 
+    logs.start("Prebuild dotenv");
+    logs.note(`dotenv path: ${newFilePath}`);
+
     debug("write .env file...");
     Files.new(newFilePath).write(template);
 

@@ -1,13 +1,19 @@
 const { Files } = require("@zouloux/files");
 const logs = require("../../../helpers/logs-helper");
 const debug = require("debug")("config:prebuild-htaccess");
+const root = require("app-root-path");
 
 const config = require("../../../global.config");
 const paths = require("../../../global.paths");
 const OUTPUT_PATH = config.outputPath;
 const CONFIG_PATH = paths.config;
+
+// select first .htaccess in src/.htaccess
+// if doesn't exist, take .htaccess from task templates folder
 const HTACCESS_TEMPLATE_FILE =
-  CONFIG_PATH + "/tasks/prebuild/htaccess/templates/.htaccess.template";
+  Files.getFiles(`${paths.src}/.htaccess`).files.length > 0
+    ? `${paths.src}/.htaccess`
+    : CONFIG_PATH + "/tasks/prebuild/htaccess/templates/.htaccess.template";
 
 /**
  * Prebuild .htaccess file
@@ -22,7 +28,7 @@ const prebuildHtaccess = () => {
    */
   const _htpasswdLinkInHtaccess = (
     pNewHtaccessFilePath = newHtaccessFilePath,
-    pServerWebRootPath = process.env.HTACCESS_SERVER_WEB_ROOT_PATH,
+    pServerWebRootPath = process.env.HTACCESS_SERVER_WEB_ROOT_PATH
   ) => {
     if (!pServerWebRootPath) return null;
 
@@ -117,10 +123,12 @@ const prebuildHtaccess = () => {
     return { newHtaccessFilePath };
   };
 
-  logs.start("Prebuild htaccess.");
+  logs.start("Prebuild htaccess");
 
   // create htaccess file and get returned newHtaccessFilePath
   const { newHtaccessFilePath } = _createHtaccessFile();
+
+  logs.note(`htaccess path: ${newHtaccessFilePath}`);
 
   if (process.env.HTACCESS_ENABLE_AUTH === "true") {
     _createHtpasswdFile();
