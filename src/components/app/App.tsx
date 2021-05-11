@@ -23,8 +23,6 @@ function App(props: IProps) {
           </li>
           <li>
 
-
-
             
             <Link to={"/work/first-work"}>Work - id: "first-work"</Link>
           </li>
