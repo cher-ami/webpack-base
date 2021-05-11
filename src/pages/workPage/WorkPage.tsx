@@ -31,16 +31,14 @@ const WorkPage = forwardRef((props: IProps, handleRef: ForwardedRef<any>) => {
 
   /**
    * Handle page for Stack
-   * Minimal arguments should be: usePageRegister({ componentName, handleRef, rootRef });
+   * Minimal arguments should be: useStack({ componentName, handleRef, rootRef });
    * (remove playIn and playOut if not use)
    */
   useStack({ componentName, handleRef, rootRef, playIn, playOut });
 
-  debug("props.params", props.params);
-
   return (
     <div className={css.root} ref={rootRef}>
-      {componentName} witn ID <em>{props.params?.id}</em>
+      {componentName} with id: <em>{props.params?.id}</em>
     </div>
   );
 });

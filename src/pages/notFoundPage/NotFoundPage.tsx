@@ -28,7 +28,7 @@ const NotFoundPage = forwardRef(
 
     /**
      * Handle page for Stack
-     * Minimal arguments should be: usePageRegister({ componentName, handleRef, rootRef });
+     * Minimal arguments should be: useStack({ componentName, handleRef, rootRef });
      * (remove playIn and playOut if not use)
      */
     useStack({ componentName, handleRef, rootRef, playIn, playOut });
