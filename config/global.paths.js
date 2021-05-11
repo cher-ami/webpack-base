@@ -40,9 +40,7 @@ module.exports = {
   tasks: root.resolve("config/tasks"),
   taskSetupFolder: root.resolve("config/tasks/setup"),
   installConfig: root.resolve("config/install.config.js"),
-  webpackTemplatePath: root.resolve("config/webpack/templates"),
-  bundlesTemplatesPath: root.resolve("config/tasks/scaffold-bundle/templates"),
   componentsTemplatesPath: root.resolve(
-    "config/tasks/scaffold-component/templates"
+    "config/tasks/scaffold/component/templates"
   ),
 };
