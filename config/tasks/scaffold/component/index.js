@@ -3,7 +3,7 @@ const path = require("path");
 const Inquirer = require("inquirer");
 const changeCase = require("change-case");
 const createFile = require("./helpers/create-file");
-const logs = require("../../helpers/logs-helper");
+const logs = require("../../../helpers/logs-helper");
 const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:scaffold-component");
 
@@ -11,9 +11,9 @@ const debug = require("debug")("config:scaffold-component");
 Files.setVerbose(false);
 
 // get local task path
-const paths = require("../../global.paths");
+const paths = require("../../../global.paths");
 // get local task config
-const config = require("../../global.config");
+const config = require("../../../global.config");
 
 const _askWhichComponentFolder = (
   componentCompatibleFolders = config.componentCompatibleFolders
@@ -34,6 +34,15 @@ const _askComponentName = () => {
   });
 };
 
+const _askTest = () => {
+  return Inquirer.prompt({
+    type: "confirm",
+    message: "Create test file?",
+    name: "createTest",
+    default: false,
+  });
+};
+
 /**
  * React Component Builder
  * @param subFolder
@@ -46,6 +55,7 @@ const _reactComponentBuilder = ({
   subFolder,
   componentPath,
   upperComponentName,
+  createTest
 }) => {
   // choose between page and component type
   const componentType = subFolder === "pages" ? "page" : "component";
@@ -61,12 +71,15 @@ const _reactComponentBuilder = ({
     destinationFilePath: `${componentPath}/${upperComponentName}.module.less`,
     replaceExpressions: { upperComponentName },
   });
+
   // scaffold test
-  createFile({
-    templateFilePath: `${paths.componentsTemplatesPath}/common/component.test.ts.template`,
-    destinationFilePath: `${componentPath}/${upperComponentName}.test.ts`,
-    replaceExpressions: { upperComponentName },
-  });
+  if (createTest) {
+    createFile({
+      templateFilePath: `${paths.componentsTemplatesPath}/common/component.test.ts.template`,
+      destinationFilePath: `${componentPath}/${upperComponentName}.test.ts`,
+      replaceExpressions: { upperComponentName },
+    });
+  }
 };
 
 /**
@@ -75,7 +88,7 @@ const _reactComponentBuilder = ({
  * @param upperComponentName
  * @private
  */
-const _domComponentBuilder = ({ componentPath, upperComponentName }) => {
+const _domComponentBuilder = ({ componentPath, upperComponentName, createTest }) => {
   // scaffold component file
   createFile({
     templateFilePath: `${paths.componentsTemplatesPath}/dom/component.ts.template`,
@@ -89,11 +102,13 @@ const _domComponentBuilder = ({ componentPath, upperComponentName }) => {
     replaceExpressions: { upperComponentName },
   });
   // scaffold test
-  createFile({
-    templateFilePath: `${paths.componentsTemplatesPath}/common/component.test.ts.template`,
-    destinationFilePath: `${componentPath}/${upperComponentName}.test.ts`,
-    replaceExpressions: { upperComponentName },
-  });
+  if (createTest) {
+    createFile({
+      templateFilePath: `${paths.componentsTemplatesPath}/common/component.test.ts.template`,
+      destinationFilePath: `${componentPath}/${upperComponentName}.test.ts`,
+      replaceExpressions: { upperComponentName },
+    });
+  }
 };
 
 // ----------------------–----------------------–----------------------–-------- PUBLIC
@@ -138,6 +153,13 @@ const scaffoldComponent = (pComponentType) => {
       componentName = answer.componentName;
     });
 
+
+    // Get component name
+    let createTest = "";
+    await _askTest().then((answer) => {
+      createTest = answer.createTest;
+    });
+
     // formated name "lowerCase"
     let lowerComponentName = changeCase.camelCase(componentName);
 
@@ -149,15 +171,14 @@ const scaffoldComponent = (pComponentType) => {
     let componentPath = `${paths.src}/${subFolder}/${lowerComponentName}`;
     debug("component will be created here: componentPath", componentPath);
 
-    /**
-     * Build component
-     */
+
     // build REACT component
     if (pComponentType === "react") {
       _reactComponentBuilder({
         subFolder,
         upperComponentName,
         componentPath,
+        createTest,
       });
     }
 
@@ -166,6 +187,7 @@ const scaffoldComponent = (pComponentType) => {
       _domComponentBuilder({
         upperComponentName,
         componentPath,
+        createTest
       });
     }
 

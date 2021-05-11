@@ -1,6 +1,6 @@
 require("colors");
 const Inquirer = require("inquirer");
-const scaffoldComponent = require("../scaffold-component");
+const scaffoldComponent = require("./component");
 const debug = require("debug")("config:scaffold");
 
 /**
