@@ -24,7 +24,7 @@
     "scaffold": "node config/tasks/runner.js scaffold",
     "setup": "npm i && node config/tasks/runner.js setup",
     "help": "node config/tasks/runner.js help",
-    "prettier": "prettier --write './src/**/**/**/*.{tsx,ts,jsx,js,less,css,json,md}'",
+    "prettier": "prettier --write .",
     "test": "jest src/*",
     "test-framework": "jest config/*",
     "postinstall": "cp -n .env.example .env || true"

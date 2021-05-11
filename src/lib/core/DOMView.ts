@@ -6,7 +6,7 @@ export class DOMView {
   // ------------------------------------------------------------------------- DOM
 
   // Starting node of our component
-  $root: HTMLElement;
+  $root: HTMLElement
 
   // ------------------------------------------------------------------------- INIT
 
@@ -19,23 +19,23 @@ export class DOMView {
   constructor($pRoot: HTMLElement = null, pAutoInit = true) {
     // Set root from parameter
     if ($pRoot != null) {
-      this.$root = $pRoot;
+      this.$root = $pRoot
     }
 
     // Initialise if needed
-    pAutoInit && this.init();
+    pAutoInit && this.init()
   }
 
   /**
    * Start init sequence
    */
   protected init() {
-    this.prepareDependencies();
-    this.beforeInit();
-    this.prepareNodes();
-    this.initComponents();
-    this.prepareEvents();
-    this.afterInit();
+    this.prepareDependencies()
+    this.beforeInit()
+    this.prepareNodes()
+    this.initComponents()
+    this.prepareEvents()
+    this.afterInit()
   }
 
   /**

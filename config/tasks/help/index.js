@@ -1,4 +1,4 @@
-require("colors");
+require("colors")
 
 /**
  * Node command line
@@ -23,7 +23,7 @@ const help = () => {
   ${"npm run prettier".brightBlue}
   > prettify sources. This appended on each pre-commit.
       `
-  );
-};
+  )
+}
 
-module.exports = { help };
+module.exports = { help }

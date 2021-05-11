@@ -9,9 +9,9 @@ export const merge = (pClasses: any[], pJoin: string = " "): string => {
     return pClasses
       .reduce((a, b) => a.concat(b), [])
       .filter((v) => v)
-      .join(pJoin);
+      .join(pJoin)
   }
-};
+}
 
 /**
  * @credits Original work by Alexis Bouhet - https://zouloux.com
@@ -25,10 +25,10 @@ export function inArray(pArray: any[], pElement: any): boolean {
   // Browse array
   for (let i in pArray) {
     // We got it
-    if (pArray[i] == pElement) return true;
+    if (pArray[i] == pElement) return true
   }
   // Not found
-  return false;
+  return false
 }
 
 /**
@@ -41,7 +41,7 @@ export function inArray(pArray: any[], pElement: any): boolean {
  */
 export function deleteWhere(pArray: any[], pWhere: {}): any[] {
   // New array created
-  let newArray = [];
+  let newArray = []
 
   // Browse array
   for (let i in pArray) {
@@ -49,13 +49,13 @@ export function deleteWhere(pArray: any[], pWhere: {}): any[] {
     for (let j in pWhere) {
       // Check if this object is ok with condition
       if (!(j in pArray[i]) || pWhere[j] != pArray[i][j]) {
-        newArray.push(pArray[i]);
-        break;
+        newArray.push(pArray[i])
+        break
       }
     }
   }
   // Return filtered array
-  return newArray;
+  return newArray
 }
 
 /**
@@ -68,16 +68,16 @@ export function deleteWhere(pArray: any[], pWhere: {}): any[] {
  */
 export function removeElement(pArray: any[], pElement: any) {
   // Browse array
-  let newArray = [];
+  let newArray = []
   for (let i in pArray) {
     // If this is not not searched element
     if (pArray[i] != pElement) {
       // Add to new array
-      newArray.push(pArray[i]);
+      newArray.push(pArray[i])
     }
   }
   // Return new array
-  return newArray;
+  return newArray
 }
 
 /**
@@ -88,23 +88,23 @@ export function removeElement(pArray: any[], pElement: any) {
  * @returns {any} Original instance of array with same elements at other indexes
  */
 export function shuffle(pArray: any[]): any[] {
-  let currentIndex = pArray.length;
-  let temporaryValue;
-  let randomIndex;
+  let currentIndex = pArray.length
+  let temporaryValue
+  let randomIndex
 
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
     // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex -= 1
 
     // And swap it with the current element.
-    temporaryValue = pArray[currentIndex];
-    pArray[currentIndex] = pArray[randomIndex];
-    pArray[randomIndex] = temporaryValue;
+    temporaryValue = pArray[currentIndex]
+    pArray[currentIndex] = pArray[randomIndex]
+    pArray[randomIndex] = temporaryValue
   }
 
-  return pArray;
+  return pArray
 }
 
 /**
@@ -121,23 +121,23 @@ export const splitArrayToEqualChunks = (pArray: any[], pNumber: number) => {
   let rest = pArray.length % pNumber,
     restUsed = rest,
     partLength = Math.floor(pArray.length / pNumber),
-    result = [];
+    result = []
 
   for (let i = 0; i < pArray.length; i += partLength) {
     let end = partLength + i,
-      add = false;
+      add = false
 
     if (rest !== 0 && restUsed) {
-      end++;
-      restUsed--;
-      add = true;
+      end++
+      restUsed--
+      add = true
     }
 
-    result.push(pArray.slice(i, end));
+    result.push(pArray.slice(i, end))
 
     if (add) {
-      i++;
+      i++
     }
   }
-  return result;
-};
+  return result
+}

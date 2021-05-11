@@ -1,4 +1,4 @@
-const root = require("app-root-path");
+const root = require("app-root-path")
 
 module.exports = {
   /**
@@ -40,7 +40,5 @@ module.exports = {
   tasks: root.resolve("config/tasks"),
   taskSetupFolder: root.resolve("config/tasks/setup"),
   installConfig: root.resolve("config/install.config.js"),
-  componentsTemplatesPath: root.resolve(
-    "config/tasks/scaffold/component/templates"
-  ),
-};
+  componentsTemplatesPath: root.resolve("config/tasks/scaffold/component/templates"),
+}

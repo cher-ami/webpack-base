@@ -11,7 +11,7 @@
  * @returns {number} Limited value
  */
 export function limitRange(pMin: number, pValue: number, pMax: number): number {
-  return Math.max(pMin, Math.min(pValue, pMax));
+  return Math.max(pMin, Math.min(pValue, pMax))
 }
 
 // ----------------------------------------------------------------------------- ARITHMETIC
@@ -21,7 +21,7 @@ export function limitRange(pMin: number, pValue: number, pMax: number): number {
  * From http://stackoverflow.com/questions/4467539/javascript-modulo-not-behaving
  */
 export function positiveModulo(n: number, m: number): number {
-  return ((n % m) + m) % m;
+  return ((n % m) + m) % m
 }
 
 // ----------------------------------------------------------------------------- RANDOM
@@ -35,10 +35,10 @@ export function positiveModulo(n: number, m: number): number {
  */
 export function randomRange(pMin: number, pMax: number, pRound = false) {
   // Get random value between min and max
-  let value = pMin + Math.random() * (pMax - pMin);
+  let value = pMin + Math.random() * (pMax - pMin)
 
   // Round if needed and return
-  return pRound ? Math.floor(value) : value;
+  return pRound ? Math.floor(value) : value
 }
 
 /**
@@ -48,7 +48,7 @@ export function randomRange(pMin: number, pMax: number, pRound = false) {
  * @returns {number} int from 0 to pTo, excluded
  */
 export function randomTo(pTo: number): number {
-  return Math.floor(Math.random() * pTo);
+  return Math.floor(Math.random() * pTo)
 }
 
 /**
@@ -56,7 +56,7 @@ export function randomTo(pTo: number): number {
  * @returns {boolean}
  */
 export function randomBool(): boolean {
-  return Math.random() > 0.5;
+  return Math.random() > 0.5
 }
 
 /**
@@ -66,7 +66,7 @@ export function randomBool(): boolean {
  */
 export function randomPickFromArray<P>(pArray: P[]): P {
   // Return randomly selected object
-  return pArray[randomRange(0, pArray.length, true)];
+  return pArray[randomRange(0, pArray.length, true)]
 }
 
 /**
@@ -77,7 +77,7 @@ export function randomPickFromArray<P>(pArray: P[]): P {
  */
 export function randomPickFromObject<P>(pObject: { [index: string]: P }): P {
   // Get object keys
-  const keys = Object.keys(pObject);
+  const keys = Object.keys(pObject)
 
   // Return randomly selected object
   return pObject[
@@ -86,5 +86,5 @@ export function randomPickFromObject<P>(pObject: { [index: string]: P }): P {
       // Pick random key
       randomRange(0, keys.length, true)
     ]
-  ];
+  ]
 }

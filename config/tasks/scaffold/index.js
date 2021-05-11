@@ -1,7 +1,7 @@
-require("colors");
-const Inquirer = require("inquirer");
-const scaffoldComponent = require("./component");
-const debug = require("debug")("config:scaffold");
+require("colors")
+const Inquirer = require("inquirer")
+const scaffoldComponent = require("./component")
+const debug = require("debug")("config:scaffold")
 
 /**
  * Ask bundle Type to
@@ -15,12 +15,12 @@ const _scaffolders = [
     name: "DOM component",
     exec: () => scaffoldComponent("dom"),
   },
-];
+]
 
 const scaffold = () =>
   new Promise((resolve) => {
     // Get scaffolder to present listing to user
-    let scaffolderTypes = _scaffolders.map((scaffolder) => scaffolder.name);
+    let scaffolderTypes = _scaffolders.map((scaffolder) => scaffolder.name)
 
     // List available scaffolders to user
     Inquirer.prompt({
@@ -31,12 +31,12 @@ const scaffold = () =>
       pageSize: 20,
     }).then((answer) => {
       // Get scaffolder index
-      const scaffolderIndex = scaffolderTypes.indexOf(answer.type);
+      const scaffolderIndex = scaffolderTypes.indexOf(answer.type)
 
       // Start this scaffolder
-      _scaffolders[scaffolderIndex].exec();
-      resolve();
-    });
-  });
+      _scaffolders[scaffolderIndex].exec()
+      resolve()
+    })
+  })
 
-module.exports = { scaffold };
+module.exports = { scaffold }
