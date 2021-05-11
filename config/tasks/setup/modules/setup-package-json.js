@@ -1,11 +1,11 @@
-require("colors");
-const { Files } = require("@zouloux/files");
-const Inquirer = require("inquirer");
-const changeCase = require("change-case");
-const logs = require("../../../helpers/logs-helper");
-const debug = require("debug")("config:manage-package-json");
-const paths = require("../../../global.paths");
-const config = require("../../../global.config");
+require("colors")
+const { Files } = require("@zouloux/files")
+const Inquirer = require("inquirer")
+const changeCase = require("change-case")
+const logs = require("../../../helpers/logs-helper")
+const debug = require("debug")("config:manage-package-json")
+const paths = require("../../../global.paths")
+const config = require("../../../global.config")
 
 /**
  * Setup package.json
@@ -18,30 +18,30 @@ const setupPackageJson = ({
   fakeMode = config.fakeMode,
 } = {}) => {
   return new Promise(async (resolve) => {
-    logs.start("Setup package.json...");
+    logs.start("Setup package.json...")
 
     // Read package.json
-    let projectName = packageJson.name;
-    let projectVersion = packageJson.version;
-    let projectAuthor = packageJson.author;
-    let projectDescription = packageJson.description;
+    let projectName = packageJson.name
+    let projectVersion = packageJson.version
+    let projectAuthor = packageJson.author
+    let projectDescription = packageJson.description
 
     debug("current package properties:", {
       projectVersion,
       projectName,
       projectAuthor,
       projectDescription,
-    });
+    })
 
     // Get package infos if this is the first setup
     if (projectName !== defaultProjectName) {
       debug(`package.json name, has NOT default name ${defaultProjectName}.
       Current package.json name is ${projectName}.
       We suppose he has been already setup.
-      `);
+      `)
 
-      logs.error("package.json is already setup. Aborting.");
-      return resolve({ projectName, projectAuthor, projectDescription });
+      logs.error("package.json is already setup. Aborting.")
+      return resolve({ projectName, projectAuthor, projectDescription })
     }
 
     // Ask user for project name
@@ -49,56 +49,54 @@ const setupPackageJson = ({
       type: "input",
       message: "What's the project name? (dash-case)",
       name: "projectName",
-    }).then(
-      (answer) => (projectName = changeCase.paramCase(answer.projectName))
-    );
-    debug("> new project name:", projectName);
+    }).then((answer) => (projectName = changeCase.paramCase(answer.projectName)))
+    debug("> new project name:", projectName)
 
     // Ask user for author
     await Inquirer.prompt({
       type: "input",
       message: "What's the author name?",
       name: "projectAuthor",
-    }).then((answer) => (projectAuthor = answer.projectAuthor));
-    debug("> new project author:", projectAuthor);
+    }).then((answer) => (projectAuthor = answer.projectAuthor))
+    debug("> new project author:", projectAuthor)
 
     // Ask user for desc
     await Inquirer.prompt({
       type: "input",
       message: "What's the descripton?",
       name: "projectDescription",
-    }).then((answer) => (projectDescription = answer.projectDescription));
-    debug("> new project description:", projectDescription);
+    }).then((answer) => (projectDescription = answer.projectDescription))
+    debug("> new project description:", projectDescription)
 
     // Reset project version
-    projectVersion = "0.1.0";
-    debug("> new project version:", projectVersion);
+    projectVersion = "0.1.0"
+    debug("> new project version:", projectVersion)
 
     // Set name and version into package.json
     if (!fakeMode) {
-      debug("Modify package.json");
+      debug("Modify package.json")
       Files.getFiles("package.json").alterJSON((packageObject) => {
-        packageObject.version = projectVersion;
-        packageObject.name = projectName;
-        packageObject.author = projectAuthor;
-        packageObject.description = projectDescription;
-        return packageObject;
-      });
+        packageObject.version = projectVersion
+        packageObject.name = projectName
+        packageObject.author = projectAuthor
+        packageObject.description = projectDescription
+        return packageObject
+      })
     } else {
-      debug("FakeMode is activated, do nothing.".red);
+      debug("FakeMode is activated, do nothing.".red)
     }
 
-    logs.done();
+    logs.done()
     debug("Promise is resolve fn pass new package properties:", {
       projectName,
       projectAuthor,
       projectDescription,
-    });
+    })
     setTimeout(
       () => resolve({ projectName, projectAuthor, projectDescription }),
       logDoneDelay
-    );
-  });
-};
+    )
+  })
+}
 
-module.exports = setupPackageJson;
+module.exports = setupPackageJson

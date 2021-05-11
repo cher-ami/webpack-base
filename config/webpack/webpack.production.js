@@ -1,11 +1,10 @@
-const webpack = require("webpack");
-const { merge } = require("webpack-merge");
-const common = require("./webpack.common.js");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserJSPlugin = require("terser-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
-const config = require("../global.config");
+const webpack = require("webpack")
+const { merge } = require("webpack-merge")
+const common = require("./webpack.common.js")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const TerserJSPlugin = require("terser-webpack-plugin")
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
+const config = require("../global.config")
 
 /**
  * Production Webpack Configuration
@@ -22,8 +21,6 @@ const productionConfig = {
     filename: config.outputHashName
       ? `[name].[contenthash].bundle.js`
       : `[name].bundle.js`,
-    // need production APP_BASE, for that, set a ".env.production" with APP_BASE value.
-    // if .env.production doesn't exist, APP_BASE from ".env" will be used
     publicPath: process.env.APP_BASE,
   },
 
@@ -38,9 +35,7 @@ const productionConfig = {
      * They cannot be used together in the same config.
      */
     new MiniCssExtractPlugin({
-      filename: config.outputHashName
-        ? `[name].[contenthash].css`
-        : `[name].css`,
+      filename: config.outputHashName ? `[name].[contenthash].css` : `[name].css`,
     }),
 
     /**
@@ -126,7 +121,7 @@ const productionConfig = {
     colors: true,
     assetsSort: "size",
   },
-};
+}
 
 // Export merge config
-module.exports = merge(common, productionConfig);
+module.exports = merge(common, productionConfig)

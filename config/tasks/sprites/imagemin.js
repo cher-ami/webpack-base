@@ -1,21 +1,21 @@
 /**
  * @credits Original by Alexis Bouhet - https://zouloux.com
  */
-const imagemin = require("imagemin");
-const imageminJpegtran = require("imagemin-jpegtran");
-const imageminPngquant = require("imagemin-pngquant");
-const { Files } = require("@zouloux/files");
-const path = require("path");
-const globalPaths = require("../../global.paths");
+const imagemin = require("imagemin")
+const imageminJpegtran = require("imagemin-jpegtran")
+const imageminPngquant = require("imagemin-pngquant")
+const { Files } = require("@zouloux/files")
+const path = require("path")
+const globalPaths = require("../../global.paths")
 
 // Mini match targeting images inside a folder
-const imagesMiniMatch = "*.{jpg,png}";
+const imagesMiniMatch = "*.{jpg,png}"
 
 // Load config
-const imageminConfig = require("./imagemin.config");
+const imageminConfig = require("./imagemin.config")
 
-let tempUniqid = Date.now();
-let counter = 0;
+let tempUniqid = Date.now()
+let counter = 0
 
 /**
  * Public API
@@ -39,12 +39,12 @@ module.exports = {
   ) =>
     new Promise((resolve) => {
       // Clone default config and override with custom config
-      const pngConfig = { ...imageminConfig.defaultPNGSettings, ...pPngConfig };
+      const pngConfig = { ...imageminConfig.defaultPNGSettings, ...pPngConfig }
 
       // If we need to add .min extension, output in a temp folder
       let tempOutput = pAddDotMinAndDoNotOverride
         ? `temp-${tempUniqid}-${++counter}/`
-        : pOutputFolder;
+        : pOutputFolder
 
       // @see : https://github.com/imagemin/imagemin
       imagemin(
@@ -70,32 +70,26 @@ module.exports = {
             // Browse images inside temp folder
             pInputFiles.map((file) => {
               // Read file extension
-              const ext = path.extname(file);
+              const ext = path.extname(file)
 
               // New file name with .min extension before original file extension
-              const newFileName = `${path.basename(file, ext)}.min${ext}`;
+              const newFileName = `${path.basename(file, ext)}.min${ext}`
 
               // Path of the minified image, in the same folder
-              const minifiedDestinationPath = path.join(
-                pOutputFolder,
-                newFileName
-              );
+              const minifiedDestinationPath = path.join(pOutputFolder, newFileName)
 
               // Delete previously minified image
-              Files.getFiles(minifiedDestinationPath).delete();
+              Files.getFiles(minifiedDestinationPath).delete()
 
               // Move file inside the same folder
-              const minifiedTempPath = path.join(
-                tempOutput,
-                path.basename(file)
-              );
-              Files.getFiles(minifiedTempPath).moveTo(minifiedDestinationPath);
-            });
+              const minifiedTempPath = path.join(tempOutput, path.basename(file))
+              Files.getFiles(minifiedTempPath).moveTo(minifiedDestinationPath)
+            })
           }
 
           // Remove temp folder
           if (pAddDotMinAndDoNotOverride) {
-            Files.getFolders(tempOutput).delete();
+            Files.getFolders(tempOutput).delete()
           }
 
           // Show files
@@ -104,17 +98,16 @@ module.exports = {
               const customConfigText =
                 pPngConfig == null || Object.keys(pPngConfig).length === 0
                   ? "default config."
-                  : JSON.stringify(pPngConfig);
+                  : JSON.stringify(pPngConfig)
               console.log(
-                `	✓ Image ${path.basename(
-                  file.path
-                )} optimized with ${customConfigText}.`.grey
-              );
-            });
+                `	✓ Image ${path.basename(file.path)} optimized with ${customConfigText}.`
+                  .grey
+              )
+            })
 
           // Done
-          resolve();
-        });
+          resolve()
+        })
     }),
 
   /**
@@ -130,22 +123,22 @@ module.exports = {
       )})/**/${imagesMiniMatch}`
     ).all((imageFile) => {
       // Skip already minified images
-      const imageBaseName = path.basename(imageFile, path.extname(imageFile));
+      const imageBaseName = path.basename(imageFile, path.extname(imageFile))
       if (imageBaseName.lastIndexOf(".min") === imageBaseName.length - 4) {
         // Delete this min file
-        Files.getFiles(imageFile).delete();
+        Files.getFiles(imageFile).delete()
 
         // Return no promise to skip
-        return null;
+        return null
       }
 
       // Get override settings for this file
-      let customConfig = {};
+      let customConfig = {}
       Object.keys(imageminConfig.settingOverride).map((configPath) => {
         if (imageFile.indexOf(configPath) > 0) {
-          customConfig = imageminConfig.settingOverride[configPath];
+          customConfig = imageminConfig.settingOverride[configPath]
         }
-      });
+      })
 
       // Optimize this file and get its promise
       return module.exports.optimizeFiles(
@@ -154,22 +147,21 @@ module.exports = {
         customConfig,
         // Add .min extension
         true
-      );
-    });
+      )
+    })
 
     // Start log
-    const totalImages = promises.filter((p) => p != null).length;
+    const totalImages = promises.filter((p) => p != null).length
     console.log(
-      `  → Optimizing ${totalImages} image${totalImages > 1 ? "s" : ""} ...`
-        .cyan
-    );
+      `  → Optimizing ${totalImages} image${totalImages > 1 ? "s" : ""} ...`.cyan
+    )
 
     // Done log
     Promise.all(promises).then(() => {
-      console.log("  → Done !".green);
-    });
+      console.log("  → Done !".green)
+    })
 
     // Return all promises
-    return Promise.all(promises);
+    return Promise.all(promises)
   },
-};
+}

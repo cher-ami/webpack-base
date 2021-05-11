@@ -1,17 +1,17 @@
-let templateRegex;
+let templateRegex
 
 module.exports = {
   setDelimiters(pLeft, pRight) {
-    templateRegex = new RegExp(pLeft + "(.*?)" + pRight, "g");
+    templateRegex = new RegExp(pLeft + "(.*?)" + pRight, "g")
   },
 
   // Quick and dirty template method
   quickTemplate(pTemplate, pValues) {
     if (templateRegex == null) {
-      module.exports.setDelimiters("%%", "%%");
+      module.exports.setDelimiters("%%", "%%")
     }
     return pTemplate.replace(templateRegex, function (i, pMatch) {
-      return pValues && pValues[pMatch];
-    });
+      return pValues && pValues[pMatch]
+    })
   },
-};
+}

@@ -1,19 +1,19 @@
-const { Files } = require("@zouloux/files");
-const logs = require("../../../helpers/logs-helper");
-const debug = require("debug")("config:prebuild-htaccess");
-const root = require("app-root-path");
+const { Files } = require("@zouloux/files")
+const logs = require("../../../helpers/logs-helper")
+const debug = require("debug")("config:prebuild-htaccess")
+const root = require("app-root-path")
 
-const config = require("../../../global.config");
-const paths = require("../../../global.paths");
-const OUTPUT_PATH = config.outputPath;
-const CONFIG_PATH = paths.config;
+const config = require("../../../global.config")
+const paths = require("../../../global.paths")
+const OUTPUT_PATH = config.outputPath
+const CONFIG_PATH = paths.config
 
 // select first .htaccess in src/.htaccess
 // if doesn't exist, take .htaccess from task templates folder
 const HTACCESS_TEMPLATE_FILE =
   Files.getFiles(`${paths.src}/.htaccess`).files.length > 0
     ? `${paths.src}/.htaccess`
-    : CONFIG_PATH + "/tasks/prebuild/htaccess/templates/.htaccess.template";
+    : CONFIG_PATH + "/tasks/prebuild/htaccess/templates/.htaccess.template"
 
 /**
  * Prebuild .htaccess file
@@ -30,7 +30,7 @@ const prebuildHtaccess = () => {
     pNewHtaccessFilePath = newHtaccessFilePath,
     pServerWebRootPath = process.env.HTACCESS_SERVER_WEB_ROOT_PATH
   ) => {
-    if (!pServerWebRootPath) return null;
+    if (!pServerWebRootPath) return null
 
     const template = [
       `# Add password
@@ -41,10 +41,10 @@ const prebuildHtaccess = () => {
       `,
     ]
       .join("\n")
-      .replace(/  +/g, "");
+      .replace(/  +/g, "")
 
-    Files.getFiles(pNewHtaccessFilePath).append(template);
-  };
+    Files.getFiles(pNewHtaccessFilePath).append(template)
+  }
 
   /**
    * Create htpasswdFile
@@ -55,41 +55,39 @@ const prebuildHtaccess = () => {
     pUser = process.env.HTACCESS_AUTH_USER,
     pPassword = process.env.HTACCESS_AUTH_PASSWORD
   ) => {
-    debug("_createHtpasswdFile...");
+    debug("_createHtpasswdFile...")
     debug("_createHtpasswdFile params", {
       outPutPath,
       pUser,
       pPassword,
-    });
+    })
     // check
     if (!outPutPath || !pUser || !pPassword) {
-      debug("Missing param, aborting.");
-      return;
+      debug("Missing param, aborting.")
+      return
     }
     // create htpasswd file and add password in it
-    const htpasswdFilePath = `${outPutPath}/.htpasswd`;
-    debug("htpasswdFilePath", htpasswdFilePath);
+    const htpasswdFilePath = `${outPutPath}/.htpasswd`
+    debug("htpasswdFilePath", htpasswdFilePath)
 
     // define content
-    const htpasswdContent = `${pUser}:${pPassword}`;
-    debug("htpasswdContent", htpasswdContent);
+    const htpasswdContent = `${pUser}:${pPassword}`
+    debug("htpasswdContent", htpasswdContent)
 
     // write content user:pass in htpasswd file
-    Files.new(htpasswdFilePath).write(htpasswdContent);
-  };
+    Files.new(htpasswdFilePath).write(htpasswdContent)
+  }
 
   /**
    * rewrite http To https
    * @param pNewHtaccessFilePath
    * @returns {string|null}
    */
-  const _rewriteHttpToHttpsInHtaccess = (
-    pNewHtaccessFilePath = newHtaccessFilePath
-  ) => {
-    debug("_rewriteHttpToHttpsInHtaccess...");
+  const _rewriteHttpToHttpsInHtaccess = (pNewHtaccessFilePath = newHtaccessFilePath) => {
+    debug("_rewriteHttpToHttpsInHtaccess...")
     debug("_rewriteHttpToHttpsInHtaccess params", {
       pNewHtaccessFilePath,
-    });
+    })
 
     const template = [
       `# Force http to https
@@ -98,10 +96,10 @@ const prebuildHtaccess = () => {
      `,
     ]
       .join("\n")
-      .replace(/  +/g, "");
+      .replace(/  +/g, "")
 
-    Files.getFiles(pNewHtaccessFilePath).append(template);
-  };
+    Files.getFiles(pNewHtaccessFilePath).append(template)
+  }
 
   /**
    * Create htaccess file
@@ -113,32 +111,30 @@ const prebuildHtaccess = () => {
     pOutputPath = OUTPUT_PATH,
     htaccessTemplateFile = HTACCESS_TEMPLATE_FILE
   ) => {
-    debug("create htaccess file...");
+    debug("create htaccess file...")
     // target htaccess new file
-    const newHtaccessFilePath = `${pOutputPath}/.htaccess`;
-    debug("newHtaccessFilePath", newHtaccessFilePath);
-    Files.new(newHtaccessFilePath).write(
-      Files.getFiles(htaccessTemplateFile).read()
-    );
-    return { newHtaccessFilePath };
-  };
+    const newHtaccessFilePath = `${pOutputPath}/.htaccess`
+    debug("newHtaccessFilePath", newHtaccessFilePath)
+    Files.new(newHtaccessFilePath).write(Files.getFiles(htaccessTemplateFile).read())
+    return { newHtaccessFilePath }
+  }
 
-  logs.start("Prebuild htaccess");
+  logs.start("Prebuild htaccess")
 
   // create htaccess file and get returned newHtaccessFilePath
-  const { newHtaccessFilePath } = _createHtaccessFile();
+  const { newHtaccessFilePath } = _createHtaccessFile()
 
-  logs.note(`htaccess path: ${newHtaccessFilePath}`);
+  logs.note(`htaccess path: ${newHtaccessFilePath}`)
 
   if (process.env.HTACCESS_ENABLE_AUTH === "true") {
-    _createHtpasswdFile();
-    _htpasswdLinkInHtaccess();
+    _createHtpasswdFile()
+    _htpasswdLinkInHtaccess()
   }
   if (process.env.HTACCESS_ENABLE_HTTPS_REDIRECTION === "true") {
-    _rewriteHttpToHttpsInHtaccess();
+    _rewriteHttpToHttpsInHtaccess()
   }
 
-  logs.done();
-};
+  logs.done()
+}
 
-module.exports = prebuildHtaccess;
+module.exports = prebuildHtaccess

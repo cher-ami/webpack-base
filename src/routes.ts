@@ -1,7 +1,7 @@
-import { TRoute } from "@cher-ami/router";
-import HomePage from "./pages/homePage/HomePage";
-import WorkPage from "./pages/workPage/WorkPage";
-import NotFoundPage from "./pages/notFoundPage/NotFoundPage";
+import { TRoute } from "@cher-ami/router"
+import HomePage from "./pages/homePage/HomePage"
+import WorkPage from "./pages/workPage/WorkPage"
+import NotFoundPage from "./pages/notFoundPage/NotFoundPage"
 
 export const routes: TRoute[] = [
   {
@@ -16,4 +16,4 @@ export const routes: TRoute[] = [
     path: "/:rest",
     component: NotFoundPage,
   },
-];
+]

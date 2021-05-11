@@ -1,15 +1,15 @@
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const Dotenv = require("dotenv-webpack");
-const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin");
-const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
-const paths = require("../global.paths");
-const config = require("../global.config");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const path = require("path");
+const webpack = require("webpack")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
+const Dotenv = require("dotenv-webpack")
+const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin")
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin")
+const paths = require("../global.paths")
+const config = require("../global.config")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
+const path = require("path")
 
-const APP_BASE = process.env.APP_BASE;
+const APP_BASE = process.env.APP_BASE
 
 /**
  * Common Webpack Configuration
@@ -25,16 +25,7 @@ const commonConfig = {
    * Resolve
    */
   resolve: {
-    extensions: [
-      ".ts",
-      ".tsx",
-      ".js",
-      ".jsx",
-      ".json",
-      ".module.less",
-      ".less",
-      ".css",
-    ],
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".json", ".module.less", ".less", ".css"],
     alias: {
       // react: "preact/compat",
       // "react-dom/test-utils": "preact/test-utils",
@@ -51,7 +42,6 @@ const commonConfig = {
     /**
      * Compile TS to js process is allowing by esbuild-loader with no type check
      * This plugin allow only type checking part of the process
-     * TODO remplacer par un pluging custom avec un simple tsc -noEmit ?
      * @doc https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
      */
     new ForkTsCheckerWebpackPlugin({ async: false }),
@@ -160,6 +150,6 @@ const commonConfig = {
       },
     ],
   },
-};
+}
 
-module.exports = commonConfig;
+module.exports = commonConfig

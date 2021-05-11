@@ -20,25 +20,25 @@ export function zeroFormat(
   pPlaceHolder = "0"
 ): string {
   // Convert number to string
-  let currentNumberAsString = pNumber.toString();
+  let currentNumberAsString = pNumber.toString()
 
   // Count chars
-  let totalCharsInCurrentNumber = currentNumberAsString.length;
+  let totalCharsInCurrentNumber = currentNumberAsString.length
 
   // Formatted output
-  let output = "";
+  let output = ""
 
   // If we miss some zeros
   if (totalCharsInCurrentNumber < pTotalChars) {
     // Add corresponding number of zeros
-    const missingZeros = pTotalChars - totalCharsInCurrentNumber;
+    const missingZeros = pTotalChars - totalCharsInCurrentNumber
     for (let i = 0; i < missingZeros; i++) {
-      output += pPlaceHolder;
+      output += pPlaceHolder
     }
   }
 
   // Return formatted string
-  return output + currentNumberAsString;
+  return output + currentNumberAsString
 }
 
 /**
@@ -55,20 +55,20 @@ export function zeroFormat(
  */
 export function trailingSlash(pPath: string, pAdd = true): string {
   // If we currently have a trailing slash
-  const hasTrailingSlash = pPath.lastIndexOf("/") == pPath.length - 1;
+  const hasTrailingSlash = pPath.lastIndexOf("/") == pPath.length - 1
 
   // If we have to add trailing slash
   if (pAdd && !hasTrailingSlash) {
-    return pPath + "/";
+    return pPath + "/"
   }
 
   // If we have to remove trailing slash
   else if (!pAdd && hasTrailingSlash) {
-    return pPath.substr(0, pPath.length - 1);
+    return pPath.substr(0, pPath.length - 1)
   }
 
   // Do nothing
-  else return pPath;
+  else return pPath
 }
 
 /**
@@ -85,20 +85,20 @@ export function trailingSlash(pPath: string, pAdd = true): string {
  */
 export function leadingSlash(pPath: string, pAdd = true): string {
   // If we currently have a leading slash
-  const hasLeadingSlash = pPath.indexOf("/") == 0;
+  const hasLeadingSlash = pPath.indexOf("/") == 0
 
   // If we have to add leading slash
   if (pAdd && !hasLeadingSlash) {
-    return "/" + pPath;
+    return "/" + pPath
   }
 
   // If we have to remove leading slash
   else if (!pAdd && hasLeadingSlash) {
-    return pPath.substr(1, pPath.length);
+    return pPath.substr(1, pPath.length)
   }
 
   // Do nothing
-  else return pPath;
+  else return pPath
 }
 
 /**
@@ -108,7 +108,7 @@ export function leadingSlash(pPath: string, pAdd = true): string {
  * For ex: "courgette? Oui!" become "Courgette, Oui!"
  */
 export function upperCaseFirstChar(pSource: string): string {
-  return pSource.substr(0, 1).toUpperCase() + pSource.substr(1, pSource.length);
+  return pSource.substr(0, 1).toUpperCase() + pSource.substr(1, pSource.length)
 }
 
 /**
@@ -118,7 +118,7 @@ export function upperCaseFirstChar(pSource: string): string {
  * For ex: "Fromage? Oui!" become "fromage? Oui!"
  */
 export function lowerCaseFirstChar(pSource: string): string {
-  return pSource.substr(0, 1).toLowerCase() + pSource.substr(1, pSource.length);
+  return pSource.substr(0, 1).toLowerCase() + pSource.substr(1, pSource.length)
 }
 
 /**
@@ -127,26 +127,23 @@ export function lowerCaseFirstChar(pSource: string): string {
  *
  * Ex: "my-string" will be converted to "myString"
  */
-export function dashToCamelCase(
-  pSource: string,
-  pSeparator: string = "-"
-): string {
+export function dashToCamelCase(pSource: string, pSeparator: string = "-"): string {
   // Seperate dashs
-  let splitted = pSource.toLowerCase().split(pSeparator);
-  let total = splitted.length;
+  let splitted = pSource.toLowerCase().split(pSeparator)
+  let total = splitted.length
 
   // Return raw if it's not a dash
-  if (total < 2) return pSource.toLowerCase();
+  if (total < 2) return pSource.toLowerCase()
 
   // The first is not uppercase
-  let out = splitted[0];
+  let out = splitted[0]
 
   // Others are upper cased first
   for (let i = 1; i < total; i++) {
-    out += i == 0 ? splitted[i] : upperCaseFirstChar(splitted[i]);
+    out += i == 0 ? splitted[i] : upperCaseFirstChar(splitted[i])
   }
 
-  return out;
+  return out
 }
 
 /**
@@ -164,9 +161,8 @@ export function camelToDashCase(
 ): string {
   return pSource.replace(
     /([A-Z])/g,
-    (part: string) =>
-      pSeparator + (pUpperCase ? part.toUpperCase() : part.toLowerCase())
-  );
+    (part: string) => pSeparator + (pUpperCase ? part.toUpperCase() : part.toLowerCase())
+  )
 }
 
 /**
@@ -184,13 +180,13 @@ export function enumToString(
   pCamelCase = true
 ): string {
   // On récupère le string en underscore depuis notre enum
-  let enumStringValue = pEnumClass[pEnumValue] as string;
+  let enumStringValue = pEnumClass[pEnumValue] as string
 
   // On converti en dashCase
-  let enumDashValue = enumStringValue.toLowerCase().split("_").join("-");
+  let enumDashValue = enumStringValue.toLowerCase().split("_").join("-")
 
   // On retourne en camel ou en dash
-  return pCamelCase ? dashToCamelCase(enumDashValue) : enumDashValue;
+  return pCamelCase ? dashToCamelCase(enumDashValue) : enumDashValue
 }
 
 /**
@@ -205,23 +201,23 @@ export function enumToString(
  */
 export function stringToEnum(pString: string, pEnumClass: Object): number {
   // Patcher notre dash-case
-  let patchedString = pString.toUpperCase().split("-").join("_");
+  let patchedString = pString.toUpperCase().split("-").join("_")
 
   // Parcourir tous les indexs
-  let index = 0;
+  let index = 0
   do {
     // Si notre index correspond à la valeur recherchée
     if (pEnumClass[index] == patchedString) {
       // On retourne l'index
-      return index;
+      return index
     }
 
     // Sinon on passe au suivant
-    index++;
-  } while (index in pEnumClass);
+    index++
+  } while (index in pEnumClass)
 
   // On n'a pas trouvé
-  return -1;
+  return -1
 }
 
 /**
@@ -231,13 +227,13 @@ export function stringToEnum(pString: string, pEnumClass: Object): number {
  * ex : 'usr/bin/TestFile' will return 'TestFile'
  */
 export function getFileFromPath(pPath: string): string {
-  let lastIndex = pPath.lastIndexOf("/");
+  let lastIndex = pPath.lastIndexOf("/")
 
   if (lastIndex == -1) {
-    lastIndex = 0;
+    lastIndex = 0
   }
 
-  return pPath.substring(lastIndex + 1, pPath.length);
+  return pPath.substring(lastIndex + 1, pPath.length)
 }
 
 /**
@@ -248,13 +244,13 @@ export function getFileFromPath(pPath: string): string {
  * ex: 'usr/bin/TestFile' will return 'usr/bin/'
  */
 export function getBaseFromPath(pPath: string): string {
-  let lastIndex = pPath.lastIndexOf("/");
+  let lastIndex = pPath.lastIndexOf("/")
 
   if (lastIndex == -1) {
-    lastIndex = pPath.length;
+    lastIndex = pPath.length
   }
 
-  return pPath.substring(0, lastIndex);
+  return pPath.substring(0, lastIndex)
 }
 
 /**
@@ -268,7 +264,7 @@ export function getBaseFromPath(pPath: string): string {
  */
 export function extractPathFromBase(pPath: string, pBase: string): string {
   // Get the index of base within the path
-  let baseStartIndex = pPath.indexOf(pBase);
+  let baseStartIndex = pPath.indexOf(pBase)
 
   return (
     // Base is starting path so its ok
@@ -276,7 +272,7 @@ export function extractPathFromBase(pPath: string, pBase: string): string {
       ? pPath.substr(pBase.length, pPath.length)
       : // Invalid base for this path, do nothing
         pPath
-  );
+  )
 }
 
 /**
@@ -288,8 +284,8 @@ export function extractPathFromBase(pPath: string, pBase: string): string {
  */
 export function quickMustache(pTemplate: string, pValues: {}): string {
   return pTemplate.replace(/\{\{(.*?)\}\}/g, function (i, pMatch) {
-    return pValues[pMatch];
-  });
+    return pValues[pMatch]
+  })
 }
 
 /**
@@ -349,7 +345,7 @@ export const SLUG_REGEX = [
     regex: /[\xF1]/g,
     char: "n",
   },
-];
+]
 
 /**
  * @credits Alexis Bouhet - https://zouloux.com
@@ -358,9 +354,9 @@ export const SLUG_REGEX = [
  */
 export function slugify(pInput: string): string {
   // Replace all non URL compatible chars
-  const total = SLUG_REGEX.length;
+  const total = SLUG_REGEX.length
   for (let i = 0; i < total; i++) {
-    pInput = pInput.replace(SLUG_REGEX[i].regex, SLUG_REGEX[i].char);
+    pInput = pInput.replace(SLUG_REGEX[i].regex, SLUG_REGEX[i].char)
   }
 
   // Patch quircks
@@ -369,7 +365,7 @@ export function slugify(pInput: string): string {
     .replace(/\s+/g, "-") // Replacing spaces by dashes
     .replace(/[^a-z0-9-]/g, "") // Deleting non alphanumeric chars
     .replace(/\-{2,}/g, "-") // Deleting multiple dashes
-    .replace(/^\-+|\-+$/g, ""); // Remove leading and trailing slashes
+    .replace(/^\-+|\-+$/g, "") // Remove leading and trailing slashes
 }
 
 /**
@@ -383,28 +379,26 @@ export function slugify(pInput: string): string {
  * @param pQueryString The query string to parse
  * @returns Associative object with parsed values
  */
-export function parseQueryString(
-  pQueryString: string
-): { [key: string]: string | number | boolean } {
+export function parseQueryString(pQueryString: string): {
+  [key: string]: string | number | boolean
+} {
   // Start parsing after first ? or first # if detected
-  ["?", "#"].map((q) => {
+  ;["?", "#"].map((q) => {
     // Detect position of starter and split from it if detected
-    const pos = pQueryString.indexOf(q);
-    if (pos !== -1)
-      pQueryString = pQueryString.substr(pos + 1, pQueryString.length);
-  });
+    const pos = pQueryString.indexOf(q)
+    if (pos !== -1) pQueryString = pQueryString.substr(pos + 1, pQueryString.length)
+  })
 
   // Convert number in strings to number
-  const parseNumberValue = (pValue) =>
-    isNumber(pValue) ? parseFloat(pValue) : pValue;
+  const parseNumberValue = (pValue) => (isNumber(pValue) ? parseFloat(pValue) : pValue)
 
   // TODO : Ajouter le parsing de "true" / "false" ... et étendre ça a des helpers sur stringUtils
 
   // Split every & and browse
-  const outputVarBag = {};
+  const outputVarBag = {}
   pQueryString.split("&").map((couples) => {
     // Split on all =
-    const splitted = couples.split("=", 2);
+    const splitted = couples.split("=", 2)
 
     // If there is an =, this is a key/value
     outputVarBag[decodeURIComponent(splitted[0])] =
@@ -412,9 +406,9 @@ export function parseQueryString(
         ? // Try to parse number from strings
           parseNumberValue(decodeURIComponent(splitted[1]))
         : // Otherwise, this is just a flag, we put it to true
-          true;
-  });
-  return outputVarBag;
+          true
+  })
+  return outputVarBag
 }
 
 /**
@@ -425,8 +419,8 @@ export function parseQueryString(
  * @returns True if the string is representing a number.
  */
 export function isNumber(pNumberAsString: string): boolean {
-  const f = parseFloat(pNumberAsString);
-  return !isNaN(f) && isFinite(f);
+  const f = parseFloat(pNumberAsString)
+  return !isNaN(f) && isFinite(f)
 }
 
 /**
@@ -438,8 +432,5 @@ export function isNumber(pNumberAsString: string): boolean {
  * @returns {string}
  */
 export function nl2br(str: string, breakTag = "<br>") {
-  return (str + "").replace(
-    /([^>\r\n]?)(\r\n|\n\r|\r|\n)/g,
-    "$1" + breakTag + "$2"
-  );
+  return (str + "").replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, "$1" + breakTag + "$2")
 }

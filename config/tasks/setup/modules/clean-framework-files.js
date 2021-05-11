@@ -1,10 +1,10 @@
-require("colors");
-const logs = require("../../../helpers/logs-helper");
-const { execSync } = require("@solid-js/cli");
-const debug = require("debug")("config:clean-framework-files");
-const paths = require("../../../global.paths");
-const config = require("../../../global.config");
-const Inquirer = require("inquirer");
+require("colors")
+const logs = require("../../../helpers/logs-helper")
+const { execSync } = require("@solid-js/cli")
+const debug = require("debug")("config:clean-framework-files")
+const paths = require("../../../global.paths")
+const config = require("../../../global.config")
+const Inquirer = require("inquirer")
 
 /**
  * cleanFrameworkFiles
@@ -20,27 +20,25 @@ const cleanFrameworkFiles = ({
     gitFolder,
     installScriptFile,
     delay,
-  });
+  })
 
   return new Promise(async (resolve) => {
     const removeGitAnswer = await Inquirer.prompt({
       type: "confirm",
       name: "removeGit",
       message: "Do you want to remove .git folder?",
-    });
-    debug("removeGitAnswer", removeGitAnswer["removeGit"]);
+    })
+    debug("removeGitAnswer", removeGitAnswer["removeGit"])
 
     if (!fakeMode && removeGitAnswer["removeGit"]) {
-      logs.start("Remove .git folder");
-      await execSync(`rm -rf ${gitFolder}`, 3);
+      logs.start("Remove .git folder")
+      await execSync(`rm -rf ${gitFolder}`, 3)
     } else {
-      debug(
-        "FakeMode is activated or removeGitAnswer is false, do nothing.".red
-      );
+      debug("FakeMode is activated or removeGitAnswer is false, do nothing.".red)
     }
-    logs.done();
-    setTimeout(resolve, delay);
-  });
-};
+    logs.done()
+    setTimeout(resolve, delay)
+  })
+}
 
-module.exports = cleanFrameworkFiles;
+module.exports = cleanFrameworkFiles

@@ -1,9 +1,9 @@
-const webpack = require("webpack");
-const { merge } = require("webpack-merge");
-const common = require("./webpack.common.js");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const config = require("../global.config");
-require("colors");
+const webpack = require("webpack")
+const { merge } = require("webpack-merge")
+const common = require("./webpack.common.js")
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin")
+const config = require("../global.config")
+require("colors")
 
 /**
  * Development Webpack Configuration
@@ -76,12 +76,7 @@ const developmentConfig = {
           },
           // else if it's a simple less or css file
           {
-            use: [
-              "style-loader",
-              "css-loader",
-              "postcss-loader",
-              "less-loader",
-            ],
+            use: ["style-loader", "css-loader", "postcss-loader", "less-loader"],
           },
         ],
       },
@@ -106,7 +101,7 @@ const developmentConfig = {
       forceEnable: false,
     }),
   ],
-};
+}
 
 // Export merge config
-module.exports = merge(common, developmentConfig);
+module.exports = merge(common, developmentConfig)

@@ -28,21 +28,21 @@
  * 7. @import generated less sprite files to the css bundle
  *
  */
-const nsg = require("@zouloux/node-sprite-generator");
-const Handlebars = require("handlebars");
-const { optimizeFiles } = require("./imagemin");
+const nsg = require("@zouloux/node-sprite-generator")
+const Handlebars = require("handlebars")
+const { optimizeFiles } = require("./imagemin")
 
-require("colors");
-const { Files } = require("@zouloux/files");
-const path = require("path");
-const logs = require("../../helpers/logs-helper");
-const debug = require("debug")("config:sprites");
-const globalPaths = require("../../global.paths");
+require("colors")
+const { Files } = require("@zouloux/files")
+const path = require("path")
+const logs = require("../../helpers/logs-helper")
+const debug = require("debug")("config:sprites")
+const globalPaths = require("../../global.paths")
 
 // Sprite namming
-const spritePrefix = "sprite";
-const separator = "-";
-const configExt = ".config.js";
+const spritePrefix = "sprite"
+const separator = "-"
+const configExt = ".config.js"
 
 // Default sprite config
 const defaultSpriteConfig = {
@@ -56,10 +56,10 @@ const defaultSpriteConfig = {
     compressionLevel: 6,
     filter: "none",
   },
-};
+}
 
 // List of generated PNG files, before optimizing
-const pngToOptimize = [];
+const pngToOptimize = []
 
 /**
  * Optimize all generated png files with imagemin
@@ -86,8 +86,8 @@ const optimizeImages = () => {
         // No console.log
         false
       )
-  );
-};
+  )
+}
 
 // ----------------------------------------------------------------------------- PUBLIC
 
@@ -103,7 +103,7 @@ const sprites = (
     /**
      * Prepare
      */
-    logs.start("Build sprites");
+    logs.start("Build sprites")
 
     // Get skeletons
     let skeletons = [
@@ -121,12 +121,11 @@ const sprites = (
           Files.getFiles(`${spritesTemplatesPath}/sprite.ts.template`).read()
         ),
       },
-    ];
+    ]
 
     // Generate sprite seed for cache busting
     const spriteSeed =
-      (Math.random() * Math.pow(10, 16)).toString(16) +
-      new Date().getTime().toString(16);
+      (Math.random() * Math.pow(10, 16)).toString(16) + new Date().getTime().toString(16)
 
     /**
      *  Generate stylesheet
@@ -150,14 +149,14 @@ const sprites = (
         spriteHeight: pSpriteData.height,
         spritePath: pStylesheetOptions.spritePath,
         textures: [],
-      };
+      }
 
-      debug(cleanStylesheetData);
+      debug(cleanStylesheetData)
 
       // Browse images
       for (let i in pSpriteData.images) {
         // Target this image data
-        let currentImage = pSpriteData.images[i];
+        let currentImage = pSpriteData.images[i]
 
         // Add clean data to clean styleSheet data
         cleanStylesheetData.textures.push({
@@ -165,70 +164,61 @@ const sprites = (
           y: currentImage.y,
           width: currentImage.width,
           height: currentImage.height,
-          name: path.basename(
-            currentImage.path,
-            path.extname(currentImage.path)
-          ),
-        });
+          name: path.basename(currentImage.path, path.extname(currentImage.path)),
+        })
       }
 
       // Add lastOne flag for JSON files
-      cleanStylesheetData.textures[
-        cleanStylesheetData.textures.length - 1
-      ].lastOne = true;
+      cleanStylesheetData.textures[cleanStylesheetData.textures.length - 1].lastOne = true
 
       // Browse already loaded skeletons
       for (let i in skeletons) {
         // Generate styleSheet from skeleton and write it to output file
-        let currentSkeleton = skeletons[i];
-        Files.new(
-          `${pStylesheetOutputPath}.${currentSkeleton.extension}`
-        ).write(currentSkeleton.template(cleanStylesheetData));
+        let currentSkeleton = skeletons[i]
+        Files.new(`${pStylesheetOutputPath}.${currentSkeleton.extension}`).write(
+          currentSkeleton.template(cleanStylesheetData)
+        )
       }
 
       // Write sprite PNG file
-      Files.new(`${pSpriteOutputPath}.png`).write(pSpriteBuffer);
-    };
+      Files.new(`${pSpriteOutputPath}.png`).write(pSpriteBuffer)
+    }
 
     /**
      * Generite sprite
      */
 
-    let totalSprites = 0;
+    let totalSprites = 0
 
     // Browse bundles
     Files.getFolders(`${spritesOutputPath}/*/`).all((folder) => {
       // Browser sprites folders
 
-      ++totalSprites;
+      ++totalSprites
 
       // Get sprite name from folder name
-      const spriteName = path.basename(folder);
+      const spriteName = path.basename(folder)
 
       // Read sprite config
-      let spriteConfig;
+      let spriteConfig
       try {
         spriteConfig = require(`../${path.dirname(
           folder
-        )}/${spritePrefix}${separator}${spriteName}${configExt}`);
+        )}/${spritePrefix}${separator}${spriteName}${configExt}`)
       } catch (error) {
         // Default sprite config
-        logs.note(
-          `Config file not found for ${spriteName}. Using default config...`
-        );
-        spriteConfig = defaultSpriteConfig;
+        logs.note(`Config file not found for ${spriteName}. Using default config...`)
+        spriteConfig = defaultSpriteConfig
       }
 
       // Get images list
-      const imageFiles = Files.getFiles(
-        path.join(folder, "*.+(jpg|jpeg|png|gif)")
-      );
+      const imageFiles = Files.getFiles(path.join(folder, "*.+(jpg|jpeg|png|gif)"))
 
       // Output path for styles / typescript and PNG file
-      const outputPath = `${spritesOutputPath}/${spritePrefix}${separator}${spriteName}`;
-      const PNGOutputPath = `${spritesOutputPath}/${spritePrefix}${separator}${spriteName}`;
+      const outputPath = `${spritesOutputPath}/${spritePrefix}${separator}${spriteName}`
+      const PNGOutputPath = `${spritesOutputPath}/${spritePrefix}${separator}${spriteName}`
 
-      debug({ outputPath, PNGOutputPath });
+      debug({ outputPath, PNGOutputPath })
 
       // Styles sheet path options
       const stylesheetOptions = {
@@ -240,9 +230,9 @@ const sprites = (
 
         // Pixel ratio from sprite config
         pixelRatio: spriteConfig.pixelRatio,
-      };
+      }
 
-      debug(stylesheetOptions);
+      debug(stylesheetOptions)
 
       // Compute nsg options
       const nsgOptions = {
@@ -270,15 +260,15 @@ const sprites = (
             PNGOutputPath,
             stylesheetOptions,
             outputPath
-          );
+          )
         },
-      };
+      }
 
       // When a sprite is generated
       const completeHandler = (error, cache) => {
         cache != null
           ? logs.note(`Sprite ${spriteName} already in cache.`)
-          : logs.note(`Sprite ${spriteName} generated.`);
+          : logs.note(`Sprite ${spriteName} generated.`)
 
         // If there is an imagemin config
         if ("imagemin" in spriteConfig) {
@@ -288,69 +278,60 @@ const sprites = (
             outputPath,
             bundleSpritePath: `${spritesOutputPath}/`,
             spriteConfig,
-          });
+          })
         }
 
         // If we have an error
         if (error) {
-          logs.error(`Error while creating sprite ${error}`);
-          console.log("\007");
-          process.exit(1);
+          logs.error(`Error while creating sprite ${error}`)
+          console.log("\007")
+          process.exit(1)
         }
 
         // If every sprite has compiled
         else if (--totalSprites === 0) {
-          logs.done();
+          logs.done()
 
           // Optimise images
-          Promise.all(optimizeImages()).then(resolve);
+          Promise.all(optimizeImages()).then(resolve)
         }
-      };
+      }
 
       // Compute hash for images files
-      const currentSpriteImagesHash = imageFiles.generateFileListHash(
-        true,
-        false
-      );
+      const currentSpriteImagesHash = imageFiles.generateFileListHash(true, false)
 
       // Compute hash for config file
       const currentSpriteConfigHash = Files.getFiles(
         `${spritesOutputPath}/${spritePrefix}${separator}${spriteName}${configExt}`
-      ).generateFileListHash(true, false);
+      ).generateFileListHash(true, false)
 
       // Concat hashes
-      const currentSpriteHash =
-        currentSpriteImagesHash + currentSpriteConfigHash;
+      const currentSpriteHash = currentSpriteImagesHash + currentSpriteConfigHash
 
       // Target cache file which is storing current hashes
-      const hashCacheFile = Files.getFiles(`${outputPath}.cache`);
+      const hashCacheFile = Files.getFiles(`${outputPath}.cache`)
 
       // Check if hashes changed
-      if (
-        hashCacheFile.exists() &&
-        hashCacheFile.read() === currentSpriteHash
-      ) {
+      if (hashCacheFile.exists() && hashCacheFile.read() === currentSpriteHash) {
         // If there is no changes, complete without recreating sprite
-        setTimeout(() => completeHandler(false, true), 10);
-        return;
+        setTimeout(() => completeHandler(false, true), 10)
+        return
       }
 
       // Write hash to cache
-      hashCacheFile.write(currentSpriteHash);
+      hashCacheFile.write(currentSpriteHash)
 
       // Compile and check errors
-      nsg(nsgOptions, completeHandler);
-    });
+      nsg(nsgOptions, completeHandler)
+    })
 
     // If we do not have any sprites, we are done
     if (totalSprites === 0) {
-      resolve();
-      return;
+      resolve()
+      return
     }
 
-    logs.note(
-      `Generating ${totalSprites} sprite${totalSprites > 1 ? "s" : ""}...`
-    );
-  });
+    logs.note(`Generating ${totalSprites} sprite${totalSprites > 1 ? "s" : ""}...`)
+  })
 
-module.exports = sprites;
+module.exports = sprites

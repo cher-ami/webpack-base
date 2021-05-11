@@ -1,4 +1,4 @@
-const paths = require("./global.paths");
+const paths = require("./global.paths")
 
 module.exports = {
   /**
@@ -47,4 +47,4 @@ module.exports = {
    * Show log done for x ms.
    */
   logDelay: 500,
-};
+}

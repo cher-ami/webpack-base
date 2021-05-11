@@ -1,13 +1,12 @@
-import "./index.less";
-import ReactDOM from "react-dom";
-import * as React from "react";
-import App from "./components/app/App";
-import { routes } from "./routes";
-import { Router } from "@cher-ami/router";
-const debug = require("debug")(`front:index`);
-debug("version:", require("../package.json").version);
-
-(function initApp() {
+import "./index.less"
+import ReactDOM from "react-dom"
+import * as React from "react"
+import App from "./components/app/App"
+import { routes } from "./routes"
+import { Router } from "@cher-ami/router"
+const debug = require("debug")(`front:index`)
+debug("version:", require("../package.json").version)
+;(function initApp() {
   /**
    * Init React App
    */
@@ -16,5 +15,5 @@ debug("version:", require("../package.json").version);
       <App />
     </Router>,
     document.getElementById("root")
-  );
-})();
+  )
+})()

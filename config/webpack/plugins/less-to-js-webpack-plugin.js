@@ -1,7 +1,7 @@
-const { prebuildAtoms } = require("./prebuild-atoms");
-const { Files } = require("@zouloux/files");
-const PLUGIN_NAME = "less-to-js-webpack-plugin";
-const debug = require("debug")(`config:${PLUGIN_NAME}`);
+const { prebuildAtoms } = require("./prebuild-atoms")
+const { Files } = require("@zouloux/files")
+const PLUGIN_NAME = "less-to-js-webpack-plugin"
+const debug = require("debug")(`config:${PLUGIN_NAME}`)
 
 /**
  * Less to JS Plugin
@@ -15,9 +15,9 @@ module.exports = class LessToJsPlugin {
    * @param outputFilename: name of the output file
    */
   constructor({ watcher = "", outputPath = "", outputFilename = "" }) {
-    this.watcher = watcher;
-    this.outputPath = outputPath;
-    this.outputFilename = outputFilename;
+    this.watcher = watcher
+    this.outputPath = outputPath
+    this.outputFilename = outputFilename
   }
 
   /**
@@ -27,9 +27,7 @@ module.exports = class LessToJsPlugin {
    * @private
    */
   _getChangedFiles(compilation) {
-    return compilation.modifiedFiles
-      ? Array.from(compilation.modifiedFiles)
-      : [];
+    return compilation.modifiedFiles ? Array.from(compilation.modifiedFiles) : []
   }
 
   /**
@@ -40,11 +38,11 @@ module.exports = class LessToJsPlugin {
    */
   _fileAsChanged(compilation) {
     // check files to watch
-    const glob = Files.getFiles(this.watcher);
-    debug("glob.files", glob.files);
+    const glob = Files.getFiles(this.watcher)
+    debug("glob.files", glob.files)
 
-    const changedFiles = this._getChangedFiles(compilation);
-    debug("changedFiles", changedFiles);
+    const changedFiles = this._getChangedFiles(compilation)
+    debug("changedFiles", changedFiles)
 
     // check if is glob (glob.files.length > 0)
     if (glob.files && glob.files.length > 0) {
@@ -52,8 +50,8 @@ module.exports = class LessToJsPlugin {
       return glob.files.some((globEl) =>
         // check if a file of change file list match with one of glob files
         changedFiles.some((changeEl) => globEl.includes(changeEl))
-      );
-    } else return false;
+      )
+    } else return false
   }
 
   /**
@@ -62,10 +60,7 @@ module.exports = class LessToJsPlugin {
    * @private
    */
   _outputFileExist() {
-    return (
-      Files.getFiles(`${this.outputPath}/${this.outputFilename}`).files.length >
-      0
-    );
+    return Files.getFiles(`${this.outputPath}/${this.outputFilename}`).files.length > 0
   }
 
   /**
@@ -80,7 +75,7 @@ module.exports = class LessToJsPlugin {
       pWatcher: this.watcher,
       pOutputPath: this.outputPath,
       pOutputFilename: this.outputFilename,
-    });
+    })
   }
 
   /**
@@ -93,30 +88,27 @@ module.exports = class LessToJsPlugin {
      * (only for production build, not dev server)
      */
     compiler.hooks.beforeRun.tapPromise(PLUGIN_NAME, async (compilation) => {
-      debug(`Prebuild less to js file...`);
-      return await this._buildLessToJsFile();
-    });
+      debug(`Prebuild less to js file...`)
+      return await this._buildLessToJsFile()
+    })
 
     /**
      * The "watchRun" hook runs only when using 'watch mode' with webpack
      * triggering every time that webpack recompiles on a change triggered by the watcher
      */
     compiler.hooks.watchRun.tapPromise(PLUGIN_NAME, async (compilation) => {
-      const outputFileExist = this._outputFileExist();
-      const fileAsChanged = this._fileAsChanged(compilation);
-      debug(
-        { outputFileExist, fileAsChanged },
-        !outputFileExist || fileAsChanged
-      );
+      const outputFileExist = this._outputFileExist()
+      const fileAsChanged = this._fileAsChanged(compilation)
+      debug({ outputFileExist, fileAsChanged }, !outputFileExist || fileAsChanged)
 
       // if output file don't exist
       // or files to watch were changed
       if (!outputFileExist || fileAsChanged) {
-        debug(`Prebuild less to js file...`);
-        await this._buildLessToJsFile();
+        debug(`Prebuild less to js file...`)
+        await this._buildLessToJsFile()
       } else {
-        debug("Prebluild nothing, matches files doesn't changed");
+        debug("Prebluild nothing, matches files doesn't changed")
       }
-    });
+    })
   }
-};
+}

@@ -1,4 +1,4 @@
-require("colors");
+require("colors")
 
 module.exports = {
   /**
@@ -6,7 +6,7 @@ module.exports = {
    * @param pMessage
    */
   start: (pMessage = "") => {
-    console.log(`${pMessage}`.brightBlue);
+    console.log(`${pMessage}`.brightBlue)
   },
 
   /**
@@ -14,7 +14,7 @@ module.exports = {
    * @param pMessage
    */
   note: (pMessage = "") => {
-    console.log(`> ${pMessage}`.grey);
+    console.log(`> ${pMessage}`.grey)
   },
 
   /**
@@ -22,7 +22,7 @@ module.exports = {
    * @param pMessage
    */
   done: (pMessage = "Done.") => {
-    console.log(`✔`.green, `${pMessage}`, "\n");
+    console.log(`✔`.green, `${pMessage}`, "\n")
   },
 
   /**
@@ -30,6 +30,6 @@ module.exports = {
    * @param pMessage
    */
   error: (pMessage = "") => {
-    console.log(`${pMessage}`.red, "\n");
+    console.log(`${pMessage}`.red, "\n")
   },
-};
+}
