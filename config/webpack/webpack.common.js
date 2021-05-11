@@ -64,7 +64,7 @@ const commonConfig = {
       ? [
           new HtmlWebpackPlugin({
             title: require("../../package").name,
-            base: APP_BASE.endsWith("/") ? APP_BASE : APP_BASE + "/",
+            base: APP_BASE?.endsWith("/") ? APP_BASE : APP_BASE + "/",
             template: paths.src + "/index.html",
             filename: "index.html",
           }),
