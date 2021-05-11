@@ -1,20 +1,13 @@
 import "./index.less";
 import ReactDOM from "react-dom";
 import * as React from "react";
-import { EnvUtils } from "lib/utils/EnvUtils";
 import App from "./components/app/App";
 import { routes } from "./routes";
 import { Router } from "@cher-ami/router";
-
 const debug = require("debug")(`front:index`);
 debug("version:", require("../package.json").version);
 
 (function initApp() {
-  /**
-   * Add env classes
-   */
-  EnvUtils.addClasses();
-
   /**
    * Init React App
    */
