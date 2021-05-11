@@ -27,7 +27,8 @@
     "prettier": "prettier --write .",
     "test": "jest src/*",
     "test-framework": "jest config/*",
-    "postinstall": "cp -n .env.example .env || true"
+    "postinstall": "cp -n .env.example .env || true",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@cher-ami/router": "^1.0.0-alpha.7",
