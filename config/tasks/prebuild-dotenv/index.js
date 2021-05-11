@@ -27,7 +27,7 @@ const prebuildDotEnv = (newFilePath = `${config.outputPath}/.env`) => {
             const isComment = el.includes("#");
             const isEmptyLine = el === "";
             const containsEqual = el.includes("=");
-            if (!isEmptyLine && !isComment && containsEqual) {
+            if (!isComment && containsEqual) {
               const varName = el.split("=")[0];
               return varName ? varName : null;
             }
@@ -37,17 +37,24 @@ const prebuildDotEnv = (newFilePath = `${config.outputPath}/.env`) => {
       )
       // flat arrays results
       .flat()
+
       // remove double entries
       .filter((elem, index, self) => index === self.indexOf(elem));
 
+    debug(" process.env.NODE_ENV", process.env.NODE_ENV);
     debug("available vars after merge vars from all .env files", vars);
 
     let template;
     // create template with varNames and process.env values
-    template = vars.map((el) => process.env[el] && `${el}=${process.env[el]}`);
+    template = vars.map((el) => {
+      debug("el",el)
+      debug(('process.env[el]'), process.env[el])
+      return `${el}=${process.env[el] || ""}`;
+    });
 
     // push current version in it
     template.push(`VERSION=${require("../../../package").version}`);
+    debug("template", template);
 
     // filter to remove empty lines
     template = template.filter((e) => e).join("\n");
@@ -61,4 +68,4 @@ const prebuildDotEnv = (newFilePath = `${config.outputPath}/.env`) => {
   });
 };
 
-module.exports = prebuildDotEnv;
+module.exports = prebuildDotEnv();
