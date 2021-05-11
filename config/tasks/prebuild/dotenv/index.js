@@ -1,17 +1,22 @@
 const { Files } = require("@zouloux/files");
 const debug = require("debug")("config:prebuild-dotenv");
-const logs = require("../../helpers/logs-helper");
-const config = require("../../global.config");
+
+const logs = require("../../../helpers/logs-helper");
 const root = require("app-root-path");
+
+const config = require("../../../global.config");
+const NEW_DOTENV_FILE_PATH = `${config.outputPath}/.env`;
+const ALL_AVAILABLE_DOTENV = root.resolve(".env*");
+const PACKAGE_JSON_VERSION = require(root.resolve("package.json")).version;
 
 /**
  * Prebuild .env file
  * Create and inject .env file in specific folder
  */
-const prebuildDotEnv = (newFilePath = `${config.outputPath}/.env`) => {
+const prebuildDotEnv = (newFilePath = NEW_DOTENV_FILE_PATH) => {
   return new Promise((resolve) => {
     // read all .env files and get all var names
-    const envFiles = Files.getFiles(root.resolve(".env*")).files;
+    const envFiles = Files.getFiles(ALL_AVAILABLE_DOTENV).files;
     debug("available env files", envFiles);
 
     // get vars from all .env files and add them to the same array
@@ -25,7 +30,6 @@ const prebuildDotEnv = (newFilePath = `${config.outputPath}/.env`) => {
           // for each line, filter comments and keep only var name
           .map((el) => {
             const isComment = el.includes("#");
-            const isEmptyLine = el === "";
             const containsEqual = el.includes("=");
             if (!isComment && containsEqual) {
               const varName = el.split("=")[0];
@@ -40,20 +44,14 @@ const prebuildDotEnv = (newFilePath = `${config.outputPath}/.env`) => {
 
       // remove double entries
       .filter((elem, index, self) => index === self.indexOf(elem));
-
-    debug(" process.env.NODE_ENV", process.env.NODE_ENV);
     debug("available vars after merge vars from all .env files", vars);
 
     let template;
     // create template with varNames and process.env values
-    template = vars.map((el) => {
-      debug("el",el)
-      debug(('process.env[el]'), process.env[el])
-      return `${el}=${process.env[el] || ""}`;
-    });
+    template = vars.map((el) => `${el}=${process.env[el] || ""}`);
 
     // push current version in it
-    template.push(`VERSION=${require("../../../package").version}`);
+    template.push(`VERSION=${PACKAGE_JSON_VERSION}`);
     debug("template", template);
 
     // filter to remove empty lines
@@ -68,4 +66,4 @@ const prebuildDotEnv = (newFilePath = `${config.outputPath}/.env`) => {
   });
 };
 
-module.exports = prebuildDotEnv();
+module.exports = prebuildDotEnv;

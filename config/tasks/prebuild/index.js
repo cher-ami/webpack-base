@@ -1,5 +1,5 @@
-const prebuildHtaccess = require("../prebuild-htaccess");
-const prebuildDotEnv = require("../prebuild-dotenv");
+const prebuildHtaccess = require("./htaccess");
+const prebuildDotEnv = require("./dotenv");
 const debug = require("debug")("config:prebuild");
 
 /**
