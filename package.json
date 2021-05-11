@@ -27,7 +27,8 @@
     "prettier": "prettier --write .",
     "test": "jest src/*",
     "test-framework": "jest config/*",
-    "postinstall": "cp -n .env.example .env || true"
+    "postinstall": "cp -n .env.example .env || true",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@cher-ami/router": "^1.0.0-alpha.7",
@@ -96,11 +97,6 @@
     "webpack-hot-middleware": "^2.25.0",
     "webpack-manifest-plugin": "^3.1.1",
     "webpack-merge": "^5.7.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.{tsx,ts,jsx,js,less,css,json,md}": [
