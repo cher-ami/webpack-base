@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const lessToJsPlugin = require("./plugins/less-to-js-webpack-plugin");
-const ManifestPlugin = require("webpack-manifest-plugin");
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const paths = require("../global.paths");
 const config = require("../global.config");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -81,7 +81,7 @@ const commonConfig = {
      * Manifest plugin
      * @doc https://github.com/danethurber/webpack-manifest-plugin
      */
-    ...(config.buildManifestFile ? [new ManifestPlugin()] : []),
+    ...(config.buildManifestFile ? [new WebpackManifestPlugin()] : []),
 
     /**
      * Define Plugin
