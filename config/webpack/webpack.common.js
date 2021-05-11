@@ -9,6 +9,8 @@ const config = require("../global.config");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require("path");
 
+const APP_BASE = process.env.APP_BASE;
+
 /**
  * Common Webpack Configuration
  */
@@ -62,7 +64,8 @@ const commonConfig = {
       ? [
           new HtmlWebpackPlugin({
             title: require("../../package").name,
-            template: paths.webpackTemplatePath + "/index.html.template",
+            base: APP_BASE.endsWith("/") ? APP_BASE : APP_BASE + "/",
+            template: paths.src + "/index.html",
             filename: "index.html",
           }),
         ]
