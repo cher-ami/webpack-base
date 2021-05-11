@@ -1,9 +1,13 @@
-const bcrypt = require("bcrypt");
 const { Files } = require("@zouloux/files");
-const logs = require("../../helpers/logs-helper");
+const logs = require("../../../helpers/logs-helper");
 const debug = require("debug")("config:prebuild-htaccess");
-const config = require("../../global.config");
-const paths = require("../../global.paths");
+
+const config = require("../../../global.config");
+const paths = require("../../../global.paths");
+const OUTPUT_PATH = config.outputPath;
+const CONFIG_PATH = paths.config;
+const HTACCESS_TEMPLATE_FILE =
+  CONFIG_PATH + "/tasks/prebuild/htaccess/templates/.htaccess.template";
 
 /**
  * Prebuild .htaccess file
@@ -17,8 +21,8 @@ const prebuildHtaccess = () => {
    * @returns {string|null}
    */
   const _htpasswdLinkInHtaccess = (
+    pNewHtaccessFilePath = newHtaccessFilePath,
     pServerWebRootPath = process.env.HTACCESS_SERVER_WEB_ROOT_PATH,
-    pNewHtaccessFilePath = newHtaccessFilePath
   ) => {
     if (!pServerWebRootPath) return null;
 
@@ -41,7 +45,7 @@ const prebuildHtaccess = () => {
    * @type {string}
    */
   const _createHtpasswdFile = (
-    outPutPath = config.outputPath,
+    outPutPath = OUTPUT_PATH,
     pUser = process.env.HTACCESS_AUTH_USER,
     pPassword = process.env.HTACCESS_AUTH_PASSWORD
   ) => {
@@ -60,12 +64,8 @@ const prebuildHtaccess = () => {
     const htpasswdFilePath = `${outPutPath}/.htpasswd`;
     debug("htpasswdFilePath", htpasswdFilePath);
 
-    // hash pass with bCrypt
-    let hashPassword = bcrypt.hashSync(pPassword, 10);
-    debug("hash", hashPassword);
-
     // define content
-    const htpasswdContent = `${pUser}:${hashPassword}`;
+    const htpasswdContent = `${pUser}:${pPassword}`;
     debug("htpasswdContent", htpasswdContent);
 
     // write content user:pass in htpasswd file
@@ -98,29 +98,22 @@ const prebuildHtaccess = () => {
   };
 
   /**
-   *
+   * Create htaccess file
    * @param pOutputPath
-   * @param pConfigPath
+   * @param htaccessTemplateFile
    * @private
    */
   const _createHtaccessFile = (
-    pOutputPath = config.outputPath,
-    pConfigPath = paths.config
+    pOutputPath = OUTPUT_PATH,
+    htaccessTemplateFile = HTACCESS_TEMPLATE_FILE
   ) => {
+    debug("create htaccess file...");
     // target htaccess new file
     const newHtaccessFilePath = `${pOutputPath}/.htaccess`;
     debug("newHtaccessFilePath", newHtaccessFilePath);
-
-    // target htaccess template
-    const templateFilePath =
-      pConfigPath + "/tasks/prebuild-htaccess/templates/.htaccess.template";
-    debug("templateFilePath", templateFilePath);
-
-    debug("write htaccess file");
     Files.new(newHtaccessFilePath).write(
-      Files.getFiles(templateFilePath).read()
+      Files.getFiles(htaccessTemplateFile).read()
     );
-
     return { newHtaccessFilePath };
   };
 

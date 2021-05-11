@@ -60,7 +60,6 @@
     "app-root-path": "^3.0.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-import-glob-array": "^0.2.0",
-    "bcrypt": "^5.0.1",
     "change-case": "^4.1.2",
     "colors": "^1.4.0",
     "copy-webpack-plugin": "^8.1.1",

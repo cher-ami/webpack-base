@@ -10,9 +10,7 @@ const debug = require("debug")("config:scaffold-component");
 // remove Files lib logs
 Files.setVerbose(false);
 
-// get local task path
 const paths = require("../../../global.paths");
-// get local task config
 const config = require("../../../global.config");
 
 const _askWhichComponentFolder = (
@@ -55,7 +53,7 @@ const _reactComponentBuilder = ({
   subFolder,
   componentPath,
   upperComponentName,
-  createTest
+  createTest,
 }) => {
   // choose between page and component type
   const componentType = subFolder === "pages" ? "page" : "component";
@@ -88,7 +86,11 @@ const _reactComponentBuilder = ({
  * @param upperComponentName
  * @private
  */
-const _domComponentBuilder = ({ componentPath, upperComponentName, createTest }) => {
+const _domComponentBuilder = ({
+  componentPath,
+  upperComponentName,
+  createTest,
+}) => {
   // scaffold component file
   createFile({
     templateFilePath: `${paths.componentsTemplatesPath}/dom/component.ts.template`,
@@ -153,7 +155,6 @@ const scaffoldComponent = (pComponentType) => {
       componentName = answer.componentName;
     });
 
-
     // Get component name
     let createTest = "";
     await _askTest().then((answer) => {
@@ -171,7 +172,6 @@ const scaffoldComponent = (pComponentType) => {
     let componentPath = `${paths.src}/${subFolder}/${lowerComponentName}`;
     debug("component will be created here: componentPath", componentPath);
 
-
     // build REACT component
     if (pComponentType === "react") {
       _reactComponentBuilder({
@@ -187,7 +187,7 @@ const scaffoldComponent = (pComponentType) => {
       _domComponentBuilder({
         upperComponentName,
         componentPath,
-        createTest
+        createTest,
       });
     }
 
