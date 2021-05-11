@@ -23,7 +23,7 @@ module.exports = {
    * Build manifest file
    * It will contain paths to each assets served
    */
-  buildManifestFile: false,
+  buildManifestFile: true,
 
   /**
    * Build analyser file
