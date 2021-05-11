@@ -22,7 +22,7 @@
     "clean": "node config/tasks/runner.js clean",
     "reset": "node config/tasks/runner.js reset",
     "scaffold": "node config/tasks/runner.js scaffold",
-    "setup": "npm i && node config/tasks/runner.js setup",
+    "setup": "npm i && node config/tasks/runner.js setup && npm run prepare",
     "help": "node config/tasks/runner.js help",
     "prettier": "prettier --write .",
     "test": "jest src/*",

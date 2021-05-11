@@ -26,13 +26,17 @@ const cleanFrameworkFiles = ({
     const removeGitAnswer = await Inquirer.prompt({
       type: "confirm",
       name: "removeGit",
-      message: "Do you want to remove .git folder?",
+      message: "Do you want to reset the .git folder?",
     })
     debug("removeGitAnswer", removeGitAnswer["removeGit"])
 
     if (!fakeMode && removeGitAnswer["removeGit"]) {
       logs.start("Remove .git folder")
+      logs.note(`rm -rf ${gitFolder}`)
       await execSync(`rm -rf ${gitFolder}`, 3)
+      logs.start("Init new .git folder")
+      logs.note(`git init`)
+      await execSync(`git init`, 3)
     } else {
       debug("FakeMode is activated or removeGitAnswer is false, do nothing.".red)
     }
