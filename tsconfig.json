@@ -3,7 +3,9 @@
     "module": "esnext",
     "target": "es5",
     "baseUrl": "./src",
-    "paths": {},
+    "paths": {
+      "tslib": ["node_modules/tslib/tslib.d.ts"]
+    },
     "lib": ["es2015.promise", "es6", "dom", "esnext"],
     "jsx": "react",
     "moduleResolution": "node",
