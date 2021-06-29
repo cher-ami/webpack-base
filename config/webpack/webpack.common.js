@@ -31,7 +31,7 @@ const commonConfig = {
       // "react-dom/test-utils": "preact/test-utils",
       // "react-dom": "preact/compat",
     },
-    modules: [paths.nodeModules, paths.src],
+    modules: ["src", "node_modules"],
   },
 
   /**
