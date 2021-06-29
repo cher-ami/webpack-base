@@ -142,10 +142,7 @@ const commonConfig = {
           name: "[path][name].[ext]",
           // prevent display of "src/" in filename
           context: "src",
-          publicPath: path.join(
-            process.env.APP_BASE || "",
-            process.env.ASSETS_PATH || ""
-          ),
+          publicPath: path.join(process.env.ASSETS_PATH || ""),
         },
       },
     ],
