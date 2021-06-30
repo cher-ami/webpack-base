@@ -16,11 +16,5 @@
     ],
     "@babel/preset-react"
   ],
-  "plugins": [
-    "import-glob-array",
-    "@babel/plugin-transform-runtime",
-    ["@babel/plugin-proposal-class-properties", { "loose": true }],
-    "@babel/plugin-proposal-optional-chaining",
-    "@babel/plugin-proposal-export-default-from"
-  ]
+  "plugins": ["import-glob-array", "@babel/plugin-transform-runtime"]
 }
