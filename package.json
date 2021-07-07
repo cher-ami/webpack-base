@@ -33,7 +33,7 @@
   "dependencies": {
     "@cher-ami/router": "^1.0.0",
     "@solid-js/css-flat": "^1.0.1",
-    "@wbe/libraries": "^1.6.0",
+    "@wbe/libraries": "^2.0.0",
     "gsap": "^3.7.0",
     "preact": "^10.5.13",
     "react": "^17.0.2",
