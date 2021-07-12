@@ -18,7 +18,7 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development env-cmd --no-override -f .env node config/tasks/runner.js dev",
-    "build": "NODE_ENV=production env-cmd --no-override -f .env.production --fallback node config/tasks/runner.js build",
+    "build": "NODE_ENV=production node config/tasks/runner.js build",
     "clean": "node config/tasks/runner.js clean",
     "reset": "node config/tasks/runner.js reset",
     "scaffold": "node config/tasks/runner.js scaffold",
