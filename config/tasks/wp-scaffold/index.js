@@ -38,7 +38,7 @@ const wpScaffold = () => {
       logs.error(`WP path not defined in global.paths`.bold)
       console.log(
         `Add \n\n ${
-          `  /**\n    * wp\n    */\n   wp: root.resolve("dist/api/web"), \n   wpTheme: root.resolve("dist/api/web/app/themes/CherAmi"),`
+          `  /**\n    * wp\n    */\n   wpTemplatesPath: root.resolve("config/tasks/wp-scaffold/component/templates"), \n   wpTheme: root.resolve("dist/api/web/app/themes/CherAmi"),`
             .yellow.bold
         } \n\nto ${`global.paths.js`.bold}`
       )

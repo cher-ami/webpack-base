@@ -36,7 +36,6 @@ module.exports = {
   /**
    * wp
    */
-  wp: root.resolve("dist/api/web"),
   wpTheme: root.resolve("dist/api/web/app/themes/CherAmi"),
 
   /**
