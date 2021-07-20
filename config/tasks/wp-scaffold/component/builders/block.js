@@ -137,7 +137,7 @@ ${blockTypeList
 
 const buildBlockType = () => {
   return new Promise(async (resolve) => {
-    const generatedFilePath = `${paths.wpTheme}/block/BlockTypes.php`
+    const generatedFilePath = `${paths.wpTheme}/block/BlockType.php`
     const blockFolder = Files.getFolders(`${paths.wpTheme}/block/*`).files
     const formatedBlocks = blockFolder.map((block) => {
       const blockName = block.substring(block.lastIndexOf("/") + 1)

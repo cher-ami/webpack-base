@@ -57,7 +57,7 @@ const _optionPageBuilder = ({ pagePath, pageName, pageTitle }) => {
 
 const buildOptionPage = () => {
   return new Promise(async (resolve) => {
-    let optionPageFolder = `${paths.wpTheme}/options`
+    let optionPageFolder = `${paths.wpTheme}/optionPage`
 
     // Get page name
     let pageName = "",

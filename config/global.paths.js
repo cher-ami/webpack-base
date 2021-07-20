@@ -31,7 +31,8 @@ module.exports = {
    * dist
    */
   dist: root.resolve("dist"),
-  static: root.resolve("dist/static"),
+  public: root.resolve("dist/public"),
+  bo: root.resolve("dist/api"),
 
   /**
    * wp
