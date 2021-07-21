@@ -34,7 +34,7 @@ const wpScaffold = () => {
     // Get scaffolder to present listing to user
     let scaffolderTypes = _scaffolders.map((scaffolder) => scaffolder.name)
 
-    if (!paths.wp) {
+    if (!paths.wpTheme) {
       logs.error(`WP path not defined in global.paths`.bold)
       console.log(
         `Add \n\n ${
