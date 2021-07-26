@@ -21,6 +21,9 @@ Files.setVerbose(false)
   CLICommands.add("scaffold", (options, args) => {
     require("./scaffold").scaffold()
   })
+  CLICommands.add("wp-scaffold", (options, args) => {
+    require("./wp-scaffold").wpScaffold()
+  })
   CLICommands.add("help", (options, args) => {
     require("./help").help()
   })

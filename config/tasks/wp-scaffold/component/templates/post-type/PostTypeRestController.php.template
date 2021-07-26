@@ -1,0 +1,13 @@
+<?php
+
+
+class %%pascalCasePostType%%RestController extends PostRestController
+{
+  //The namespace and version for the REST SERVER
+
+  public function register_routes():void {
+    parent::register_routes();
+  }
+
+}
+

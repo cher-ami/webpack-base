@@ -1,0 +1,4 @@
+<?php
+
+include_once '%%pascalCasePageName%%Option.php';
+include_once '%%pascalCasePageName%%RestController.php';

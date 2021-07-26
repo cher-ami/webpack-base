@@ -5,7 +5,7 @@ const logs = require("../../../helpers/logs-helper")
 const root = require("app-root-path")
 
 const config = require("../../../global.config")
-const NEW_DOTENV_FILE_PATH = `${config.outputPath}/.env`
+const NEW_DOTENV_FILE_PATH = `${config.envPath}/.env`
 const ALL_AVAILABLE_DOTENV = root.resolve(".env*")
 const PACKAGE_JSON_VERSION = require(root.resolve("package.json")).version
 

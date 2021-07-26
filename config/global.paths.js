@@ -31,7 +31,13 @@ module.exports = {
    * dist
    */
   dist: root.resolve("dist"),
-  static: root.resolve("dist/static"),
+  public: root.resolve("dist/public"),
+  bo: root.resolve("dist/api"),
+
+  /**
+   * wp
+   */
+  wpTheme: root.resolve("dist/api/web/app/themes/CherAmi"),
 
   /**
    * config
@@ -41,4 +47,5 @@ module.exports = {
   taskSetupFolder: root.resolve("config/tasks/setup"),
   installConfig: root.resolve("config/install.config.js"),
   componentsTemplatesPath: root.resolve("config/tasks/scaffold/component/templates"),
+  wpTemplatesPath: root.resolve("config/tasks/wp-scaffold/component/templates"),
 }

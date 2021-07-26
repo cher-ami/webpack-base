@@ -9,6 +9,11 @@ module.exports = {
   outputPath: paths.dist,
 
   /**
+  * Output path for generated .env
+  */
+  envPath: paths.dist,
+
+  /**
    * Generate an index.html from template /src/template.html
    */
   generateHtmlIndex: true,
