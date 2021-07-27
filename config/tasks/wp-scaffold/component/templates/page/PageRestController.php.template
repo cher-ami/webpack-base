@@ -25,5 +25,31 @@ class %%pascalCasePageName%%RestController extends BaseRestController
         return $this->successResponse([]);
     }
 
+    public function format($post){
+        $data = [];
+
+        $blocks = parse_blocks($post->post_content);
+        foreach($blocks as $block){
+            $restBlock = null;
+            switch($block["blockName"]){
+                case "core/heading":
+                    $restBlock = TitleBlockController::format(str_replace("\n", "",$block['innerHTML']));
+                    break;
+                case "core/paragraph":
+                    $restBlock = TextBlockController::format(str_replace("\n", "",$block['innerHTML']));
+                    break;
+                case "core/list":
+                    $restBlock = ListBlockController::format(str_replace("\n", "",$block['innerHTML']));
+                    break;
+            }
+
+            if($restBlock){
+                $data['blocks'][] = $restBlock->toArray();
+            }
+        }
+
+        return $data;
+    }
+
 }
 
