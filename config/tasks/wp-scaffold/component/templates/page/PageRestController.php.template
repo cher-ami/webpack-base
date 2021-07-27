@@ -43,8 +43,8 @@ class %%pascalCasePageName%%RestController extends BaseRestController
                     break;
             }
 
-            if($restBlock){
-                $data['blocks'][] = $restBlock->toArray();
+            if ($restBlock) {
+                $data['blocks'][] = $restBlock;
             }
         }
 

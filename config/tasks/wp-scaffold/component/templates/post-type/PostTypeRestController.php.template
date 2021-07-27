@@ -26,8 +26,8 @@ class %%pascalCasePostType%%RestController extends PostRestController
                     break;
             }
 
-            if($restBlock){
-                $data['blocks'][] = $restBlock->toArray();
+            if ($restBlock) {
+                $data['blocks'][] = $restBlock;
             }
         }
 
