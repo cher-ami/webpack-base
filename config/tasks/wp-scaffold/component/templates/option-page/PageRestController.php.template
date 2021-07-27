@@ -22,7 +22,7 @@ class %%pascalCasePageName%%RestController extends BaseRestController
     }
 
     public function get_page():WP_REST_Response{
-        return $this->success();
+        return $this->successResponse([]);
     }
 
 }
