@@ -16,13 +16,13 @@ class %%pascalCasePostType%%RestController extends PostRestController
             $restBlock = null;
             switch ($block["blockName"]) {
                 case "core/heading":
-                    $restBlock = TitleBlockController::format($data);
+                    $restBlock = TitleBlockController::format($block);
                     break;
                 case "core/paragraph":
-                    $restBlock = TextBlockController::format($data);
+                    $restBlock = TextBlockController::format($block);
                     break;
                 case "core/list":
-                    $restBlock = ListBlockController::format($data);
+                    $restBlock = ListBlockController::format($block);
                     break;
             }
 
