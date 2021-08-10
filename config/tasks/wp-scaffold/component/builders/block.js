@@ -128,7 +128,7 @@ const GUTENBERG_CUSTOM_BLOCKS = array(
 class BlockTypes{
 ${blockTypeList
   .map((block) => {
-    return `    public const ${block.upperCaseBlockName} = "${block.name}";`
+    return `    public const ${block.upperCaseBlockName} = 'acf/g-${block.name}';`
   })
   .join("\n")}
 
