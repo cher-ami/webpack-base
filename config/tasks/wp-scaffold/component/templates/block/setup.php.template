@@ -1,5 +1,6 @@
 <?php
 
+include_once '%%pascalCaseBlockName%%Controller.php';
 
 if (function_exists('acf_add_local_field_group')):
 

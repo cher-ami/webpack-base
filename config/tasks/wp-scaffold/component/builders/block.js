@@ -40,7 +40,7 @@ const _blockBuilder = ({ blockPath, blockName, blockTitle }) => {
   // scaffold postType file
   createFile({
     templateFilePath: `${paths.wpTemplatesPath}/block/setup.php.template`,
-    destinationFilePath: `${blockPath}/${pascalCaseBlockName}.php`,
+    destinationFilePath: `${blockPath}/setup.php`,
     replaceExpressions: {
       blockName,
       blockTitle,
