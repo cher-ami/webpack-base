@@ -40,7 +40,7 @@ const _blockBuilder = ({ blockPath, blockName, blockTitle }) => {
   // scaffold postType file
   createFile({
     templateFilePath: `${paths.wpTemplatesPath}/block/setup.php.template`,
-    destinationFilePath: `${blockPath}/${pascalCaseBlockName}.php`,
+    destinationFilePath: `${blockPath}/setup.php`,
     replaceExpressions: {
       blockName,
       blockTitle,
@@ -111,11 +111,6 @@ const _blockTypeTemplate = (
  * This file is generated on block creation via the wp-scaffold task
  */
 
-${blockTypeList
-  .map((block) => {
-    return `require("${block.pasclaCaseName}/${block.pasclaCaseName}Controller.php");`
-  })
-  .join("\n")}
 
 const GUTENBERG_CUSTOM_BLOCKS = array(
     ${blockTypeList
@@ -128,7 +123,7 @@ const GUTENBERG_CUSTOM_BLOCKS = array(
 class BlockTypes{
 ${blockTypeList
   .map((block) => {
-    return `    public const ${block.upperCaseBlockName} = "${block.name}";`
+    return `    public const ${block.upperCaseBlockName} = 'acf/g-${block.name}';`
   })
   .join("\n")}
 
