@@ -111,11 +111,6 @@ const _blockTypeTemplate = (
  * This file is generated on block creation via the wp-scaffold task
  */
 
-${blockTypeList
-  .map((block) => {
-    return `require("${block.pasclaCaseName}/${block.pasclaCaseName}Controller.php");`
-  })
-  .join("\n")}
 
 const GUTENBERG_CUSTOM_BLOCKS = array(
     ${blockTypeList
