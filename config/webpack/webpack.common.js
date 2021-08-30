@@ -78,8 +78,6 @@ const commonConfig = {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.DEBUG": JSON.stringify(process.env.DEBUG),
-      "process.env.APP_BASE": JSON.stringify(process.env.APP_BASE),
-      "process.env.APP_URL": JSON.stringify(process.env.APP_URL),
     }),
 
     /**

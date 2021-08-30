@@ -99,6 +99,7 @@ const developmentConfig = {
      */
     new ReactRefreshWebpackPlugin({
       forceEnable: false,
+      overlay: false,
     }),
   ],
 }

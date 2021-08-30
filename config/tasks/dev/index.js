@@ -23,7 +23,6 @@ const _startDevServer = async (closeServerAfterFirstBuild = false) => {
   const compiler = webpack(webpackConfig)
 
   const devServerOptions = {
-    host: "local-ip",
     port: process.env.DEV_SERVER_PORT || portFinderSync.getPort(3000),
     allowedHosts: "all",
     compress: true,
@@ -31,13 +30,7 @@ const _startDevServer = async (closeServerAfterFirstBuild = false) => {
     historyApiFallback: true,
     hot: DEV_SERVER_HOT_RELOAD,
     open: DEV_SERVER_OPEN,
-    static: {
-      directory: paths.dist,
-      staticOptions: {},
-      watch: true,
-    },
     devMiddleware: {
-      publicPath: "",
       index: true,
       serverSideRender: true,
       writeToDisk: true,
