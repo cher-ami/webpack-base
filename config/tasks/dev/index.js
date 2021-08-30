@@ -12,44 +12,47 @@ const debug = require("debug")(`config:${TASK_DEV}`)
  * @private
  */
 const _startDevServer = async (closeServerAfterFirstBuild = false) => {
-  const webpack = require("webpack")
-  const webpackDevServer = require("webpack-dev-server")
-  const webpackConfig = require("../../webpack/webpack.development.js")
-  const compiler = webpack(webpackConfig)
-
-  const ip = require("internal-ip")
-  const portFinderSync = require("portfinder-sync")
-
   const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true"
   const DEV_SERVER_HOT_RELOAD = process.env.DEV_SERVER_HOT_RELOAD === "true"
   const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === "true"
+  const webpack = require("webpack")
+  const webpackDevServer = require("webpack-dev-server")
+  const webpackConfig = require("../../webpack/webpack.development.js")
+  const ip = require("internal-ip")
+  const portFinderSync = require("portfinder-sync")
+  const compiler = webpack(webpackConfig)
 
   const devServerOptions = {
-    publicPath: "",
-    contentBase: paths.dist,
-    host: "0.0.0.0",
+    host: "local-ip",
     port: process.env.DEV_SERVER_PORT || portFinderSync.getPort(3000),
-    disableHostCheck: true,
-    useLocalIp: true,
-    inline: true,
+    allowedHosts: "all",
     compress: true,
     https: false,
     historyApiFallback: true,
-
     hot: DEV_SERVER_HOT_RELOAD,
     open: DEV_SERVER_OPEN,
-    writeToDisk: true,
-
-    noInfo: false,
-    stats: {
-      preset: "minimal",
-      colors: true,
+    static: {
+      directory: paths.dist,
+      staticOptions: {},
+      watch: true,
     },
-    quiet: false,
-
+    devMiddleware: {
+      publicPath: "",
+      index: true,
+      serverSideRender: true,
+      writeToDisk: true,
+      stats: {
+        preset: "minimal",
+        colors: true,
+      },
+    },
+    client: {
+      logging: "info",
+      overlay: true,
+      progress: true,
+    },
     // specify to enable root proxying
     // if use proxy option is enable
-    index: "",
     ...(ENABLE_DEV_PROXY
       ? {
           proxy: {
@@ -65,7 +68,7 @@ const _startDevServer = async (closeServerAfterFirstBuild = false) => {
   }
 
   // create new dev server
-  const server = new webpackDevServer(compiler, devServerOptions)
+  const server = new webpackDevServer(devServerOptions, compiler)
 
   // template logs to print on each build
   const templatingLogs = (port = devServerOptions.port) => {
@@ -94,7 +97,7 @@ const _startDevServer = async (closeServerAfterFirstBuild = false) => {
 
   return new Promise((resolve, reject) => {
     // start to listen
-    server.listen(devServerOptions.port)
+    server.start(devServerOptions.port)
 
     compiler.hooks.done.tap(TASK_DEV, (stats) => {
       const hasErrors = stats && stats.hasErrors()
