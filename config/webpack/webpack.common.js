@@ -26,11 +26,7 @@ const commonConfig = {
    */
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json", ".module.less", ".less", ".css"],
-    alias: {
-      // react: "preact/compat",
-      // "react-dom/test-utils": "preact/test-utils",
-      // "react-dom": "preact/compat",
-    },
+    alias: {},
     modules: ["src", "node_modules"],
   },
 
@@ -82,8 +78,6 @@ const commonConfig = {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.DEBUG": JSON.stringify(process.env.DEBUG),
-      "process.env.APP_BASE": JSON.stringify(process.env.APP_BASE),
-      "process.env.APP_URL": JSON.stringify(process.env.APP_URL),
     }),
 
     /**
