@@ -16,5 +16,5 @@
     ],
     "@babel/preset-react"
   ],
-  "plugins": ["import-glob-array", "@babel/plugin-transform-runtime"]
+  "plugins": ["import-glob-array", "@babel/plugin-transform-runtime", "@babel/plugin-proposal-class-properties"]
 }
