@@ -13,7 +13,6 @@ const debug = require("debug")(`config:${TASK_DEV}`)
  */
 const _startDevServer = async (closeServerAfterFirstBuild = false) => {
   const DEV_SERVER_OPEN = process.env.DEV_SERVER_OPEN === "true"
-  const DEV_SERVER_HOT_RELOAD = process.env.DEV_SERVER_HOT_RELOAD === "true"
   const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === "true"
   const webpack = require("webpack")
   const webpackDevServer = require("webpack-dev-server")
@@ -28,7 +27,6 @@ const _startDevServer = async (closeServerAfterFirstBuild = false) => {
     compress: true,
     https: false,
     historyApiFallback: true,
-    hot: DEV_SERVER_HOT_RELOAD,
     open: DEV_SERVER_OPEN,
     devMiddleware: {
       index: true,
