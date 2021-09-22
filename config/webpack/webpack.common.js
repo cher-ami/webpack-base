@@ -124,21 +124,6 @@ const commonConfig = {
         exclude: /node_modules/,
         use: [{ loader: "babel-loader" }],
       },
-
-      /**
-       * Images
-       * Copy image files to build folder.
-       */
-      {
-        test: /\.(?:ico|gif|svg|png|jpg|jpeg|webp|mp4|mp3|wav|pdf|woff(2)?|eot|ttf|otf)$/i,
-        loader: "file-loader",
-        options: {
-          name: "[path][name].[ext]",
-          // prevent display of "src/" in filename
-          context: "src",
-          publicPath: path.join(process.env.ASSETS_PATH || ""),
-        },
-      },
     ],
   },
 }
