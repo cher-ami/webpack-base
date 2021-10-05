@@ -48,7 +48,16 @@ const prebuildDotEnv = (newFilePath = NEW_DOTENV_FILE_PATH) => {
 
     let template
     // create template with varNames and process.env values
-    template = vars.map((el) => `${el}=${process.env[el] || ""}`)
+    template = vars.map(
+      (el) =>
+        `${el}=${
+          process.env[el]
+            ? process.env[el].includes(" ")
+              ? `"${process.env[el]}"`
+              : process.env[el]
+            : ""
+        }`
+    )
 
     // push current version in it
     template.push(`VERSION=${PACKAGE_JSON_VERSION}`)
