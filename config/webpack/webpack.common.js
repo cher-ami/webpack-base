@@ -124,6 +124,10 @@ const commonConfig = {
         exclude: /node_modules/,
         use: [{ loader: "babel-loader" }],
       },
+      {
+        test: /\.(?:ico|gif|svg|png|jpg|jpeg|webp|mp4|mp3|wav|pdf|woff(2)?|eot|ttf|otf)$/i,
+        type: "asset/resource",
+      },
     ],
   },
 }
