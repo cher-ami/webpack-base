@@ -115,10 +115,6 @@ module.exports = {
   dev: async (closeServerAfterFirstBuild = false) => {
     clean()
     await prebuild()
-    try {
-      return await _startDevServer(closeServerAfterFirstBuild)
-    } catch (e) {
-      throw new Error("dev task failed")
-    }
+    return await _startDevServer(closeServerAfterFirstBuild)
   },
 }
