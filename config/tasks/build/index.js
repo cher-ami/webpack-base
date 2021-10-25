@@ -41,12 +41,8 @@ const _build = async () => {
 const build = async () => {
   clean()
 
-  try {
-    await prebuild()
-    return await _build()
-  } catch (e) {
-    throw new Error("build task failed")
-  }
+  await prebuild()
+  return await _build()
 }
 
 module.exports = { build }
