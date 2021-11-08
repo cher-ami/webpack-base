@@ -127,6 +127,10 @@ const commonConfig = {
       {
         test: /\.(?:ico|gif|svg|png|jpg|jpeg|webp|mp4|mp3|wav|pdf|woff(2)?|eot|ttf|otf)$/i,
         type: "asset/resource",
+        generator: {
+          filename: "[hash][ext][query]",
+          publicPath: process.env.ASSETS_PATH,
+        },
       },
     ],
   },
